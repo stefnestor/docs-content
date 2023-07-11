@@ -1,0 +1,36 @@
+name: Staging Docs
+
+on:
+  pull_request_target:
+    # The paths property can be omitted entirely if the repo is mainly used for docs. Leaving it in can result in builds that 
+    # have branch protection checks in place lose the ability to merge because the workflow is not starting. If this property 
+    # is included, please ensure that branch protection checks are disabled for the repo. 
+    paths:
+      # Preface with your docs dir if you need further specificity (optional)
+      - '**.mdx'
+      - '**.docnav.json'
+      - '**.docapi.json'
+      - '**.devdocs.json'
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.svg'
+      - '**.gif'
+    types: [opened, closed, synchronize]
+
+jobs:
+  publish:
+    name: Vercel Build Check
+    uses: elastic/workflows/.github/workflows/docs-elastic-staging-publish.yml@main
+    with:
+      # Refers to Vercel project
+      project-name: docs-staging-elastic-dev
+      # Which prebuild step (dev or not)
+      prebuild: wordlake-staging
+      # Docsmobile project dir
+      repo: docs-staging.elastic.dev    
+    secrets:
+      VERCEL_GITHUB_TOKEN: ${{ secrets.VERCEL_GITHUB_TOKEN }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID_STAGING_PREVIEW_DOCS: ${{ secrets.VERCEL_PROJECT_ID_STAGING_PREVIEW_DOCS }}
