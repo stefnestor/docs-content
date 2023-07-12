@@ -1,2 +1,2 @@
-# serverless-general-docs
-Staging location for Serverless general docs
+# staging-serverless-elasticsearch-docs
+Staging location for Serverless elasticsearch docs
