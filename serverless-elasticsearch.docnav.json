@@ -244,6 +244,14 @@
         },
         {
           "id": "serverlessElasticsearchExploreYourDataSearchAnalytics"
+        },
+        {
+          "id": "serverlessElasticsearchExploreYourDataMachineLearning",
+          "items": [
+            {
+              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlp"
+            }
+          ]
         }
       ]
     },
