@@ -246,10 +246,22 @@
           "id": "serverlessElasticsearchExploreYourDataSearchAnalytics"
         },
         {
-          "id": "serverlessElasticsearchExploreYourDataMachineLearning",
+          "id": "serverlessElasticsearchExploreYourDataMachineLearningNlp",
           "items": [
             {
-              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlp"
+              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlpDeployTrainedModels"
+            },
+            {
+              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlpInference"
+            },
+            {
+              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlpElasticModels"
+            },
+            {
+              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlpModelRef"
+            },
+            {
+              "id": "serverlessElasticsearchExploreYourDataMachineLearningNlpExamples"
             }
           ]
         }
