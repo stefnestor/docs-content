@@ -3,10 +3,5 @@
   "id": "serverless-general",
   "landingPageId": "serverlessGeneralWelcomeToServerless",
   "icon": "logoElastic",
-  "description": "Description to be written",
-  "items": [
-    {
-      "id": "serverlessGeneralWelcomeToServerless"
-    }
-  ]
+  "description": "Description to be written"
 }
