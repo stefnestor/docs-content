@@ -12,30 +12,30 @@
       "pageId": "serverlessElasticsearchSignUpForAnAccount",
       "items": [
         {
-          "id": "serverlessElasticsearchSignUpForAnAccountJoinElasticCloud",
+          "id": "serverlessElasticsearchJoinElasticCloud",
           "items": [
             {
-              "id": "serverlessElasticsearchSignUpForAnAccountJoinElasticCloudAddYourBillingDetails"
+              "id": "serverlessElasticsearchJoinElasticCloudAddYourBillingDetails"
             },
             {
-              "id": "serverlessElasticsearchSignUpForAnAccountJoinElasticCloudChooseATier"
+              "id": "serverlessElasticsearchJoinElasticCloudChooseATier"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchSignUpForAnAccountSubscribeFromAMarketplace",
+          "id": "serverlessElasticsearchSubscribeFromAMarketplace",
           "items": [
             {
-              "id": "serverlessElasticsearchSignUpForAnAccountSubscribeFromAMarketplaceAwsMarketplace"
+              "id": "serverlessElasticsearchSubscribeFromAMarketplaceAwsMarketplace"
             },
             {
-              "id": "serverlessElasticsearchSignUpForAnAccountSubscribeFromAMarketplaceAzureMarketplace"
+              "id": "serverlessElasticsearchSubscribeFromAMarketplaceAzureMarketplace"
             },
             {
-              "id": "serverlessElasticsearchSignUpForAnAccountSubscribeFromAMarketplaceAzureNativeIsvService"
+              "id": "serverlessElasticsearchSubscribeFromAMarketplaceAzureNativeIsvService"
             },
             {
-              "id": "serverlessElasticsearchSignUpForAnAccountSubscribeFromAMarketplaceGcpMarketplace"
+              "id": "serverlessElasticsearchSubscribeFromAMarketplaceGcpMarketplace"
             }
           ]
         }
@@ -62,104 +62,104 @@
       "pageId": "serverlessElasticsearchApis",
       "items": [
         {
-          "id": "serverlessElasticsearchApisApiConventions"
+          "id": "serverlessElasticsearchApiConventions"
         },
         {
-          "id": "serverlessElasticsearchApisHttpApis",
+          "id": "serverlessElasticsearchHttpApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisHttpApisGettingStarted"
+              "id": "serverlessElasticsearchHttpApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisHttpApisReferences"
+              "id": "serverlessElasticsearchHttpApisReferences"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchApisPythonApis",
+          "id": "serverlessElasticsearchPythonApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisPythonApisGettingStarted"
+              "id": "serverlessElasticsearchPythonApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisPythonApisReferences"
+              "id": "serverlessElasticsearchPythonApisReferences"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchApisNodejsApis",
+          "id": "serverlessElasticsearchNodejsApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisNodejsApisGettingStarted"
+              "id": "serverlessElasticsearchNodejsApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisNodejsApisReferences"
+              "id": "serverlessElasticsearchNodejsApisReferences"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchApisPhpApis",
+          "id": "serverlessElasticsearchPhpApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisPhpApisGettingStarted"
+              "id": "serverlessElasticsearchPhpApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisPhpApisReferences"
+              "id": "serverlessElasticsearchPhpApisReferences"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchApisGoApis",
+          "id": "serverlessElasticsearchGoApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisGoApisGettingStarted"
+              "id": "serverlessElasticsearchGoApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisGoApisReferences"
+              "id": "serverlessElasticsearchGoApisReferences"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchApisRubyApis",
+          "id": "serverlessElasticsearchRubyApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisRubyApisGettingStarted"
+              "id": "serverlessElasticsearchRubyApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisRubyApisReferences"
+              "id": "serverlessElasticsearchRubyApisReferences"
             }
           ]
         },
         {
-          "id": "serverlessElasticsearchApisJavaApis",
+          "id": "serverlessElasticsearchJavaApis",
           "items": [
             {
-              "id": "serverlessElasticsearchApisJavaApisGettingStarted"
+              "id": "serverlessElasticsearchJavaApisGettingStarted"
             },
             {
-              "id": "serverlessElasticsearchApisJavaApisReferences"
+              "id": "serverlessElasticsearchJavaApisReferences"
             }
           ]
         }
       ]
     },
     {
-      "pageId": "serverlessElasticsearchDeveloperTools",
+      "pageId": "serverlessElasticsearchDevTools",
       "items": [
         {
-          "id": "serverlessElasticsearchDeveloperToolsRunApiRequestsInConsole"
+          "id": "serverlessElasticsearchDevToolsConsole"
         },
         {
-          "id": "serverlessElasticsearchDeveloperToolsInspectAndAnalyzeYourSearchQueriesSearchProfiler"
+          "id": "serverlessElasticsearchDevToolsSearchProfiler"
         },
         {
-          "id": "serverlessElasticsearchDeveloperToolsBuildAndDebugGrokPatterns"
+          "id": "serverlessElasticsearchDevToolsBuildAndDebugGrokPatterns"
         },
         {
-          "id": "serverlessElasticsearchDeveloperToolsTestAndDebugPainlessScripts"
+          "id": "serverlessElasticsearchDevToolsTestAndDebugPainlessScripts"
         },
         {
-          "id": "serverlessElasticsearchDeveloperToolsTroubleshooting"
+          "id": "serverlessElasticsearchDevToolsTroubleshooting"
         }
       ]
     },
@@ -167,19 +167,19 @@
       "pageId": "serverlessElasticsearchIngestYourData",
       "items": [
         {
-          "id": "serverlessElasticsearchIngestYourDataIngestDataThroughApi"
+          "id": "serverlessElasticsearchIngestDataThroughApi"
         },
         {
-          "id": "serverlessElasticsearchIngestYourDataIngestDataThroughIntegrations",
+          "id": "serverlessElasticsearchIngestDataThroughIntegrations",
           "items": [
             {
-              "id": "serverlessElasticsearchIngestYourDataIngestDataThroughIntegrationsLogstash"
+              "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
             },
             {
-              "id": "serverlessElasticsearchIngestYourDataIngestDataThroughIntegrationsBeats"
+              "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats"
             },
             {
-              "id": "serverlessElasticsearchIngestYourDataIngestDataThroughIntegrationsConnectorClient"
+              "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
             }
           ]
         }
@@ -224,10 +224,10 @@
           "id": "serverlessElasticsearchExploreYourDataVisualizeYourData",
           "items": [
             {
-              "id": "serverlessElasticsearchExploreYourDataVisualizeYourDataCreateDashboards"
+              "id": "serverlessElasticsearchExploreYourDataDashboards"
             },
             {
-              "id": "serverlessElasticsearchExploreYourDataVisualizeYourDataCreateVisualizations"
+              "id": "serverlessElasticsearchExploreYourDataVisualizations"
             }
           ]
         },
@@ -235,10 +235,10 @@
           "id": "serverlessElasticsearchExploreYourDataAlerting",
           "items": [
             {
-              "id": "serverlessElasticsearchExploreYourDataAlertingCreateAnAlert"
+              "id": "serverlessElasticsearchExploreYourDataCreateAnAlert"
             },
             {
-              "id": "serverlessElasticsearchExploreYourDataAlertingManageCreatedAlerts"
+              "id": "serverlessElasticsearchExploreYourDataManageAlerts"
             }
           ]
         },
@@ -282,19 +282,19 @@
       "pageId": "serverlessElasticsearchManageYourProject",
       "items": [
         {
-          "id": "serverlessElasticsearchManageYourProjectManageAccessToYourProject"
+          "id": "serverlessElasticsearchManageAccessToYourProject"
         },
         {
-          "id": "serverlessElasticsearchManageYourProjectUpdateYourProject",
+          "id": "serverlessElasticsearchUpdateYourProject",
           "items": [
             {
-              "id": "serverlessElasticsearchManageYourProjectUpdateYourProjectRenamingAProject"
+              "id": "serverlessElasticsearchRenamingAProject"
             },
             {
-              "id": "serverlessElasticsearchManageYourProjectUpdateYourProjectManagingTags"
+              "id": "serverlessElasticsearchUpdateYourProjectManagingTags"
             },
             {
-              "id": "serverlessElasticsearchManageYourProjectUpdateYourProjectDeletingAProject"
+              "id": "serverlessElasticsearchDeletingAProject"
             }
           ]
         },
@@ -302,10 +302,10 @@
           "id": "serverlessElasticsearchManageYourProjectPerformanceMetrics",
           "items": [
             {
-              "id": "serverlessElasticsearchManageYourProjectPerformanceMetricsHowAutoscalingWorks"
+              "id": "serverlessElasticsearchPerformanceMetricsAutoscaling"
             },
             {
-              "id": "serverlessElasticsearchManageYourProjectPerformanceMetricsSearchPowerAcceleration"
+              "id": "serverlessElasticsearchPerformanceMetricsAcceleration"
             }
           ]
         }
@@ -315,19 +315,19 @@
       "pageId": "serverlessElasticsearchManageUserAccessToYourOrganization",
       "items": [
         {
-          "id": "serverlessElasticsearchManageUserAccessToYourOrganizationInviteMembersToYourOrganization"
+          "id": "serverlessElasticsearchInviteMembersToYourOrganization"
         },
         {
-          "id": "serverlessElasticsearchManageUserAccessToYourOrganizationJoinAnOrganizationFromAnExistingElasticCloudAccount"
+          "id": "serverlessElasticsearchJoinAnOrganizationFromAnExistingElasticCloudAccount"
         },
         {
-          "id": "serverlessElasticsearchManageUserAccessToYourOrganizationAssignUserRolesAndPrivileges"
+          "id": "serverlessElasticsearchAssignUserRolesAndPrivileges"
         },
         {
-          "id": "serverlessElasticsearchManageUserAccessToYourOrganizationManageCloudApiKeys"
+          "id": "serverlessElasticsearchManageCloudApiKeys"
         },
         {
-          "id": "serverlessElasticsearchManageUserAccessToYourOrganizationLeaveAnOrganization"
+          "id": "serverlessElasticsearchLeaveAnOrganization"
         }
       ]
     },
