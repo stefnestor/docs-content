@@ -153,10 +153,10 @@
           "id": "serverlessElasticsearchDevToolsSearchProfiler"
         },
         {
-          "id": "serverlessElasticsearchDevToolsBuildAndDebugGrokPatterns"
+          "id": "serverlessElasticsearchDeveloperToolsBuildAndDebugGrokPatterns"
         },
         {
-          "id": "serverlessElasticsearchDevToolsTestAndDebugPainlessScripts"
+          "id": "serverlessElasticsearchDeveloperToolsTestAndDebugPainlessScripts"
         },
         {
           "id": "serverlessElasticsearchDevToolsTroubleshooting"
