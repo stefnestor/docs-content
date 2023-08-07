@@ -271,7 +271,7 @@
       "pageId": "serverlessElasticsearchUpdateYourUserProfile",
       "items": [
         {
-          "id": "serverlessElasticsearchUpdateYourUserProfileChangeYourEmailAddressNamePwdEtc"
+          "id": "serverlessElasticsearchUpdateYourUserProfileEmailAddress"
         },
         {
           "id": "serverlessElasticsearchUpdateYourUserProfileSetupMultifactorAuthentication"
