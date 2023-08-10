@@ -209,7 +209,8 @@
       "pageId": "serverlessElasticsearchExploreYourData",
       "items": [
         {
-          "id": "serverlessElasticsearchExploreYourDataTheAggregationsApi"
+          "id": "serverlessElasticsearchExploreYourDataTheAggregationsApi",
+          "classic-sources": [ "enElasticsearchReferenceSearchAggregations" ]
         },
         {
           "id": "serverlessElasticsearchExploreYourDataDiscoverYourData"
