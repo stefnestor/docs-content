@@ -153,12 +153,6 @@
           "id": "serverlessElasticsearchDevToolsSearchProfiler"
         },
         {
-          "id": "serverlessElasticsearchDeveloperToolsBuildAndDebugGrokPatterns"
-        },
-        {
-          "id": "serverlessElasticsearchDeveloperToolsTestAndDebugPainlessScripts"
-        },
-        {
           "id": "serverlessElasticsearchDevToolsTroubleshooting"
         }
       ]
@@ -198,7 +192,7 @@
           "id": "serverlessElasticsearchSearchYourDataSearchExactValues"
         },
         {
-          "id": "serverlessElasticsearchSearchYourDataFulltTextSearch"
+          "id": "serverlessElasticsearchSearchYourDataFullTextSearch"
         },
         {
           "id": "serverlessElasticsearchSearchYourDataSemanticSearch"
@@ -322,12 +316,6 @@
         },
         {
           "id": "serverlessElasticsearchAssignUserRolesAndPrivileges"
-        },
-        {
-          "id": "serverlessElasticsearchManageCloudApiKeys"
-        },
-        {
-          "id": "serverlessElasticsearchLeaveAnOrganization"
         }
       ]
     },
