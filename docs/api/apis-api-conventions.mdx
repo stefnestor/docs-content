@@ -5,4 +5,419 @@ title: API conventions
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'API conventions' ]
 ---
-Content goes here
+
+
+{/* import RestApiCronExpressions from './transclusion/rest-api/cron-expressions.mdx' */}
+{/* import CommonParmsIndexIgnoreUnavailable from './transclusion/rest-api/common-parms/index-ignore-unavailable.mdx' */}
+{/* import CommonParmsAllowNoIndices from './transclusion/rest-api/common-parms/allow-no-indices.mdx' */}
+{/* import CommonParmsExpandWildcards from './transclusion/rest-api/common-parms/expand-wildcards.mdx' */}
+{/* import CommonParmsIgnore_throttled from './transclusion/rest-api/common-parms/ignore_throttled.mdx' */}
+
+<div id="api-conventions"></div>
+
+The ((es)) REST APIs are exposed over HTTP.
+Except where noted, the following conventions apply across all APIs.
+
+## Content-type requirements
+
+The type of the content sent in a request body must be specified using
+the `Content-Type` header. The value of this header must map to one of
+the supported formats that the API supports. Most APIs support JSON,
+YAML, CBOR, and SMILE. The bulk and multi-search APIs support NDJSON,
+JSON, and SMILE; other types will result in an error response.
+
+When using the `source` query string parameter, the content type must be
+specified using the `source_content_type` query string parameter.
+
+((es)) only supports UTF-8-encoded JSON. ((es)) ignores any other encoding headings
+sent with a request. Responses are also UTF-8 encoded.
+
+<div id="x-opaque-id"></div>
+
+## `X-Opaque-Id` HTTP header
+
+You can pass an `X-Opaque-Id` HTTP header to track the origin of a request in
+((es)) logs and tasks. If provided, ((es)) surfaces the `X-Opaque-Id` value in the:
+
+* Response of any request that includes the header
+* \<\<_identifying_running_tasks,Task management API>> response
+* \<\<_identifying_search_slow_log_origin,Slow logs>>
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging" section="deprecation-logging">Deprecation logs</DocLink> */}
+
+For the deprecation logs, ((es)) also uses the `X-Opaque-Id` value to throttle
+and deduplicate deprecation warnings. See \<\<_deprecation_logs_throttling>>.
+
+The `X-Opaque-Id` header accepts any arbitrary value. However, we recommend you
+limit these values to a finite set, such as an ID per client. Don't generate a
+unique `X-Opaque-Id` header for every request. Too many unique `X-Opaque-Id`
+values can prevent ((es)) from deduplicating warnings in the deprecation logs.
+
+<div id="traceparent"></div>
+
+## `traceparent` HTTP header
+
+((es)) also supports a `traceparent` HTTP header using the
+[official W3C trace
+context spec](https://www.w3.org/TR/trace-context/#traceparent-header). You can use the `traceparent` header to trace requests across
+Elastic products and other services. Because it's only used for traces, you can
+safely generate a unique `traceparent` header for each request.
+
+If provided, ((es)) surfaces the header's `trace-id` value as `trace.id` in the:
+
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging">JSON ((es)) server logs</DocLink> */}
+* \<\<_identifying_search_slow_log_origin,Slow logs>>
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging" section="deprecation-logging">Deprecation logs</DocLink> */}
+
+For example, the following `traceparent` value would produce the following
+`trace.id` value in the above logs.
+
+```txt
+`traceparent`: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
+`trace.id`: 0af7651916cd43dd8448eb211c80319c
+```
+
+<div id="get-requests"></div>
+
+## GET and POST requests
+
+A number of ((es)) GET APIs--most notably the search API--support a request body.
+While the GET action makes sense in the context of retrieving information,
+GET requests with a body are not supported by all HTTP libraries.
+All ((es)) GET APIs that require a body can also be submitted as POST requests.
+Alternatively, you can pass the request body as the
+<DocLink id="serverlessElasticsearchApiConventions" section="request-body-in-query-string">`source` query string parameter</DocLink>
+when using GET.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <RestApiCronExpressions  /> */}
+
+
+<div id="api-date-math-index-names"></div>
+
+## Date math support in index and index alias names
+
+Date math name resolution lets you to search a range of time series indices or
+index aliases rather than searching all of your indices and filtering the
+results. Limiting the number of searched indices reduces cluster load and
+improves search performance. For example, if you are searching for errors in
+your daily logs, you can use a date math name template to restrict the search to
+the past two days.
+
+Most APIs that accept an index or index alias argument support date math. A date
+math name takes the following form:
+
+```txt
+<static_name{date_math_expr{date_format|time_zone}}>
+```
+
+Where:
+
+|  |  |
+|---|---|
+| `static_name` | Static text |
+| `date_math_expr` | Dynamic date math expression that computes the date dynamically |
+| `date_format` | Optional format in which the computed date should be rendered. Defaults to `yyyy.MM.dd`. Format should be compatible with java-time https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html |
+| `time_zone` | Optional time zone. Defaults to `UTC`. |
+
+<DocCallOut title="Note">
+Pay attention to the usage of small vs capital letters used in the `date_format`. For example:
+`mm` denotes minute of hour, while `MM` denotes month of year. Similarly `hh` denotes the hour in the
+`1-12` range in combination with `AM/PM`, while `HH` denotes the hour in the `0-23` 24-hour range.
+</DocCallOut>
+
+Date math expressions are resolved locale-independent. Consequently, it is not possible to use any other
+calendars than the Gregorian calendar.
+
+You must enclose date math names in angle brackets. If you use the name in a
+request path, special characters must be URI encoded. For example:
+
+```console
+# PUT /<my-index-{now/d}>
+PUT /%3Cmy-index-%7Bnow%2Fd%7D%3E
+```
+
+<DocCallOut title="Note">
+
+The special characters used for date rounding must be URI encoded as follows:
+
+|  |  |
+|---|---|
+| `<` | `%3C` |
+| `>` | `%3E` |
+| `/` | `%2F` |
+| `{` | `%7B` |
+| `}` | `%7D` |
+| `\|` | `%7C` |
+| `+` | `%2B` |
+| `:` | `%3A` |
+| `,` | `%2C` |
+
+</DocCallOut>
+
+The following example shows different forms of date math names and the final names
+they resolve to given the current time is 22nd March 2024 noon UTC.
+
+| Expression | Resolves to |
+|---|---|
+| `<logstash-{now/d}>`                      | `logstash-2024.03.22` |
+| `<logstash-{now/M}>`                      | `logstash-2024.03.01` |
+| `<logstash-{now/M{yyyy.MM}}>`             | `logstash-2024.03` |
+| `<logstash-{now/M-1M{yyyy.MM}}>`          | `logstash-2024.02` |
+| `<logstash-{now/d{yyyy.MM.dd\|+12:00}}>`  | `logstash-2024.03.23` |
+
+To use the characters `{` and `}` in the static part of a name template, escape them
+with a backslash `\`, for example:
+
+ * `<elastic\\{ON\\}-{now/M}>` resolves to `elastic{ON}-2024.03.01`
+
+The following example shows a search request that searches the Logstash indices for the past
+three days, assuming the indices use the default Logstash index name format,
+`logstash-YYYY.MM.dd`.
+
+```console
+# GET /<logstash-{now/d-2d}>,<logstash-{now/d-1d}>,<logstash-{now/d}>/_search
+GET /%3Clogstash-%7Bnow%2Fd-2d%7D%3E%2C%3Clogstash-%7Bnow%2Fd-1d%7D%3E%2C%3Clogstash-%7Bnow%2Fd%7D%3E/_search
+{
+  "query" : {
+    "match": {
+      "test": "data"
+    }
+  }
+}
+```
+{/* TEST[s/^/PUT logstash-2016.09.20\nPUT logstash-2016.09.19\nPUT logstash-2016.09.18\n/] */}
+{/* TEST[s/now/2016.09.20%7C%7C/] */}
+
+<div id="api-multi-index"></div>
+
+## Multi-target syntax
+
+Most APIs that accept a `<data-stream>`, `<index>`, or `<target>` request path
+parameter also support _multi-target syntax_.
+
+In multi-target syntax, you can use a comma-separated list to run a request on
+multiple resources, such as data streams, indices, or aliases:
+`test1,test2,test3`. You can also use [glob-like](((wikipedia))/Glob_(programming))
+wildcard (`*`) expressions to target resources that match a pattern: `test*` or
+`*test` or `te*t` or `*test*`.
+
+You can exclude targets using the `-` character: `test*,-test3`.
+
+<DocCallOut title="Important" color="warning">
+Aliases are resolved after wildcard expressions. This can result in a
+request that targets an excluded alias. For example, if `test3` is an index
+alias, the pattern `test*,-test3` still targets the indices for `test3`. To
+avoid this, exclude the concrete indices for the alias instead.
+</DocCallOut>
+
+Multi-target APIs that can target indices support the following query
+string parameters:
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <CommonParmsIndexIgnoreUnavailable  /> */}
+
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <CommonParmsAllowNoIndices  /> */}
+
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <CommonParmsExpandWildcards  /> */}
+
+
+The defaults settings for the above parameters depend on the API being used.
+
+Some multi-target APIs that can target indices also support the following query
+string parameter:
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <CommonParmsIgnore_throttled  /> */}
+
+
+<DocCallOut title="Note">
+APIs with a single target, such as the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDocsGet">get document API</DocLink> */}, do
+not support multi-target syntax.
+</DocCallOut>
+
+<div id="multi-hidden"></div>
+
+### Hidden data streams and indices
+
+For most APIs, wildcard expressions do not match hidden data streams and indices
+by default. To match hidden data streams and indices using a wildcard
+expression, you must specify the `expand_wildcards` query parameter.
+
+Alternatively, querying an index pattern starting with a dot, such as
+`.watcher_hist*`, will match hidden indices by default. This is intended to
+mirror Unix file-globbing behavior and provide a smoother transition path to
+hidden indices.
+
+You can create hidden data streams by setting `data_stream.hidden` to `true` in
+the stream's matching <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesPutTemplate">index template</DocLink> */}. You can hide
+indices using the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndexModules" section="index-hidden">`index.hidden`</DocLink> */} index setting.
+
+The backing indices for data streams are hidden automatically. Some features,
+such as ((ml)), store information in hidden indices.
+
+Global index templates that match all indices are not applied to hidden indices.
+
+<div id="system-indices"></div>
+
+### System indices
+
+((es)) modules and plugins can store configuration and state information in internal _system indices_.
+You should not directly access or modify system indices
+as they contain data essential to the operation of the system.
+
+<DocCallOut title="Important" color="warning">
+Direct access to system indices is deprecated and
+will no longer be allowed in a future major version.
+</DocCallOut>
+
+<div id="api-conventions-parameters"></div>
+
+## Parameters
+
+Rest parameters (when using HTTP, map to HTTP URL parameters) follow the
+convention of using underscore casing.
+
+<div id="api-request-body-query-string"></div>
+
+## Request body in query string
+
+For libraries that don't accept a request body for non-POST requests,
+you can pass the request body as the `source` query string parameter
+instead. When using this method, the `source_content_type` parameter
+should also be passed with a media type value that indicates the format
+of the source, such as `application/json`.
+
+<div id="api-compatibility"></div>
+
+## REST API version compatibility
+
+Major version upgrades often include a number of breaking changes
+that impact how you interact with ((es)).
+While we recommend that you monitor the deprecation logs and
+update applications before upgrading ((es)),
+having to coordinate the necessary changes can be an impediment to upgrading.
+
+You can enable an existing application to function without modification after
+an upgrade by including API compatibility headers, which tell ((es)) you are still
+using the previous version of the REST API. Using these headers allows the
+structure of requests and responses to remain the same; it does not guarantee
+the same behavior.
+
+You set version compatibility on a per-request basis in the `Content-Type` and `Accept` headers.
+Setting `compatible-with` to the same major version as
+the version you're running has no impact,
+but ensures that the request will still work after ((es)) is upgraded.
+
+To tell ((es)) 8.0 you are using the 7.x request and response format,
+set `compatible-with=7`:
+
+```sh
+Content-Type: application/vnd.elasticsearch+json; compatible-with=7
+Accept: application/vnd.elasticsearch+json; compatible-with=7
+```
+
+<div id="api-url-access-control"></div>
+
+## URL-based access control
+
+Many users use a proxy with URL-based access control to secure access to
+((es)) data streams and indices. For <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchMultiSearch">multi-search</DocLink> */},
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceDocsMultiGet">multi-get</DocLink> */}, and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDocsBulk">bulk</DocLink> */} requests, the user has
+the choice of specifying a data stream or  index in the URL and on each individual request
+within the request body. This can make URL-based access control challenging.
+
+To prevent the user from overriding the data stream or index specified in the
+URL, set `rest.action.multi.allow_explicit_index` to `false` in `elasticsearch.yml`.
+
+This causes  ((es)) to
+reject requests that explicitly specify a data stream or index in the request body.
+
+## Boolean Values
+
+All REST API parameters (both request parameters and JSON body) support
+providing boolean "false" as the value `false` and boolean "true" as the
+value `true`. All other values will raise an error.
+
+## Number Values
+
+All REST APIs support providing numbered parameters as `string` on top
+of supporting the native JSON number types.
+
+<div id="byte-units"></div>
+
+## Byte size units
+
+Whenever the byte size of data needs to be specified, e.g. when setting a buffer size
+parameter, the value must specify the unit, like `10kb` for 10 kilobytes. Note that
+these units use powers of 1024, so `1kb` means 1024 bytes. The supported units are:
+
+|  |  |
+|---|---|
+| `b` | Bytes |
+| `kb` | Kilobytes |
+| `mb` | Megabytes |
+| `gb` | Gigabytes |
+| `tb` | Terabytes |
+| `pb` | Petabytes |
+
+<div id="distance-units"></div>
+
+## Distance Units
+
+Wherever distances need to be specified, such as the `distance` parameter in
+the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceQueryDslGeoDistanceQuery">Geo-distance query</DocLink> */}), the default unit is meters if none is specified.
+Distances can be specified in other units, such as `"1km"` or
+`"2mi"` (2 miles).
+
+The full list of units is listed below:
+
+|  |  |
+|---|---|
+| Mile | `mi` or `miles` |
+| Yard | `yd` or `yards` |
+| Feet | `ft` or `feet` |
+| Inch | `in` or `inch` |
+| Kilometer | `km` or `kilometers` |
+| Meter | `m` or `meters` |
+| Centimeter | `cm` or `centimeters` |
+| Millimeter | `mm` or `millimeters` |
+| Nautical mile | `NM`, `nmi`, or `nauticalmiles` |
+
+<div id="time-units"></div>
+
+## Time units
+
+Whenever durations need to be specified, e.g. for a `timeout` parameter, the duration must specify
+the unit, like `2d` for 2 days. The supported units are:
+
+|  |  |
+|---|---|
+| `d` | Days |
+| `h` | Hours |
+| `m` | Minutes |
+| `s` | Seconds |
+| `ms` | Milliseconds |
+| `micros` | Microseconds |
+| `nanos` | Nanoseconds |
+
+<div id="size-units"></div>
+
+## Unit-less quantities
+
+Unit-less quantities means that they don't have a "unit" like "bytes" or "Hertz" or "meter" or "long tonne".
+
+If one of these quantities is large we'll print it out like 10m for 10,000,000 or 7k for 7,000. We'll still print 87
+when we mean 87 though. These are the supported multipliers:
+
+|  |  |
+|---|---|
+| `k` | Kilo |
+| `m` | Mega |
+| `g` | Giga |
+| `t` | Tera |
+| `p` | Peta |
+
