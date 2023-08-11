@@ -235,7 +235,8 @@
           "classic-sources": [ "enKibanaAlertingGettingStarted" ],
           "items": [
             {
-              "id": "serverlessElasticsearchExploreYourDataCreateAnAlert"
+              "id": "serverlessElasticsearchExploreYourDataCreateAnAlert",
+              "classic-sources": [ "enKibanaCreateAndManageRules" ]
             },
             {
               "id": "serverlessElasticsearchExploreYourDataManageAlerts"
