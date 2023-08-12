@@ -5,3 +5,76 @@ title: Search analytics
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'search', analytics' ]
 ---
+
+
+<div id="analytics-overview"></div>
+
+Behavioral analytics is an analytics event collection platform introduced to Elastic in version **8.7.0**.
+Use these tools to analyze your users' searching and clicking behavior.
+Leverage this information to improve the relevance of your search results and identify gaps in your content.
+
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enEnterpriseSearchAnalyticsGettingStarted">Get started</DocLink> */} by embedding one of our JavaScript clients on your website or application and instrumenting the user actions you want to track.
+For example, you can track when a user searches, when they click on a search result, or when a user visits a particular page on your website.
+
+Data and analytics are stored in Elasticsearch indices, for advanced analysis and visualization.
+
+Even if you don't use Elastic for search, you can use these tools to collect analytics from your application/website.
+
+<div id="analytics-overview-prerequisites"></div>
+
+## Availability and prerequisites
+
+Behavioral analytics is available in Elastic **8.7.0** and later.
+(See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchAnalyticsMigration">Migrating from 8.7 to 8.8</DocLink> */} if you're upgrading from 8.7 to 8.8.)
+
+<DocCallOut title="Note">
+
+Analytics are a **beta feature**.
+Beta features are subject to change and are not covered by the support SLA of general release (GA) features. Elastic plans to promote this feature to GA in a future release.
+
+</DocCallOut>
+
+Analytics are available to all Elastic Cloud users.
+
+Analytics are also available to **self-managed** deployments that satisfy <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchLicenseManagement">subscription</DocLink> */} requirements.
+View the requirements for this feature under the **Elastic Enterprise Search** section of the [Elastic Stack subscriptions^](https://www.elastic.co/subscriptions) page.
+
+Your <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchDeployment">deployment</DocLink> */} must include the Elasticsearch, Kibana, and Enterprise Search services.
+
+<div id="analytics-overview-docs"></div>
+
+## Documentation
+
+The following documentation is available in the Enterprise Search guide:
+
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchAnalyticsGettingStarted">Getting started with behavioral analytics</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchAnalyticsApis">Behavioral analytics APIs</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchAnalyticsCorsProxy">Working with CORS</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchAnalyticsEventsReference">Analytics events reference</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchAnalyticsMigration">Migrating from 8.7 to 8.8</DocLink> */}
+
+Additional documentation is available in the following places:
+
+* The [Behavioral Analytics Tracker Mono Repo^](https://github.com/elastic/behavioral-analytics-tracker/tree/main#readme) contains the source code for the Behavioral Analytics Tracker, which can be embedded using either the JavaScript or Browser trackers:
+    * Read the [JavaScript tracker README^](https://github.com/elastic/behavioral-analytics-tracker/blob/main/packages/javascript-tracker/README.md).
+    * Read the [Browser tracker README^](https://github.com/elastic/behavioral-analytics-tracker/blob/main/packages/browser-tracker/README.md).
+* The Search UI documentation contains information about the [Search UI Analytics Plugin^](https://docs.elastic.co/search-ui/api/core/plugins/analytics-plugin).
+* Behavioral Analytics uses a number of [Elasticsearch APIs](((ref))/behavioral-analytics-apis.html) to manage analytics collections.
+
+<DocCallOut title="Note">
+
+Users may be concerned about the privacy implications of analytics data collection.
+Behavioral analytics is fully GDPR compliant, because no personal data are collected.
+
+To integrate the behavioral analytics client, session data are stored in two tokens:
+
+* **User Token**. A unique identifier for the user.
+    Stored under `EA_UID` cookie. Default time length is 24 hours from the first time the user visits the site.
+
+* **Session Token**. A unique identifier for the session.
+    Stored under `EA_SID` cookie. Time length is 30 minutes from the last time the user visits the site.
+
+These tokens enable the client to identify a user across sessions.
+They do not collect sensitive information, such as IP addresses or location data, or any other personal data.
+
+</DocCallOut>

@@ -5,3 +5,78 @@ title: Connector Client
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'ingest', 'connector', how to' ]
 ---
+
+
+{/* import Transclusion_connectorsListNative from './transclusion/_connectors-list-native.mdx' */}
+{/* import Transclusion_connectorsListClients from './transclusion/_connectors-list-clients.mdx' */}
+{/* import Transclusion_connectorsListFrameworks from './transclusion/_connectors-list-frameworks.mdx' */}
+{/* import Transclusion_connectorsListWorkplaceSearch from './transclusion/_connectors-list-workplace-search.mdx' */}
+
+<div id="connectors"></div>
+
+A _connector_ is a type of [Elastic integration^](https://www.elastic.co/integrations/data-integrations) that syncs data from an original data source to an Elastic deployment.
+Each connector extracts the original files, records, or objects; and transforms them into documents within Elasticsearch.
+
+Several connector workflows are available.
+Get started by choosing a workflow and a data source.
+
+<div id="connectors-native"></div>
+
+## Native connectors
+
+_Native connectors_ are available directly within your Elastic Cloud deployment.
+No additional infrastructure is required.
+
+Native connectors sync data sources directly to Elasticsearch indices.
+Create these indices using the **Connector** workflow within Kibana.
+See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchNativeConnectors">Native connectors</DocLink> */}.
+
+The following connectors are available as native connectors:
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <Transclusion_connectorsListNative  /> */}
+
+
+<div id="connectors-build"></div>
+
+## Connector clients and frameworks
+
+_Connector clients_ are open-code connector implementations you can deploy to your own infrastructure.
+Connector clients allow you to customize connectors to satisfy your needs, use new connectors before they are available natively within Elastic Cloud, and build your own connectors for custom data sources.
+
+Connector clients sync data sources directly to Elasticsearch indices.
+Create these indices using the **Connector** workflow within Kibana.
+See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchBuildConnector">Connector clients and frameworks</DocLink> */}.
+
+The following connectors are available as connector clients:
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <Transclusion_connectorsListClients  /> */}
+
+
+Connector clients are built using _connector frameworks_.
+Use these frameworks to deploy existing connector clients, or create your own clients to sync from custom data sources.
+
+The following connector frameworks are available:
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <Transclusion_connectorsListFrameworks  /> */}
+
+
+<div id="connectors-workplace-search"></div>
+
+## Workplace Search connectors
+
+_Workplace Search connectors_ are available directly within your Elastic deployment, through the Workplace Search product.
+No additional infrastructure is required.
+_Workplace Search connector packages_ are open-code connector implementations you can deploy to your own infrastructure.
+
+Workplace Search connectors (and connector packages) sync data sources to Workplace Search content sources.
+Create these content sources using the Workplace Search product within Kibana.
+See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enEnterpriseSearchWorkplaceSearchConnectors">Workplace Search connectors</DocLink> */}.
+
+The following Workplace Search connectors are available:
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* <Transclusion_connectorsListWorkplaceSearch  /> */}
+

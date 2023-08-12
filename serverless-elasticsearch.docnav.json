@@ -62,10 +62,12 @@
       "pageId": "serverlessElasticsearchApis",
       "items": [
         {
-          "id": "serverlessElasticsearchApiConventions"
+          "id": "serverlessElasticsearchApiConventions",
+          "classic-sources": [ "enElasticsearchReferenceApiConventions" ]
         },
         {
           "id": "serverlessElasticsearchHttpApis",
+          "classic-sources": [ "enKibanaApi" ],
           "items": [
             {
               "id": "serverlessElasticsearchHttpApisGettingStarted"
@@ -170,10 +172,12 @@
               "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
             },
             {
-              "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats"
+              "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats",
+              "classic-sources": [ "enFleetBeatsAgentComparison" ]
             },
             {
-              "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
+              "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient",
+              "classic-sources": [ "enEnterpriseSearchConnectors" ]
             }
           ]
         }
@@ -209,8 +213,7 @@
       "pageId": "serverlessElasticsearchExploreYourData",
       "items": [
         {
-          "id": "serverlessElasticsearchExploreYourDataTheAggregationsApi",
-          "classic-sources": [ "enElasticsearchReferenceSearchAggregations" ]
+          "id": "serverlessElasticsearchExploreYourDataTheAggregationsApi"
         },
         {
           "id": "serverlessElasticsearchExploreYourDataDiscoverYourData"
@@ -219,7 +222,8 @@
           "id": "serverlessElasticsearchExploreYourDataVisualizeYourData",
           "items": [
             {
-              "id": "serverlessElasticsearchExploreYourDataDashboards"
+              "id": "serverlessElasticsearchExploreYourDataDashboards",
+              "classic-sources": [ "enKibanaDashboard" ]
             },
             {
               "id": "serverlessElasticsearchExploreYourDataVisualizations"
@@ -228,9 +232,11 @@
         },
         {
           "id": "serverlessElasticsearchExploreYourDataAlerting",
+          "classic-sources": [ "enKibanaAlertingGettingStarted" ],
           "items": [
             {
-              "id": "serverlessElasticsearchExploreYourDataCreateAnAlert"
+              "id": "serverlessElasticsearchExploreYourDataCreateAnAlert",
+              "classic-sources": [ "enKibanaCreateAndManageRules" ]
             },
             {
               "id": "serverlessElasticsearchExploreYourDataManageAlerts"
@@ -238,7 +244,8 @@
           ]
         },
         {
-          "id": "serverlessElasticsearchExploreYourDataSearchAnalytics"
+          "id": "serverlessElasticsearchExploreYourDataSearchAnalytics",
+          "classic-sources": [ "enEnterpriseSearchAnalyticsOverview" ]
         },
         {
           "id": "serverlessElasticsearchExploreYourDataMachineLearningNlp",
