@@ -9,54 +9,7 @@
       "pageId": "serverlessElasticsearchWhatIsElasticsearchServerless"
     },
     {
-      "pageId": "serverlessElasticsearchSignUpForAnAccount",
-      "items": [
-        {
-          "id": "serverlessElasticsearchJoinElasticCloud",
-          "items": [
-            {
-              "id": "serverlessElasticsearchJoinElasticCloudAddYourBillingDetails"
-            },
-            {
-              "id": "serverlessElasticsearchJoinElasticCloudChooseATier"
-            }
-          ]
-        },
-        {
-          "id": "serverlessElasticsearchSubscribeFromAMarketplace",
-          "items": [
-            {
-              "id": "serverlessElasticsearchSubscribeFromAMarketplaceAwsMarketplace"
-            },
-            {
-              "id": "serverlessElasticsearchSubscribeFromAMarketplaceAzureMarketplace"
-            },
-            {
-              "id": "serverlessElasticsearchSubscribeFromAMarketplaceAzureNativeIsvService"
-            },
-            {
-              "id": "serverlessElasticsearchSubscribeFromAMarketplaceGcpMarketplace"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "pageId": "serverlessElasticsearchGetStarted",
-      "items": [
-        {
-          "id": "serverlessElasticsearchGetStartedCreateYourProject"
-        },
-        {
-          "id": "serverlessElasticsearchGetStartedIngest"
-        },
-        {
-          "id": "serverlessElasticsearchGetStartedSearch"
-        },
-        {
-          "id": "serverlessElasticsearchGetStartedExplore"
-        }
-      ]
+      "pageId": "serverlessElasticsearchGetStarted"
     },
     {
       "pageId": "serverlessElasticsearchApis",
