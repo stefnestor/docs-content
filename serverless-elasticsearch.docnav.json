@@ -285,7 +285,29 @@
     },
     {
       "pageId": "serverlessElasticsearchManageBillingOfYourOrganization",
-      "classic-sources": [ "enCloudEcOrganizations" ]
+      "classic-sources": [ "enCloudEcOrganizations" ],
+      "items": [
+        {
+          "id": "serverlessElasticsearchCheckSubscription",
+          "classic-sources": [ "enCloudEcSubscriptionOverview" ]
+        },
+        {
+          "id": "serverlessElasticsearchMonitorUsage",
+          "classic-sources": [ "enCloudEcAccountUsage" ]
+        },
+        {
+          "id": "serverlessElasticsearchCheckBilling",
+          "classic-sources": [ "enCloudEcBillingHistory" ]
+        },
+        {
+          "id": "serverlessElasticsearchUpdateBillingAndContacts",
+          "classic-sources": [ "enCloudEcBillingContacts" ]
+        },
+        {
+          "id": "serverlessElasticsearchStopCharges",
+          "classic-sources": [ "enCloudEcBillingStop" ]
+        }
+      ]
     }
   ]
 }
