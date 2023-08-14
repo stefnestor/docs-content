@@ -226,7 +226,8 @@
       "pageId": "serverlessElasticsearchUpdateYourUserProfile",
       "items": [
         {
-          "id": "serverlessElasticsearchUpdateYourUserProfileEmailAddress"
+          "id": "serverlessElasticsearchUpdateYourUserProfileEmailAddress",
+          "classic-sources": [ "enCloudEcAccountUserSettings" ]
         },
         {
           "id": "serverlessElasticsearchUpdateYourUserProfileSetupMultifactorAuthentication"
@@ -268,9 +269,11 @@
     },
     {
       "pageId": "serverlessElasticsearchManageUserAccessToYourOrganization",
+      "classic-sources": [ "enCloudEcOrganizations" ],
       "items": [
         {
-          "id": "serverlessElasticsearchInviteMembersToYourOrganization"
+          "id": "serverlessElasticsearchInviteMembersToYourOrganization",
+          "classic-sources": [ "enCloudEcInviteUsers" ]
         },
         {
           "id": "serverlessElasticsearchJoinAnOrganizationFromAnExistingElasticCloudAccount"
@@ -281,7 +284,8 @@
       ]
     },
     {
-      "pageId": "serverlessElasticsearchManageBillingOfYourOrganization"
+      "pageId": "serverlessElasticsearchManageBillingOfYourOrganization",
+      "classic-sources": [ "enCloudEcOrganizations" ]
     }
   ]
 }

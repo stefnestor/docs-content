@@ -5,3 +5,56 @@ title: Invite members to your organization
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'organization', 'invite', 'how to' ]
 ---
+
+
+<div id="ec-invite-users"></div>
+
+Anyone can be invited to join an organization, whether that person has an Elastic Cloud account or not. Organization owners can invite new users to the organization by using their email addresses. 
+
+To invite a new member, go to your avatar in the upper right corner, choose **Organization** and click **Invite members**. You can add multiple members by entering their email addresses separated by a space. You can also assign roles to the users when you invite them, so that they will automatically get the appropriate permissions when they accept the invitation and sign in to Elastic Cloud.
+
+On the **Members** tab of the **Organization** page, you can view the list of current members, their status and role.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Members tab](images/ec-invite-users/-ec-org-members-tab.png) */}
+
+To edit a member’s role, in the **Actions** column click the three dots and select **Edit role**.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Edit roles](images/ec-invite-users/-ec-org-edit-role.png) */}
+
+<div id="ec-accept-invitation"></div>
+
+## Accept an invitation
+
+Invitations to join an organization are sent by email. You have 72 hours to accept the invitation, after which it will expire. If you don’t get the invitation in the main inbox, check your spam folder.
+
+<div id="ec-join-invitation"></div>
+
+## Join an organization from an existing Elastic Cloud account
+
+You already belong to an organization. 
+If you want to join a new one and bring your deployments over, follow these steps: 
+
+1. Backup your deployments to any private repository so that you can restore them to your new organization.
+1. Leave your current organization.
+1. Ask the administrator to invite you to the organization you want to join.
+1. Accept the invitation that you will get by email.
+1. Restore the backup you took in step 1.
+
+If you want to join a new one, but leave your deployments, follow these steps:
+
+1. Make sure you do not have active deployments before you leave your current organization.
+1. Delete your deployments and clear any bills.
+1. Leave your current organization.
+1. Ask the administrator to invite you to the organization you want to join.
+1. Accept the invitation that you will get by email.
+
+<div id="ec-leave-organization"></div>
+
+## Leave an organization
+
+On the **Members** tab of the **Organization** page, click the three dots corresponding to your email address and select **Leave organization**.
+
+If you’re the only user in the organization, you can only leave if you deleted all your deployments and you don't have pending bills.
+
