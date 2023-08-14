@@ -15,15 +15,15 @@
       "pageId": "serverlessElasticsearchApis",
       "items": [
         {
-          "id": "serverlessElasticsearchApiConventions",
-          "classic-sources": [ "enElasticsearchReferenceApiConventions" ]
-        },
-        {
-          "id": "serverlessElasticsearchHttpApis",
-          "classic-sources": [ "enKibanaApi" ],
+          "pageId": "serverlessElasticsearchHttpApis",
           "items": [
             {
-              "id": "serverlessElasticsearchHttpApisGettingStarted"
+              "id": "serverlessElasticsearchApiConventions",
+              "classic-sources": [ "enElasticsearchReferenceApiConventions" ]
+            },
+            {
+              "id": "serverlessElasticsearchKibanaApiConventions",
+              "classic-sources": [ "enKibanaApi" ]
             },
             {
               "id": "serverlessElasticsearchHttpApisReferences"
