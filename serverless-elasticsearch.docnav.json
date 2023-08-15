@@ -190,9 +190,6 @@
             {
               "id": "serverlessElasticsearchExploreYourDataCreateAnAlert",
               "classic-sources": [ "enKibanaCreateAndManageRules" ]
-            },
-            {
-              "id": "serverlessElasticsearchExploreYourDataManageAlerts"
             }
           ]
         },
