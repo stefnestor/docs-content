@@ -120,6 +120,7 @@
         },
         {
           "id": "serverlessElasticsearchIngestDataThroughIntegrations",
+          "classic-sources": [ "enCloudEcCloudIngestData" ],
           "items": [
             {
               "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
