@@ -7,437 +7,382 @@ tags: [ 'serverless', 'elasticsearch', 'dashboards', 'how to' ]
 ---
 
 
-<div id="dashboard"></div>
+<div id="create-a-dashboard-of-panels-with-web-server-data"></div>
 
-**_Visualize your data with dashboards._**
+Learn the most common ways to create a dashboard from your own data.
+The tutorial will use sample data from the perspective of an analyst looking
+at website logs, but this type of dashboard works on any type of data.
 
-The best way to understand your data is to visualize it. With dashboards, you can turn your data from one or more <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaDataViews">data views</DocLink> */} into a collection of panels 
-that bring clarity to your data, tell a story about your data, and allow you to focus on only the data that's important to you. 
+When you're done, you'll have a complete overview of the sample web logs data. 
 
 <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Example dashboard](images/dashboard/user-dashboard-dashboard_ecommerceRevenueDashboard_7.15.0.png) */}
+{/* <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Logs dashboard](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_logsDashboard_8.4.0.png) */} */}
 
-Panels display your data in charts, tables, maps, and more, which allow you to compare your data side-by-side to identify patterns and connections. Dashboards support several types of panels to display your data, and several options to create panels.
+Before you begin, you should be familiar with the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaKibanaConceptsAnalysts">((kib)) concepts</DocLink> */}.
 
-{/* [cols="2"] */}
-|  |  |
-|---|---|
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAggregationReference">Editors</DocLink> */} | Use one of the editors to create visualizations of your data. Each editor varies in capabilities for all levels of analysts. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaMaps">Maps</DocLink> */} | Create beautiful displays of your geographical data. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackMlAnomalies">Anomaly swim lane</DocLink> */} | Display the results from machine learning anomaly detection jobs. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackMlAnomalies">Anomaly chart</DocLink> */} | Display an anomaly chart from the **Anomaly Explorer**. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaObservability" section="logs">Log stream</DocLink> */} | Display a table of live streaming logs. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAddControls">Tools</DocLink> */} | Add interactive filters with **Controls** panels. |
-| <DocLink id="serverlessElasticsearchExploreYourDataDashboards" section="add-context-to-panels">Text</DocLink> | Add context to your panels with **Text**. |
-| <DocLink id="serverlessElasticsearchExploreYourDataDashboards" section="add-image-panels">Image</DocLink> | Personalize your dashboard with a custom image. |
+<div id="add-the-data-and-create-the-dashboard"></div>
 
-<div id="create-dashboards"></div>
+## Add the data and create the dashboard
 
-## Create dashboards
+Add the sample web logs data, and create and set up the dashboard.
 
-Dashboards provide you with the space where you add panels of your data.
+1. On the home page, click **Try sample data**.
 
-<div id="dashboard-minimum-requirements"></div>
+1. Click **Other sample data sets**. 
 
-### Minimum requirements
+1. On the **Sample web logs** card, click **Add data**.
 
-To create dashboards, you must meet the minimum requirements. 
-
-* If you need to set up ((kib)), use [our free trial](https://www.elastic.co/cloud/elasticsearch-service/signup?baymax=docs-body&elektra=docs).
-
-* Make sure you have [data indexed into ((es))](((ref))/getting-started-index.html) and a <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaDataViews">data view</DocLink> */}.
-
-* When the read-only indicator appears, you have insufficient privileges
-    to create or save dashboards, and the options to create and save dashboards are not visible. For more information,
-    refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackSecurityAuthorization">Granting access to ((kib))</DocLink> */}.
-
-<div id="open-the-dashboard"></div>
-
-### Open the dashboard
-
-Begin with an empty dashboard, or open an existing dashboard.
+Create the dashboard where you'll display the visualization panels.
 
 1. Open the main menu, then click **Dashboard**.
 
-1. On the **Dashboards** page, choose one of the following options:
+1. Click **Create dashboard**.
 
-* To start with an empty dashboard, click **Create dashboard**.
+1. Set the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaSetTimeFilter">time filter</DocLink> */} to **Last 90 days**.
 
-    When you create a dashboard, you are automatically in edit mode and can make changes to the dashboard. 
+<div id="open-and-set-up-lens"></div>
 
-* To open an existing dashboard, click the dashboard **Title** you want to open.
+## Open the visualization editor and get familiar with the data
 
-    When you open an existing dashboard, you are in view mode. To make changes to the dashboard, click **Edit** in the toolbar. 
+Open the visualization editor, then make sure the correct fields appear.
 
-<div id="create-panels-with-lens"></div>
+1. On the dashboard, click **Create visualization**.
 
-### Create and add panels
+1. Make sure the **((kib)) Sample Data Logs** ((data-source)) appears.
 
-You create panels using the editors, which you can access from the dashboard toolbar or the **Visualize Library**, or add panels that are saved in the **Visualize Library**, or search results from <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaDiscover" section="save-your-search-for-later-use">**Discover**</DocLink> */}.
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Data view dropdown](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_dataViewDropDown_8.4.0.png) */}
 
-To create panels from the dashboard toolbar, use one of the following options:
+To create the visualizations in this tutorial, you'll use the following fields:
 
-* **Create visualization** &mdash; Opens the drag-and-drop editor, which is the recommended way to create visualization panels.
+* **Records**
 
-* **Select type** &mdash; Opens the menu for all of the editors and panel types. 
+* **timestamp**
 
-To create panels from the **Visualize Library**:
+* **bytes**
 
-1. Open the main menu, then click **Visualize Library**.
+* **clientip**
 
-1. Click **Create visualization**, then select an editor. 
+* **referer.keyword**
 
-To add existing panels from the **Visualize Library**:
+To see the most frequent values in a field, hover over the field name, then click *i*.
 
-1. In the dashboard toolbar, click **Add from library**.
+<div id="view-the-number-of-website-visitors"></div>
 
-1. Click the panel you want to add to the dashboard, then click *X*.
+## Create your first visualization
 
-    When a panel contains a saved query, both queries are applied.
+Pick a field you want to analyze, such as **clientip**. To analyze only the **clientip** field, use the **Metric** visualization to display the field as a number.
 
-    When you add search results from **Discover** to dashboards, the results are not aggregated.
+The only number function that you can use with **clientip** is **Unique count**, also referred to as cardinality, which approximates the number of unique values.
 
-<div id="save-panels"></div>
+1. Open the **Visualization type** dropdown, then select **Metric**.
 
-### Save and add panels
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Visualization type dropdown](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_visualizationTypeDropdown_8.4.0.png) */}
 
-Consider where you want to save and add the panel in ((kib)).
+1. From the **Available fields** list, drag **clientip** to the workspace or layer pane.
 
-<div id="save-to-visualize-library"></div>
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Metric visualization of the clientip field](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_metricUniqueCountOfClientip_8.4.0.png) */}
 
-#### Save to the Visualize Library
+    In the layer pane, **Unique count of clientip** appears because the editor automatically applies the **Unique count** function to the **clientip** field. **Unique count** is the only numeric function that works with IP addresses.
 
-To use the panel on other dashboards and **Canvas** workpads, save the panel to the **Visualize Library**. When panels are saved in the **Visualize Library**, <DocIcon type="folderCheck" title="Visualize Library" /> appears in the panel header.
+1. In the layer pane, click **Unique count of clientip**.
 
-If you created the panel from the dashboard:
+    1. In the **Name** field, enter `Unique visitors`.
 
-1. In the editor, click **Save to library**.
+    1. Click **Close**.
 
-1. Enter the **Title** and add any applicable <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaManagingTags">**Tags**</DocLink> */}.
+1111. Click **Save and return**.
 
-1. Make sure that **Add to Dashboard after saving** is selected.
+    **[No Title]** appears in the visualization panel header. Since the visualization has its own `Unique visitors` label, you do not need to add a panel title.
+
+<div id="mixed-multiaxis"></div>
+
+## View a metric over time
+
+There are two shortcuts you can use to view metrics over time. 
+When you drag a numeric field to the workspace, the visualization editor adds the default
+time field from the ((data-source)). When you use the **Date histogram** function, you can
+replace the time field by dragging the field to the workspace.
+
+To visualize the **bytes** field over time:
+
+1. On the dashboard, click **Create visualization**. 
+
+1. From the **Available fields** list, drag **bytes** to the workspace. 
+
+    The visualization editor creates a bar chart with the **timestamp** and **Median of bytes** fields. 
+
+1. To zoom in on the data, click and drag your cursor across the bars. 
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Zoom in on the data](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_3_1_1.gif) */}
+
+To emphasize the change in **Median of bytes** over time, change the visualization type to **Line** with one of the following options:
+
+* In the **Suggestions**, click the line chart.
+* In the editor toolbar, open the **Visualization type** dropdown, then select **Line**.
+* In the layer pane, open the **Layer visualization type** menu, then click **Line**.
+
+To increase the minimum time interval:
+
+1. In the layer pane, click **timestamp**.
+
+1. Change the **Minimum interval** to **1d**, then click **Close**.
+
+    You can increase and decrease the minimum interval, but you are unable to decrease the interval below the configured <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAdvancedOptions">**Advanced Settings**</DocLink> */}. 
+
+To save space on the dashboard, hide the axis labels.
+
+1. Open the **Left axis** menu, then select **None** from the **Axis title** dropdown.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Left axis menu](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTimeLeftAxis_8.7.png) */}
+
+1. Open the **Bottom axis** menu, then select **None** from the **Axis title** dropdown.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Bottom axis menu](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTimeBottomAxis_8.7.png) */}
+
+1. Click **Save and return**
+
+Since you removed the axis labels, add a panel title:
+
+1. Open the panel menu, then select **Edit panel settings**.
+
+1. In the **Title** field, enter `Median of bytes`, then click **Save**.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Line chart that displays metric data over time](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTime_8.4.0.png) */}
+
+<div id="view-the-distribution-of-visitors-by-operating-system"></div>
+
+## View the top values of a field
+
+Create a visualization that displays the most frequent values of **request.keyword** on your website, ranked by the unique visitors.
+To create the visualization, use **Top values of request.keyword** ranked by **Unique count of clientip**, instead of being ranked by **Count of records**.
+
+The **Top values** function ranks the unique values of a field by another function.
+The values are the most frequent when ranked by a **Count** function, and the largest when ranked by the **Sum** function.
+
+1. On the dashboard, click **Create visualization**. 
+
+1. From the **Available fields** list, drag **clientip** to the **Vertical axis** field in the layer pane. 
+
+    The visualization editor automatically applies the **Unique count** function. If you drag **clientip** to the workspace, the editor adds the field to the incorrect axis.
+
+1. Drag **request.keyword** to the workspace.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Vertical bar chart with top values of request.keyword by most unique visitors](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_2_1_1.png) */}
+
+    When you drag a text or IP address field to the workspace,
+    the editor adds the **Top values** function ranked by **Count of records** to show the most frequent values.
+
+The chart labels are unable to display because the **request.keyword** field contains long text fields. You could use one of the **Suggestions**, but the suggestions also have issues with long text. The best way to display long text fields is with the **Table** visualization.
+
+1. Open the **Visualization type** dropdown, then select **Table**.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Table with top values of request.keyword by most unique visitors](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens-end-to-end-lens_end_to_end_2_1_2.png) */}
+
+1. In the layer pane, click **Top 5 values of request.keyword**.
+
+    1. In the **Number of values** field, enter `10`.
+
+    1. In the **Name** field, enter `Page URL`.
+
+    1. Click **Close**.
+
+        <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Table that displays the top field values](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_tableTopFieldValues_7.16.png) */}
 
 1. Click **Save and return**.
 
-If you created the panel from the **Visualize Library**:
+    Since the table columns are labeled, you do not need to add a panel title.
 
-1. In the editor, click **Save**.
+<div id="custom-ranges"></div>
 
-1. On the **Save** window, enter the **Title**.
+## Compare a subset of documents to all documents
 
-1. Choose one of the following options:
+Create a proportional visualization that helps you determine if your users transfer more bytes from documents under 10KB versus documents over 10Kb.
 
-* To save the panel to a dashboard and the **Visualize Library**, select **Add to library**, add any applicable <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaManagingTags">**Tags**</DocLink> */}, then click **Save and go to Dashboard**.
+1. On the dashboard, click **Create visualization**. 
 
-* To save the panel only to the **Visualize Library**, select **None**, add any applicable <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaManagingTags">**Tags**</DocLink> */}, then click **Save and add to library**.
+1. From the **Available fields** list, drag **bytes** to the **Vertical axis** field in the layer pane.
 
-<div id="save-to-the-dashboard"></div>
+1. In the layer pane, click **Median of bytes**. 
 
-#### Save to the dashboard
+1. Click the **Sum** quick function, then click **Close**.
 
-Return to the dashboard and add the panel without specifying the save options or adding the panel to the **Visualize Library**. 
+1. From the **Available fields** list, drag **bytes** to the **Break down by** field in the layer pane.
 
-If you created the panel from the dashboard:
+To select documents based on the number range of a field, use the **Intervals** function.
+When the ranges are non numeric, or the query requires multiple clauses, you could use the **Filters** function.
 
-1. In the editor, click **Save and return**.
+Specify the file size ranges: 
 
-1. Add an optional title to the panel.
+1. In the layer pane, click **bytes**.
 
-    1. In the panel header, click **No Title**.
+1. Click **Create custom ranges**, enter the following in the **Ranges** field, then press Return:
 
-    1. On the **Panel settings** window, select **Show title**.
+* **Ranges** &mdash; `0` -> `10240`
 
-    1. Enter the **Title**, then click **Save**.
+* **Label** &mdash; `Below 10KB`
 
-If you created the panel from the **Visualize Library**:
+1. Click **Add range**, enter the following, then press Return:
 
-1. Click **Save**.
+* **Ranges** &mdash; `10240` -> `+∞`
 
-1. On the **Save** window, enter the **Title**.
+* **Label** &mdash; `Above 10KB`
 
-1. Choose one of the following options:
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Custom ranges configuration](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_6_1.png) */}
 
-* If you want to add the panel to an existing dashboard, select **Existing**, select the dashboard from the dropdown, then click **Save and go to Dashboard**.
+1. From the **Value format** dropdown, select **Bytes (1024)**, then click **Close**.
 
-* If you want to add the panel to a new dashboard, select **New**, then click **Save and go to Dashboard**.
+To display the values as a percentage of the sum of all values, use the **Pie** chart. 
 
-To add unsaved dashboard panels to the **Visualize Library**:
+1. Open the **Visualization Type** dropdown, then select **Pie**.
 
-1. Open the panel menu, then select **More > Save to library**.
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Pie chart that compares a subset of documents to all documents](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_pieChartCompareSubsetOfDocs_7.16.png) */}
 
-1. Enter the panel title, then click **Save**.
+. Click **Save and return**.
 
-<div id="add-text"></div>
+Add a panel title:
 
-## Add context to panels
+1. Open the panel menu, then select **Edit panel settings**.
 
-To provide context to your dashboard panels, add **Text** panels that display important information, instructions, images, and more. You create **Text** panels using GitHub-flavored Markdown text.
+1. In the **Title** field, enter `Sum of bytes from large requests`, then click **Save**.
 
-1. On the dashboard, click <DocIcon type="visText" title="Create new text" />.
+<div id="histogram"></div>
 
-1. In the **Markdown** field, enter the text, then click **Update**.
+## View the distribution of a number field
 
-For example, when you enter:
+The distribution of a number can help you find patterns. For example, you can analyze the website traffic per hour to find the best time for routine maintenance.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Markdown text with links](images/dashboard/user-dashboard-markdown_example_1.png) */}
+1. On the dashboard, click **Create visualization**. 
 
-The following instructions are displayed:
+1. From the **Available fields** list, drag **bytes** to **Vertical axis** field in the layer pane.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Panel with markdown link text](images/dashboard/user-dashboard-markdown_example_2.png) */}
+1. In the layer pane, click **Median of bytes**.
 
-Or when you enter:
+    1. Click the **Sum** quick function.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Markdown text with image file](images/dashboard/user-dashboard-markdown_example_3.png) */}
+    1. In the **Name** field, enter `Transferred bytes`.
 
-The following image is displayed:
+    1. From the **Value format** dropdown, select **Bytes (1024)**, then click **Close**.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Panel with markdown image](images/dashboard/user-dashboard-markdown_example_4.png) */}
+1. From the **Available fields** list, drag **hour_of_day** to **Horizontal axis** field in the layer pane.
 
-For detailed information about writing on GitHub, click **Help**.
+1. In the layer pane, click **hour_of_day**, then slide the **Intervals granularity** slider until the horizontal axis displays hourly intervals.
 
-<div id="save-the-markdown-panel"></div>
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Bar chart that displays the distribution of a number field](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_barChartDistributionOfNumberField_7.16.png) */}
 
-### Save and add the panel
+. Click **Save and return**.
 
-Save the panel to the **Visualize Library** and add it to the dashboard, or add it to the dashboard without saving.
+Add a panel title:
 
-To save the panel to the **Visualize Library**:
+1. Open the panel menu, then select **Edit panel settings**.
 
-1. Click **Save to library**.
+1. In the **Title** field, enter `Website traffic`, then click **Save**.
 
-1. Enter the **Title** and add any applicable <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaManagingTags">**Tags**</DocLink> */}.
+<div id="treemap"></div>
 
-1. Make sure that **Add to Dashboard after saving** is selected.
+## Create a multi-level chart
 
-1. Click **Save and return**.
+**Table** and **Proportion** visualizations support multiple functions. For example, to create visualizations that break down the data by website traffic sources and user geography, apply the **Filters** and **Top values** functions.
 
-To save the panel to the dashboard:
+1. On the dashboard, click **Create visualization**. 
 
-1. Click **Save and return**.
+1. Open the **Visualization type** dropdown, then select **Treemap**.
 
-1. Add an optional title to the panel.
+1. From the **Available fields** list, drag **Records** to the **Size by** field in the layer pane. 
 
-    1. In the panel header, click **No Title**.
+1. In the layer pane, click **Add or drag-and-drop a field** for **Group by**.
 
-    1. On the **Panel settings** window, select **Show title**.
+Create a filter for each website traffic source:
 
-    1. Enter the **Title**, then click **Save**.
+1. Click **Filters**.
 
-<div id="add-image"></div>
+1. Click **All records**, enter the following in the query bar, then press Return:
 
-## Add image panels
+* **KQL** &mdash; `referer : **facebook.com**`
 
-To personalize your dashboards, add your own logos and graphics with the **Image** panel. You can upload images from your computer, select previously uploaded images, or add images from an external link.
+* **Label** &mdash; `Facebook`
 
-1. On the dashboard, click <DocIcon type="visText" title="Create new text" />.
-1. Use the editor to add an image.
+1. Click **Add a filter**, enter the following in the query bar, then press Return:
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Add image editor](images/dashboard/user-dashboard-dashboard_addImageEditor_8.7.0.png) */}
+* **KQL** &mdash; `referer : **twitter.com**`
 
-To manage your uploaded image files, open the main menu, then click **Stack Management > Kibana > Files**. 
+* **Label** &mdash; `Twitter`
 
-<DocCallOut title="Warning" color="warning">
+1. Click **Add a filter**, enter the following in the query bar, then press Return:
 
-When you export a dashboard, the uploaded image files are not exported. 
-When importing a dashboard with an image panel, and the image file is unavailable, the image panel displays a `not found` warning. Such panels have to be fixed manually by re-uploading the image using the panel's image editor.
+* **KQL** &mdash; `NOT referer : **twitter.com** OR NOT referer: **facebook.com**`
 
-</DocCallOut>
+* **Label** &mdash; `Other`
 
-<div id="moving-containers"></div>
+1. Click **Close**.
 
-<div id="resizing-containers"></div>
+Add the user geography grouping:
 
-<div id="arrange-panels"></div>
+1. From the **Available fields** list, drag **geo.srcdest** to the workspace.
 
-## Arrange panels
+1. To change the **Group by** order, drag **Top 3 values of geo.srcdest** in the layer pane so that appears first.
 
-Compare the data in your panels side-by-side, organize panels by priority, resize the panels so they all appear immediately on the dashboard, and more.
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Treemap visualization](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_7_2.png) */}
 
-In the toolbar, click **Edit**, then use the following options:
+Remove the documents that do not match the filter criteria:
 
-* To move, click and hold the panel header, then drag to the new location.
+1. In the layer pane, click **Top 3 values of geo.srcdest**.
 
-* To resize, click the resize control, then drag to the new dimensions.
+1. Click **Advanced**, deselect **Group other values as "Other"**, then click **Close**.
 
-* To maximize to fullscreen, open the panel menu, then click **More > Maximize panel**.
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Treemap visualization](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_treemapMultiLevelChart_7.16.png) */}
 
-<div id="edit-panels"></div>
+. Click **Save and return**.
 
-## Edit panels
+Add a panel title:
 
-To make changes to the panel, use the panel menu options.
+1. Open the panel menu, then select **Edit panel settings**.
 
-1. In the toolbar, click **Edit**.
+1. In the **Title** field, enter `Page views by location and referrer`, then click **Save**.
 
-1. Open the panel menu, then use the following options:
+<div id="arrange-the-lens-panels"></div>
 
-* **Edit lens** &mdash; Opens **Lens** so you can make changes to the visualization. 
+## Arrange the dashboard panels
 
-* **Edit visualization** &mdash; Opens the editor so you can make changes to the panel. 
+Resize and move the panels so they all appear on the dashboard without scrolling.
 
-    To make changes without changing the original version, open the panel menu, then click **More > Unlink from library**.
+Decrease the size of the following panels, then move the panels to the first row:
 
-* **Convert to Lens** &mdash; Opens **TSVB** and aggregation-based visualizations in **Lens**.
+* **Unique visitors** 
 
-* **Edit panel settings** &mdash; Opens the **Panel settings** window to change the **title**, **description**, and **time range**.
+* **Median of bytes**
 
-* **More > Replace panel** &mdash; Opens the **Visualize Library** so you can select a new panel to replace the existing panel.
+* **Sum of bytes from large requests**
 
-* **More > Delete from dashboard** &mdash; Removes the panel from the dashboard. 
+* **Website traffic**
 
-    If you want to use the panel later, make sure that you save the panel to the **Visualize Library**.  
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+    {/* ![Logs dashboard](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_logsDashboard_8.4.0.png) */}
 
-<div id="duplicate-panels"></div>
+## Save the dashboard
 
-## Duplicate panels
-
-To duplicate a panel and the configured functionality, use the clone and copy panel options. Cloned and copied panels replicate all of the functionality from the original panel, 
-including renaming, editing, and cloning. 
-
-<div id="clone-panels"></div>
-
-### Clone panels
-
-Cloned panels appear next to the original panel, and move the other panels to provide a space on the dashboard.
-
-1. In the toolbar, click **Edit**.
-
-1. Open the panel menu, then select **Clone panel**. 
-
-    When cloned panels are saved in the **Visualize Library**, <DocIcon type="folderCheck" title="Visualize Library" /> appears in the header.
-
-<div id="copy-to-dashboard"></div>
-
-### Copy panels
-
-Copy panels from one dashboard to another dashboard.
-
-1. Open the panel menu, then select **More > Copy to dashboard**.
-
-1. On the **Copy to dashboard** window, select the dashboard, then click **Copy and go to dashboard**.
-
-<div id="add-dashboard-settings"></div>
-
-## Add the dashboard settings
-
-Add the title, tags, design options, and more to the dashboard.
-
-1. In the toolbar, click **Settings**.
-
-1. On the **Dashboard settings** flyout, enter the **Title** and an optional **Description**.
-
-1. Add any applicable <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaManagingTags">**Tags**</DocLink> */}. 
-
-1. Specify the following settings:
-
-* **Store time with dashboard** &mdash; Saves the specified time filter.
-
-* **Use margins between panels** &mdash; Adds a margin of space between each panel.
-
-* **Show panel titles** &mdash; Displays the titles in the panel headers.
-
-* **Sync color palettes across panels** &mdash; Applies the same color palette to all panels on the dashboard.
-
-* **Sync cursor across panels** &mdash; When you hover your cursor over a **Lens**, **TSVB**, aggregation-based, or **Timelion** XY or heatmap chart, the cursor on all other related dashboard charts automatically appears.
-
-* **Sync tooltips across panels** &mdash; When you hover your cursor over a **Lens**, **TSVB**, aggregation-based, or **Timelion** XY chart, the tooltips on all other related dashboard charts automatically appears.
-
-1. Click **Apply**. 
-
-<div id="reset-the-dashboard"></div>
-
-## Reset the dashboard
-
-To remove any dashboard changes you've made, reset the dashboard to the last saved changes.
-
-1. In the toolbar, click **Reset**.
-
-1. On the **Reset dashboard** window, click **Reset dashboard**.
-
-<div id="save-dashboards"></div>
-
-## Save dashboards
-
-When you've finished making changes to the dashboard, save it.
+Now that you have a complete overview of your web server data, save the dashboard.
 
 1. In the toolbar, click **Save**.
 
-1. To exit **Edit** mode, click **Switch to view mode**. 
+1. On the **Save dashboard** window, enter `Logs dashboard` in the **Title** field.
 
-<div id="search-or-filter-your-data"></div>
+1. Select **Store time with dashboard**.
 
-## Search and filter your data
+1. Click **Save**.
 
-((kib)) supports several ways to search your data and apply ((es)) filters. You can combine the filters with any panel
-filter to display the data want to you see.
-
-For more information about ((kib)) and ((es)) filters, refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaKibanaConceptsAnalysts">((kib)) concepts</DocLink> */}.
-
-To apply a panel-level time filter:
-
-1. Open the panel menu, then select **More > Edit panel settings**.
-
-1. Select **Apply a custom time range**.
-
-1. Enter the time range you want to view, then click **Save**.
-
-To view and edit panel-level filters:
-
-1. On the panel, click <DocIcon type="filter" title="Filter" />.
-
-1. To edit, click **Edit filters**.
-
-<div id="download-csv"></div>
-
-## View the panel data and requests
-
-View the data in visualizations and the requests that collect the data. 
-
-1. Open the panel menu, then click **More > Inspect**.
-
-1. View and download the panel data.
-
-    1. Open the **View** dropdown, then click **Data**.
-
-    1. Click **Download CSV**, then select the format type from the dropdown:
-
-* **Formatted CSV** &mdash; Contains human-readable dates and numbers.
-
-* **Unformatted** &mdash; Best used for computer use.
-
-    When you download visualization panels with multiple layers, each layer produces a CSV file, and the file names contain the visualization and layer ((data-source)) names.
-
-1. View the requests that collect the data.
-
-    1. Open the **View** dropdown, then click **Requests**.
-
-    1. From the dropdown, select the requests you want to view.
-
-    1. To view the requests in **Console**, click **Request**, then click **Open in Console**.
-
-<div id="share-the-dashboard"></div>
-
-## Share dashboards
-
-To share the dashboard with a larger audience, click **Share** in the toolbar. For detailed information about the sharing options, refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaReportingGettingStarted">Reporting</DocLink> */}.
-
-<div id="import-dashboards"></div>
-
-## Export dashboards
-
-To automate ((kib)), you can export dashboards as NDJSON using the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaSavedObjectsApiExport">Export objects API</DocLink> */}. It is important to export dashboards with all necessary references.
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
