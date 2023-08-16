@@ -170,14 +170,16 @@
           "id": "serverlessElasticsearchExploreYourDataTheAggregationsApi"
         },
         {
-          "id": "serverlessElasticsearchExploreYourDataDiscoverYourData"
+          "id": "serverlessElasticsearchExploreYourDataDiscoverYourData",
+          "classic-sources": [ "enKibanaDiscover" ]
         },
         {
           "id": "serverlessElasticsearchExploreYourDataVisualizeYourData",
+          "classic-sources": [ "enKibanaDashboard" ],
           "items": [
             {
               "id": "serverlessElasticsearchExploreYourDataDashboards",
-              "classic-sources": [ "enKibanaDashboard" ]
+              "classic-sources": [ "enKibanaCreateADashboardOfPanelsWithWebServerData" ]
             },
             {
               "id": "serverlessElasticsearchExploreYourDataVisualizations"
