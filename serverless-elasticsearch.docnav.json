@@ -221,16 +221,8 @@
       ]
     },
     {
-      "pageId": "serverlessElasticsearchUpdateYourUserProfile",
-      "items": [
-        {
-          "id": "serverlessElasticsearchUpdateYourUserProfileEmailAddress",
-          "classic-sources": [ "enCloudEcAccountUserSettings" ]
-        },
-        {
-          "id": "serverlessElasticsearchUpdateYourUserProfileSetupMultifactorAuthentication"
-        }
-      ]
+      "pageId": "serverlessElasticsearchUserProfile",
+      "classic-sources": [ "enCloudEcAccountUserSettings" ]
     },
     {
       "pageId": "serverlessElasticsearchManageYourProject",
