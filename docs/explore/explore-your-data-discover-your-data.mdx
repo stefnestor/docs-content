@@ -4,8 +4,12 @@ slug: /serverless/elasticsearch/explore-your-data-discover-your-data
 title: Discover your data
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'discover data', 'how to' ]
+status: rough content
 ---
 
+import RoughContent from '../partials/rough-content-notice.mdx'
+
+<RoughContent />
 
 <div id="discover"></div>
 
@@ -19,8 +23,7 @@ about the structure of the fields, and display your findings in a visualization.
 You can also customize and save your searches and place them on a dashboard.
 
 <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![A view of the Discover app](images/discover/discover-hello-field.png) */} */}
+{/* ![A view of the Discover app](images/discover/discover-hello-field.png) */}
 
 ## Explore and query your data
 
@@ -106,8 +109,8 @@ You’ll modify the document table to display your fields of interest.
 1. Find the `customer_first_name` and `customer_last_name` fields and add
     them to the document table. Your table should look similar to this:
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Document table with fields for manufacturer, customer_first_name, and customer_last_name](images/discover/discover-document-table.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Document table with fields for manufacturer, customer_first_name, and customer_last_name](images/discover/discover-document-table.png) */}
 
 1. Optionally try out these actions:
 
@@ -161,8 +164,7 @@ the same way you do with other fields.
 1. In the sidebar, search for the **hello** field, and then add it to the document table.
 
     <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-    {/* <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-    {/* ![A view of the Discover app](images/discover/discover-hello-field.png) */} */}
+{/* ![A view of the Discover app](images/discover/discover-hello-field.png) */}
 
 1. Create a second field named `customer` that combines customer last name and first initial.
 
@@ -174,8 +176,8 @@ the same way you do with other fields.
 
 1. Remove `customer_first_name` and `customer_last_name` from the document table, and then add `customer`.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Customer last name, first initial in the document table](images/discover/discover-customer.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Customer last name, first initial in the document table](images/discover/discover-customer.png) */}
 
     For more information on adding fields and Painless scripting language examples,
     refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaManagingDataViews" section="explore-your-data-with-runtime-fields">Explore your data with runtime fields</DocLink> */}.
@@ -221,8 +223,8 @@ Exclude documents where day of week is not Wednesday:
 1. In the **Add filter** pop-up, set the field to **day_of_week**, the operator to **is not**,
     and the value to **Wednesday**.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Add filter dialog in Discover](images/discover/discover-discover-add-filter.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Add filter dialog in Discover](images/discover/discover-discover-add-filter.png) */}
 
 1. Click **Add filter**.
 1. Continue your exploration by adding more filters.
@@ -239,8 +241,8 @@ that occurred before and after it.
 1. In the document table, click the expand icon <DocIcon type="expand" title="View details" />
     to show document details.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Table view with document expanded](images/discover/discover-document-table-expanded.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Table view with document expanded](images/discover/discover-document-table-expanded.png) */}
 
 1. Scan through the fields and their values. If you find a field of interest,
     hover your mouse over the **Actions** column for filters and other options.
@@ -282,8 +284,8 @@ visualize it from **Discover**.
 
 1. From the **Available fields** list, drag and drop `manufacturer.keyword` onto the workspace.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Visualization that opens from Discover based on your data](images/discover/discover-discover-from-visualize.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Visualization that opens from Discover based on your data](images/discover/discover-discover-from-visualize.png) */}
 
 1. Save your visualization for use on a dashboard.
 
@@ -292,8 +294,8 @@ visualize it from **Discover**.
     if you click **Visualize**,
     your data appears in a map.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Map containing documents](images/discover/discover-discover-maps.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Map containing documents](images/discover/discover-discover-maps.png) */}
 
 <div id="share-your-findings"></div>
 

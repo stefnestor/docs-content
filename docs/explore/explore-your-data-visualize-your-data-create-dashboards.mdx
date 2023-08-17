@@ -4,8 +4,12 @@ slug: /serverless/elasticsearch/explore-your-data-dashboards
 title: Create dashboards
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'dashboards', 'how to' ]
+status: rough content
 ---
 
+import RoughContent from '../partials/rough-content-notice.mdx'
+
+<RoughContent />
 
 <div id="create-a-dashboard-of-panels-with-web-server-data"></div>
 
@@ -16,8 +20,7 @@ at website logs, but this type of dashboard works on any type of data.
 When you're done, you'll have a complete overview of the sample web logs data. 
 
 <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Logs dashboard](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_logsDashboard_8.4.0.png) */} */}
+{/* ![Logs dashboard](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_logsDashboard_8.4.0.png) */}
 
 Before you begin, you should be familiar with the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaKibanaConceptsAnalysts">((kib)) concepts</DocLink> */}.
 
@@ -51,8 +54,8 @@ Open the visualization editor, then make sure the correct fields appear.
 
 1. Make sure the **((kib)) Sample Data Logs** ((data-source)) appears.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Data view dropdown](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_dataViewDropDown_8.4.0.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Data view dropdown](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_dataViewDropDown_8.4.0.png) */}
 
 To create the visualizations in this tutorial, you'll use the following fields:
 
@@ -78,13 +81,13 @@ The only number function that you can use with **clientip** is **Unique count**,
 
 1. Open the **Visualization type** dropdown, then select **Metric**.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Visualization type dropdown](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_visualizationTypeDropdown_8.4.0.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Visualization type dropdown](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_visualizationTypeDropdown_8.4.0.png) */}
 
 1. From the **Available fields** list, drag **clientip** to the workspace or layer pane.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Metric visualization of the clientip field](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_metricUniqueCountOfClientip_8.4.0.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Metric visualization of the clientip field](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_metricUniqueCountOfClientip_8.4.0.png) */}
 
     In the layer pane, **Unique count of clientip** appears because the editor automatically applies the **Unique count** function to the **clientip** field. **Unique count** is the only numeric function that works with IP addresses.
 
@@ -117,8 +120,8 @@ To visualize the **bytes** field over time:
 
 1. To zoom in on the data, click and drag your cursor across the bars. 
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Zoom in on the data](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_3_1_1.gif) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Zoom in on the data](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_3_1_1.gif) */}
 
 To emphasize the change in **Median of bytes** over time, change the visualization type to **Line** with one of the following options:
 
@@ -138,13 +141,13 @@ To save space on the dashboard, hide the axis labels.
 
 1. Open the **Left axis** menu, then select **None** from the **Axis title** dropdown.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Left axis menu](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTimeLeftAxis_8.7.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Left axis menu](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTimeLeftAxis_8.7.png) */}
 
 1. Open the **Bottom axis** menu, then select **None** from the **Axis title** dropdown.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Bottom axis menu](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTimeBottomAxis_8.7.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Bottom axis menu](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTimeBottomAxis_8.7.png) */}
 
 1. Click **Save and return**
 
@@ -154,8 +157,8 @@ Since you removed the axis labels, add a panel title:
 
 1. In the **Title** field, enter `Median of bytes`, then click **Save**.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Line chart that displays metric data over time](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTime_8.4.0.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Line chart that displays metric data over time](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_lineChartMetricOverTime_8.4.0.png) */}
 
 <div id="view-the-distribution-of-visitors-by-operating-system"></div>
 
@@ -175,8 +178,8 @@ The values are the most frequent when ranked by a **Count** function, and the la
 
 1. Drag **request.keyword** to the workspace.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Vertical bar chart with top values of request.keyword by most unique visitors](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_2_1_1.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Vertical bar chart with top values of request.keyword by most unique visitors](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_2_1_1.png) */}
 
     When you drag a text or IP address field to the workspace,
     the editor adds the **Top values** function ranked by **Count of records** to show the most frequent values.
@@ -185,8 +188,8 @@ The chart labels are unable to display because the **request.keyword** field con
 
 1. Open the **Visualization type** dropdown, then select **Table**.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Table with top values of request.keyword by most unique visitors](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens-end-to-end-lens_end_to_end_2_1_2.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Table with top values of request.keyword by most unique visitors](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens-end-to-end-lens_end_to_end_2_1_2.png) */}
 
 1. In the layer pane, click **Top 5 values of request.keyword**.
 
@@ -196,8 +199,8 @@ The chart labels are unable to display because the **request.keyword** field con
 
     1. Click **Close**.
 
-        <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Table that displays the top field values](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_tableTopFieldValues_7.16.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*         ![Table that displays the top field values](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_tableTopFieldValues_7.16.png) */}
 
 1. Click **Save and return**.
 
@@ -238,8 +241,8 @@ Specify the file size ranges:
 
 * **Label** &mdash; `Above 10KB`
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Custom ranges configuration](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_6_1.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Custom ranges configuration](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_6_1.png) */}
 
 1. From the **Value format** dropdown, select **Bytes (1024)**, then click **Close**.
 
@@ -247,8 +250,8 @@ To display the values as a percentage of the sum of all values, use the **Pie** 
 
 1. Open the **Visualization Type** dropdown, then select **Pie**.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Pie chart that compares a subset of documents to all documents](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_pieChartCompareSubsetOfDocs_7.16.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Pie chart that compares a subset of documents to all documents](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_pieChartCompareSubsetOfDocs_7.16.png) */}
 
 . Click **Save and return**.
 
@@ -280,8 +283,8 @@ The distribution of a number can help you find patterns. For example, you can an
 
 1. In the layer pane, click **hour_of_day**, then slide the **Intervals granularity** slider until the horizontal axis displays hourly intervals.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Bar chart that displays the distribution of a number field](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_barChartDistributionOfNumberField_7.16.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Bar chart that displays the distribution of a number field](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_barChartDistributionOfNumberField_7.16.png) */}
 
 . Click **Save and return**.
 
@@ -335,8 +338,8 @@ Add the user geography grouping:
 
 1. To change the **Group by** order, drag **Top 3 values of geo.srcdest** in the layer pane so that appears first.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Treemap visualization](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_7_2.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Treemap visualization](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_end_to_end_7_2.png) */}
 
 Remove the documents that do not match the filter criteria:
 
@@ -344,8 +347,8 @@ Remove the documents that do not match the filter criteria:
 
 1. Click **Advanced**, deselect **Group other values as "Other"**, then click **Close**.
 
-    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Treemap visualization](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_treemapMultiLevelChart_7.16.png) */}
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/*     ![Treemap visualization](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_treemapMultiLevelChart_7.16.png) */}
 
 . Click **Save and return**.
 
@@ -372,7 +375,7 @@ Decrease the size of the following panels, then move the panels to the first row
 * **Website traffic**
 
     <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-    {/* ![Logs dashboard](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_logsDashboard_8.4.0.png) */}
+{/* ![Logs dashboard](images/create-a-dashboard-of-panels-with-web-server-data/user-dashboard-lens_logsDashboard_8.4.0.png) */}
 
 ## Save the dashboard
 
