@@ -12,6 +12,7 @@
       "pageId": "serverlessGeneralUserProfile"
     },
     {
+      "label": "Manage user access",
       "pageId": "serverlessGeneralManageAccessToOrganization",
       "items": [
         {
