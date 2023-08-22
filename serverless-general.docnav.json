@@ -27,6 +27,7 @@
       ]
     },
     {
+      "label": "Manage billing",
       "pageId": "serverlessGeneralManageBilling",
       "items": [
         {
