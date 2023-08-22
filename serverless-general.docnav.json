@@ -1,7 +1,52 @@
 {
-  "mission": "Welcome",
+  "mission": "Manage your Elastic Cloud account",
   "id": "serverless-general",
   "landingPageId": "serverlessGeneralWelcomeToServerless",
   "icon": "logoElastic",
-  "description": "Description to be written"
+  "description": "Description to be written",
+  "items": [
+    {
+      "pageId": "serverlessGeneralSignUp"
+    },
+    {
+      "pageId": "serverlessGeneralUserProfile"
+    },
+    {
+      "pageId": "serverlessGeneralManageAccessToOrganization",
+      "items": [
+        {
+          "id": "serverlessGeneralInviteMembersToYourOrganization"
+        },
+        {
+          "id": "serverlessGeneralJoinOrganizationFromExistingCloudAccount"
+        },
+        {
+          "id": "serverlessGeneralAssignUserRoles"
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessGeneralManageBilling",
+      "items": [
+        {
+          "id": "serverlessGeneralCheckSubscription"
+        },
+        {
+          "id": "serverlessGeneralMonitorUsage"
+        },
+        {
+          "id": "serverlessGeneralBillingHistory"
+        },
+        {
+          "id": "serverlessGeneralBillingContacts"
+        },
+        {
+          "id": "serverlessGeneralStopCharges"
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessGeneralGetHelp"
+    }
+  ]
 }
