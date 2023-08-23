@@ -102,13 +102,16 @@
       "pageId": "serverlessElasticsearchDevTools",
       "items": [
         {
-          "id": "serverlessElasticsearchDevToolsConsole"
+          "id": "serverlessElasticsearchDevToolsConsole",
+          "classic-sources": [ "enKibanaConsoleKibana" ]
         },
         {
-          "id": "serverlessElasticsearchDevToolsSearchProfiler"
+          "id": "serverlessElasticsearchDevToolsSearchProfiler",
+          "classic-sources": [ "enKibanaXpackProfiler" ]
         },
         {
-          "id": "serverlessElasticsearchDevToolsTroubleshooting"
+          "id": "serverlessElasticsearchDevToolsTroubleshooting",
+          "classic-sources": [ "enElasticsearchReferenceTroubleshootingSearches" ]
         }
       ]
     },
@@ -130,8 +133,7 @@
               "classic-sources": [ "enFleetBeatsAgentComparison" ]
             },
             {
-              "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient",
-              "classic-sources": [ "enEnterpriseSearchConnectors" ]
+              "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
             }
           ]
         }
