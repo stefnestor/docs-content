@@ -12,6 +12,9 @@
       "pageId": "serverlessGeneralUserProfile"
     },
     {
+      "pageId": "serverlessGeneralManageProject"
+    },
+    {
       "label": "Manage user access",
       "pageId": "serverlessGeneralManageAccessToOrganization",
       "items": [
@@ -46,9 +49,6 @@
           "id": "serverlessGeneralStopCharges"
         }
       ]
-    },
-    {
-      "pageId": "serverlessGeneralGetHelp"
     }
   ]
 }
