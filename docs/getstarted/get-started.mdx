@@ -11,16 +11,55 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-In this getting started, you'll create your first Elasticsearch project. You can then ingest, search, and explore your data in Elasticsearch.
-To get started with Elasticsearch, follow these steps:
+Get started with Elasticsearch in a few steps.
+Ingest, search, and explore some sample data after setting up your project:
 
-1. Set up
-    - Create your project
-    - Create an API key
-2. Ingest
-3. Search
-4. Explore
-    - Run an aggregation with the client
-    - Create a dashboard
+1. [Set up project](#set-up-project)
+2. [Ingest](#ingest)
+3. [Search](#search)
+4. [Explore](#explore)
 
+## Set up project
 
+### Create project
+
+### Create API key
+
+### Configure client
+
+## Ingest
+
+## Search
+
+Now search for documents in the `books` index that contain the word `snow`:
+
+<DocTabs>
+  <DocTab name="Ruby">
+    Run a search using the `search` API:
+
+    ```ruby
+    response = client.search(index: 'books', q: 'snow')
+    response['hits']['hits']
+    ```
+
+    Result:
+    
+    ```ruby
+    [{"_index"=>"books", "_id"=>"Pdink4cBmDx329iqhzM2", "_score"=>1.5904956, "_source"=>{"name"=>"Snow Crash", "author"=>"Neal Stephenson", "release_date"=>"1992-06-01", "page_count"=>470}}]
+    ```
+  </DocTab>
+  <DocTab name="curl">
+    Run a search using the `_search` API:
+
+    ```bash
+    curl -X GET '/books/_search' -H 'Content-Type: application/json' -d'
+    {
+        "query": {
+            "match": { "_all": "snow" }
+        }
+    }'
+    ```
+  </DocTab>
+</DocTabs>
+
+## Explore
