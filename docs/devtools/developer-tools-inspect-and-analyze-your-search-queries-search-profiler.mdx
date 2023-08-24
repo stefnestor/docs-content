@@ -22,11 +22,10 @@ The **((searchprofiler))** tool transforms this JSON into a user-friendly, inter
 
 ## Get started
 
-**((searchprofiler))** is automatically enabled in your project's UI under **Dev Tools**.
+Access **((searchprofiler))** under **Dev Tools**.
 
-**((searchprofiler))** displays the names of the indices searched, the shards in each index,
-and how long it took for the query to complete. To try it out, replace the default `match_all` query
-with the query you want to profile, and then select **Profile**.
+**((searchprofiler))** displays the names of the indices searched and how long it took for the query to complete.
+Test it out by replacing the default `match_all` query with the query you want to profile, and then select **Profile**.
 
 The following example shows the results of profiling the `match_all` query.
 If you take a closer look at the information for the `.security_7` sample index, the
@@ -34,7 +33,7 @@ If you take a closer look at the information for the `.security_7` sample index,
 
 ![((searchprofiler)) `match_all` example](images/profiler-overview.png)
 
-<DocCallOut title="Note">
+{/* <DocCallOut title="Note">
 
 The cumulative time metric is the sum of individual shard times.
 It is not necessarily the actual time it took for the query to return (wall clock time).
@@ -45,11 +44,11 @@ However, if shards are colocated on the same node and executed serially, the wal
 While the cumulative time metric is useful for comparing the performance of your
 indices and shards, it doesn't necessarily represent the actual physical query times.
 
-</DocCallOut>
+</DocCallOut> */}
+{/* Commenting out for moment, given shards and nodes are obfuscated concepts in serverless */}
 
 To see more profiling information, select **View details**.
-You'll
-see details about the query components that ran on the shard and the timing
+You'll ssee details about query components and the timing
 breakdown of low-level methods.
 For more information, refer to [Profiling queries](((ref))/search-profile.html#profiling-queries) in the ((es)) documentation.
 

@@ -11,7 +11,7 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-Use the **Console** to run API requests against your Elasticsearch cluster, and view the responses.
+Use the **Console** to run API requests against ((es)), and view the responses.
 Console is available in your Elastic UI under **Dev Tools**.
 
 Requests are made in the left pane, and responses are displayed in the right pane.
@@ -23,7 +23,7 @@ Console also tracks your request history, so you can easily repeat requests, and
 ## Write requests
 
 **Console** understands commands in a cURL-like syntax.
-For example, the following is a `GET` request to the Elasticsearch `_search` API.
+For example, the following is a `GET` request to the ((es)) `_search` API.
 
 ```js
 GET /_search
@@ -47,7 +47,7 @@ curl -XGET "http://localhost:9200/_search" -d'
 
 When you paste a cURL command into **Console**, it is automatically converted to **Console** syntax.
 If you want to see **Console** syntax in cURL, select the action icon (<DocIcon type="wrench" title="Wrench" />) and select **Copy as cURL**.
-Once copied, the username and password will need to be provided for the calls to work from external environments.
+Once copied, an API key will need to be provided for the calls to work from external environments.
 
 ### Autocomplete
 
@@ -122,14 +122,14 @@ For example, you might have a request formatted like this:
 
 If you select **Auto indent** on a request that is already well formatted,
 **Console** collapses the request body to a single line per document.
-This is helpful when working with the Elasticsearch [bulk APIs](((ref))/docs-bulk.html).
+This is helpful when working with the ((es)) [bulk APIs](((ref))/docs-bulk.html).
 
 ## Submit requests
 
-When you're ready to submit the request to Elasticsearch, select the green triangle.
+When you're ready to submit the request to ((es)), select the green triangle.
 
 You can select multiple requests and submit them together.
-**Console** sends the requests to Elasticsearch one by one and shows the output
+**Console** sends the requests to ((es)) one by one and shows the output
 in the response pane. Submitting multiple requests is helpful
 when you're debugging an issue or trying query
 combinations in multiple scenarios.
