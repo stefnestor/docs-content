@@ -1,8 +1,8 @@
 ---
 id: serverlessElasticsearchPhpApisGettingStarted
 slug: /serverless/elasticsearch/php-apis-getting-started
-title: Getting started
-# description: Description to be written
+title: Getting started with the Serverless PHP client
+description: This page contains quickstart information about the Serverless PHP client.
 tags: [ 'serverless', 'elasticsearch', 'php', 'how to' ]
 status: rough content
 ---
@@ -10,3 +10,110 @@ status: rough content
 import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
+
+This page guides you through the installation process of the Serverless PHP  
+client, shows you how to instantiate the client, and how to perform basic 
+Elasticsearch operations with it.
+
+
+## Requirements
+
+* PHP x or higher installed on your system.
+
+
+## Installation
+
+
+### Using the command line
+
+You can install the Elasticsearch Serverless PHP client with the following 
+commands:
+
+```bash
+
+```
+
+
+## Instantiate a client
+
+You can instantiate a client by running the following command:
+
+```php
+
+```
+
+You can find the Elasticsearch endpoint on the Cloud deployment management page.
+
+<DocImage url="images/copy-endpoint.gif" alt="Copy the endpoint for Elasticsearch"/>
+
+You can create a new API Key under **Stack Management** > **Security**:
+
+<DocImage url="images/setup-api-key.gif" alt="Create and copy Apy Key"/>
+
+
+## Using the API
+
+After you instantiated a client with your API key and Elasticsearch endpoint, 
+you can start ingesting documents into the Elasticsearch Service. You can use 
+the Bulk API for this. This API enables you to index, update, and delete several 
+documents in one request.
+
+
+### Creating an index and ingesting documents
+
+You can call the `bulk` API with a body parameter, an array of hashes that 
+define the action, and a document. 
+
+The following is an example of indexing some classic books into the `books` 
+index:
+
+```php
+
+```
+
+When you use the client to make a request to Elasticsearch, it returns an API 
+response object. You can check the HTTP return code by calling `status` and the 
+HTTP headers by calling `headers` on the response object. The response object 
+also behaves as a Hash, so you can access the body values directly as seen on 
+the previous example with ``.
+
+### Getting documents
+
+You can get documents by using the following code:
+
+```php
+
+```
+
+
+### Searching
+
+You can search your documents using the **Search API**:
+
+```php
+
+```
+
+
+### Updating documents
+
+This is how you can update a document, for example to add a new field:
+
+```php
+
+```
+
+### Deleting documents
+
+
+```php
+
+```
+
+
+### Deleting an index
+
+
+```php
+
+```
