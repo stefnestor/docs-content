@@ -1,5 +1,5 @@
 {
-  "mission": "Manage your Elastic Cloud account",
+  "mission": "Welcome to Elastic Serverless",
   "id": "serverless-general",
   "landingPageId": "serverlessGeneralWelcomeToServerless",
   "icon": "logoElastic",
@@ -9,13 +9,7 @@
       "pageId": "serverlessGeneralSignUp"
     },
     {
-      "pageId": "serverlessGeneralUserProfile"
-    },
-    {
-      "pageId": "serverlessGeneralManageProject"
-    },
-    {
-      "label": "Manage user access",
+      "label": "Invite your team",
       "pageId": "serverlessGeneralManageAccessToOrganization",
       "items": [
         {
@@ -28,6 +22,12 @@
           "id": "serverlessGeneralAssignUserRoles"
         }
       ]
+    },
+    {
+      "pageId": "serverlessGeneralUserProfile"
+    },
+    {
+      "pageId": "serverlessGeneralManageProject"
     },
     {
       "label": "Manage billing",
