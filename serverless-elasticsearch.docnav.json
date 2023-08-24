@@ -12,29 +12,13 @@
       "pageId": "serverlessElasticsearchGetStarted"
     },
     {
-      "pageId": "serverlessElasticsearchApis",
+      "pageId": "serverlessElasticsearchClients",
       "items": [
         {
-          "pageId": "serverlessElasticsearchHttpApis",
+          "id": "serverlessElasticsearchPythonClient",
           "items": [
             {
-              "id": "serverlessElasticsearchApiConventions",
-              "classic-sources": [ "enElasticsearchReferenceApiConventions" ]
-            },
-            {
-              "id": "serverlessElasticsearchKibanaApiConventions",
-              "classic-sources": [ "enKibanaApi" ]
-            },
-            {
-              "id": "serverlessElasticsearchHttpApisReferences"
-            }
-          ]
-        },
-        {
-          "id": "serverlessElasticsearchPythonApis",
-          "items": [
-            {
-              "id": "serverlessElasticsearchPythonApisGettingStarted"
+              "id": "serverlessElasticsearchPythonGettingStarted"
             },
             {
               "id": "serverlessElasticsearchPythonApisReferences"
@@ -42,10 +26,10 @@
           ]
         },
         {
-          "id": "serverlessElasticsearchNodejsApis",
+          "id": "serverlessElasticsearchNodejsClient",
           "items": [
             {
-              "id": "serverlessElasticsearchNodejsApisGettingStarted"
+              "id": "serverlessElasticsearchNodejsGettingStarted"
             },
             {
               "id": "serverlessElasticsearchNodejsApisReferences"
@@ -53,10 +37,10 @@
           ]
         },
         {
-          "id": "serverlessElasticsearchPhpApis",
+          "id": "serverlessElasticsearchPhpClient",
           "items": [
             {
-              "id": "serverlessElasticsearchPhpApisGettingStarted"
+              "id": "serverlessElasticsearchPhpGettingStarted"
             },
             {
               "id": "serverlessElasticsearchPhpApisReferences"
@@ -64,10 +48,10 @@
           ]
         },
         {
-          "id": "serverlessElasticsearchGoApis",
+          "id": "serverlessElasticsearchGoClient",
           "items": [
             {
-              "id": "serverlessElasticsearchGoApisGettingStarted"
+              "id": "serverlessElasticsearchGoGettingStarted"
             },
             {
               "id": "serverlessElasticsearchGoApisReferences"
@@ -75,10 +59,10 @@
           ]
         },
         {
-          "id": "serverlessElasticsearchRubyApis",
+          "id": "serverlessElasticsearchRubyClient",
           "items": [
             {
-              "id": "serverlessElasticsearchRubyApisGettingStarted"
+              "id": "serverlessElasticsearchRubyGettingStarted"
             },
             {
               "id": "serverlessElasticsearchRubyApisReferences"
@@ -86,15 +70,31 @@
           ]
         },
         {
-          "id": "serverlessElasticsearchJavaApis",
+          "id": "serverlessElasticsearchJavaClient",
           "items": [
             {
-              "id": "serverlessElasticsearchJavaApisGettingStarted"
+              "id": "serverlessElasticsearchJavaGettingStarted"
             },
             {
               "id": "serverlessElasticsearchJavaApisReferences"
             }
           ]
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessElasticsearchHttpApis",
+      "items": [
+        {
+          "id": "serverlessElasticsearchApiConventions",
+          "classic-sources": [ "enElasticsearchReferenceApiConventions" ]
+        },
+        {
+          "id": "serverlessElasticsearchKibanaApiConventions",
+          "classic-sources": [ "enKibanaApi" ]
+        },
+        {
+          "id": "serverlessElasticsearchHttpApisReferences"
         }
       ]
     },
