@@ -2,7 +2,7 @@
 id: serverlessElasticsearchDevToolsSearchProfiler
 slug: /serverless/elasticsearch/dev-tools-search-profiler
 title: Search profiler
-description: Learn how to use the Search Profiler tool to debug your search queries
+description: Use the Search Profiler to debug search queries
 tags: [ 'serverless', 'elasticsearch', 'serach-profiler', 'how to' ]
 status: rough content
 ---
@@ -11,12 +11,12 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-((es)) has a powerful [Profile API](((ref))/search-profile.html) for debugging your search queries.
+((es)) has a powerful [Profile API](((ref))/search-profile.html) for debugging search queries.
 It provides detailed timing information about the execution of individual components in a search request.
 This allows users to optimize queries for better performance.
 
-However, the Profile API returns a large, verbose JSON blob, which can be difficult to analyze and understand, especially for complex queries.
-The **((searchprofiler))** tool transforms this JSON into a user-friendly, interactive output, making it simpler and faster to debug and optimize queries.
+However, Profile API responses can be hard to read, especially for complex queries.
+**((searchprofiler))** helps you visualize these responses in a graphical interface.
 
 <div id="search-profiler-getting-started"></div>
 
