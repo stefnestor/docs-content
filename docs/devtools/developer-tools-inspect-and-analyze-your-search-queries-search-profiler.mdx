@@ -2,7 +2,7 @@
 id: serverlessElasticsearchDevToolsSearchProfiler
 slug: /serverless/elasticsearch/dev-tools-search-profiler
 title: Search profiler
-# description: Description to be written
+description: Use the Search Profiler to debug search queries
 tags: [ 'serverless', 'elasticsearch', 'serach-profiler', 'how to' ]
 status: rough content
 ---
@@ -11,65 +11,59 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
+((es)) has a powerful [Profile API](((ref))/search-profile.html) for debugging search queries.
+It provides detailed timing information about the execution of individual components in a search request.
+This allows users to optimize queries for better performance.
 
-<div id="xpack-profiler"></div>
-
-((es)) has a powerful [Profile API](((ref))/search-profile.html) that you can use to inspect and analyze
-your search queries. The response returns a large JSON blob, which can be
-difficult to analyze manually.
-
-The **((searchprofiler))** tool can transform this JSON output
-into a visualization that is easy to navigate, allowing you to diagnose and debug
-poorly performing queries much faster.
+However, Profile API responses can be hard to read, especially for complex queries.
+**((searchprofiler))** helps you visualize these responses in a graphical interface.
 
 <div id="search-profiler-getting-started"></div>
 
 ## Get started
 
-**((searchprofiler))** is automatically enabled in ((kib)). Open the main menu,
-click **Dev Tools**, and then click **((searchprofiler))**
-to get started.
+Access **((searchprofiler))** under **Dev Tools**.
 
-**((searchprofiler))** displays the names of the indices searched, the shards in each index,
-and how long it took for the query to complete. To try it out, replace the default `match_all` query
-with the query you want to profile, and then click **Profile**.
+**((searchprofiler))** displays the names of the indices searched and how long it took for the query to complete.
+Test it out by replacing the default `match_all` query with the query you want to profile, and then select **Profile**.
 
 The following example shows the results of profiling the `match_all` query.
 If you take a closer look at the information for the `.security_7` sample index, the
 **Cumulative time** field shows you that the query took 0.028ms to execute.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* !["((searchprofiler)) visualization"](images/xpack-profiler/dev-tools-searchprofiler-overview.png) */}
+![((searchprofiler)) `match_all` example](images/profiler-overview.png)
 
-<DocCallOut title="Note">
+{/* <DocCallOut title="Note">
 
 The cumulative time metric is the sum of individual shard times.
 It is not necessarily the actual time it took for the query to return (wall clock time).
 Because shards might be processed in parallel on multiple nodes, the wall clock time can
-be significantly less than the cumulative time. However, if shards are colocated on the
-same node and executed serially, the wall clock time is closer to the cumulative time.
+be significantly less than the cumulative time.
+However, if shards are colocated on the same node and executed serially, the wall clock time is closer to the cumulative time.
 
 While the cumulative time metric is useful for comparing the performance of your
 indices and shards, it doesn't necessarily represent the actual physical query times.
 
-</DocCallOut>
+</DocCallOut> */}
+{/* Commenting out for moment, given shards and nodes are obfuscated concepts in serverless */}
 
-To see more profiling information, click **View details**. You'll
-see details about the query components that ran on the shard and the timing
-breakdown of low-level methods. For more information, refer to [Profiling queries](((ref))/search-profile.html#profiling-queries).
+To see more profiling information, select **View details**.
+You'll find details about query components and the timing
+breakdown of low-level methods.
+For more information, refer to [Profiling queries](((ref))/search-profile.html#profiling-queries) in the ((es)) documentation.
 
 ## Filter for an index or type
 
 By default, all queries executed by the **((searchprofiler))** are sent
-to `GET /_search`. It searches across your entire cluster (all indices, all types).
+to `GET /_search`.
+It searches across your entire cluster (all indices, all types).
 
 To query a specific index or type, you can use the **Index** filter.
 
 In the following example, the query is executed against the indices `.security-7` and `kibana_sample_data_ecommerce`.
-This is equivalent making a request to `GET /test,kibana_1/_search`.
+This is equivalent to making a request to `GET /.security-7,kibana_sample_data_ecommerce/_search`.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* !["Filtering by index and type"](images/xpack-profiler/dev-tools-searchprofiler-filter.png) */}
+!["Filtering by index and type"](images/profiler-filter.png)
 
 <div id="profile-complicated-query"></div>
 
@@ -78,7 +72,7 @@ This is equivalent making a request to `GET /test,kibana_1/_search`.
 To understand how the query trees are displayed inside the **((searchprofiler))**,
 take a look at a more complicated query.
 
-1. Index the following data via **Console**:
+1. Index the following data using **Console**:
 
     ```js
     POST test/_bulk
@@ -100,75 +94,73 @@ take a look at a more complicated query.
 
 1. Replace the default `match_all` query in the query editor with a query that has two sub-query
     components and includes a simple aggregation:
-
     ```js
     {
-    "query": {
-    "bool": {
-    "should": [
-    {
-    "match": {
-    "name": "fred"
+       "query": {
+          "bool": {
+             "should": [
+                {
+                   "match": {
+                      "name": "fred"
+                   }
+                },
+                {
+                   "terms": {
+                      "name": [
+                          "sue",
+                          "sally"
+                      ]
+                   }
+                }
+             ]
+          }
+       },
+       "aggs": {
+          "stats": {
+             "stats": {
+                "field": "price"
+             }
+          }
+       }
     }
-    },
-    {
-    "terms": {
-    "name": [
-    "sue",
-    "sally"
-    ]
-    }
-    }
-    ]
-    }
-    },
-    "aggs": {
-    "stats": {
-    "stats": {
-    "field": "price"
-    }
-    }
-    }
-
     ```
     {/* NOTCONSOLE */}
 
-1. Click **Profile** to profile the query and visualize the results.
+1. Select **Profile** to profile the query and visualize the results.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/*     !["Profiling the more complicated query"](images/xpack-profiler/dev-tools-searchprofiler-gs8.png) */}
+    ![Profiling the more complicated query](images/profiler-gs8.png)
 
-    - The top `BooleanQuery` component corresponds to the bool in the query.
-    - The second `BooleanQuery` corresponds to the terms query, which is internally
-    converted to a `Boolean` of should clauses. It has two child queries that correspond
-    to "sally" and "sue from the terms query.
-    - The `TermQuery` that's labeled with "name:fred" corresponds to match: fred in the query.
+    - The top `BooleanQuery` component corresponds to the `bool` in the query.
+    - The second `BooleanQuery` corresponds to the `terms` query, which is internally
+    converted to a `Boolean` of `should` clauses. It has two child queries that correspond
+    to "sally" and "sue from the `terms` query.
+    - The `TermQuery` that's labeled with "name:fred" corresponds to `match: fred` in the query.
 
-    If you look at the time columns, you can see that **Self time** and **Total time** are no longer
-    identical on all the rows.  **Self time** represents how long the query component took to execute.
-    **Total time** is the time a query component and all its children took to execute.
+
+    In the time columns, the **Self time** and **Total time** are no longer
+    identical on all rows:
+
+    - **Self time** represents how long the query component took to execute.
+    - **Total time** is the time a query component and all its children took to execute.
+
     Therefore, queries like the Boolean queries often have a larger total time than self time.
 
-1. Click **Aggregation Profile** to view aggregation profiling statistics.
+1. Select **Aggregation Profile** to view aggregation profiling statistics.
 
     This query includes a `stats` agg on the `"age"` field.
     The **Aggregation Profile** tab is only enabled when the query being profiled contains an aggregation.
 
-1. Click **View details** to view the timing breakdown.
+1. Select **View details** to view the timing breakdown.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/*     !["Drilling into the first shard's details"](images/xpack-profiler/dev-tools-searchprofiler-gs10.png) */}
+    !["Drilling into the first shard's details"](images/profiler-gs10.png)
 
     For more information about how the **((searchprofiler))** works, how timings are calculated, and
-    how to interpret various results, see
-    [Profiling queries](((ref))/search-profile.html#profiling-queries).
+    how to interpret various results, refer to
+    [Profiling queries](((ref))/search-profile.html#profiling-queries) in the ((es)) documentation.
 
 <div id="profiler-render-JSON"></div>
 
 ## Render pre-captured profiler JSON
-
-The **((searchprofiler))** queries the cluster that the ((kib)) node is attached to.
-It does this by executing the query against the cluster and collecting the results.
 
 Sometimes you might want to investigate performance problems that are temporal in nature.
 For example, a query might only be slow at certain time of day when many customers are using your system.
@@ -176,12 +168,13 @@ You can set up a process to automatically profile slow queries when they occur a
 save those profile responses for later analysis.
 
 The **((searchprofiler))** supports this workflow by allowing you to paste the
-pre-captured JSON in the query editor.  The **((searchprofiler))** will detect that you
+pre-captured JSON in the query editor.
+The **((searchprofiler))** will detect that you
 have entered a JSON response (rather than a query) and will render just the visualization,
 rather than querying the cluster.
 
 To see how this works, copy and paste the following profile response into the
-query editor and click **Profile**.
+query editor and select **Profile**.
 
 ```js
 {
@@ -324,5 +317,4 @@ query editor and click **Profile**.
 
 Your output should look similar to this:
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* !["Rendering pre-captured profiler JSON"](images/xpack-profiler/dev-tools-searchprofiler-search-profiler-json.png) */}
+![Rendering pre-captured profiler JSON](images/profiler-json.png)

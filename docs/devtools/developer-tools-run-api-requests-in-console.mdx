@@ -1,8 +1,8 @@
 ---
 id: serverlessElasticsearchDevToolsConsole
 slug: /serverless/elasticsearch/dev-tools-console
-title: Run API requests in console
-# description: Description to be written
+title: Run API requests in Console
+description: Run Elasticsearch API requests in the Dev Tools Console
 tags: [ 'serverless', 'elasticsearch', 'console', 'how to' ]
 status: rough content
 ---
@@ -11,20 +11,15 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-<div id="console-kibana"></div>
+Use **Console** to run API requests against ((es)), and view the responses.
+Console is available in your Elastic UI under **Dev Tools**.
 
-Interact with the REST APIs of ((es)) and ((kib)) with **Console**. With **Console**, you can:
+Requests are made in the left pane, and responses are displayed in the right pane.
 
-* Send requests and view the responses
-* View API documentation
-* Get your request history
+![Console request/response pair](images/console-request-response.png)
 
-To get started, open the main menu, click **Dev Tools**, then click **Console**.
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* !["Console"](images/console-kibana/dev-tools-console-console.png) */}
-
-<div id="console-api"></div>
+Console keeps a request history, making it easy to find and repeat requests.
+It also provides links to API documentation.
 
 ## Write requests
 
@@ -51,33 +46,19 @@ curl -XGET "http://localhost:9200/_search" -d'
 }'
 ```
 
-Prepend requests to a ((kib)) API endpoint with `kbn:`
-
-```bash
-GET kbn:/api/index_management/indices
-```
-
-When you paste the command into **Console**, ((kib)) automatically converts it
-to **Console** syntax.  Alternatively, if you want to see **Console** syntax in cURL,
-click the action icon (<DocIcon type="wrench" title="Wrench" />) and select **Copy as cURL**.
-Once copied, the username and password will need to be provided
-for the calls to work from external environments.
-
-<div id="console-autocomplete"></div>
+When you paste a cURL command into **Console**, it is automatically converted to **Console** syntax.
+To convert **Console** syntax into cURL syntax, select the action icon (<DocIcon type="wrench" title="Wrench" />) and choose **Copy as cURL**.
+Once copied, an API key will need to be provided for the calls to work from external environments.
 
 ### Autocomplete
 
 When you're typing a command, **Console** makes context-sensitive suggestions.
 These suggestions show you the parameters for each API and speed up your typing.
-To configure your preferences for autocomplete, go to
-<DocLink id="serverlessElasticsearchDevToolsConsole" section="configure-console-settings">Settings</DocLink>.
-
-<div id="console-comments"></div>
+To configure your preferences for autocomplete, go to [Settings](#configure-console-settings).
 
 ### Comments
 
-You can write comments or temporarily disable parts of a request by using double forward slashes
-or pound signs to create single-line comments.
+You can write comments or temporarily disable parts of a request by using double forward slashes (`//`) or pound (`#`) signs to create single-line comments.
 
 ```js
 # This request searches all of your indices.
@@ -90,8 +71,9 @@ GET /_search
 }
 ```
 
-You can also use a forward slash followed by an asterisk to mark the beginning of multi-line
-comments. An asterisk followed by a forward slash marks the end.
+You can also use a forward slash followed by an asterisk (`/*`) to mark the beginning of multi-line
+comments.
+An asterisk followed by a forward slash (`*/`) marks the end.
 
 ```js
 GET /_search
@@ -104,15 +86,11 @@ GET /_search
   }
 }
 ```
-
-<div id="console-variables"></div>
-
 ### Variables
 
-Click **Variables** to create, edit, and delete variables.
+Select **Variables** to create, edit, and delete variables.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* <DocImage size="l" url="images/console-kibana/dev-tools-console-variables.png" alt="'Variables'" /> */}
+![Variables](images/console-variables.png)
 
 You can refer to these variables in the paths and bodies of your requests.
 Each variable can be referenced multiple times.
@@ -128,34 +106,28 @@ GET ${pathVariable}
 }
 ```
 
-<div id="auto-formatting"></div>
-
 ### Auto-formatting
 
 The auto-formatting
 capability can help you format requests. Select one or more requests that you
-want to format, click the action icon (<DocIcon type="wrench" title="Wrench" />),
+want to format, select the action icon (<DocIcon type="wrench" title="Wrench" />),
 and then select **Auto indent**.
 
 For example, you might have a request formatted like this:
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* <DocImage size="xl" url="images/console-kibana/dev-tools-console-unformatted-request.png" alt="'Unformatted request'" /> */}
+![Unformatted request](images/console-unformatted-request.png)
 
 **Console** adjusts the JSON body of the request to apply the indents.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* <DocImage size="xl" url="images/console-kibana/dev-tools-console-formatted-request.png" alt="'Formatted request'" /> */}
+![Formatted request](images/console-formatted-request.png)
 
 If you select **Auto indent** on a request that is already well formatted,
 **Console** collapses the request body to a single line per document.
 This is helpful when working with the ((es)) [bulk APIs](((ref))/docs-bulk.html).
 
-<div id="console-request"></div>
-
 ## Submit requests
 
-When you're ready to submit the request to ((es)), click the green triangle.
+When you're ready to submit the request to ((es)), select the green triangle.
 
 You can select multiple requests and submit them together.
 **Console** sends the requests to ((es)) one by one and shows the output
@@ -163,44 +135,31 @@ in the response pane. Submitting multiple requests is helpful
 when you're debugging an issue or trying query
 combinations in multiple scenarios.
 
-<div id="console-view-api"></div>
-
 ## View API docs
 
-To view the documentation for an API endpoint, click
+To view the documentation for an API endpoint, select
 the action icon (<DocIcon type="wrench" title="Wrench" />) and select
 **Open documentation**.
 
-<div id="console-history"></div>
-
 ## Get your request history
 
-**Console** maintains a list of the last 500 requests that ((es)) successfully executed.
-To view your most recent requests, click **History**. If you select a request
-and click **Apply**, ((kib)) adds it to the editor at the current cursor position.
-
-<div id="configuring-console"></div>
+**Console** maintains a list of the last 500 requests that Elasticsearch successfully executed.
+To view your most recent requests, select **History**.
+If you select a request and select **Apply**, it is added to the editor at the current cursor position.
 
 ## Configure Console settings
 
-You can configure the **Console** font size, JSON syntax,
-and autocomplete suggestions in **Settings**.
+You can configure the **Console** font size, JSON syntax, and autocomplete suggestions in **Settings**.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* <DocImage size="l" url="images/console-kibana/dev-tools-console-console-settings.png" alt="'Console Settings'" /> */}
-
-<div id="keyboard-shortcuts"></div>
+<DocImage size="l" url="images/console-settings.png" alt="Console Settings" />
 
 ## Get keyboard shortcuts
 
-For a list of available keyboard
-shortcuts, click **Help**.
+For a list of available keyboard shortcuts, select **Help**.
 
-<div id="console-settings"></div>
-
-## Disable Console
+{/* ## Disable Console
 
 If you don’t want to use **Console**, you can disable it by setting `console.ui.enabled`
 to `false` in your `kibana.yml` configuration file. Changing this setting
 causes the server to regenerate assets on the next startup,
-which might cause a delay before pages start being served.
+which might cause a delay before pages start being served. */}
