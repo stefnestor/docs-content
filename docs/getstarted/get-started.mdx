@@ -34,7 +34,44 @@ Let's create an index and ingest some data!
 Use the `_bulk` API to create an index called `books` and add some data to it in 
 a single API call:
 
-<DocTabs>
+<DocTabs> 
+  <DocTab name="curl">
+    ```bash
+    # Call the `_bulk` API to create the index and ingest the documents:
+    curl -X POST "_bulk?pretty" -H "Content-Type: application/json" -d'
+    { "index" : { "_index" : "books" } }
+    {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
+    { "index" : { "_index" : "books" } }
+    {"title": "Revelation Space", "author": "Alastair Reynolds", "release_date": "2000-03-15", "page_count": 585}
+    { "index" : { "_index" : "books" } }
+    {"title": "1984", "author": "George Orwell", "release_date": "1985-06-01", "page_count": 328}
+    { "index" : { "_index" : "books" } }
+    {"title": "Fahrenheit 451", "author": "Ray Bradbury", "release_date": "1953-10-15", "page_count": 227}
+    { "index" : { "_index" : "books" } }
+    {"title": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
+    { "index" : { "_index" : "books" } }
+    {"title": "The Handmaid's Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
+    { "index" : { "_index" : "books" } }
+    {"title": "Neuromancer", "author": "William Gibson", "release_date": "1984-07-01", "page_count": 271}
+    { "index" : { "_index" : "books" } }
+    {"title": "Count Zero", "author": "William Gibson", "release_date": "1986-01-02", "page_count": 256}
+    { "index" : { "_index" : "books" } }
+    {"title": "Mona Lisa Overdrive", "author": "William Gibson", "release_date": "1988-06-01", "page_count": 251}
+    { "index" : { "_index" : "books" } }
+    {"title": "Virtual light", "author": "William Gibson", "release_date": "1993-09-06", "page_count": 304}
+    { "index" : { "_index" : "books" } }
+    {"title": "Idoru", "author": "William Gibson", "release_date": "1994-09-04", "page_count": 304}
+    { "index" : { "_index" : "books" } }
+    {"title": "All Tomorrow's Parties", "author": "William Gibson", "release_date": "1999-10-07", "page_count": 320}
+    { "index" : { "_index" : "books" } }
+    {"title": "The Colour of Magic", "author": "Terry Pratchett", "release_date": "1983-11-24", "page_count": 288}
+    { "index" : { "_index" : "books" } }
+    {"title": "The Light Fantastic", "author": "Terry Pratchett", "release_date": "1986-06-02", "page_count": 288}
+    { "index" : { "_index" : "books" } }
+    {"title": "Világló részletek", "author": "Nádas Péter", "release_date": "2017-06-08", "page_count": 1212}'
+    # Check the API response to make sure that the items are indexed correctly.
+    ```
+  </DocTab>
   <DocTab name="Ruby">
     ```ruby
     # First, build your data:
@@ -76,43 +113,6 @@ a single API call:
       {"index"=>{"_index"=>"books", "_id"=>"Gtine4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>13, "_primary_term"=>1, "status"=>201}},
       {"index"=>{"_index"=>"books", "_id"=>"H9inc4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>14, "_primary_term"=>1, "status"=>201}}]
     ```
-  </DocTab> 
-  <DocTab name="console">
-    ```bash
-    # Use the Dev Console to call the `_bulk` API to create the index and ingest the documents:
-    POST /_bulk?pretty
-    { "index" : { "_index" : "books" } }
-    {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
-    { "index" : { "_index" : "books" } }
-    {"title": "Revelation Space", "author": "Alastair Reynolds", "release_date": "2000-03-15", "page_count": 585}
-    { "index" : { "_index" : "books" } }
-    {"title": "1984", "author": "George Orwell", "release_date": "1985-06-01", "page_count": 328}
-    { "index" : { "_index" : "books" } }
-    {"title": "Fahrenheit 451", "author": "Ray Bradbury", "release_date": "1953-10-15", "page_count": 227}
-    { "index" : { "_index" : "books" } }
-    {"title": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
-    { "index" : { "_index" : "books" } }
-    {"title": "The Handmaid's Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
-    { "index" : { "_index" : "books" } }
-    {"title": "Neuromancer", "author": "William Gibson", "release_date": "1984-07-01", "page_count": 271}
-    { "index" : { "_index" : "books" } }
-    {"title": "Count Zero", "author": "William Gibson", "release_date": "1986-01-02", "page_count": 256}
-    { "index" : { "_index" : "books" } }
-    {"title": "Mona Lisa Overdrive", "author": "William Gibson", "release_date": "1988-06-01", "page_count": 251}
-    { "index" : { "_index" : "books" } }
-    {"title": "Virtual light", "author": "William Gibson", "release_date": "1993-09-06", "page_count": 304}
-    { "index" : { "_index" : "books" } }
-    {"title": "Idoru", "author": "William Gibson", "release_date": "1994-09-04", "page_count": 304}
-    { "index" : { "_index" : "books" } }
-    {"title": "All Tomorrow's Parties", "author": "William Gibson", "release_date": "1999-10-07", "page_count": 320}
-    { "index" : { "_index" : "books" } }
-    {"title": "The Colour of Magic", "author": "Terry Pratchett", "release_date": "1983-11-24", "page_count": 288}
-    { "index" : { "_index" : "books" } }
-    {"title": "The Light Fantastic", "author": "Terry Pratchett", "release_date": "1986-06-02", "page_count": 288}
-    { "index" : { "_index" : "books" } }
-    {"title": "Világló részletek", "author": "Nádas Péter", "release_date": "2017-06-08", "page_count": 1212}
-    # Check the API response to make sure that the items are indexed correctly.
-    ```
   </DocTab>
 </DocTabs>
 
@@ -121,6 +121,18 @@ a single API call:
 Now search for documents in the `books` index that contain the word `snow`:
 
 <DocTabs>
+  <DocTab name="curl">
+    Run a search using the `_search` API:
+
+    ```bash
+    curl -X GET '/books/_search' -H 'Content-Type: application/json' -d'
+    {
+        "query": {
+            "match": { "_all": "snow" }
+        }
+    }'
+    ```
+  </DocTab>
   <DocTab name="Ruby">
     Run a search using the `search` API:
 
@@ -133,18 +145,6 @@ Now search for documents in the `books` index that contain the word `snow`:
     
     ```ruby
     [{"_index"=>"books", "_id"=>"Pdink4cBmDx329iqhzM2", "_score"=>1.5904956, "_source"=>{"title"=>"Snow Crash", "author"=>"Neal Stephenson", "release_date"=>"1992-06-01", "page_count"=>470}}]
-    ```
-  </DocTab>
-  <DocTab name="curl">
-    Run a search using the `_search` API:
-
-    ```bash
-    curl -X GET '/books/_search' -H 'Content-Type: application/json' -d
-    {
-        "query": {
-            "match": { "_all": "snow" }
-        }
-    }'
     ```
   </DocTab>
 </DocTabs>
