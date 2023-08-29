@@ -10,10 +10,44 @@ status: rough content
 import RoughContent from './partials/rough-content-notice.mdx'
 
 <RoughContent />
-This page will cover the following topics:
+To manage your project:
 
-- Rename your project
-- Edit Search Power 
-- Edit Search Data Lake
-- Edit Search Boost Window
-- Delete your project
+1. Navigate to [cloud.elastic.co](https://cloud.elastic.co/).
+
+2. Log in to your Elastic Cloud account.
+
+3. Select your project from the **Fully-managed projects** panel and click **Manage**.
+
+From the project page, you can perform the following actions.
+
+## Rename your project
+
+In the **Overview** section, click **Edit** next to the project's name.
+
+## Edit Search Power 
+
+Search Power controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project. Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
+
+![Edit Search Power](images/edit-search-power.png)
+
+We recommend running your typical search workload for 48-96 hours at the default Search Power setting of Balanced, and then adjust the setting based on search performance metrics if needed.
+
+## Edit Search Data Lake
+
+The Search Data Lake provides cost-optimized storage for your data.
+
+By default, all data is stored indefinitely in the Search Data Lake and remains searchable. You can specify different retention periods for each data source configured in your project.
+
+## Edit Search Boost Window
+
+Search Boost provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake.
+
+The default Search Boost window size is 7 days. To request an update to this default, contact [Support](https://support.elastic.co/).
+
+## Delete your project
+
+When you delete a project, you remove all the relevant data. 
+
+1. From the **Actions** menu on the top right corner, select **Delete project**.
+
+2. To confirm, enter the name of the project and click **Delete**.
