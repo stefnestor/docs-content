@@ -415,34 +415,35 @@ alias, the pattern `test*,-test3` still targets the indices for `test3`. To
 avoid this, exclude the concrete indices for the alias instead.
 </DocCallOut>
 
+{/* MISSING TRANSCLUSION
 Multi-target APIs that can target indices support the following query
-string parameters:
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+string parameters: */}
+{/* 
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div> */}
 {/* <CommonParmsIndexIgnoreUnavailable  /> */}
 
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* 
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div> */}
 {/* <CommonParmsAllowNoIndices  /> */}
 
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+{/* 
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div> */}
 {/* <CommonParmsExpandWildcards  /> */}
 
-
+{/* 
 The defaults settings for the above parameters depend on the API being used.
 
 Some multi-target APIs that can target indices also support the following query
-string parameter:
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
+string parameter: */}
+{/* 
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div> */}
 {/* <CommonParmsIgnore_throttled  /> */}
 
-
+{/* 
 <DocCallOut title="Note">
-APIs with a single target, such as the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDocsGet">get document API</DocLink> */}, do
+APIs with a single target, such as the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge> <DocLink id="enElasticsearchReferenceDocsGet">get document API</DocLink> , do
 not support multi-target syntax.
-</DocCallOut>
+</DocCallOut> */}
 
 <div id="multi-hidden"></div>
 
@@ -458,8 +459,13 @@ mirror Unix file-globbing behavior and provide a smoother transition path to
 hidden indices.
 
 You can create hidden data streams by setting `data_stream.hidden` to `true` in
-the stream's matching <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesPutTemplate">index template</DocLink> */}. You can hide
-indices using the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndexModules" section="index-hidden">`index.hidden`</DocLink> */} index setting.
+the stream's matching index template. You can hide
+indices using the `index.hidden` index setting.
+
+{/* MISSING LINK:
+<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge> <DocLink id="enElasticsearchReferenceIndicesPutTemplate">index template</DocLink>
+<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enElasticsearchReferenceIndexModules" section="index-hidden">`index.hidden`</DocLink>
+*/}
 
 The backing indices for data streams are hidden automatically. Some features,
 such as ((ml)), store information in hidden indices.
@@ -530,10 +536,14 @@ Accept: application/vnd.elasticsearch+json; compatible-with=7
 ## URL-based access control
 
 Many users use a proxy with URL-based access control to secure access to
-((es)) data streams and indices. For <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchMultiSearch">multi-search</DocLink> */},
- <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceDocsMultiGet">multi-get</DocLink> */}, and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDocsBulk">bulk</DocLink> */} requests, the user has
+((es)) data streams and indices. For multi-search, multi-get, and bulk requests, the user has
 the choice of specifying a data stream or  index in the URL and on each individual request
 within the request body. This can make URL-based access control challenging.
+
+{/* MISSING LINK
+<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enElasticsearchReferenceSearchMultiSearch">multi-search</DocLink>,
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enElasticsearchReferenceDocsMultiGet">multi-get</DocLink>, and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enElasticsearchReferenceDocsBulk">bulk</DocLink> 
+ */}
 
 To prevent the user from overriding the data stream or index specified in the
 URL, set `rest.action.multi.allow_explicit_index` to `false` in `elasticsearch.yml`.
@@ -574,9 +584,12 @@ these units use powers of 1024, so `1kb` means 1024 bytes. The supported units a
 ## Distance Units
 
 Wherever distances need to be specified, such as the `distance` parameter in
-the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceQueryDslGeoDistanceQuery">Geo-distance query</DocLink> */}), the default unit is meters if none is specified.
+the geo-distance query), the default unit is meters if none is specified.
 Distances can be specified in other units, such as `"1km"` or
 `"2mi"` (2 miles).
+
+{/* MISSING LINK:
+<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>  <DocLink id="enElasticsearchReferenceQueryDslGeoDistanceQuery">Geo-distance query</DocLink> */}
 
 The full list of units is listed below:
 
