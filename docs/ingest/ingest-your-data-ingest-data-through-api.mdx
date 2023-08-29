@@ -10,3 +10,195 @@ status: rough content
 import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
+
+The simplest method to getting data into Elasticsearch is through API calls.
+You can use the APIs of one of the 
+<DocLink id="serverlessElasticsearchClients" text="language clients"/> or the 
+HTTP APIs of Elasticsearch through the **Dev Tools** > **Console**. The examples 
+on this page uses the HTTP APIs to demonstrate how ingesting works in 
+Elasticsearch through APIs. If you want to ingest timestamped data or have a 
+more complex ingestion use case, refer to the 
+<DocLink id="serverlessElasticsearchIngestDataThroughIntegrations" /> page.
+
+
+## Using the bulk API
+
+You can index multiple JSON documents to an index and make it searchable by 
+using the 
+<DocBadge><DocIcon size="s" type="unlink" title="missing link to bulk API"/> missing link to bulk API</DocBadge>
+{/* <DocLink id="" text="bulk API"/> */}.
+
+The following example uses the bulk API to ingest some book-related data into an 
+index called `book`. The API call creates the index if it doesn't exist already.
+
+```bash
+POST /_bulk
+{ "index" : { "_index" : "books" } }
+{"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
+{ "index" : { "_index" : "books" } }
+{"title": "Revelation Space", "author": "Alastair Reynolds", "release_date": "2000-03-15", "page_count": 585}
+{ "index" : { "_index" : "books" } }
+{"title": "1984", "author": "George Orwell", "release_date": "1985-06-01", "page_count": 328}
+{ "index" : { "_index" : "books" } }
+{"title": "Fahrenheit 451", "author": "Ray Bradbury", "release_date": "1953-10-15", "page_count": 227}
+{ "index" : { "_index" : "books" } }
+{"title": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
+{ "index" : { "_index" : "books" } }
+{"title": "The Handmaid's Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
+```
+
+The API returns a response similar like this:
+
+```bash
+{
+  "errors": false,
+  "took": 902,
+  "items": [
+    {
+      "index": {
+        "_index": "books",
+        "_id": "MCYbQooByucZ6Gimx2BL",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 0,
+        "_primary_term": 1,
+        "status": 201
+      }
+    },
+    {
+      "index": {
+        "_index": "books",
+        "_id": "MSYbQooByucZ6Gimx2BL",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 1,
+        "_primary_term": 1,
+        "status": 201
+      }
+    },
+    {
+      "index": {
+        "_index": "books",
+        "_id": "MiYbQooByucZ6Gimx2BL",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 2,
+        "_primary_term": 1,
+        "status": 201
+      }
+    },
+    {
+      "index": {
+        "_index": "books",
+        "_id": "MyYbQooByucZ6Gimx2BL",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 3,
+        "_primary_term": 1,
+        "status": 201
+      }
+    },
+    {
+      "index": {
+        "_index": "books",
+        "_id": "NCYbQooByucZ6Gimx2BL",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 4,
+        "_primary_term": 1,
+        "status": 201
+      }
+    },
+    {
+      "index": {
+        "_index": "books",
+        "_id": "NSYbQooByucZ6Gimx2BL",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 1,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 5,
+        "_primary_term": 1,
+        "status": 201
+      }
+    }
+  ]
+}
+```
+
+The API call creates an index called `books` and add six documents to it. All of 
+those documents have the `title`, `author`, `release_date`, and `page_count` 
+fields with associated values. This data is now searchable.
+
+You can check if a certain book is in the index by calling the search API and 
+specifying either of the properties of the book in a `match` query, for example:
+
+```bash
+GET /books/_search
+{
+  "query": {
+    "match": {
+      "title": "Snow Crash"
+    }
+  }
+}
+```
+
+The API response will contain the whole document.
+
+
+## Using the index API
+
+Use the <DocBadge><DocIcon size="s" type="unlink" title="missing link to index API"/> missing link to index API</DocBadge>
+{/* <DocLink id="" text="index API"/> */}
+to ingest a single document to an index.
+
+Following the previous example, a new document will be added to the `book` 
+index.
+
+```bash
+POST books/_doc/
+{
+  "title": "Neuromancer",
+  "author": "William Gibson",
+  "release_date": "1984-07-01",
+  "page_count": "271"
+}
+```
+
+<DocCallOut>
+To ensure that the JSON body matches the index mappings, navigate to **Content** 
+> **Index management**, select the index you want to ingest the data into, and 
+click the **Mappings** tab.
+</DocCallOut>
+
+The API call indexes the new document into the `books` index. Now you can search 
+for it!
