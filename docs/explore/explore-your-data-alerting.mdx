@@ -15,8 +15,7 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 Alerting enables you to define _rules_, which detect complex conditions within different ((kib)) apps and trigger actions when those conditions are met. Alerting is integrated with [*((observability))*](((observability-guide))/create-alerts.html), [*Security*](((security-guide))/prebuilt-rules.html), <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaGeoAlerting">**Maps**</DocLink> */} and [*((ml-app))*](((ml-docs))/ml-configuring-alerts.html). It can be centrally managed from **((stack-manage-app))** and provides a set of built-in <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes">connectors</DocLink> */} and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaRuleTypes" section="stack-rules">rules</DocLink> */} for you to use.
 
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![((rules-ui)) UI](images/alerting-getting-started/user-alerting-alerting-overview.png) */}
+![((rules-ui)) UI](images/alerting/alerting-overview.png)
 
 <DocCallOut title="Important" color="warning">
 
@@ -44,7 +43,7 @@ For example, when monitoring a set of servers, a rule might:
 * Check every minute (schedule).
 * Send a warning email message via SMTP with subject `CPU on {{server}} is high` (action).
 
-image::images/what-is-a-rule.svg[Three components of a rule]
+![Three components of a rule](images/alerting/what-is-a-rule.svg)
 
 The following sections describe each part of the rule in more detail.
 
@@ -106,13 +105,13 @@ When checking for a condition, a rule might identify multiple occurrences of the
 
 Using the server monitoring example, each server with average CPU > 0.9 is tracked as an alert. This means a separate email is sent for each server that exceeds the threshold whenever the alert status changes.
 
-image::images/alerts.svg[((kib)) tracks each detected condition as an alert and takes action on each alert]
+![((kib)) tracks each detected condition as an alert and takes action on each alert](images/alerting/alerts.svg)
 
 ## Putting it all together
 
 A rule consists of conditions, actions, and a schedule. When conditions are met, alerts are created that render actions and invoke them. To make action setup and update easier, actions use connectors that centralize the information used to connect with ((kib)) services and third-party integrations. The following example ties these concepts together:
 
-image::images/rule-concepts-summary.svg[Rules, connectors, alerts and actions work together to convert detection into action]
+![Rules, connectors, alerts and actions work together to convert detection into action](images/alerting/rule-concepts-summary.svg)
 
 1. Any time a rule's conditions are met, an alert is created. This example checks for servers with average CPU \> 0.9. Three servers meet the condition, so three alerts are created. 
 1. Alerts create actions according to the action frequency, as long as they are not muted or throttled. When actions are created, its properties are filled with actual values. In this example, three actions are created when the threshold is met, and the template string `{{server}}` is replaced with the appropriate server name for each alert.
