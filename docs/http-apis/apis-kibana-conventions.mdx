@@ -26,12 +26,12 @@ Note: this will automatically prefix `s/{space_id}/` on the API request if ran f
 
 <div id="api-authentication"></div>
 
-### Authentication
+## Authentication
 The ((kib)) APIs support key- and token-based authentication.
 
 <div id="token-api-authentication"></div>
 
-#### Token-based authentication
+### Token-based authentication
 
 To use token-based authentication, you use the same username and password that you use to log into Elastic.
 In a given HTTP tool, and when available, you can select to use its basic authentication option,
@@ -39,7 +39,7 @@ which is where the username and password are stored in order to be passed as par
 
 <div id="key-authentication"></div>
 
-#### Key-based authentication
+### Key-based authentication
 
 To use key-based authentication, you create an API key using the Elastic Console, then specify the key in the header of your API calls.
 
@@ -47,7 +47,7 @@ To use key-based authentication, you create an API key using the Elastic Console
 
 <div id="api-calls"></div>
 
-### API calls
+## API calls
 API calls are stateless. Each request that you make happens in isolation from other calls and must include all of the necessary information for ((kib)) to fulfill the request. API requests return JSON output, which is a format that is machine-readable and works well for automation.
 
 Calls to the API endpoints require different operations. To interact with the ((kib)) APIs, use the following operations:
@@ -62,7 +62,7 @@ Calls to the API endpoints require different operations. To interact with the ((
 
 <div id="api-request-headers"></div>
 
-### Request headers
+## Request headers
 
 For all APIs, you must use a request header. The ((kib)) APIs support the `kbn-xsrf` and `Content-Type` headers.
 
