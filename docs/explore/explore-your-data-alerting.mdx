@@ -13,14 +13,15 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <div id="alerting-getting-started"></div>
 
-Alerting enables you to define _rules_, which detect complex conditions within different ((kib)) apps and trigger actions when those conditions are met. Alerting is integrated with [*((observability))*](((observability-guide))/create-alerts.html), [*Security*](((security-guide))/prebuilt-rules.html), <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaGeoAlerting">**Maps**</DocLink> */} and [*((ml-app))*](((ml-docs))/ml-configuring-alerts.html). It can be centrally managed from **((stack-manage-app))** and provides a set of built-in <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes">connectors</DocLink> */} and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaRuleTypes" section="stack-rules">rules</DocLink> */} for you to use.
+Alerting enables you to define _rules_, which detect complex conditions within different ((kib)) apps and trigger actions when those conditions are met.
+Alerting is integrated with **((observability))**, **Security**, **Maps**, and **((ml-app))**.
+It can be centrally managed from **((stack-manage-app))** and provides a set of built-in connectors and rules for you to use.
 
 ![((rules-ui)) UI](images/alerting/alerting-overview.png)
 
 <DocCallOut title="Important" color="warning">
-
-To make sure you can access alerting and actions, see the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAlertingSetup" section="prerequisites">setup and prerequisites</DocLink> */} section.
-
+To make sure you can access alerting and actions, refer to [Alerting set up](((kibana-ref))/alerting-setup.html)
+{/*<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enKibanaAlertingSetup" section="prerequisites">setup and prerequisites</DocLink> */}
 </DocCallOut>
 
 Alerting works by running checks on a schedule to detect conditions defined by a rule. When a condition is met, the rule tracks it as an _alert_ and responds by triggering one or more _actions_.
@@ -29,7 +30,8 @@ This section describes all of these elements and how they operate together.
 
 ## Rules
 
-A rule specifies a background task that runs on the ((kib)) server to check for specific conditions. ((kib)) provides two types of rules: stack rules that are built into ((kib)) and the rules that are registered by ((kib)) apps. For more information, refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaRuleTypes">Rule types</DocLink> */}.
+A rule specifies a background task that runs on the ((kib)) server to check for specific conditions. ((kib)) provides two types of rules: stack rules that are built into ((kib)) and the rules that are registered by ((kib)) apps. For more information, refer to [Rule types](((kibana-ref))/rule-types.html)
+{/*<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enKibanaRuleTypes">Rule types</DocLink> */}
 
 A rule consists of three main parts: 
 
@@ -56,9 +58,9 @@ Under the hood, ((kib)) rules detect conditions by running a JavaScript function
 These conditions are packaged and exposed as _rule types_. A rule type hides the underlying details of the condition, and exposes a set of parameters
 to control the details of the conditions to detect.
 
-For example, an <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaRuleTypeIndexThreshold">index threshold rule type</DocLink> */} lets you specify the index to query, an aggregation field, and a time window, but the details of the underlying ((es)) query are hidden.
+For example, an index threshold rule type lets you specify the index to query, an aggregation field, and a time window, but the details of the underlying ((es)) query are hidden.
 
-See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaRuleTypes">Rule types</DocLink> */} for the rules provided by ((kib)) and how they express their conditions.
+{/* See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enKibanaRuleTypes">Rule types</DocLink> for the rules provided by ((kib)) and how they express their conditions. */}
 
 <div id="alerting-concepts-scheduling"></div>
 
@@ -68,7 +70,8 @@ Rule schedules are defined as an interval between subsequent checks, and can ran
 
 <DocCallOut title="Important" color="warning">
 
-The intervals of rule checks in ((kib)) are approximate. Their timing is affected by factors such as the frequency at which tasks are claimed and the task load on the system. Refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAlertingProductionConsiderations">Alerting production considerations</DocLink> */} for more information.
+The intervals of rule checks in ((kib)) are approximate. Their timing is affected by factors such as the frequency at which tasks are claimed and the task load on the system. Refer to [Alerting production considerations](((kibana-ref))/alerting-production-considerations.html)
+{/*<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enKibanaAlertingProductionConsiderations">Alerting production considerations</DocLink> */}
 
 </DocCallOut>
 
@@ -84,7 +87,7 @@ When defining actions in a rule, you specify:
 * An action frequency
 * A mapping of rule values to properties exposed for that type of action
 
-Rather than repeatedly entering connection information and credentials for each action, ((kib)) simplifies action setup using <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes">connectors</DocLink> */}. For example if four rules send email notifications via the same SMTP service, they can all reference the same SMTP connector.
+Rather than repeatedly entering connection information and credentials for each action, ((kib)) simplifies action setup using connectors. For example if four rules send email notifications via the same SMTP service, they can all reference the same SMTP connector.
 
 The _action frequency_ defines when the action runs (for example, only when the alert status changes or at specific time intervals). Each rule type also has a set of the _action groups_ that affects when the action runs (for example, when the threshold is met or when the alert is recovered). If you want to reduce the number of notifications you receive without affecting their timeliness, some rule types support alert summaries. You can set the action frequency such that you receive notifications that summarize the new, ongoing, and recovered alerts at your preferred time intervals.
 
@@ -117,25 +120,3 @@ A rule consists of conditions, actions, and a schedule. When conditions are met,
 1. Alerts create actions according to the action frequency, as long as they are not muted or throttled. When actions are created, its properties are filled with actual values. In this example, three actions are created when the threshold is met, and the template string `{{server}}` is replaced with the appropriate server name for each alert.
 1. ((kib)) runs the actions, sending notifications by using a third party integration like an email service.
 1. If the third party integration has connection parameters or credentials, ((kib)) fetches these from the appropriate connector.
-
-<div id="alerting-concepts-differences"></div>
-
-## Differences from ((watcher))
-
- <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enKibanaWatcherUi">((watcher))</DocLink> */} and the ((kib)) ((alert-features)) are both used to detect
-conditions and can trigger actions in response, but they are completely
-independent alerting systems.
-
-This section will clarify some of the important differences in the function and
-intent of the two systems.
-
-Functionally, the ((alert-features)) differ in that: 
-
-* Scheduled checks are run on ((kib)) instead of ((es))
-* ((kib)) <DocLink id="serverlessElasticsearchExploreYourDataAlerting" section="conditions">rules hide the details of detecting conditions</DocLink> through rule types, whereas watches provide low-level control over inputs, conditions, and transformations.
-* ((kib)) rules track and persist the state of each detected condition through alerts. This makes it possible to mute and throttle individual alerts, and detect changes in state such as resolution.
-* Actions are linked to alerts. Actions are fired for each occurrence of a detected condition, rather than for the entire rule.
-
-At a higher level, the ((alert-features)) allow rich integrations across use cases like <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackApm">**APM**</DocLink> */}, <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaObservability" section="metrics">**Metrics**</DocLink> */}, <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackSiem">**Security**</DocLink> */}, and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaObservability" section="uptime">**Uptime**</DocLink> */}.
-Prepackaged rule types simplify setup and hide the details of complex, domain-specific detections, while providing a consistent interface across ((kib)).
-
