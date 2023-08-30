@@ -12,7 +12,7 @@
       "pageId": "serverlessElasticsearchGetStarted"
     },
     {
-      "label": "Client libraries",
+      "pageId": "serverlessElasticsearchClients",
       "items": [
         {
           "id": "serverlessElasticsearchPythonClient",
