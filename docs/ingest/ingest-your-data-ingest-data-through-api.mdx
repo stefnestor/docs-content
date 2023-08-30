@@ -11,7 +11,7 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-The simplest method to getting data into Elasticsearch is through API calls.
+The Elasticsearch APIs enable you to ingest data through code.
 You can use the APIs of one of the 
 <DocLink id="serverlessElasticsearchClients" text="language clients"/> or the 
 HTTP APIs of Elasticsearch through the **Dev Tools** > **Console**. The examples 
@@ -32,7 +32,7 @@ The following example uses the bulk API to ingest some book-related data into an
 index called `book`. The API call creates the index if it doesn't exist already.
 
 ```bash
-POST /_bulk
+POST /_bulk?refresh
 { "index" : { "_index" : "books" } }
 {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
 { "index" : { "_index" : "books" } }
@@ -154,7 +154,7 @@ The API returns a response similar like this:
 }
 ```
 
-The API call creates an index called `books` and add six documents to it. All of 
+The API call creates an index called `books` and adds six documents to it. All of 
 those documents have the `title`, `author`, `release_date`, and `page_count` 
 fields with associated values. This data is now searchable.
 
@@ -172,7 +172,7 @@ GET /books/_search
 }
 ```
 
-The API response will contain the whole document.
+The API response contains an array of hits. Each hit represents a document that matches the query and the whole document is returned. Only one document matches this query.
 
 
 ## Using the index API
@@ -195,7 +195,8 @@ POST books/_doc/
 ```
 
 <DocCallOut>
-To ensure that the JSON body matches the index mappings, navigate to **Content** > **Index management**, select the index you want to ingest the data into, and click the **Mappings** tab.
+Under the hood, the earlier bulk request created a data schema, called "mappings" for the `books` index.
+To review the mappings and ensure the JSON body matches the index mappings, navigate to **Content** > **Index management**, select the index you want to ingest the data into, and click the **Mappings** tab.
 </DocCallOut>
 
 The API call indexes the new document into the `books` index. Now you can search 
