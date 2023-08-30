@@ -1,0 +1,73 @@
+{
+  "mission": "Project settings",
+  "id": "serverless-settings",
+  "landingPageId": "serverlessSettingsProjectSettings",
+  "icon": "logoElastic",
+  "description": "Description to be written",
+  "items": [
+    {
+      "pageId": "serverlessSettingsManagement",
+      "items": [
+        {
+          "id": "serverlessSettingsManagementIngestPipelines"
+        },
+        {
+          "id": "serverlessSettingsManagementLogstashPipelines"
+        },
+        {
+          "id": "serverlessSettingsManagementElasticsearchIndices"
+        },
+        {
+          "id": "serverlessSettingsManagementTransforms"
+        },
+        {
+          "id": "serverlessSettingsManagementDataViews"
+        },
+        {
+          "id": "serverlessSettingsManagementSavedObjects"
+        },
+        {
+          "id": "serverlessSettingsManagementTags"
+        },
+        {
+          "id": "serverlessSettingsManagementFiles"
+        },
+        {
+          "id": "serverlessSettingsManagementApiKeys"
+        },
+        {
+          "id": "serverlessSettingsManagementReports"
+        },
+        {
+          "id": "serverlessSettingsManagementAdvancedSettings"
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessSettingsIntegrations"
+    },
+    {
+      "pageId": "serverlessSettingsFleet"
+    },
+    {
+      "pageId": "serverlessSettingsOtherSettings"
+    },
+    {
+      "pageId": "serverlessDevtoolsDeveloperTools",
+      "items": [
+        {
+          "id": "serverlessDevtoolsRunApiRequestsInTheConsole"
+        },
+        {
+          "id": "serverlessDevtoolsProfileQueriesAndAggregations"
+        },
+        {
+          "id": "serverlessDevtoolsDebugGrokExpressions"
+        },
+        {
+          "id": "serverlessDevtoolsDebugPainlessScripts"
+        }
+      ]
+    }
+  ]
+}
