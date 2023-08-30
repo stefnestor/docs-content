@@ -13,96 +13,19 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 
 <div id="ec-cloud-ingest-data"></div>
+ 
+Elastic Agent integrations are the preferred way to index time series (timestamped) data. 
+The Elastic Agent provides a single, unified way to add monitoring for logs, metrics, and other types of data to a host. 
+It can also protect hosts from security threats, query data from operating systems, and forward data from remote services or hardware. 
+Each Elastic Agent-based integration includes default ingestion rules, dashboards, and visualizations to help you start analyzing your data right away.
 
-You have a number of options for getting data into Elasticsearch, referred to as ingesting or indexing your data. Use Elastic Agent, Beats, Logstash, Elastic language clients, Elastic connectors, or the Enterprise Search web crawler. The option (or combination) selected depends on whether you are indexing general content or timestamped data.
+If no Elastic Agent integration is available for your data source, use Beats to collect your data.
+If neither Elastic Agent nor Beats supports your data source, use Logstash.
 
-<div id="ec-ingest-methods"></div>
-
-General content 
-    : Index content like HTML pages, catalogs and other files. Send data directly to Elasticseach from your application using an Elastic language client. Otherwise use Elastic content [connectors](((enterprise-search-ref))/connectors.html) or the Elastic [web crawler](((enterprise-search-ref))/crawler.html).
-
-Timestamped data 
-    : The preferred way to index timestamped data is to use Elastic Agent. Elastic Agent is a single, unified way to add monitoring for logs, metrics, and other types of data to a host. It can also protect hosts from security threats, query data from operating systems, and forward data from remote services or hardware. Each Elastic Agent based integration includes default ingestion rules, dashboards, and visualizations to start analyzing your data right away. Fleet Management enables you to centrally manage all of your deployed Elastic Agents from Kibana.
-
-    If no Elastic Agent integration is available for your data source, use Beats to collect your data.
-    Beats are data shippers designed to collect and ship a particular type of data from a server. You install a separate Beat for each type of data to collect.
-    Modules that provide default configurations, Elasticsearch ingest pipeline definitions, and Kibana dashboards
-    are available for some Beats, such as Filebeat and Metricbeat.
-    No Fleet management capabilities are provided for Beats.
-
-    If neither Elastic Agent or Beats supports your data source, use Logstash.
-    Logstash is an open source data collection engine with real-time pipelining capabilities that
-    supports a wide variety of data sources.
-    You might also use Logstash to persist incoming data to ensure data is not lost if there's an ingestion spike,
-    or if you need to send the data to multiple destinations.
-
-<div id="ec-data-ingest-pipeline"></div>
-
-## Designing a data ingestion pipeline
-
-While you can send data directly to Elasticsearch, data ingestion pipelines often include additional steps to manipulate the data, ensure data integrity, or manage the data flow.
-
-<DocCallOut title="Note">
-
-This diagram focuses on _timestamped_ data.
-
-</DocCallOut>
-
-[subs=attributes+]
-include::./diagrams/design-ingest-pipeline.asciidoc[A decision tree for choosing an approach to designing a new data ingestion pipeline.]
-
-<div id="ec-data-manipulation"></div>
-
-### Data manipulation
-
-It’s often necessary to sanitize, normalize, transform, or enrich your data before it’s indexed and stored in Elasticsearch.
-
-* Elastic Agent and Beats processors enable you to manipulate the data at the edge. This is useful if you need to control what data is sent across the wire, or need to enrich the raw data with information available on the host.
-
-* Elasticsearch ingest pipelines enable you to manipulate the data as it comes in. This avoids putting additional processing overhead on the hosts from which you’re collecting data.
-
-* Logstash enables you to avoid heavyweight processing at the edge, but still manipulate the data before sending it to Elasticsearch. This also enables you to send the processed data to multiple destinations.
-
-One reason for preprocessing your data is to control the structure of the data that's indexed into Elasticsearch--the data schema. For example, use an ingest pipeline to map your data to
-the Elastic Common Schema (ECS). Alternatively, use runtime fields at query time to:
-
-* Start working with your data without needing to understand how it’s structured
-* Add fields to existing documents without reindexing your data
-* Override the value returned from an indexed field
-* Define fields for a specific use without modifying the underlying schema
-
-<div id="ec-data-integrity"></div>
-
-### Data integrity
-
-Logstash boosts data resiliency for important data that you don't want to lose.
-Logstash offers an on-disk [persistent queue (PQ)](https://www.elastic.co/guide/en/logstash/current/persistent-queues.html) that absorbs bursts of events without an external buffering mechanism.
-It attempts to deliver messages stored in the PQ until delivery succeeds at least once.
-
-The Logstash [dead letter queue (DLQ)](https://www.elastic.co/guide/en/logstash/current/dead-letter-queues.html) provides on-disk storage for events that Logstash can't process, giving you a chance to evaluate them.
-You can use the dead_letter_queue input plugin to easily reprocess DLQ events.
-
-<div id="ec-data-flow"></div>
-
-### Data flow
-
-If you need to collect data from multiple Beats or Elastic Agents, consider using Logstash as a proxy.
-Logstash can receive data from multiple endpoints, even on different networks, and send the data on to Elasticsearch through a single firewall rule.
-You get more security for less work than if you set up individual rules for each endpoint.
-
-Logstash can send to multiple [outputs](https://www.elastic.co/guide/en/logstash/current/output-plugins.html) from a single pipeline to help you get the most value from your data.
 
 <div id="ec-data-ingest-where-to-go"></div>
 
 ## Where to go from here
-
-<div id="ec-ingest-solutions"></div>
-
-**Ingest data for Elastic solutions:**
-
-* [Add data to Elastic Enterprise Search](((enterprise-search-ref))/ingestion.html)
-* [Add data to Elastic Observability](((observability-guide))/logs-metrics-get-started.html)
-* [Add data to Elastic Security](((security-guide))/ingest-data.html)
 
 <div id="ec-ingest-timestamped"></div>
 
@@ -124,7 +47,7 @@ Logstash can send to multiple [outputs](https://www.elastic.co/guide/en/logstash
 
 **Ingest data from your application:**
 
-* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enCloudEcIngestGuides">Application ingest tutorials</DocLink> */}
+* Application ingest tutorials
 * [Elasticsearch language clients](https://www.elastic.co/guide/en/elasticsearch/client/index.html)
 * [Enterprise Search language clients](https://www.elastic.co/guide/en/enterprise-search/current/programming-language-clients.html)
 
@@ -136,4 +59,3 @@ Complete with sample visualizations, dashboards, and more, they provide a quick 
 to see what's possible with Elastic.
 
 </DocCallOut>
-

@@ -11,11 +11,24 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-Logstash is an open source data collection engine with real-time pipelining capabilities. Logstash can dynamically
-unify data from disparate sources and normalize the data into destinations of your choice. Cleanse and democratize all
-your data for diverse advanced downstream analytics and visualization use cases.
+Logstash is an open source data collection engine with real-time pipelining capabilities.
+It supports a wide variety of data sources, and can dynamically unify data from disparate sources and normalize the data into destinations of your choice. 
+Logstash can enrich and transform data with a broad array of input, filter, and output plugins.
+Many native codecs are available to further simplify the ingestion process. 
 
-While Logstash originally drove innovation in log collection, its capabilities extend well beyond that use case. Any
-type of event can be enriched and transformed with a broad array of input, filter, and output plugins, with many
-native codecs further simplifying the ingestion process. Logstash accelerates your insights by harnessing a greater
-volume and variety of data.
+You can use Logstash to extend Elastic Agent or Beats for advanced uses such as data persistence
+or if you need to send data to multiple destinations.
+
+<DocCallOut id="ls-serverless-notes" title="Logstash for Elastic Serverless">
+
+Logstash is a powerful, versatile ETL (Extract, Transform, Load) engine that can play an important role in organizations of all sizes.
+Some capabilities and features for large, self-managed users aren't appropriate for the Elastic Serverless offering.
+
+You'll use the logstash-output-elasticsearch plugin to send data to Elastic Serverless. 
+Some differences to note between Elastic Serverless and self-managed Elasticsearch: 
+
+- Elastic Serverless uses **Data Lifecycle Management (DLM)** instead of Index Lifecycle Management (ILM). If you add ILM settings to your elasticsearch output configuration, they are ignored and may cause errors.
+- Your logstash-output-elasticsearch configuration uses **API keys** for access Elasticsearch. User-based security settings are ignored and may cause errors. 
+- **Logstash monitoring** is still under development. 
+
+</DocCallOut>

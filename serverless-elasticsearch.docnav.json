@@ -123,19 +123,17 @@
         },
         {
           "id": "serverlessElasticsearchIngestDataThroughIntegrations",
-          "classic-sources": [ "enCloudEcCloudIngestData" ],
-          "items": [
-            {
-              "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
-            },
-            {
-              "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats",
+          "classic-sources": [ "enCloudEcCloudIngestData" ]
+        },
+        {
+          "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
+        },
+        {
+          "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats",
               "classic-sources": [ "enFleetBeatsAgentComparison" ]
-            },
-            {
-              "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
-            }
-          ]
+        },
+        {
+          "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
         }
       ]
     },
