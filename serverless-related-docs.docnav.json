@@ -14,6 +14,10 @@
           "classic-sources": ["enKibanaApiKeys"]
         },
         {
+          "id": "serverlessRelatedDocsActionConnectors",
+          "classic-sources": ["enKibanaActionTypes"]
+        },
+        {
           "id": "serverlessRelatedDocsDataViews",
           "classic-sources": ["enKibanaDataViews"]
         },
