@@ -35,6 +35,16 @@
           "id": "serverlessRelatedDocsLogstashPipelines"
         },
         {
+          "id": "serverlessRelatedDocsMachineLearning"
+        },
+        {
+          "id": "serverlessRelatedDocsMaintenanceWindows",
+          "classic-sources": ["enKibanaMaintenanceWindows"]
+        },
+        {
+          "id": "serverlessRelatedDocsMaps"
+        },
+        {
           "id": "serverlessRelatedDocsReports"
         },
         {
@@ -50,6 +60,9 @@
           "classic-sources": ["enElasticsearchReferenceTransforms"]
         }
       ]
+    },
+    {
+      "pageId": "serverlessRelatedDocsVisualizeLibrary"
     },
     {
       "pageId": "serverlessRelatedDocsIntegrations"
