@@ -1,0 +1,89 @@
+---
+id: serverlessRelatedDocsTags
+slug: /serverless/related-docs/tags
+title: Tags
+description: Use tags to categorize your saved objects, then filter for related objects based on shared tags.
+tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
+status: rough content
+---
+
+import RoughContent from '../../partials/rough-content-notice.mdx'
+
+<RoughContent />
+
+This content applies to: <DocBadge template="elasticsearch" /> <DocBadge template="observability" /> <DocBadge template="security" /> 
+
+<div id="managing-tags"></div>
+
+Use tags to categorize your saved objects,
+then filter for related objects based on shared tags.
+
+To get started, open the main menu, and then click **Stack Management > Tags**.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Tags management](images/managing-tags/management-tags-tag-management-section.png) */}
+
+## Required permissions
+
+To create tags, you must meet the minimum requirements.
+
+* Access to **Tags** requires the `Tag Management` Kibana privilege. To add the privilege, open the main menu,
+    and then click **Stack Management > Roles**.
+
+* The `read` privilege allows you to assign tags to the saved objects for which you have write permission.
+* The `write` privilege enables you to create, edit, and delete tags.
+
+<DocCallOut title="Note">
+Having the `Tag Management` ((kib)) privilege is not required to
+view tags assigned on objects you have `read` access to, or to filter objects by tags
+from the global search.
+</DocCallOut>
+
+<div id="settings-create-tag"></div>
+
+## Create a tag
+
+Create a tag to assign to your saved objects.
+
+1. Click **Create tag**.
+
+1. Enter a name and select a color for the new tag.
+
+    The name cannot be longer than 50 characters.
+
+1. Click **Create tag**.
+
+<div id="settings-assign-tag"></div>
+
+## Assign a tag to an object
+
+To assign and remove tags, you must have `write` permission
+on the objects to which you assign the tags.
+
+1. Find the tag you want to assign.
+
+1. Click the actions icon and then select **Manage assignments**.
+
+1. Select the objects to which you want to assign or remove tags.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* <DocImage size="xl" url="images/managing-tags/management-tags-manage-assignments-flyout.png" alt="Assign flyout" /> */}
+
+1. Click **Save tag assignments**.
+
+<div id="settings-delete-tag"></div>
+
+## Delete a tag
+
+When you delete a tag, you remove it from all saved objects that use it.
+
+1. Click the actions icon, and then select **Delete**.
+
+1. Click **Delete tag**.
+
+<DocCallOut title="Tip">
+To assign, delete, or clear multiple tags,
+select them in the **Tags** view, and then select
+the action from the **selected tags** menu.
+</DocCallOut>
+

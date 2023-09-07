@@ -1,0 +1,251 @@
+---
+id: serverlessRelatedDocsIndexManagement
+slug: /serverless/related-docs/index-management
+title: Index management
+description: View index settings, mappings, and statistics and perform operations, such as refreshing, flushing, and clearing the cache.
+tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
+status: rough content
+---
+
+import RoughContent from '../../partials/rough-content-notice.mdx'
+
+<RoughContent />
+
+This content applies to: <DocBadge template="elasticsearch" /> <DocBadge template="observability" /> <DocBadge template="security" /> 
+
+<div id="index-mgmt"></div>
+
+Elastic's **Index Management** features are an easy, convenient way to manage your
+cluster's indices, <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDataStreams">data streams</DocLink> */}, and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndexTemplates">index
+templates</DocLink> */}. Practicing good index management ensures your data is stored
+correctly and in the most cost-effective way possible.
+
+<div id="index-mgmt-wyl"></div>
+
+## What you'll learn
+
+You'll learn how to:
+
+* View and edit index settings.
+* View mappings and statistics for an index.
+* Perform index-level operations, such as refreshes.
+* View and manage data streams.
+* Create index templates to automatically configure new data streams and indices.
+
+<div id="index-mgm-req-permissions"></div>
+
+## Required permissions
+
+If you use ((es)) ((security-features)), the following
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSecurityPrivileges">security privileges</DocLink> */} are required:
+
+* The `monitor` cluster privilege to access Elastic's **Index Management** features.
+* The `view_index_metadata` and `manage` index privileges to view a data stream
+    or index's data.
+
+* The `manage_index_templates` cluster privilege to manage index templates.
+
+To add these privileges, go to **Stack Management > Security > Roles**.
+
+<div id="view-edit-indices"></div>
+
+## View and edit indices
+
+From the main menu, click **Project Settings > Index Management**.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Index Management UI](images/index-mgmt/-index-mgmt-management_index_labels.png) */}
+
+The **Index Management** page contains an overview of your indices.
+Badges indicate if an index is a <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceCcrPutFollow">follower index</DocLink> */}, a
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceRollupGetRollupIndexCaps">rollup index</DocLink> */}, or <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceUnfreezeIndexApi">frozen</DocLink> */}.
+
+Clicking a badge narrows the list to only indices of that type.
+You can also filter indices using the search bar.
+
+You can drill down into each index to investigate the index
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">settings</DocLink> */}, <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceMapping">mapping</DocLink> */}, and statistics.
+From this view, you can also edit the index settings. 
+
+To view and explore the documents within an index, click the compass icon <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* <DocImage flatImage alt="width=3%] next to the index name to open [Discover" url="images/index-mgmt/-index-mgmt-compassicon.png" /> */} */}.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Index Management UI](images/index-mgmt/-index-mgmt-management_index_details.png) */}
+
+## Perform index-level operations
+
+Use the **Manage** menu to perform index-level operations. This menu
+is available in the index details view, or when you select the checkbox of one or more
+indices on the overview page. The menu includes the following actions:
+
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesClose">**Close index**</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesForcemerge">**Force merge index**</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesRefresh">**Refresh index**</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesFlush">**Flush index**</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesDeleteIndex">**Delete index**</DocLink> */}
+* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSetUpLifecyclePolicy">**Add lifecycle policy**</DocLink> */}
+
+<div id="manage-data-streams"></div>
+
+## Manage data streams
+
+The **Data Streams** view lists your data streams and lets you examine or delete
+them.
+
+To view more information about a data stream, such as its generation or its
+current index lifecycle policy, click the stream's name.
+
+To view and explore the data within a data stream, click the compass icon <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* <DocImage flatImage alt="width=3%] next to the index name to open [Discover" url="images/index-mgmt/-index-mgmt-compassicon.png" /> */} */}.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Data stream details](((kibana-ref) */})/discover.html)(images/index-mgmt/-index-mgmt-management_index_data_stream_stats.png)
+
+To view information about the stream's backing indices, click the number in the
+**Indices** column.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Backing index](images/index-mgmt/-index-mgmt-management_index_data_stream_backing_index.png) */}
+
+<div id="manage-index-templates"></div>
+
+## Manage index templates
+
+The **Index Templates** view lists your templates and lets you examine,
+edit, clone, and delete them. Changes made to an index template do not
+affect existing indices.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Index templates](images/index-mgmt/-index-mgmt-management-index-templates.png) */}
+
+If you don't have any templates, you can create one using the **Create template**
+wizard.
+
+### Try it: Create an index template
+
+In this tutorial, you’ll create an index template and use it to configure two
+new indices.
+
+**Step 1. Add a name and index pattern**
+
+1. In the **Index Templates** view, open the **Create template** wizard.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Create wizard](images/index-mgmt/-index-mgmt-management_index_create_wizard.png) */}
+
+1. In the **Name** field, enter `my-index-template`.
+
+1. Set **Index pattern** to `my-index-*` so the template matches any index
+    with that index pattern.
+
+1. Leave **Data Stream**, **Priority**, **Version**, and **_meta field** blank or as-is.
+
+**Step 2. Add settings, mappings, and aliases**
+
+1. Add <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesComponentTemplate">component templates</DocLink> */} to your index template.
+
+    Component templates are pre-configured sets of mappings, index settings, and
+    aliases you can reuse across multiple index templates. Badges indicate
+    whether a component template contains mappings (*M*), index settings (*S*),
+    aliases (*A*), or a combination of the three.
+
+    Component templates are optional. For this tutorial, do not add any component
+    templates.
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Component templates page](images/index-mgmt/-index-mgmt-management_index_component_template.png) */}
+
+1. Define index settings. These are optional. For this tutorial, leave this
+    section blank.
+
+1. Define a mapping that contains an <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceObject">object</DocLink> */} field named `geo` with a
+    child <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceGeoPoint">`geo_point`</DocLink> */} field named `coordinates`:
+
+    <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* ![Mapped fields page](images/index-mgmt/-index-mgmt-management-index-templates-mappings.png) */}
+
+    Alternatively, you can click the **Load JSON** link and define the mapping as JSON:
+
+    ```js
+    {
+    "properties": {
+    "geo": {
+    "properties": {
+    "coordinates": {
+    "type": "geo_point"
+    }
+    }
+    }
+    }
+
+    ```
+    {/* NOTCONSOLE */}
+
+    You can create additional mapping configurations in the **Dynamic templates** and
+    **Advanced options** tabs. For this tutorial, do not create any additional
+    mappings.
+
+1. Define an alias named `my-index`:
+
+    ```js
+    {
+    "my-index": {}
+    }
+    ```
+    {/* NOTCONSOLE */}
+
+1. On the review page, check the summary. If everything looks right, click
+    **Create template**.
+
+**Step 3. Create new indices**
+
+You’re now ready to create new indices using your index template.
+
+1. Index the following documents to create two indices:
+    `my-index-000001` and `my-index-000002`.
+
+    ```console
+    POST /my-index-000001/_doc
+    {
+    "@timestamp": "2019-05-18T15:57:27.541Z",
+    "ip": "225.44.217.191",
+    "extension": "jpg",
+    "response": "200",
+    "geo": {
+    "coordinates": {
+    "lat": 38.53146222,
+    "lon": -121.7864906
+    }
+    },
+    "url": "https://media-for-the-masses.theacademyofperformingartsandscience.org/uploads/charles-fullerton.jpg"
+    }
+
+    POST /my-index-000002/_doc
+    {
+    "@timestamp": "2019-05-20T03:44:20.844Z",
+    "ip": "198.247.165.49",
+    "extension": "php",
+    "response": "200",
+    "geo": {
+    "coordinates": {
+    "lat": 37.13189556,
+    "lon": -76.4929875
+    }
+    },
+    "memory": 241720,
+    "url": "https://theacademyofperformingartsandscience.org/people/type:astronauts/name:laurel-b-clark/profile"
+    }
+    ```
+
+1. Use the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesGetIndex">get index API</DocLink> */} to view the configurations for the
+    new indices. The indices were configured using the index template you created
+    earlier.
+
+    ```console
+    GET /my-index-000001,my-index-000002
+    ```
+    {/* TEST[continued] */}
+

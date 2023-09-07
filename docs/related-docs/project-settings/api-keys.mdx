@@ -1,0 +1,85 @@
+---
+id: serverlessRelatedDocsApiKeys
+slug: /serverless/related-docs/api-keys
+title: API keys
+description: Create secondary credentials so that you can send requests on behalf of the user. Secondary credentials have the same or lower access rights.
+tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
+status: rough content
+---
+
+import RoughContent from '../../partials/rough-content-notice.mdx'
+
+<RoughContent />
+
+This content applies to: <DocBadge template="elasticsearch" /> <DocBadge template="observability" /> <DocBadge template="security" /> 
+
+<div id="api-keys"></div>
+
+API keys enable you to create secondary credentials so that you can send
+requests on behalf of a user. Secondary credentials have
+the same or lower access rights.
+
+For example, if you extract data from an ((es)) cluster on a daily
+basis, you might create an API key tied to your credentials,
+configure it with minimum access,
+and then put the API credentials into a cron job.
+Or, you might create API keys to automate ingestion of new data from
+remote sources, without a live user interaction.
+
+To manage API keys, open the main menu, then click **Stack Management > API Keys**.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* !["API Keys UI"](images/api-keys/user-security-api-keys-api-keys.png) */}
+
+<div id="api-keys-security-privileges"></div>
+
+## Security privileges
+
+You must have the `manage_security`, `manage_api_key`, or the `manage_own_api_key` 
+cluster privileges to use API keys in Elastic.  API keys can also be seen in a readonly view with access to the page and the `read_security` cluster privilege. To manage roles, open the main menu, then click 
+**Stack Management > Roles**, or use the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaRoleManagementApi">Role Management API</DocLink> */}. 
+
+<div id="create-api-key"></div>
+
+## Create an API key
+
+To create an API key, open the main menu, then click **Stack Management > API Keys > Create API key**.
+
+<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
+{/* !["Create API Key UI"](images/api-keys/user-security-api-keys-create-api-key.png) */}
+
+Once created, you can copy the API key (Base64 encoded) and use it to send requests to ((es)) on your behalf. For example:
+
+```bash
+curl --location --request GET 'http://localhost:5601/api/security/role' \
+--header 'Content-Type: application/json;charset=UTF-8' \
+--header 'kbn-xsrf: true' \
+--header 'Authorization: ApiKey aVZlLUMzSUJuYndxdDJvN0k1bU46aGxlYUpNS2lTa2FKeVZua1FnY1VEdw==' \
+```
+
+<DocCallOut title="Important" color="warning">
+
+API keys are intended for programmatic access. Do not use API keys to authenticate access via a web browser.
+
+</DocCallOut>
+
+<div id="udpate-api-key"></div>
+
+## Update an API key
+
+To update an API key, open the main menu, click **Stack Management > API Keys**, and then click on the name of the key.
+
+You can only update the `Restrict privileges` and `metadata` fields.
+
+<div id="view-api-keys"></div>
+
+## View and delete API keys
+
+The **API Keys** feature in Kibana lists your API keys, including the name, date created, and status. If an API key expires, its status changes from `Active` to `Expired`.
+
+If you have `manage_security` or `manage_api_key` permissions,
+you can view the API keys of all users, and see which API key was
+created by which user in which realm.
+If you have only the `manage_own_api_key` permission, you see only a list of your own keys.
+
+You can delete API keys individually or in bulk.

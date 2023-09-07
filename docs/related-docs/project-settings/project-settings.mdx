@@ -1,0 +1,194 @@
+---
+id: serverlessRelatedDocsProjectSettings
+slug: /serverless/related-docs/project-settings
+title: Project settings
+description: Manage the data, alerts and insights, content, and API keys for your project from a central location in Elastic.
+tags: [ 'serverless', 'management', 'overview' ]
+status: rough content
+---
+
+import RoughContent from '../../partials/rough-content-notice.mdx'
+
+<RoughContent />
+
+<div id="management"></div>
+
+**Project Settings -> Management** is home to UIs for managing all things Elastic&mdash;
+indices, data views, spaces, and more.
+
+Access to individual features is governed by Elastic privileges.
+Consult your administrator if you do not have the appropriate access.
+
+<div id="manage-ingest"></div>
+
+## Ingest
+
+{/* [cols="50, 50"] */}
+|  |  |
+|---|---|
+| [Ingest Pipelines](((ref))/ingest.html) | Create and manage ingest pipelines that let you perform common transformations and enrichments on your data. |
+| [Logstash Pipelines](((logstash-ref))/logstash-centralized-pipeline-management.html) | Create, edit, and delete your Logstash pipeline configurations. |
+
+<div id="manage-data"></div>
+
+## Data
+
+<DocTable columns={[
+  {
+    "title": "",
+    "width": "50%"
+  },
+  {
+    "title": "",
+    "width": "50%"
+  }
+]}>
+  <DocRow>
+    <DocCell>
+      [Index Management](((ref))/index-mgmt.html)
+      
+    </DocCell>
+    <DocCell>
+      View index settings, mappings, and statistics and perform operations, such as refreshing,
+      flushing, and clearing the cache. Practicing good index management ensures
+      that your data is stored cost effectively.
+      
+      
+    </DocCell>
+  </DocRow> 
+  <DocRow>
+    <DocCell>
+      [Transforms](((ref))/transforms.html)
+      
+    </DocCell>
+    <DocCell>
+      Use transforms to pivot existing ((es)) indices into summarized or entity-centric indices.
+      
+      
+    </DocCell>
+  </DocRow>
+
+</DocTable>
+
+<div id="manage-alerts-insights"></div>
+
+## Alerts and Insights
+
+{/* [cols="50, 50"] */}
+|  |  |
+|---|---|
+| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAlertingGettingStarted">((rules-ui))</DocLink> */} | Centrally <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaCreateAndManageRules">manage your rules</DocLink> */} across ((kib)). |
+| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaCases">Cases</DocLink> */} | Create and manage cases to investigate issues. |
+| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes">((connectors-ui))</DocLink> */} | Create and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes" section="managing-connectors">manage reusable connectors</DocLink> */} for triggering actions. |
+| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaReportingGettingStarted">Reporting</DocLink> */} | Monitor the generation of reports&mdash;PDF, PNG, and CSV&mdash;and download reports that you previously generated. A report can contain a dashboard, visualization, saved search, or Canvas workpad. |
+| Machine Learning Jobs | View, export, and import your <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackMlAnomalies">((anomaly-detect))</DocLink> */} and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackMlDfanalytics">((dfanalytics))</DocLink> */} jobs. Open the Single Metric Viewer or Anomaly Explorer to see your ((anomaly-detect)) results. |
+| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaMaintenanceWindows">Maintenance windows</DocLink> */} | Suppress rule notifications for scheduled periods of time. |
+
+<div id="manage-security"></div>
+
+## Security
+
+<DocTable columns={[
+  {
+    "title": "",
+    "width": "50%"
+  },
+  {
+    "title": "",
+    "width": "50%"
+  }
+]}>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessRelatedDocsApiKeys">API Keys</DocLink>
+      
+    </DocCell>
+    <DocCell>
+      Create secondary credentials so that you can send requests on behalf of the user.
+      Secondary credentials have the same or lower access rights.
+      
+      
+    </DocCell>
+  </DocRow>
+</DocTable>
+
+<div id="manage-kibana"></div>
+
+## ((kib))
+
+<DocTable columns={[
+  {
+    "title": "",
+    "width": "50%"
+  },
+  {
+    "title": "",
+    "width": "50%"
+  }
+]}>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessRelatedDocsDataViews">Data Views</DocLink>
+      
+    </DocCell>
+    <DocCell>
+      Manage the fields in the data views that retrieve your data from ((es)).
+      
+      
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessRelatedDocsSavedObjects">Saved Objects</DocLink>
+      
+    </DocCell>
+    <DocCell>
+      Copy, edit, delete, import, and export your saved objects.
+      These include dashboards, visualizations, maps, data views, Canvas workpads, and more.
+      
+      
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessRelatedDocsTags">Tags</DocLink>
+      
+    </DocCell>
+    <DocCell>
+      Create, manage, and assign tags to your saved objects.
+      
+      
+    </DocCell>
+  </DocRow>
+</DocTable>
+
+<div id="manage-stack"></div>
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+
+{/* The include that was here is another page */}
+

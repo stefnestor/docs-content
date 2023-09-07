@@ -1,0 +1,96 @@
+{
+  "mission": "Related docs",
+  "id": "serverless-related-docs",
+  "landingPageId": "serverlessRelatedDocs",
+  "icon": "logoElastic",
+  "description": "Description to be written",
+  "items": [
+    {
+      "pageId": "serverlessRelatedDocsProjectSettings",
+      "classic-sources": ["enKibanaManagement"],
+      "items": [
+        {
+          "id": "serverlessRelatedDocsApiKeys",
+          "classic-sources": ["enKibanaApiKeys"]
+        },
+        {
+          "id": "serverlessRelatedDocsActionConnectors",
+          "classic-sources": ["enKibanaActionTypes"]
+        },
+        {
+          "id": "serverlessRelatedDocsDataViews",
+          "classic-sources": ["enKibanaDataViews"]
+        },
+        {
+          "id": "serverlessRelatedDocsFiles"
+        },
+        {
+          "id": "serverlessRelatedDocsIndexManagement",
+          "classic-sources": ["enElasticsearchReferenceIndexMgmt"]
+        },
+        {
+          "id": "serverlessRelatedDocsIngestPipelines"
+        },
+        {
+          "id": "serverlessRelatedDocsLogstashPipelines"
+        },
+        {
+          "id": "serverlessRelatedDocsMachineLearning"
+        },
+        {
+          "id": "serverlessRelatedDocsMaintenanceWindows",
+          "classic-sources": ["enKibanaMaintenanceWindows"]
+        },
+        {
+          "id": "serverlessRelatedDocsMaps"
+        },
+        {
+          "id": "serverlessRelatedDocsReports"
+        },
+        {
+          "id": "serverlessRelatedDocsSavedObjects",
+          "classic-sources": ["enKibanaManagingSavedObjects"]
+        },
+        {
+          "id": "serverlessRelatedDocsTags",
+          "classic-sources": ["enKibanaManagingTags"]
+        },
+        {
+          "id": "serverlessRelatedDocsTransforms",
+          "classic-sources": ["enElasticsearchReferenceTransforms"]
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessRelatedDocsVisualizeLibrary"
+    },
+    {
+      "pageId": "serverlessRelatedDocsIntegrations"
+    },
+    {
+      "pageId": "serverlessRelatedDocsFleetAndElasticAgent"
+    },
+    {
+      "pageId": "serverlessRelatedDocsDeveloperTools",
+      "classic-sources": ["enKibanaDevtoolsKibana"],
+      "items": [
+        {
+          "id": "serverlessRelatedDocsRunApiRequestsInTheConsole",
+          "classic-sources": ["enKibanaConsoleKibana"]
+        },
+        {
+          "id": "serverlessRelatedDocsProfileQueriesAndAggregations",
+          "classic-sources": ["enKibanaXpackProfiler"]
+        },
+        {
+          "id": "serverlessRelatedDocsDebugGrokExpressions",
+          "classic-sources": ["enKibanaXpackGrokdebugger"]
+        },
+        {
+          "id": "serverlessRelatedDocsDebugPainlessScripts",
+          "classic-sources":[""]
+        }
+      ]
+    }
+  ]
+}
