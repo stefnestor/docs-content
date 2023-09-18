@@ -6,57 +6,57 @@
   "description": "Description to be written",
   "items": [
     {
-      "pageId": "serverlessSettingsProjectSettings",
+      "pageId": "serverlessProjectSettings",
       "classic-sources": ["enKibanaManagement"],
       "items": [
         {
-          "id": "serverlessSettingsApiKeys",
+          "id": "serverlessApiKeys",
           "classic-sources": ["enKibanaApiKeys"]
         },
         {
-          "id": "serverlessSettingsActionConnectors",
+          "id": "serverlessActionConnectors",
           "classic-sources": ["enKibanaActionTypes"]
         },
         {
-          "id": "serverlessSettingsDataViews",
+          "id": "serverlessDataViews",
           "classic-sources": ["enKibanaDataViews"]
         },
         {
-          "id": "serverlessSettingsFiles"
+          "id": "serverlessFiles"
         },
         {
-          "id": "serverlessSettingsIndexManagement",
+          "id": "serverlessIndexManagement",
           "classic-sources": ["enElasticsearchReferenceIndexMgmt"]
         },
         {
-          "id": "serverlessSettingsIngestPipelines"
+          "id": "serverlessIngestPipelines"
         },
         {
-          "id": "serverlessSettingsLogstashPipelines"
+          "id": "serverlessLogstashPipelines"
         },
         {
-          "id": "serverlessSettingsMachineLearning"
+          "id": "serverlessMachineLearning"
         },
         {
-          "id": "serverlessSettingsMaintenanceWindows",
+          "id": "serverlessMaintenanceWindows",
           "classic-sources": ["enKibanaMaintenanceWindows"]
         },
         {
-          "id": "serverlessSettingsMaps"
+          "id": "serverlessMaps"
         },
         {
-          "id": "serverlessSettingsReports"
+          "id": "serverlessReports"
         },
         {
-          "id": "serverlessSettingsSavedObjects",
+          "id": "serverlessSavedObjects",
           "classic-sources": ["enKibanaManagingSavedObjects"]
         },
         {
-          "id": "serverlessSettingsTags",
+          "id": "serverlessTags",
           "classic-sources": ["enKibanaManagingTags"]
         },
         {
-          "id": "serverlessSettingsTransforms",
+          "id": "serverlessTransforms",
           "classic-sources": ["enElasticsearchReferenceTransforms"]
         }
       ]
