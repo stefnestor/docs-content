@@ -1,93 +1,93 @@
 {
   "mission": "Shared features and capabilities",
   "id": "serverless-related-docs",
-  "landingPageId": "serverlessRelatedDocs",
+  "landingPageId": "serverlessSharedFeatureDocs",
   "icon": "logoElastic",
   "description": "Description to be written",
   "items": [
     {
-      "pageId": "serverlessRelatedDocsProjectSettings",
+      "pageId": "serverlessSettingsProjectSettings",
       "classic-sources": ["enKibanaManagement"],
       "items": [
         {
-          "id": "serverlessRelatedDocsApiKeys",
+          "id": "serverlessSettingsApiKeys",
           "classic-sources": ["enKibanaApiKeys"]
         },
         {
-          "id": "serverlessRelatedDocsActionConnectors",
+          "id": "serverlessSettingsActionConnectors",
           "classic-sources": ["enKibanaActionTypes"]
         },
         {
-          "id": "serverlessRelatedDocsDataViews",
+          "id": "serverlessSettingsDataViews",
           "classic-sources": ["enKibanaDataViews"]
         },
         {
-          "id": "serverlessRelatedDocsFiles"
+          "id": "serverlessSettingsFiles"
         },
         {
-          "id": "serverlessRelatedDocsIndexManagement",
+          "id": "serverlessSettingsIndexManagement",
           "classic-sources": ["enElasticsearchReferenceIndexMgmt"]
         },
         {
-          "id": "serverlessRelatedDocsIngestPipelines"
+          "id": "serverlessSettingsIngestPipelines"
         },
         {
-          "id": "serverlessRelatedDocsLogstashPipelines"
+          "id": "serverlessSettingsLogstashPipelines"
         },
         {
-          "id": "serverlessRelatedDocsMachineLearning"
+          "id": "serverlessSettingsMachineLearning"
         },
         {
-          "id": "serverlessRelatedDocsMaintenanceWindows",
+          "id": "serverlessSettingsMaintenanceWindows",
           "classic-sources": ["enKibanaMaintenanceWindows"]
         },
         {
-          "id": "serverlessRelatedDocsMaps"
+          "id": "serverlessSettingsMaps"
         },
         {
-          "id": "serverlessRelatedDocsReports"
+          "id": "serverlessSettingsReports"
         },
         {
-          "id": "serverlessRelatedDocsSavedObjects",
+          "id": "serverlessSettingsSavedObjects",
           "classic-sources": ["enKibanaManagingSavedObjects"]
         },
         {
-          "id": "serverlessRelatedDocsTags",
+          "id": "serverlessSettingsTags",
           "classic-sources": ["enKibanaManagingTags"]
         },
         {
-          "id": "serverlessRelatedDocsTransforms",
+          "id": "serverlessSettingsTransforms",
           "classic-sources": ["enElasticsearchReferenceTransforms"]
         }
       ]
     },
     {
-      "pageId": "serverlessRelatedDocsVisualizeLibrary"
+      "pageId": "serverlessVisualizeLibrary"
     },
     {
-      "pageId": "serverlessRelatedDocsIntegrations"
+      "pageId": "serverlessIntegrations"
     },
     {
-      "pageId": "serverlessRelatedDocsFleetAndElasticAgent"
+      "pageId": "serverlessFleetAndElasticAgent"
     },
     {
-      "pageId": "serverlessRelatedDocsDeveloperTools",
+      "pageId": "serverlessDevtoolsDeveloperTools",
       "classic-sources": ["enKibanaDevtoolsKibana"],
       "items": [
         {
-          "id": "serverlessRelatedDocsRunApiRequestsInTheConsole",
+          "id": "serverlessDevtoolsRunApiRequestsInTheConsole",
           "classic-sources": ["enKibanaConsoleKibana"]
         },
         {
-          "id": "serverlessRelatedDocsProfileQueriesAndAggregations",
+          "id": "serverlessDevtoolsProfileQueriesAndAggregations",
           "classic-sources": ["enKibanaXpackProfiler"]
         },
         {
-          "id": "serverlessRelatedDocsDebugGrokExpressions",
+          "id": "serverlessDevtoolsDebugGrokExpressions",
           "classic-sources": ["enKibanaXpackGrokdebugger"]
         },
         {
-          "id": "serverlessRelatedDocsDebugPainlessScripts",
+          "id": "serverlessDevtoolsDebugPainlessScripts",
           "classic-sources":["enKibanaPainlesslab"]
         }
       ]
