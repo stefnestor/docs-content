@@ -1,16 +1,30 @@
 ---
 id: serverlessRelatedDocs
-slug: /serverless/related-docs
-title: Related docs
-# description: Description to be written
-tags: [ 'serverless', 'related docs', 'overview' ]
-status: rough content
+slug: /serverless/shared-feature-docs
+title: Shared features and capabilities
+description: Learn about other features and capabilities that are available in our Serverless solutions.
+tags: [ 'serverless', 'observability', 'security', 'elasticsearch', 'overview' ]
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
-This section contains related documentation to help you manage and use Elastic.
-Some of the capabilities described here may not be relevant to the solution you are using.
-Each page under related docs lists the solutions to which the page applies: <DocBadge template="elasticsearch" />, <DocBadge template="observability" />, and <DocBadge template="security" />.
+
+This section describes features and capabilities that are common to more than one solution.
+Look for the doc badge on each page to see if a page is valid for the solution you're using:
+
+* <DocBadge template="elasticsearch" /> for the Elasticsearch solution
+* <DocBadge template="observability" /> for the Observability solution
+* <DocBadge template="security" /> for the Security solution
+
+<DocCallOut title="Important">
+Some solutions provide versions of shared features tailored to your use case.
+Read the main solution docs to learn how to use those features:
+
+* <DocLink id="serverlessElasticsearchWhatIsElasticsearchServerless" text="Elasticsearch serverless docs"/>
+* <DocLink id="serverlessObservabilityWhatIsObservabilityServerless" text="Observability serverless docs"/>
+* <DocLink id="serverlessSecurityWhatIsSecurityServerless" text="Security serverless docs"/>
+
+</DocCallOut>
