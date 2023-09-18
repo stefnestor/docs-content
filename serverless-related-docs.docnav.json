@@ -1,93 +1,93 @@
 {
   "mission": "Shared features and capabilities",
   "id": "serverless-related-docs",
-  "landingPageId": "serverlessRelatedDocs",
+  "landingPageId": "serverlessSharedFeatureDocs",
   "icon": "logoElastic",
   "description": "Description to be written",
   "items": [
     {
-      "pageId": "serverlessRelatedDocsProjectSettings",
+      "pageId": "serverlessProjectSettings",
       "classic-sources": ["enKibanaManagement"],
       "items": [
         {
-          "id": "serverlessRelatedDocsApiKeys",
+          "id": "serverlessApiKeys",
           "classic-sources": ["enKibanaApiKeys"]
         },
         {
-          "id": "serverlessRelatedDocsActionConnectors",
+          "id": "serverlessActionConnectors",
           "classic-sources": ["enKibanaActionTypes"]
         },
         {
-          "id": "serverlessRelatedDocsDataViews",
+          "id": "serverlessDataViews",
           "classic-sources": ["enKibanaDataViews"]
         },
         {
-          "id": "serverlessRelatedDocsFiles"
+          "id": "serverlessFiles"
         },
         {
-          "id": "serverlessRelatedDocsIndexManagement",
+          "id": "serverlessIndexManagement",
           "classic-sources": ["enElasticsearchReferenceIndexMgmt"]
         },
         {
-          "id": "serverlessRelatedDocsIngestPipelines"
+          "id": "serverlessIngestPipelines"
         },
         {
-          "id": "serverlessRelatedDocsLogstashPipelines"
+          "id": "serverlessLogstashPipelines"
         },
         {
-          "id": "serverlessRelatedDocsMachineLearning"
+          "id": "serverlessMachineLearning"
         },
         {
-          "id": "serverlessRelatedDocsMaintenanceWindows",
+          "id": "serverlessMaintenanceWindows",
           "classic-sources": ["enKibanaMaintenanceWindows"]
         },
         {
-          "id": "serverlessRelatedDocsMaps"
+          "id": "serverlessMaps"
         },
         {
-          "id": "serverlessRelatedDocsReports"
+          "id": "serverlessReports"
         },
         {
-          "id": "serverlessRelatedDocsSavedObjects",
+          "id": "serverlessSavedObjects",
           "classic-sources": ["enKibanaManagingSavedObjects"]
         },
         {
-          "id": "serverlessRelatedDocsTags",
+          "id": "serverlessTags",
           "classic-sources": ["enKibanaManagingTags"]
         },
         {
-          "id": "serverlessRelatedDocsTransforms",
+          "id": "serverlessTransforms",
           "classic-sources": ["enElasticsearchReferenceTransforms"]
         }
       ]
     },
     {
-      "pageId": "serverlessRelatedDocsVisualizeLibrary"
+      "pageId": "serverlessVisualizeLibrary"
     },
     {
-      "pageId": "serverlessRelatedDocsIntegrations"
+      "pageId": "serverlessIntegrations"
     },
     {
-      "pageId": "serverlessRelatedDocsFleetAndElasticAgent"
+      "pageId": "serverlessFleetAndElasticAgent"
     },
     {
-      "pageId": "serverlessRelatedDocsDeveloperTools",
+      "pageId": "serverlessDevtoolsDeveloperTools",
       "classic-sources": ["enKibanaDevtoolsKibana"],
       "items": [
         {
-          "id": "serverlessRelatedDocsRunApiRequestsInTheConsole",
+          "id": "serverlessDevtoolsRunApiRequestsInTheConsole",
           "classic-sources": ["enKibanaConsoleKibana"]
         },
         {
-          "id": "serverlessRelatedDocsProfileQueriesAndAggregations",
+          "id": "serverlessDevtoolsProfileQueriesAndAggregations",
           "classic-sources": ["enKibanaXpackProfiler"]
         },
         {
-          "id": "serverlessRelatedDocsDebugGrokExpressions",
+          "id": "serverlessDevtoolsDebugGrokExpressions",
           "classic-sources": ["enKibanaXpackGrokdebugger"]
         },
         {
-          "id": "serverlessRelatedDocsDebugPainlessScripts",
+          "id": "serverlessDevtoolsDebugPainlessScripts",
           "classic-sources":["enKibanaPainlesslab"]
         }
       ]
