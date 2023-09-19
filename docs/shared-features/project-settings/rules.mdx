@@ -1,0 +1,108 @@
+---
+id: serverlessRules
+slug: /serverless/rules
+title: Rules
+description: Alerting works by running checks on a schedule to detect conditions defined by a rule.
+tags: [ 'serverless', 'Elasticsearch', 'alerting', 'learn' ]
+status: rough content
+related: ['serverlessActionConnectors', 'serverlessElasticsearchExploreYourDataAlertings']
+---
+
+import RoughContent from '../../partials/rough-content-notice.mdx'
+
+<RoughContent />
+
+This content applies to: <DocBadge template="elasticsearch" />
+
+In general, a rule consists of three parts: 
+
+* _Conditions_: what needs to be detected?
+* _Schedule_: when/how often should detection checks run?
+* _Actions_: what happens when a condition is detected?
+
+For example, when monitoring a set of servers, a rule might:
+
+* Check for average CPU usage > 0.9 on each server for the last two minutes (condition).
+* Check every minute (schedule).
+* Send a warning email message via SMTP with subject `CPU on {{server}} is high` (action).
+
+{/* ![Three components of a rule](images/alerting/what-is-a-rule.svg)
+
+The following sections describe each part of the rule in more detail. */}
+
+## Conditions
+
+Under the hood, ((kib)) rules detect conditions by running a JavaScript function on the ((kib)) server, which gives it the flexibility to support a wide range of conditions, anything from the results of a simple ((es)) query to heavy computations involving data from multiple sources or external systems. 
+These conditions are packaged and exposed as _rule types_.
+A rule type hides the underlying details of the condition and exposes a set of parameters to control the details of the conditions to detect.
+
+For example, an index threshold rule type lets you specify the index to query, an aggregation field, and a time window, but the details of the underlying ((es)) query are hidden.
+
+{/* See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enKibanaRuleTypes">Rule types</DocLink> for the rules provided by ((kib)) and how they express their conditions. */}
+
+## Schedule
+
+Rule schedules are defined as an interval between subsequent checks, and can range from a few seconds to months.
+
+<DocCallOut title="Important" color="warning">
+
+The intervals of rule checks in ((kib)) are approximate. Their timing is affected by factors such as the frequency at which tasks are claimed and the task load on the system. Refer to [Alerting production considerations](((kibana-ref))/alerting-production-considerations.html)
+{/*<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enKibanaAlertingProductionConsiderations">Alerting production considerations</DocLink> */}
+
+</DocCallOut>
+
+## Actions
+
+When a condition is met, the rule tracks it as an _alert_ and responds by triggering one or more _actions_.
+Recovery actions likewise run when rule conditions are no longer met.
+
+Actions typically involve interaction with ((kib)) services or third party integrations.
+_Connectors_ enable actions to talk to these services and integrations.
+
+When defining actions in a rule, you specify:
+
+* A connector
+* An action frequency
+* A mapping of rule values to properties exposed for that type of action
+
+Rather than repeatedly entering connection information and credentials for each action, ((kib)) simplifies action setup using <DocLink id="serverlessActionConnectors" text="connectors"/>.
+For example if four rules send email notifications via the same SMTP service, they can all reference the same SMTP connector.
+
+The _action frequency_ defines when the action runs (for example, only when the alert status changes or at specific time intervals). 
+Each rule type also has a set of the _action groups_ that affects when the action runs (for example, when the threshold is met or when the alert is recovered).
+If you want to reduce the number of notifications you receive without affecting their timeliness, some rule types support alert summaries.
+You can set the action frequency such that you receive notifications that summarize the new, ongoing, and recovered alerts at your preferred time intervals.
+
+Some types of rules enable you to further refine the conditions under which actions run.
+For example, you can specify that actions run only when an alert occurs within a specific time frame or when it matches a KQL query.
+
+Each action definition is therefore a template: all the parameters needed to invoke a service are supplied except for specific values that are only known at the time the rule condition is detected. 
+
+In the server monitoring example, the `email` connector type is used, and `server` is mapped to the body of the email, using the template string `CPU on {{server}} is high`.
+
+When the rule detects the condition, it creates an alert containing the details of the condition.
+
+## Alerts
+
+When checking for a condition, a rule might identify multiple occurrences of the condition.
+((kib)) tracks each of these alerts separately.
+Depending on the action frequency, an action occurs per alert or at the specified alert summary interval.
+
+Using the server monitoring example, each server with average CPU > 0.9 is tracked as an alert.
+This means a separate email is sent for each server that exceeds the threshold whenever the alert status changes.
+
+{/* ![((kib)) tracks each detected condition as an alert and takes action on each alert](images/alerting.svg) */}
+
+## Putting it all together
+
+A rule consists of conditions, actions, and a schedule.
+When conditions are met, alerts are created that render actions and invoke them.
+To make action setup and update easier, actions use connectors that centralize the information used to connect with ((kib)) services and third-party integrations.
+The following example ties these concepts together:
+
+![Rules, connectors, alerts and actions work together to convert detection into action](images/rule-concepts-summary.svg)
+
+1. Any time a rule's conditions are met, an alert is created. This example checks for servers with average CPU \> 0.9. Three servers meet the condition, so three alerts are created. 
+1. Alerts create actions according to the action frequency, as long as they are not muted or throttled. When actions are created, its properties are filled with actual values. In this example, three actions are created when the threshold is met, and the template string `{{server}}` is replaced with the appropriate server name for each alert.
+1. ((kib)) runs the actions, sending notifications by using a third party integration like an email service.
+1. If the third party integration has connection parameters or credentials, ((kib)) fetches these from the appropriate connector.

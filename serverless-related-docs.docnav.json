@@ -48,6 +48,10 @@
           "id": "serverlessReports"
         },
         {
+          "id": "serverlessRules",
+          "classic-sources": [ "enKibanaAlertingGettingStarted" ]
+        },
+        {
           "id": "serverlessSavedObjects",
           "classic-sources": ["enKibanaManagingSavedObjects"]
         },
