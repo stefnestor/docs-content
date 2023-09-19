@@ -6,9 +6,6 @@
   "description": "Description to be written",
   "items": [
     {
-      "pageId": "serverlessGeneralSignUp"
-    },
-    {
       "label": "Invite your team",
       "pageId": "serverlessGeneralManageAccessToOrganization",
       "items": [
