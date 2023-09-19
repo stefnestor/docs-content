@@ -188,13 +188,7 @@
         },
         {
           "id": "serverlessElasticsearchExploreYourDataAlerting",
-          "classic-sources": [ "enKibanaAlertingGettingStarted" ],
-          "items": [
-            {
-              "id": "serverlessElasticsearchExploreYourDataCreateAnAlert",
-              "classic-sources": [ "enKibanaCreateAndManageRules" ]
-            }
-          ]
+          "classic-sources": [ "enKibanaCreateAndManageRules" ]
         },
         {
           "id": "serverlessElasticsearchExploreYourDataSearchAnalytics",
