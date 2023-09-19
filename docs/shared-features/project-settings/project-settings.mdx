@@ -2,193 +2,204 @@
 id: serverlessProjectSettings
 slug: /serverless/project-settings
 title: Project and management settings
-description: Manage the data, alerts and insights, content, and API keys for your project from a central location in Elastic.
+description: Manage your indices, data views, saved objects, settings, and more from a central location in Elastic.
 tags: [ 'serverless', 'management', 'overview' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from "../../partials/in-review-notice.mdx";
 
-<RoughContent />
+<InReview />
 
 <div id="management"></div>
 
-**Project Settings -> Management** is home to UIs for managing all things Elastic&mdash;
-indices, data views, spaces, and more.
+Go to **Project Settings** to manage your indices, data views, saved objects, settings, and more.
 
-Access to individual features is governed by Elastic privileges.
+Access to individual features is governed by Elastic user roles.
 Consult your administrator if you do not have the appropriate access.
+To learn more about roles, refer to <DocLink id="serverlessGeneralAssignUserRoles"/>.
 
 <div id="manage-ingest"></div>
 
-## Ingest
-
-{/* [cols="50, 50"] */}
-|  |  |
-|---|---|
-| [Ingest Pipelines](((ref))/ingest.html) | Create and manage ingest pipelines that let you perform common transformations and enrichments on your data. |
-| [Logstash Pipelines](((logstash-ref))/logstash-centralized-pipeline-management.html) | Create, edit, and delete your Logstash pipeline configurations. |
-
-<div id="manage-data"></div>
-
-## Data
-
 <DocTable columns={[
   {
-    "title": "",
+    "title": "Feature or capability",
+    "width": "25%"
+  },
+  {
+    "title": "Description",
     "width": "50%"
   },
   {
-    "title": "",
-    "width": "50%"
-  }
-]}>
-  <DocRow>
-    <DocCell>
-      [Index Management](((ref))/index-mgmt.html)
-      
-    </DocCell>
-    <DocCell>
-      View index settings, mappings, and statistics and perform operations, such as refreshing,
-      flushing, and clearing the cache. Practicing good index management ensures
-      that your data is stored cost effectively.
-      
-      
-    </DocCell>
-  </DocRow> 
-  <DocRow>
-    <DocCell>
-      [Transforms](((ref))/transforms.html)
-      
-    </DocCell>
-    <DocCell>
-      Use transforms to pivot existing ((es)) indices into summarized or entity-centric indices.
-      
-      
-    </DocCell>
-  </DocRow>
-
-</DocTable>
-
-<div id="manage-alerts-insights"></div>
-
-## Alerts and Insights
-
-{/* [cols="50, 50"] */}
-|  |  |
-|---|---|
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaAlertingGettingStarted">((rules-ui))</DocLink> */} | Centrally <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaCreateAndManageRules">manage your rules</DocLink> */} across ((kib)). |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaCases">Cases</DocLink> */} | Create and manage cases to investigate issues. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes">((connectors-ui))</DocLink> */} | Create and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaActionTypes" section="managing-connectors">manage reusable connectors</DocLink> */} for triggering actions. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaReportingGettingStarted">Reporting</DocLink> */} | Monitor the generation of reports&mdash;PDF, PNG, and CSV&mdash;and download reports that you previously generated. A report can contain a dashboard, visualization, saved search, or Canvas workpad. |
-| Machine Learning Jobs | View, export, and import your <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackMlAnomalies">((anomaly-detect))</DocLink> */} and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaXpackMlDfanalytics">((dfanalytics))</DocLink> */} jobs. Open the Single Metric Viewer or Anomaly Explorer to see your ((anomaly-detect)) results. |
-| <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaMaintenanceWindows">Maintenance windows</DocLink> */} | Suppress rule notifications for scheduled periods of time. |
-
-<div id="manage-security"></div>
-
-## Security
-
-<DocTable columns={[
-  {
-    "title": "",
-    "width": "50%"
-  },
-  {
-    "title": "",
-    "width": "50%"
+    "title": "Availabile in",
+    "width": "25%"
   }
 ]}>
   <DocRow>
     <DocCell>
       <DocLink id="serverlessApiKeys">API Keys</DocLink>
-      
     </DocCell>
     <DocCell>
       Create secondary credentials so that you can send requests on behalf of the user.
-      Secondary credentials have the same or lower access rights.
-      
-      
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
     </DocCell>
   </DocRow>
-</DocTable>
-
-<div id="manage-kibana"></div>
-
-## ((kib))
-
-<DocTable columns={[
-  {
-    "title": "",
-    "width": "50%"
-  },
-  {
-    "title": "",
-    "width": "50%"
-  }
-]}>
   <DocRow>
     <DocCell>
-      <DocLink id="serverlessDataViews">Data Views</DocLink>
-      
+      <DocLink id="serverlessActionConnectors"/>
+    </DocCell>
+    <DocCell>
+      Create and manage reusable connectors for triggering actions.
+    </DocCell>
+      <DocCell>
+        <DocBadge template="elasticsearch" />
+        <DocBadge template="observability" />
+        <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessDataViews"/>
     </DocCell>
     <DocCell>
       Manage the fields in the data views that retrieve your data from ((es)).
-      
-      
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
     </DocCell>
   </DocRow>
   <DocRow>
     <DocCell>
-      <DocLink id="serverlessSavedObjects">Saved Objects</DocLink>
-      
+      <DocLink id="serverlessIndexManagement"/>
+    </DocCell>
+    <DocCell>
+      View index settings, mappings, and statistics and perform operations on indices.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessIngestPipelines"/>
+    </DocCell>
+    <DocCell>
+      Create and manage ingest pipelines that parse, transform, and enrich your data.
+    </DocCell>
+      <DocCell>
+        <DocBadge template="elasticsearch" />
+        <DocBadge template="observability" />
+        <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessLogstashPipelines"/>
+    </DocCell>
+    <DocCell>
+      Create and manage Logstash pipelines that parse, transform, and enrich your data.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessMachineLearning"/>
+    </DocCell>
+    <DocCell>
+    View, export, and import your ((anomaly-detect)) and ((dfanalytics)) jobs.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessMaintenanceWindows"/>
+    </DocCell>
+    <DocCell>
+      Suppress rule notifications for scheduled periods of time.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+    <DocRow>
+    <DocCell>
+      <DocLink id="serverlessMaps"/>
+    </DocCell>
+    <DocCell>
+      Create beautiful maps from your geographical data.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessReports"/>
+    </DocCell>
+    <DocCell>
+      Monitor the generation of reports&mdash;PDF, PNG, and CSV&mdash;and download reports that you previously generated.
+      A report can contain a dashboard, visualization, saved search, or Canvas workpad.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessSavedObjects"/>
     </DocCell>
     <DocCell>
       Copy, edit, delete, import, and export your saved objects.
       These include dashboards, visualizations, maps, data views, Canvas workpads, and more.
-      
-      
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
     </DocCell>
   </DocRow>
   <DocRow>
     <DocCell>
-      <DocLink id="serverlessTags">Tags</DocLink>
-      
+      <DocLink id="serverlessTags"/>
     </DocCell>
     <DocCell>
       Create, manage, and assign tags to your saved objects.
-      
-      
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      <DocLink id="serverlessTransforms"/>
+    </DocCell>
+    <DocCell>
+      Use transforms to pivot existing ((es)) indices into summarized or entity-centric indices.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" />
+      <DocBadge template="observability" />
+      <DocBadge template="security" />
     </DocCell>
   </DocRow>
 </DocTable>
-
-<div id="manage-stack"></div>
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
