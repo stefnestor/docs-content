@@ -7,37 +7,19 @@ tags: [ 'serverless' ]
 status: rough content
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="elasticsearch" /> <DocBadge template="observability" /> <DocBadge template="security" /> 
 
 <DocRelatedArticles
   items={
     [
-       {
-        "title": "D3 Security",
-        "description": "Send a request to D3 Security.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/d3security-action-type.html",
-        "target": "_blank"
-      },
       {
         "title": "Email",
         "description": "Send email from your server.",
         "href": "https://www.elastic.co/guide/en/kibana/current/email-action-type.html",
-        "target": "_blank"
-      },
-      {
-        "title": "Generative AI",
-        "description": "Send a request to OpenAI.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/gen-ai-action-type.html",
-        "target": "_blank"
-      },
-      {
-        "title": "IBM Resilient",
-        "description": "Create an incident in IBM Resilient.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/resilient-action-type.html",
         "target": "_blank"
       },
       {
@@ -59,63 +41,9 @@ This content applies to: <DocBadge template="elasticsearch" /> <DocBadge templat
         "target": "_blank"
         },
       {
-        "title": "Opsgenie",
-        "description": "Create or close an alert in Opsgenie.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/opsgenie-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "PagerDuty",
-        "description": "Send an event in PagerDuty.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/pagerduty-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "ServerLog",
-        "description": "Add a message to a Kibana log.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/server-log-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "ServiceNow ITSM",
-        "description": "Create an incident in ServiceNow.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/servicenow-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "ServiceNow SecOps",
-        "description": "Create a security incident in ServiceNow.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/servicenow-sir-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "ServiceNow ITOM",
-        "description": "Create an event in ServiceNow.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/servicenow-itom-action-type.html",
-        "target": "_blank"
-        },
-      {
         "title": "Slack",
         "description": "Send a message to a Slack channel or user.",
         "href": "https://www.elastic.co/guide/en/kibana/current/slack-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "Swimlane",
-        "description": "Create an incident in Swimlane.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/swimlane-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "Tines",
-        "description": "Send events to a Tines Story.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/tines-action-type.html",
-        "target": "_blank"
-        },
-      {
-        "title": "Torq",
-        "description": "Trigger a Torq workflow.",
-        "href": "https://www.elastic.co/guide/en/kibana/current/torq-action-type.html",
         "target": "_blank"
         },
       {
@@ -124,21 +52,98 @@ This content applies to: <DocBadge template="elasticsearch" /> <DocBadge templat
         "href": "https://www.elastic.co/guide/en/kibana/current/webhook-action-type.html",
         "target": "_blank"
         },
-      {
+    ]
+  }
+/>
+
+       {/* {
+        "title": "D3 Security",
+        "description": "Send a request to D3 Security.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/d3security-action-type.html",
+        "target": "_blank"
+      }, */}
+
+
+      {/* {
+        "title": "Generative AI",
+        "description": "Send a request to OpenAI.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/gen-ai-action-type.html",
+        "target": "_blank"
+      }, */}
+      {/* {
+        "title": "IBM Resilient",
+        "description": "Create an incident in IBM Resilient.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/resilient-action-type.html",
+        "target": "_blank"
+      }, */}
+            {/* {
+        "title": "Opsgenie",
+        "description": "Create or close an alert in Opsgenie.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/opsgenie-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "PagerDuty",
+        "description": "Send an event in PagerDuty.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/pagerduty-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "ServerLog",
+        "description": "Add a message to a Kibana log.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/server-log-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "ServiceNow ITSM",
+        "description": "Create an incident in ServiceNow.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/servicenow-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "ServiceNow SecOps",
+        "description": "Create a security incident in ServiceNow.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/servicenow-sir-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "ServiceNow ITOM",
+        "description": "Create an event in ServiceNow.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/servicenow-itom-action-type.html",
+        "target": "_blank"
+        }, */}
+
+            {/* {
+        "title": "Swimlane",
+        "description": "Create an incident in Swimlane.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/swimlane-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "Tines",
+        "description": "Send events to a Tines Story.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/tines-action-type.html",
+        "target": "_blank"
+        }, */}
+      {/* {
+        "title": "Torq",
+        "description": "Trigger a Torq workflow.",
+        "href": "https://www.elastic.co/guide/en/kibana/current/torq-action-type.html",
+        "target": "_blank"
+        }, */}
+
+            {/* {
         "title": "Webhook - Case Management",
         "description": "Send a request to a Case Management web service.",
         "href": "https://www.elastic.co/guide/en/kibana/current/cases-webhook-action-type.html",
         "target": "_blank"
-        },
-      {
+        }, */}
+      {/* {
         "title": "xMatters",
         "description": "Send actionable alerts to on-call xMatters resources.",
         "href": "https://www.elastic.co/guide/en/kibana/current/xmatters-action-type.html",
         "target": "_blank"
-        },
-    ]
-  }
-/>
+        }, */}
 
 {/* Connectors provide a central place to store connection information for services and integrations with third party systems. 
 Actions are instantiations of a connector that are linked to rules and run as background tasks on the ((kib)) server when rule conditions are met. */}
