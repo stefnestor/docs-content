@@ -4,15 +4,12 @@ slug: /serverless/elasticsearch/explore-your-data-the-aggregations-api
 title: The Aggregations API
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'aggregations', 'reference' ]
-status: rough content
+status: in testing
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import TestContent from '../partials/in-testing-notice.mdx'
 
-<RoughContent />
-
-
-<div id="search-aggregations"></div>
+<TestContent />
 
 An aggregation summarizes your data as metrics, statistics, or other analytics.
 Aggregations help you answer questions like:
@@ -24,23 +21,20 @@ Aggregations help you answer questions like:
 
 ((es)) organizes aggregations into three categories:
 
-* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsMetrics">Metric</DocLink> */} aggregations that calculate metrics,
+* [Metric](((ref))/search-aggregations-metrics.html) aggregations that calculate metrics,
     such as a sum or average, from field values.
 
-* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsBucket">Bucket</DocLink> */} aggregations that
+* [Bucket](((ref))/search-aggregations-bucket.html) aggregations that
     group documents into buckets, also called bins, based on field values, ranges,
     or other criteria.
 
-* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsPipeline">Pipeline</DocLink> */} aggregations that take input from
+* [Pipeline](((ref))/search-aggregations-pipeline.html) aggregations that take input from
     other aggregations instead of documents or fields.
-
-<div id="run-an-agg"></div>
 
 ## Run an aggregation
 
-You can run aggregations as part of a <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchYourData">search</DocLink> */} by specifying the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchSearch">search API</DocLink> */}'s `aggs` parameter. The
-following search runs a
- <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchAggregationsBucketTermsAggregation">terms aggregation</DocLink> */} on
+You can run aggregations as part of a [search](((ref))/search-your-data.html) by specifying the [search API's](((ref))/search-your-data.html) `aggs` parameter. The
+following search runs a [terms aggregation](((ref))/search-aggregations-bucket-terms-aggregation.html) on
 `my-field`:
 
 ```console
@@ -93,8 +87,6 @@ Aggregation results are in the response's `aggregations` object:
 ```
 [^1]: Results for the `my-agg-name` aggregation.
 
-<div id="change-agg-scope"></div>
-
 ## Change an aggregation's scope
 
 Use the `query` parameter to limit the documents on which an aggregation runs:
@@ -122,8 +114,6 @@ GET /my-index-000001/_search
 {/* TEST[setup:my_index] */}
 {/* TEST[s/my-field/http.request.method/] */}
 
-<div id="return-only-agg-results"></div>
-
 ## Return only aggregation results
 
 By default, searches containing an aggregation return both search hits and
@@ -144,8 +134,6 @@ GET /my-index-000001/_search
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/my-field/http.request.method/] */}
-
-<div id="run-multiple-aggs"></div>
 
 ## Run multiple aggregations
 
@@ -172,12 +160,10 @@ GET /my-index-000001/_search
 {/* TEST[s/my-field/http.request.method/] */}
 {/* TEST[s/my-other-field/http.response.bytes/] */}
 
-<div id="run-sub-aggs"></div>
-
 ## Run sub-aggregations
 
 Bucket aggregations support bucket or metric sub-aggregations. For example, a
-terms aggregation with an <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsAvgAggregation">avg</DocLink> */}
+terms aggregation with an [avg](((ref))/search-aggregations-metrics-avg-aggregation.html)
 sub-aggregation calculates an average value for each bucket of documents. There
 is no level or depth limit for nesting sub-aggregations.
 
@@ -233,8 +219,6 @@ The response nests sub-aggregation results under their parent aggregation:
 [^1]: Results for the parent aggregation, `my-agg-name`.
 [^2]: Results for `my-agg-name`'s sub-aggregation, `my-sub-agg-name`.
 
-<div id="add-metadata-to-an-agg"></div>
-
 ## Add custom metadata
 
 Use the `meta` object to associate custom metadata with an aggregation:
@@ -276,8 +260,6 @@ The response returns the `meta` object in place:
 ```
 {/* TESTRESPONSE[s/\.\.\./"took": "$body.took", "timed_out": false, "_shards": "$body._shards", "hits": "$body.hits",/] */}
 
-<div id="return-agg-type"></div>
-
 ## Return the aggregation type
 
 By default, aggregation results include the aggregation's name but not its type.
@@ -304,9 +286,8 @@ The response returns the aggregation type as a prefix to the aggregation's name.
 
 <DocCallOut title="Important" color="warning">
 Some aggregations return a different aggregation type from the
-type in the request. For example, the terms,
- <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchAggregationsBucketSignificanttermsAggregation">significant terms</DocLink> */},
-and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsPercentileAggregation">percentiles</DocLink> */}
+type in the request. For example, the terms, [significant terms](((ref))/search-aggregations-bucket-significantterms-aggregation.html),
+and [percentiles](((ref))/search-aggregations-metrics-percentile-aggregation.html)
 aggregations return different aggregations types depending on the data type of
 the aggregated field.
 </DocCallOut>
@@ -325,12 +306,10 @@ the aggregated field.
 ```
 [^1]: The aggregation type, `histogram`, followed by a `#` separator and the aggregation's name, `my-agg-name`.
 
-<div id="use-scripts-in-an-agg"></div>
-
 ## Use scripts in an aggregation
 
 When a field doesn't exactly match the aggregation you need, you
-should aggregate on a <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceRuntime">runtime field</DocLink> */}:
+should aggregate on a [runtime field](((ref))/runtime.html):
 
 ```console
 GET /my-index-000001/_search?size=0
@@ -383,20 +362,16 @@ GET /my-index-000001/_search?size=0
 
 Scripts calculate field values dynamically, which adds a little
 overhead to the aggregation. In addition to the time spent calculating,
-some aggregations like <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsBucketTermsAggregation">`terms`</DocLink> */}
-and <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregationsBucketFiltersAggregation">`filters`</DocLink> */} can't use
+some aggregations like [`terms`](((ref))/search-aggregations-bucket-terms-aggregation.html)
+and [`filters`](((ref))/search-aggregations-bucket-filters-aggregation.html) can't use
 some of their optimizations with runtime fields. In total, performance costs
 for using a runtime field varies from aggregation to aggregation.
-
-{/* TODO when we have calculated fields we can link to them here. */}
-
-<div id="agg-caches"></div>
 
 ## Aggregation caches
 
 For faster responses, ((es)) caches the results of frequently run aggregations in
-the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceShardRequestCache">shard request cache</DocLink> */}. To get cached results, use the
-same <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchShardRouting" section="set-a-preference">`preference` string</DocLink> */} for each search. If you
+the [shard request cache](((ref))/shard-request-cache.html). To get cached results, use the
+same [`preference` string](((ref))/search-shard-routing.html#shard-and-node-preference) for each search. If you
 don't need search hits, <DocLink id="serverlessElasticsearchExploreYourDataTheAggregationsApi" section="return-only-aggregation-results">set `size` to `0`</DocLink> to avoid
 filling the cache.
 
@@ -404,16 +379,8 @@ filling the cache.
 shards' data doesn’t change between searches, the shards return cached
 aggregation results.
 
-<div id="limits-for-long-values"></div>
-
 ## Limits for `long` values
 
-When running aggregations, ((es)) uses <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceNumber">`double`</DocLink> */} values to hold and
-represent numeric data. As a result, aggregations on <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceNumber">`long`</DocLink> */} numbers
+When running aggregations, ((es)) uses [`double`](((ref))/number.html) values to hold and
+represent numeric data. As a result, aggregations on `long` numbers
 greater than +2<sup>53</sup>+ are approximate.
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
-
-{/* The include that was here is another page */}
