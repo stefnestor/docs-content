@@ -13,10 +13,10 @@
           "id": "serverlessGeneralInviteMembersToYourOrganization"
         },
         {
-          "id": "serverlessGeneralJoinOrganizationFromExistingCloudAccount"
+          "id": "serverlessGeneralAssignUserRoles"
         },
         {
-          "id": "serverlessGeneralAssignUserRoles"
+          "id": "serverlessGeneralJoinOrganizationFromExistingCloudAccount"
         }
       ]
     },
