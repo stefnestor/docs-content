@@ -4,12 +4,12 @@ slug: /serverless/maintenance-windows
 title: Maintenance windows
 description: Suppress rule notifications for scheduled periods of time.
 tags: [ 'serverless', 'Observability', 'Security' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="observability" /> <DocBadge template="security" /> 
 
@@ -19,7 +19,10 @@ This content applies to: <DocBadge template="observability" /> <DocBadge templat
 You can schedule single or recurring maintenance windows to temporarily reduce rule notifications.
 For example, a maintenance window prevents false alarms during planned outages.
 
+{/*
+TBD: Do they affect all rules in the project or is it finer control in Serverless? 
 Maintenance windows affect all rules in all ((kib)) apps and spaces.
+*/}
 Alerts continue to be generated, however notifications are suppressed as follows:
 
 - When an alert occurs during a maintenance window, there are no notifications.
@@ -42,7 +45,8 @@ For more details, refer to <DocLink id="enKibanaKibanaPrivileges">((kib)) privil
 
 ## Create and manange maintenance windows
 
-In **((stack-manage-app))** > **Maintenance Windows**, you can create, edit, and archive maintenance windows.
+In **((project-settings))** or **((project-settings))** > **((manage-app))**, click **Maintenance Windows**.
+You can create, edit, and archive maintenance windows.
 
 When you create a maintenance window, you must provide a name and a schedule.
 You can optionally configure it to repeat daily, monthly, yearly, or on a custom interval.
