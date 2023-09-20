@@ -16,8 +16,7 @@ It supports a wide variety of data sources, and can dynamically unify data from 
 Logstash can enrich and transform data with a broad array of input, filter, and output plugins.
 Many native codecs are available to further simplify the ingestion process. 
 
-You can use Logstash to extend Elastic Agent or Beats for advanced uses such as data persistence
-or if you need to send data to multiple destinations.
+You can use Logstash to extend Elastic Agent or Beats for advanced use cases such as data routed to multiple destinations or when you need to make your data persistent. 
 
 <DocCallOut id="ls-serverless-notes" title="Logstash for Elastic Serverless">
 
@@ -28,7 +27,7 @@ You'll use the logstash-output-elasticsearch plugin to send data to Elastic Serv
 Some differences to note between Elastic Serverless and self-managed Elasticsearch: 
 
 - Elastic Serverless uses **Data Lifecycle Management (DLM)** instead of Index Lifecycle Management (ILM). If you add ILM settings to your elasticsearch output configuration, they are ignored and may cause errors.
-- Your logstash-output-elasticsearch configuration uses **API keys** for access Elasticsearch. User-based security settings are ignored and may cause errors. 
-- **Logstash monitoring** is still under development. 
+- Your logstash-output-elasticsearch configuration uses **API keys** to access Elasticsearch from Logstash. User-based security settings are ignored and may cause errors. 
+- **Logstash monitoring** for Elastic Serverless is still under development. 
 
 </DocCallOut>
