@@ -51,7 +51,7 @@ An API key is a private, unique identifier for authentication and authorization.
 
 2. From the **Create an API key** panel, enter a name for your key and its expiration. 
 
-After you created your API key, you can start ingesting documents into Elasticsearch. 
+After you created your API key, save it somewhere safe as it is displayed only once and it is not stored anywhere in the project.
 
 ## Ingest
 
@@ -64,7 +64,9 @@ a single API call:
   <DocTab name="curl">
     ```bash
     # Call the `_bulk` API to create the index and ingest the documents:
-    curl -X POST "_bulk?pretty" -H "Content-Type: application/json" -d'
+    curl -X POST "${ES_URL}/_bulk?pretty" 
+    -H "Authorization: ApiKey "${API_KEY}""
+    -H "Content-Type: application/json" -d'
     { "index" : { "_index" : "books" } }
     {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
     { "index" : { "_index" : "books" } }
@@ -151,7 +153,7 @@ Now search for documents in the `books` index that contain the word `snow`:
     Run a search using the `_search` API:
 
     ```bash
-    curl -X GET '/books/_search' -H 'Content-Type: application/json' -d'
+    curl -X GET '${ES_URL}/books/_search' -H 'Content-Type: application/json' -d'
     {
         "query": {
             "match": { "_all": "snow" }
