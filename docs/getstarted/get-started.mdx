@@ -64,9 +64,10 @@ a single API call:
   <DocTab name="curl">
     ```bash
     # Call the `_bulk` API to create the index and ingest the documents:
-    curl -X POST "${ES_URL}/_bulk?pretty" 
-    -H "Authorization: ApiKey "${API_KEY}""
-    -H "Content-Type: application/json" -d'
+    curl -X POST "${ES_URL}/_bulk?pretty" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+    -d'
     { "index" : { "_index" : "books" } }
     {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
     { "index" : { "_index" : "books" } }
@@ -104,7 +105,7 @@ a single API call:
     ```ruby
     # First, instantiate your client:
     client = ElasticsearchServerless::Client.new(
-    api_key: 'your_api_key',
+    api_key: 'API_KEY',
     url: 'ES_URL'
     )
     # Then build your data:
@@ -158,9 +159,10 @@ Now search for documents in the `books` index that contain the word `snow`:
     Run a search using the `_search` API:
 
     ```bash
-    curl -X GET '${ES_URL}/books/_search'
-    -H 'Authorization: ApiKey '${API_KEY}''
-    -H 'Content-Type: application/json' -d'
+    curl -X GET "${ES_URL}/books/_search" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+     -d '
     {
         "query": {
             "match": { "_all": "snow" }
