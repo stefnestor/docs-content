@@ -43,6 +43,25 @@ A project allows you to use one of the Elastic solutions -- Elasticsearch Server
 
 Once the project is ready, select **Continue** to open the **Get started with Elasticsearch** main page. From here, you can select your favorite language client, ingest data, and start searching and exploring within minutes.
 
+### Create an API key
+
+An API key is a private, unique identifier for authentication and authorization. You'll need a private API key to securely connect to your project. You can use an existing key, or create a new one.
+
+1. On the **Get started with Elasticsearch** page, scroll down to **Prepare an API Key** and click **New**.
+
+2. From the **Create an API key** panel, enter a name for your key and its expiration. Then click **Create API key**.
+
+After you created your API key, it is displayed with its ID, name, expiration date, and its encoded version. Save this information somewhere safe as it is displayed only once and it is not stored anywhere in the project.
+
+#### Using an API key
+
+Pass your `encoded` API key in an `Authorization` header using the `ApiKey` scheme:
+
+```bash
+curl "${ES_URL}" \
+-H "Authorization: ApiKey ${API_KEY}"
+```
+
 ## Ingest
 
 Let's create an index and ingest some data!
@@ -54,7 +73,10 @@ a single API call:
   <DocTab name="curl">
     ```bash
     # Call the `_bulk` API to create the index and ingest the documents:
-    curl -X POST "_bulk?pretty" -H "Content-Type: application/json" -d'
+    curl -X POST "${ES_URL}/_bulk?pretty" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+    -d'
     { "index" : { "_index" : "books" } }
     {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
     { "index" : { "_index" : "books" } }
@@ -66,7 +88,7 @@ a single API call:
     { "index" : { "_index" : "books" } }
     {"title": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
     { "index" : { "_index" : "books" } }
-    {"title": "The Handmaid's Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
+    {"title": "The Handmaid'\''s Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
     { "index" : { "_index" : "books" } }
     {"title": "Neuromancer", "author": "William Gibson", "release_date": "1984-07-01", "page_count": 271}
     { "index" : { "_index" : "books" } }
@@ -78,19 +100,25 @@ a single API call:
     { "index" : { "_index" : "books" } }
     {"title": "Idoru", "author": "William Gibson", "release_date": "1994-09-04", "page_count": 304}
     { "index" : { "_index" : "books" } }
-    {"title": "All Tomorrow's Parties", "author": "William Gibson", "release_date": "1999-10-07", "page_count": 320}
+    {"title": "All Tomorrow'\''s Parties", "author": "William Gibson", "release_date": "1999-10-07", "page_count": 320}
     { "index" : { "_index" : "books" } }
     {"title": "The Colour of Magic", "author": "Terry Pratchett", "release_date": "1983-11-24", "page_count": 288}
     { "index" : { "_index" : "books" } }
     {"title": "The Light Fantastic", "author": "Terry Pratchett", "release_date": "1986-06-02", "page_count": 288}
     { "index" : { "_index" : "books" } }
-    {"title": "Világló részletek", "author": "Nádas Péter", "release_date": "2017-06-08", "page_count": 1212}'
+    {"title": "Világló részletek", "author": "Nádas Péter", "release_date": "2017-06-08", "page_count": 1212} 
+    '
     # Check the API response to make sure that the items are indexed correctly.
     ```
   </DocTab>
   <DocTab name="Ruby">
     ```ruby
-    # First, build your data:
+    # First, instantiate your client:
+    client = ElasticsearchServerless::Client.new(
+    api_key: 'API_KEY',
+    url: 'ES_URL'
+    )
+    # Then build your data:
     body = [
     { index: { _index: 'books', data: {title: "Snow Crash", author: "Neal Stephenson", release_date: "1992-06-01", page_count: 470} } },
     { index: { _index: 'books', data: {title: "Revelation Space", author: "Alastair Reynolds", release_date: "2000-03-15", page_count: 585} } },
@@ -108,7 +136,7 @@ a single API call:
     { index: { _index: 'books', data: {title: "The Light Fantastic", author: "Terry Pratchett", release_date: "1986-06-02", page_count: 288}}},
     { index: { _index: 'books', data: {title: "Világló részletek", author: "Nádas Péter", release_date: "2017-06-08", page_count: 1212}}}
     ]
-    # Then ingest the data via the bulk API:
+    # Ingest the data via the bulk API:
     > response = client.bulk(body: body)
     # You can check the response if the items are indexed and have an ID:
     > response['items']
@@ -141,12 +169,16 @@ Now search for documents in the `books` index that contain the word `snow`:
     Run a search using the `_search` API:
 
     ```bash
-    curl -X GET '/books/_search' -H 'Content-Type: application/json' -d'
+    curl -X GET "${ES_URL}/books/_search" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+     -d '
     {
         "query": {
             "match": { "_all": "snow" }
         }
-    }'
+    }
+    '
     ```
   </DocTab>
   <DocTab name="Ruby">
