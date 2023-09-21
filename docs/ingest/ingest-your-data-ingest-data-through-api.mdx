@@ -7,9 +7,9 @@ tags: [ 'serverless', 'elasticsearch', 'ingest', 'api', 'how to' ]
 status: rough content
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 The Elasticsearch APIs enable you to ingest data through code.
 You can use the APIs of one of the 
@@ -24,15 +24,16 @@ more complex ingestion use case, refer to the
 ## Using the bulk API
 
 You can index multiple JSON documents to an index and make it searchable by 
-using the 
-<DocBadge><DocIcon size="s" type="unlink" title="missing link to bulk API"/> missing link to bulk API</DocBadge>
+using the bulk API.
 {/* <DocLink id="" text="bulk API"/> */}.
 
 The following example uses the bulk API to ingest some book-related data into an 
 index called `book`. The API call creates the index if it doesn't exist already.
 
 ```bash
-POST /_bulk?refresh
+curl -X POST "${ES_URL}/_bulk" 
+-H "Authorization: ApiKey "${API_KEY}""
+-H "Content-Type: application/json" -d'
 { "index" : { "_index" : "books" } }
 {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
 { "index" : { "_index" : "books" } }
@@ -162,7 +163,8 @@ You can check if a certain book is in the index by calling the search API and
 specifying either of the properties of the book in a `match` query, for example:
 
 ```bash
-GET /books/_search
+curl -X GET "${ES_URL}/books/_search?pretty"
+-H "Authorization: ApiKey "${API_KEY}""
 {
   "query": {
     "match": {
@@ -177,7 +179,7 @@ The API response contains an array of hits. Each hit represents a document that 
 
 ## Using the index API
 
-Use the <DocBadge><DocIcon size="s" type="unlink" title="missing link to index API"/> missing link to index API</DocBadge>
+Use the index API
 {/* <DocLink id="" text="index API"/> */}
 to ingest a single document to an index.
 
@@ -185,7 +187,8 @@ Following the previous example, a new document will be added to the `book`
 index.
 
 ```bash
-POST books/_doc/
+curl -X POST "${ES_URL}books/_doc/
+-H "Authorization: ApiKey "${API_KEY}""
 {
   "title": "Neuromancer",
   "author": "William Gibson",
