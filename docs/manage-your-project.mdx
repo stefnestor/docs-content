@@ -4,12 +4,12 @@ slug: /serverless/elasticsearch/manage-project
 title: Manage your project
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'project', 'manage' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from './partials/rough-content-notice.mdx'
+import InReview from './partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 To manage your project:
 
 1. Navigate to [cloud.elastic.co](https://cloud.elastic.co/).
@@ -18,36 +18,25 @@ To manage your project:
 
 3. Select your project from the **Fully-managed projects** panel and click **Manage**.
 
-From the project page, you can perform the following actions.
+From the project page, you can:
 
-## Rename your project
+- **Rename your project**. In the **Overview** section, click **Edit** next to the project's name.
 
-In the **Overview** section, click **Edit** next to the project's name.
+- **Manage data and integrations**. Update your project data, including storage settings, indices, and data views, directly in your project.
 
-## Edit Search Power 
+- **Manage API keys**. Access your project and interact with its data programmatically using Elasticsearch APIs.
 
-Search Power controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project. Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
+- **Manage members**. Add members and manage their access to this project or other resources of your organization.
 
-![Edit Search Power](images/edit-search-power.png)
+- **Edit Search Power**. Search Power controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project. Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
 
-We recommend running your typical search workload for 48-96 hours at the default Search Power setting of Balanced, and then adjust the setting based on search performance metrics if needed.
+  ![Edit Search Power](images/edit-search-power.png)
 
-## Edit Search Data Lake
+  We recommend running your typical search workload for 48-96 hours at the default Search Power setting of Balanced, and then adjust the setting based on search performance metrics if needed.
 
-The Search Data Lake provides cost-optimized storage for your data.
+- **Edit Search Data Lake**. The Search Data Lake provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable. You can specify different retention periods for each data source configured in your project.
 
-By default, all data is stored indefinitely in the Search Data Lake and remains searchable. You can specify different retention periods for each data source configured in your project.
+- **Edit Search Boost Window**. Search Boost provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake. The default Search Boost window size is 7 days. To request an update to this default, contact [Support](https://support.elastic.co/).
 
-## Edit Search Boost Window
+- **Delete your project**. From the **Actions** menu on the top right corner, select **Delete project**. When you delete a project, you remove all the relevant data. 
 
-Search Boost provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake.
-
-The default Search Boost window size is 7 days. To request an update to this default, contact [Support](https://support.elastic.co/).
-
-## Delete your project
-
-When you delete a project, you remove all the relevant data. 
-
-1. From the **Actions** menu on the top right corner, select **Delete project**.
-
-2. To confirm, enter the name of the project and click **Delete**.
