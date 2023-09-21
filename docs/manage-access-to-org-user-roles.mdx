@@ -11,13 +11,19 @@ import InReview from './partials/in-review-notice.mdx'
 
 <InReview />
 
-Within an organization, users can have one or more roles and each role grants specific privileges. Organization owners can manage all roles under the organization and have full access to all serverless projects.
+Within an organization, users can have one or more roles and each role grants specific privileges. 
 
-- **Organization owner**. The role assigned by default to the person who created the organization. Has all privileges to projects, organization-level details and properties, billing details and subscription levels. The organization owner can manage the organization’s extensions, bundles, API keys, and traffic filters.
+You can set a role for all projects, or a specific role individually for each project. To apply individual roles per project, you must set the role for all projects to **None**.
+
+<DocImage size="l" url="images/individual-role.png" alt="Individual role" />
+
+The following roles are common to all project types:
+
+- **Organization owner**. This role is assigned by default to the person who created the organization. Can manage all roles under the organization and has full access to all serverless projects, organization-level details, billing details, and subscription levels. The organization owner can manage the organization’s extensions, bundles, API keys, and traffic filters.
 
 - **Billing admin**. Can manage an organization’s billing details, has access to all invoices and payment methods, and can make subscription changes.
 
-Each project type has a predefined set of roles. This list describes the scope of the different roles per project.
+In addition to the common roles, each project type has a predefined set of roles. This list describes the scope of the different roles per project.
 
 ## Elasticsearch Serverless
 
