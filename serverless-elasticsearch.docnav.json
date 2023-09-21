@@ -15,70 +15,22 @@
       "pageId": "serverlessElasticsearchClients",
       "items": [
         {
-          "id": "serverlessElasticsearchPythonClient",
-          "items": [
-            {
-              "id": "serverlessElasticsearchPythonGettingStarted"
-            },
-            {
-              "id": "serverlessElasticsearchPythonApisReferences"
-            }
-          ]
+          "id": "serverlessElasticsearchPythonGettingStarted"
         },
         {
-          "id": "serverlessElasticsearchNodejsClient",
-          "items": [
-            {
-              "id": "serverlessElasticsearchNodejsGettingStarted"
-            },
-            {
-              "id": "serverlessElasticsearchNodejsApisReferences"
-            }
-          ]
+          "id": "serverlessElasticsearchNodejsGettingStarted"
         },
         {
-          "id": "serverlessElasticsearchPhpClient",
-          "items": [
-            {
-              "id": "serverlessElasticsearchPhpGettingStarted"
-            },
-            {
-              "id": "serverlessElasticsearchPhpApisReferences"
-            }
-          ]
+          "id": "serverlessElasticsearchPhpGettingStarted"
         },
         {
-          "id": "serverlessElasticsearchGoClient",
-          "items": [
-            {
-              "id": "serverlessElasticsearchGoGettingStarted"
-            },
-            {
-              "id": "serverlessElasticsearchGoApisReferences"
-            }
-          ]
+          "id": "serverlessElasticsearchGoGettingStarted"
         },
         {
-          "id": "serverlessElasticsearchRubyClient",
-          "items": [
-            {
-              "id": "serverlessElasticsearchRubyGettingStarted"
-            },
-            {
-              "id": "serverlessElasticsearchRubyApisReferences"
-            }
-          ]
+          "id": "serverlessElasticsearchRubyGettingStarted"
         },
         {
-          "id": "serverlessElasticsearchJavaClient",
-          "items": [
-            {
-              "id": "serverlessElasticsearchJavaGettingStarted"
-            },
-            {
-              "id": "serverlessElasticsearchJavaApisReferences"
-            }
-          ]
+          "id": "serverlessElasticsearchJavaGettingStarted"
         }
       ]
     },
