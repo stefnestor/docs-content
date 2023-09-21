@@ -153,7 +153,9 @@ Now search for documents in the `books` index that contain the word `snow`:
     Run a search using the `_search` API:
 
     ```bash
-    curl -X GET '${ES_URL}/books/_search' -H 'Content-Type: application/json' -d'
+    curl -X GET '${ES_URL}/books/_search'
+    -H 'Authorization: ApiKey '${API_KEY}''
+    -H 'Content-Type: application/json' -d'
     {
         "query": {
             "match": { "_all": "snow" }
