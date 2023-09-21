@@ -2,27 +2,24 @@
 id: serverlessSavedObjects
 slug: /serverless/saved-objects
 title: Saved objects
-description: Manage your saved objects, including dashboards, visualizations, maps, data views, Canvas workpads, and more.
+description: Manage your saved objects, including dashboards, visualizations, maps, ((data-sources)), and more.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
 
-<div id="managing-saved-objects"></div>
+To get started, go to **((project-settings)) > ((manage-app)) > ((saved-objects-app))**.
 
-Edit, import, export, and copy your saved objects. These objects include
-dashboards, visualizations, maps, ((data-sources)), **Canvas** workpads, and other saved objects.
+![Saved objects](images/saved-object-management.png)
+{/* TO-DO: This screenshot needs to be refreshed and automated. */}
 
-To get started, open the main menu, and then click **Stack Management > Saved Objects**.
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Saved Objects](images/managing-saved-objects/management-management-saved-objects.png) */}
-
+{/*
+TBD: Need serverless-specific RBAC requirements
 ## Required permissions
 
 To access **Saved Objects**, you must have the required `Saved Objects Management` ((kib)) privilege.
@@ -33,21 +30,15 @@ To add the privilege, open the main menu, and then click **Stack Management > Ro
 Granting access to `Saved Objects Management` authorizes users to
 manage all saved objects in ((kib)), including objects that are managed by
 applications they may not otherwise be authorized to access.
-</DocCallOut>
-
-<div id="managing-saved-objects-view"></div>
+</DocCallOut> */}
 
 ## View and delete
 
 * To view and edit a saved object in its associated application, click the object title.
 
-* To show objects that use this object, so you know the
-    impact of deleting it, click the actions icon <DocIcon type="boxesHorizontal" title="More actions" />
-    and then select **Relationships**.
+* To show objects that use this object, so you know the impact of deleting it, click the actions icon <DocIcon type="boxesHorizontal" title="More actions" /> and then select **Relationships**.
 
 * To delete one or more objects, select their checkboxes, and then click **Delete**.
-
-<div id="managing-saved-objects-export-objects"></div>
 
 ## Import and export
 
@@ -55,28 +46,32 @@ Use import and export to move objects between different ((kib)) instances.
 These actions are useful when you have multiple environments for development and production.
 Import and export also work well when you have a large number of objects to update and want to batch the process.
 
-((kib)) also provides <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaSavedObjectsApiImport">import</DocLink> */} and
- <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enKibanaSavedObjectsApiExport">export</DocLink> */} APIs to automate this process.
+{/*
+TBD: Do these APIs exist for serverless?
+((kib)) also provides <DocLink id="enKibanaSavedObjectsApiImport">import</DocLink> and
+<DocLink id="enKibanaSavedObjectsApiExport">export</DocLink> APIs to automate this process.
+*/}
 
 ### Import
 
 Import multiple objects in a single operation.
 
 1. In the toolbar, click **Import**.
-1. Select the NDJSON file that
-    includes the objects you want to import.
+1. Select the NDJSON file that includes the objects you want to import.
 
-1. Select the import options. By default,
-    saved objects already in ((kib)) are overwritten.
+1. Select the import options. By default, saved objects already in ((kib)) are overwritten.
 
 1. Click **Import**.
 
+{/*
+TBD: Are these settings configurable in Serverless?
 <DocCallOut title="Note">
-The <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaSettings" section="savedObjects-maxImportExportSize">`savedObjects.maxImportExportSize`</DocLink> */} configuration setting
+The <DocLink id="enKibanaSettings" section="savedObjects-maxImportExportSize">`savedObjects.maxImportExportSize`</DocLink> configuration setting
 limits the number of saved objects to include in the file. The
- <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enKibanaSettings" section="savedObjects-maxImportPayloadBytes">`savedObjects.maxImportPayloadBytes`</DocLink> */} setting limits the overall
+<DocLink id="enKibanaSettings" section="savedObjects-maxImportPayloadBytes">`savedObjects.maxImportPayloadBytes`</DocLink> setting limits the overall
 size of the file that you can import.
 </DocCallOut>
+*/}
 
 ### Export
 
@@ -85,65 +80,13 @@ Export objects by selection or type.
 * To export specific objects, select them in the table, and then click **Export**.
 * To export objects by type, click **Export objects** in the toolbar.
 
-((kib)) creates an NDJSON with all your saved objects. By default, the NDJSON includes child objects related to the saved
-objects. Exported dashboards include their associated ((data-sources)).
+((kib)) creates an NDJSON with all your saved objects.
+By default, the NDJSON includes child objects related to the saved objects.
+Exported dashboards include their associated ((data-sources)).
 
+{/*
+TBD: Are these settings configurable in Serverless?
 <DocCallOut title="Note">
-The <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaSettings" section="savedObjects-maxImportExportSize">`savedObjects.maxImportExportSize`</DocLink> */} configuration setting
-limits the number of saved objects that you can export.
-</DocCallOut>
+The <DocLink id="enKibanaSettings" section="savedObjects-maxImportExportSize">`savedObjects.maxImportExportSize`</DocLink> configuration setting limits the number of saved objects that you can export.
+</DocCallOut> */}
 
-### Compatibility across versions
-
-With each release, ((kib)) introduces changes to the way saved objects are stored.
-When importing a saved object, ((kib)) runs the necessary migrations to ensure
-that the imported saved objects are compatible with the current version.
-
-However, saved objects can only be imported into the same version,
-a newer minor on the same major, or the next major.
-Exported saved objects are not backward compatible and cannot be imported
-into an older version of ((kib)). For example:
-
-|  |  |  |
-|---|---|---|
-| Exporting version | Importing version | Compatible? |
-| 6.7.0 | 6.8.1 | Yes |
-| 6.8.1 | 7.3.0 | Yes |
-| 7.3.0 | 7.11.1 | Yes |
-| 7.11.1 | 7.6.0 | No |
-| 6.8.1 | 8.0.0 | No |
-
-<div id="managing-saved-objects-copy-to-space"></div>
-
-## Copy to other ((kib)) spaces
-
-Copy saved objects and their related objects between spaces.
-
-1. Click the actions icon <DocIcon type="boxesHorizontal" title="More actions" />.
-1. Click **Copy to spaces**.
-1. Select the spaces in which to copy the object.
-1. Specify whether to automatically overwrite any objects that already exist
-    in the target spaces, or resolve them on a per-object basis.
-
-    The copy operation automatically includes child objects that are related to
-    the saved object. If you don't want this behavior, use
-    the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaSpacesApiCopySavedObjects">copy saved objects to space API</DocLink> */} instead.
-
-<div id="managing-saved-objects-share-to-space"></div>
-
-## Share to other ((kib)) spaces
-
-Make a single saved object available in multiple spaces.
-
-1. Click the actions icon <DocIcon type="boxesHorizontal" title="More actions" />.
-1. Select **Share to spaces**.
-1. Select the spaces in which to share the object.
-    Or, indicate that you want the object to be shared to _all spaces_,
-    which includes those that exist now and any created in the future.
-
-    Not all saved object types are shareable. If an object is shareable, the **Spaces** column shows where the object exists. You can click
-    those space icons to open the Share UI.
-
-    The share operation automatically includes child objects that are related to the saved objects.
-
-{/* The include that was here is another page */}
