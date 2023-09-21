@@ -102,7 +102,12 @@ a single API call:
   </DocTab>
   <DocTab name="Ruby">
     ```ruby
-    # First, build your data:
+    # First, instantiate your client:
+    client = ElasticsearchServerless::Client.new(
+    api_key: 'your_api_key',
+    url: 'ES_URL'
+    )
+    # Then build your data:
     body = [
     { index: { _index: 'books', data: {title: "Snow Crash", author: "Neal Stephenson", release_date: "1992-06-01", page_count: 470} } },
     { index: { _index: 'books', data: {title: "Revelation Space", author: "Alastair Reynolds", release_date: "2000-03-15", page_count: 585} } },
@@ -120,7 +125,7 @@ a single API call:
     { index: { _index: 'books', data: {title: "The Light Fantastic", author: "Terry Pratchett", release_date: "1986-06-02", page_count: 288}}},
     { index: { _index: 'books', data: {title: "Világló részletek", author: "Nádas Péter", release_date: "2017-06-08", page_count: 1212}}}
     ]
-    # Then ingest the data via the bulk API:
+    # Ingest the data via the bulk API:
     > response = client.bulk(body: body)
     # You can check the response if the items are indexed and have an ID:
     > response['items']
