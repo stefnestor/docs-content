@@ -11,169 +11,26 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-{/* import TransclusionStandaloneNote from './transclusion/standalone-note.mdx' */}
 
-<div id="beats-agent-comparison"></div>
+<div id="beats-reference"></div>
 
-Elastic provides two main ways to send data to ((es)):
+## ((beats))
 
-* **((beats))** are lightweight data shippers that send operational data to
-    ((es)). Elastic provides separate ((beats)) for different types of data, such as
-    logs, metrics, and uptime. Depending on what data you want to collect, you may
-    need to install multiple shippers on a single host.
+((beats)) are lightweight data shippers that send operational data to ((es)). 
+Elastic provides separate ((beats)) for different types of data, such as logs, metrics, and uptime. 
+Depending on what data you want to collect, you may need to install multiple shippers on a single host.
 
-* **((agent))** is a single agent for logs, metrics, security data, and threat
-    prevention. The ((agent)) can be deployed in two different modes:
-
-    * **Managed by ((fleet))** -- The ((agent)) policies and lifecycle are centrally managed by the ((fleet)) app in ((kib)). The Integrations app also lets you centrally add integrations with other popular services and systems. This is the recommended option for most users.
-
-    * **Standalone mode** -- All policies are applied to the ((agent)) manually as a YAML file. This is intended for more advanced users.
-        See <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enFleetInstallStandaloneElasticAgent">Install standalone ((agent))s (advanced users)</DocLink> */} for more information.
-
-        <div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="documents" title="missing snippet"/> missing snippet</div>
-{/* <TransclusionStandaloneNote  /> */}
-
-
-The method you use depends on your use case, which features you need, and
-whether you want to centrally manage your agents.
-
-((beats)) and ((agent)) can both send data directly to ((es)) or via ((ls)), where you
-can further process and enhance the data, before visualizing it in ((kib)).
-
-This article summarizes the features and functionality you need to be aware of
-before adding new ((agent))s or replacing your current ((beats)) with ((agent))s.
-Starting in version 7.14.0, ((agent)) is generally available (GA).
-
-<div id="choosing-between-agent-and-beats"></div>
-
-## Choosing between ((agent)) and ((beats))
-
-((agent)) is a single binary designed to provide the same functionality that the various ((beats)) provide today. However, some functionality gaps are being addressed as we strive to reach feature parity.
-
-The following steps will help you determine if ((agent)) can support your use case:
-
-1. Determine if the integrations you need are supported and Generally Available
-    (GA) on ((agent)). To find out if an integration is GA, see the
-    [((integrations)) quick reference table](((integrations-docs))/all_integrations).
-
-1. If the integration is available, check <DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" section="supported-outputs">Supported outputs</DocLink> to see whether the required output is also supported.
-
-1. Review <DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" section="capabilities-comparison">Capabilities comparison</DocLink> to determine if any features required by your deployment are supported. ((agent)) should support most of the features available on ((beats)) and is updated for each release.
-
-If you are satisfied with all three steps, then ((agent)) is suitable for your deployment. However, if any steps fail your assessment, you should continue using ((beats)), and review future updates or contact us in the [discuss forum](((forum))).
-
-<div id="supported-inputs-beats-and-agent"></div>
-
-## Supported inputs
-
-For ((agent))s that are centrally managed by ((fleet)), data collection is
-further simplified and defined by integrations. In this model, the decision on
-the inputs is driven by the integration you want to collect data from. The
-complexity of configuration details of various inputs is driven centrally by
-((fleet)) and specifically by the integrations.
-
-To find out if an integration is GA, see the
-[((integrations)) quick reference table](((integrations-docs))/all_integrations).
-
-<div id="supported-outputs-beats-and-agent"></div>
-
-## Supported outputs
-
-The following table shows the outputs supported by the ((agent)) in ((version)):
-
-<DocCallOut title="Note">
-((elastic-defend)) and APM Server have a different output matrix.
-</DocCallOut>
-
-| Output | ((beats)) | ((fleet))-managed ((agent)) | Standalone ((agent)) |
-|---|---|---|---|
-| ((es)) Service | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> only to the same cluster where ((fleet)) runs | <DocIcon type="check" title="Yes" /> |
-| ((es)) | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> only to the same cluster where ((fleet)) runs | <DocIcon type="check" title="Yes" /> |
-| ((ls)) | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> |
-| Kafka | <DocIcon type="check" title="Yes" /> | Under consideration | Under consideration |
-| Redis | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="cross" title="No" /> |
-| File | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="cross" title="No" /> |
-| Console | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="cross" title="No" /> |
-
-Currently, ((agent))s managed by ((fleet)) can only output to the same ((es)) cluster where ((fleet)) is running. Support for outputting to remote ((es)) clusters is under consideration for a future release.
-
-<div id="supported-configurations"></div>
-
-## Supported configurations
-
-| ((beats)) configuration | ((agent)) support |
+| Data | ((beats))|
 |---|---|
-| [Modules](((filebeat-ref))/configuration-filebeat-modules.html) | Supported via integrations. |
-| [Input setting overrides](((filebeat-ref))/advanced-settings.html) | Not configurable. Set to default values. |
-| [General settings](((filebeat-ref))/configuration-general-options.html) | Many of these global settings are now internal to the agent and for proper operations should not be modified. |
-| [Project paths](((filebeat-ref))/configuration-path.html) | ((agent)) configures these paths to provide a simpler and more streamlined configuration experience. |
-| [External configuration file loading](((filebeat-ref))/filebeat-configuration-reloading.html) | Config is distributed via policy. |
-| [Live reloading](((filebeat-ref))/_live_reloading.html) | Related to the config file reload. |
-| [Outputs](((filebeat-ref))/configuring-output.html) | Configured through ((fleet)). See <DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" section="supported-outputs">Supported outputs</DocLink>. |
-| [SSL](((filebeat-ref))/configuration-ssl.html) | Supported |
-| [((ilm-cap))](((filebeat-ref))/ilm.html) | Enabled by default although the Agent uses <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enFleetDataStreams">data streams</DocLink> */}. |
-| [((es)) index template loading](((filebeat-ref))/configuration-template.html) | No longer applicable |
-| [((kib)) endpoint](((filebeat-ref))/setup-kibana-endpoint.html) | New ((agent)) workflow doesn’t need this. |
-| [((kib)) dashboard loading](((filebeat-ref))/configuration-dashboards.html) | New ((agent)) workflow doesn’t need this. |
-| [Processors](((filebeat-ref))/defining-processors.html) | Processors can be defined at the integration level. Global processors, configured at the policy level, are currently under consideration. |
-| [Autodiscover](((filebeat-ref))/configuration-autodiscover.html) | Autodiscover is facilitated through <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enFleetDynamicInputConfiguration">dynamic inputs</DocLink> */}. ((agent)) does not support hints-based autodiscovery. |
-| [Internal queues](((filebeat-ref))/configuring-internal-queue.html) | ((fleet))-managed ((agent)) does not support configuration of the internal memory queues by an end user. You can configure the output queue settings in standalone ((agents)). |
-| [Load balance output hosts](((filebeat-ref))/elasticsearch-output.html#_loadbalance) | Within the ((fleet)) UI, you can add YAML settings to configure multiple hosts per output type, which enables load balancing. |
-| [Logging](((filebeat-ref))/configuration-logging.html) | Supported |
-| [HTTP Endpoint](((filebeat-ref))/http-endpoint.html) | Supported |
-| [Regular expressions](((filebeat-ref))/regexp-support.html) | Supported |
+| Audit data | [Auditbeat](https://www.elastic.co/products/beats/auditbeat) |
+| Log files and journals | [Filebeat](https://www.elastic.co/products/beats/filebeat)|
+| Cloud data | [Functionbeat](https://www.elastic.co/products/beats/functionbeat)|
+| Availability | [Heartbeat](https://www.elastic.co/products/beats/heartbeat)|
+| Metrics | [Metricbeat](https://www.elastic.co/products/beats/metricbeat)|
+| Network traffic | [Packetbeat](https://www.elastic.co/products/beats/packetbeat)|
+| Windows event logs | [Winlogbeat](https://www.elastic.co/products/beats/winlogbeat)|
 
-<div id="additional-capabilities-beats-and-agent"></div>
+((beats)) can send data to ((serverless-full)) directly or through ((ls)), where you
+can further process and enhance the data before visualizing it in ((kib)).
 
-## Capabilities comparison
-
-The following table shows a comparison of capabilities supported by ((beats)) and the ((agent)) in ((version)):
-
-| Item | ((beats)) | ((fleet))-managed ((agent)) | Standalone ((agent)) | Description |
-|---|---|---|---|---|
-| Single agent for all use cases | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | ((agent)) provides logs, metrics, and more. You'd need to install multiple ((beats)) for these use cases. |
-| Install integrations from web UI or API | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | ((agent)) integrations are installed with a convenient web UI or API, but ((beats)) modules are installed with a CLI. This installs ((es)) assets such as index templates and ingest pipelines, and ((kib)) assets such as dashboards. |
-| Configure from web UI or API | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> (optional) | ((fleet))-managed ((agent)) integrations can be configured in the web UI or API. Standalone ((agent)) can use the web UI, API, or YAML. ((beats)) can only be configured via YAML files. |
-| Central, remote agent policy management | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | ((agent)) policies can be centrally managed through ((fleet)). You have to manage ((beats)) configuration yourself or with a third-party solution. |
-| Central, remote agent binary upgrades | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | ((agent))s can be remotely upgraded through ((fleet)). You have to upgrade ((beats)) yourself or with a third-party solution. |
-| Add ((kib)) and ((es)) assets for a single integration or module | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | ((agent)) integrations allow you to add ((kib)) and ((es)) assets for a single integration at a time. ((beats)) installs hundreds of assets for all modules at once. |
-| Auto-generated ((es)) API keys | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | ((fleet)) can automatically generate API keys with limited permissions for each ((agent)), which can be individually revoked. Standalone ((agent)) and ((beats)) require you to create and manage credentials, and users often share them across hosts. |
-| Auto-generate minimal ((es)) permissions | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | ((fleet)) can automatically give ((agent))s minimal output permissions based on the inputs running. With standalone ((agent)) and ((beats)), users often give overly broad permissions because it's more convenient. |
-| Data streams support | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | Both ((beats)) (default as of version 8.0) and ((agent))s use <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enFleetDataStreams">data streams</DocLink> */} with easier index life cycle management and the [data stream naming scheme](https://www.elastic.co/blog/an-introduction-to-the-elastic-data-stream-naming-scheme). |
-| Variables and input conditions | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> (limited) | <DocIcon type="check" title="Yes" /> | ((agent)) offers [variables and input conditions](((fleet-guide))/dynamic-input-configuration.html) to dynamically adjust based on the local host environment. Users can configure these directly in YAML for standalone ((agent)) or using the ((fleet)) API for ((fleet))-managed ((agent)). The Integrations app allows users to enter variables, and we are considering a [UI to edit conditions](https://github.com/elastic/kibana/issues/108525). ((beats)) only offers static configuration. |
-| Allow non-superusers to manage assets and agents | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> (it's optional) | Starting with version 8.1.0, a superuser role is no longer required to use the ((fleet)) and Integrations apps and corresponding APIs. These apps are optional for standalone ((agent)). ((beats)) offers [finer grained](((filebeat-ref))/feature-roles.html) roles. |
-| Air-gapped network support | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> (with Limits) | <DocIcon type="check" title="Yes" /> | The ((integrations)) and ((fleet)) apps can be deployed in an air-gapped environment [self-managed deployment of the ((package-registry))](((fleet-guide))/air-gapped.html#air-gapped-diy-epr). ((fleet))-managed ((agent))s require a connection to our artifact repository for agent binary upgrades. However the policy can be modified to have agents point to a local server in order to fetch the agent binary. |
-| Run without root on host | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="cross" title="No" /> | ((fleet))-managed ((agent))s require root permission, in particular for ((elastic-defend)). Standalone ((agent))s also require root permissions. ((beats)) requires root permission only if it's configured to capture data that requires that level of permission. |
-| Multiple outputs | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | <DocIcon type="check" title="Yes" /> | The policy for a single ((fleet))-managed ((agent)) can specify multiple outputs. |
-| Separate monitoring cluster | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | ((fleet))-managed ((agent))s only provide a single global output to the same ((es)) cluster where ((fleet)) is running. We are considering support for [remote monitoring clusters](https://github.com/elastic/kibana/issues/104980). Standalone ((agent)) and ((beats)) can send to a remote monitoring cluster. |
-| Secret management | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="cross" title="No" /> | ((agent)) stores credentials in the agent policy. We are considering adding [keystore support](https://github.com/elastic/integrations/issues/244). ((beats)) allows users to access credentials in a local [keystore](((filebeat-ref))/keystore.html). |
-| Progressive or canary deployments | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> | <DocIcon type="check" title="Yes" /> | ((fleet)) does not have a feature to deploy an ((agent)) policy update progressively but we are considering [improved support](https://github.com/elastic/kibana/issues/108267). With standalone ((agent)) and ((beats)) you can deploy configuration files progressively using third party solutions. |
-| Multiple configurations per host | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> (uses input conditions instead) | <DocIcon type="cross" title="No" /> (uses input conditions instead) | ((agent)) uses a single ((agent)) policy for configuration, and uses [variables and input conditions](((fleet-guide))/dynamic-input-configuration.html) to adapt on a per-host basis. ((beats)) supports multiple configuration files per host, enabling third party solutions to deploy files hierarchically or in multiple groups, and enabling finer-grained access control to those files. |
-| Compatible with version control and infrastructure as code solutions | <DocIcon type="check" title="Yes" /> | <DocIcon type="cross" title="No" /> (only via API) | <DocIcon type="check" title="Yes" /> | ((fleet)) stores the agent policy in ((es)). It does not integrate with external version control or infrastructure as code solutions, but we are considering [improved support](https://github.com/elastic/kibana/issues/108524). However, ((beats)) and ((agent)) in standalone mode use a YAML file that is compatible with these solutions. |
-
-<div id="agent-monitoring-support"></div>
-
-## ((agent)) monitoring support
-
-You configure the collection of agent metrics in the agent policy. If metrics
-collection is selected (the default), all ((agent))s enrolled in the policy will
-send metrics data to ((es)) (the output is configured globally).
-
-The following image shows the **Agent monitoring** settings for the default agent
-policy:
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Screen capture of agent monitoring settings in the default agent policy](images/beats-agent-comparison/-ingest-management-agent-monitoring-settings.png) */}
-
-There are also pre-built dashboards for agent metrics that you can access
-under **Assets** in the ((agent)) integration:
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Screen capture of ((agent)) monitoring assets](images/beats-agent-comparison/-ingest-management-agent-monitoring-assets.png) */}
-
-The **[((agent))] Agent metrics** dashboard shows an aggregated view of agent metrics:
-
-<div style={{ backgroundColor: "#F1F4FA", width: "100%", height: "250px", textAlign: "center", paddingTop: "110px", marginBottom: "20px" }}><DocIcon type="image" title="missing image"/> missing image</div>
-{/* ![Screen capture showing ((agent)) metrics](images/beats-agent-comparison/-ingest-management-agent-metrics-dashboard.png) */}
-
-For more information, refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enFleetMonitorElasticAgent">Monitor ((agent))s</DocLink> */}.
+Check out [Get started with Beats](((beats-ref))/getting-started.html) for some next steps.
