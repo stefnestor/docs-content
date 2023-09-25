@@ -11,15 +11,15 @@ import InReview from '../partials/in-review-notice.mdx'
 
 <InReview />
 
-This page guides you through the installation process of the Serverless Ruby 
-client, shows you how to instantiate the client, and how to perform basic 
+This page guides you through the installation process of the Serverless Ruby
+client, shows you how to initialize the client, and how to perform basic
 Elasticsearch operations with it.
 
 
 ## Requirements
 
 * Ruby 3.0 or higher installed on your system.
-* You must use the Elastiscearch Serverless service to use the 
+* You must use the Elastiscearch Serverless service to use the
 `elasticsearch-serverless` gem.
 
 
@@ -27,8 +27,8 @@ Elasticsearch operations with it.
 
 ### From GitHub's releases
 
-You can install the Elasticsearch Serverless Ruby client from GitHub's 
-releases. You will need a GitHub token (can be generated at 
+You can install the Elasticsearch Serverless Ruby client from GitHub's
+releases. You will need a GitHub token (can be generated at
 https://github.com/settings/tokens):
 
 ```bash
@@ -42,7 +42,7 @@ for the latests available versions.
 
 ### From the source code
 
-You can install the Elasticsearch Serverless Ruby client with the following 
+You can install the Elasticsearch Serverless Ruby client with the following
 commands:
 
 ```bash
@@ -63,7 +63,7 @@ gem 'elasticsearch-serverless', path: '../path/to/client-code'
 
 ### Running a Ruby console
 
-Additionally, you can have a Ruby console with the required librares to use the 
+Additionally, you can have a Ruby console with the required librares to use the
 client by using a rake task:
 
 ```bash
@@ -73,36 +73,33 @@ $ bundle exec rake console
 <DocImage url="images/rake-console.gif" alt="Rake console"/>
 
 
-## Instantiate a client
+## Initialize the client
 
-You can instantiate a client by running the following command:
+Initialize the client using your API key and Cloud URL:
 
 ```ruby
 client = ElasticsearchServerless::Client.new(
-  api_key: 'your_api_key',
-  url: 'https://my-deployment-url'
+  api_key: 'your_api_key,
+  url: 'https://your_cloud_url'
 )
 ```
 
-You can copy the code from your Elasticsearch Serverless deployment home page.
-
-<DocImage url="images/serverless-api-key.gif" alt="Create and copy Apy Key"/>
+To get an API key or Cloud URL for the project, see <DocLink id="serverlessElasticsearchGetStarted" />.
 
 
 ## Using the API
 
-After you instantiated a client with your API key and Elasticsearch endpoint, 
-you can start ingesting documents into the Elasticsearch Service. You can use 
-the Bulk API for this. This API enables you to index, update, and delete several 
+After you've initialized the client, you can start ingesting documents. You can use
+the Bulk API for this. This API enables you to index, update, and delete several
 documents in one request.
 
 
 ### Creating an index and ingesting documents
 
-You can call the `bulk` API with a body parameter, an array of hashes that 
-define the action, and a document. 
+You can call the `bulk` API with a body parameter, an array of hashes that
+define the action, and a document.
 
-The following is an example of indexing some classic books into the `books` 
+The following is an example of indexing some classic books into the `books`
 index:
 
 ```ruby
@@ -128,10 +125,10 @@ body = [
  {"index"=>{"_index"=>"books", "_id"=>"Qtink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>5, "_primary_term"=>1, "status"=>201}}]
 ```
 
-When you use the client to make a request to Elasticsearch, it returns an API 
-response object. You can check the HTTP return code by calling `status` and the 
-HTTP headers by calling `headers` on the response object. The response object 
-also behaves as a Hash, so you can access the body values directly as seen on 
+When you use the client to make a request to Elasticsearch, it returns an API
+response object. You can check the HTTP return code by calling `status` and the
+HTTP headers by calling `headers` on the response object. The response object
+also behaves as a Hash, so you can access the body values directly as seen on
 the previous example with `response['items']`.
 
 
@@ -146,7 +143,7 @@ client.get(index: 'my_index', id: id)
 
 ### Searching
 
-Now that some data is available, you can search your documents using the 
+Now that some data is available, you can search your documents using the
 **Search API**:
 
 ```ruby
@@ -161,8 +158,8 @@ You can call the `update` API to update a document:
 
 ```ruby
 response = client.update(
-  index: 'books', 
-  id: 'document_id', 
+  index: 'books',
+  id: 'document_id',
   body: { doc: { page_count: 312 } }
 )
 ```
