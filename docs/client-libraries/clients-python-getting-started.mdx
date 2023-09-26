@@ -12,7 +12,7 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 <RoughContent />
 
 This page guides you through the installation process of the Serverless Python 
-client, shows you how to instantiate the client, and how to perform basic 
+client, shows you how to initialize the client, and how to perform basic 
 Elasticsearch operations with it.
 
 ## Requirements
@@ -31,35 +31,21 @@ commands:
 ```
 
 
-## Instantiate a client
+## Initialize the client
 
-You can instantiate a client by running the following command:
+Initialize the client using your API key and Cloud URL:
 
 ```python
 
 ```
 
-You can find the Elasticsearch endpoint on the Cloud deployment management page.
-
-<DocImage url="images/copy-endpoint.gif" alt="Copy the endpoint for Elasticsearch"/>
-
-You can create a new API Key on the Elasticsearch Serverless Getting Started 
-page under the **Prepare an API key** section:
-
-<DocImage url="images/serverless-api-key.png" alt="Prepare Apy Key"/>
-
-Click **New**.
-
-<DocImage size="l" url="images/create-serverless-api-key.png" alt="Create a new Apy Key"/>
-
-Fill out the form.
+To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
 
 
 ## Using the API
 
-After you instantiated a client with your API key and Elasticsearch endpoint, 
-you can start ingesting documents into the Elasticsearch Service. You can use 
-the Bulk API for this. This API enables you to index, update, and delete several 
+After you've initialized the client, you can start ingesting documents. You can use
+the Bulk API for this. This API enables you to index, update, and delete several
 documents in one request.
 
 
