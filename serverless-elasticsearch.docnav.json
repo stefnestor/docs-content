@@ -119,7 +119,7 @@
       "pageId": "serverlessElasticsearchExploreYourData",
       "items": [
         {
-          "id": "serverlessElasticsearchExploreYourDataTheAggregationsApi"
+          "id": "serverlessElasticsearchExploreYourDataAggregations"
         },
         {
           "id": "serverlessElasticsearchExploreYourDataDiscoverYourData",
