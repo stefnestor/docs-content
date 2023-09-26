@@ -15,7 +15,7 @@ The Elasticsearch APIs enable you to ingest data through code.
 You can use the APIs of one of the 
 <DocLink id="serverlessElasticsearchClients" text="language clients"/> or the 
 HTTP APIs of Elasticsearch through the **Dev Tools** > **Console**. The examples 
-on this page uses the HTTP APIs to demonstrate how ingesting works in 
+on this page use the HTTP APIs to demonstrate how ingesting works in 
 Elasticsearch through APIs. If you want to ingest timestamped data or have a 
 more complex ingestion use case, refer to the 
 <DocLink id="serverlessElasticsearchIngestDataThroughIntegrations" /> page.
@@ -23,10 +23,10 @@ more complex ingestion use case, refer to the
 
 ## Using the bulk API
 
-You can index multiple JSON documents to an index and make it searchable by 
-using the bulk API.
+You can index multiple JSON documents to an index and make it searchable using 
+the bulk API.
 
-The following example uses the bulk API to ingest some book-related data into an 
+The following example uses the bulk API to ingest book-related data into an 
 index called `book`. The API call creates the index if it doesn't exist already.
 
 ```bash
@@ -48,7 +48,7 @@ curl -X POST "${ES_URL}/_bulk?pretty"
 '
 ```
 
-The API returns a response similar like this:
+The API returns a response similar to this:
 
 ```bash
 {
@@ -155,12 +155,12 @@ The API returns a response similar like this:
 }
 ```
 
-The API call creates an index called `books` and adds six documents to it. All of 
+The API call creates an index called `books` and adds six documents to it. All 
 those documents have the `title`, `author`, `release_date`, and `page_count` 
 fields with associated values. This data is now searchable.
 
-You can check if a certain book is in the index by calling the search API and 
-specifying either of the properties of the book in a `match` query, for example:
+You can check if a book is in the index by calling the search API and specifying 
+either of the properties of the book in a `match` query, for example:
 
 ```bash
 curl -X GET "${ES_URL}/books/_search?pretty"
@@ -176,15 +176,15 @@ curl -X GET "${ES_URL}/books/_search?pretty"
 '
 ```
 
-The API response contains an array of hits. Each hit represents a document that matches the query and the whole document is returned. Only one document matches this query.
+The API response contains an array of hits. Each hit represents a document that 
+matches the query. The response contains the whole document. Only one document 
+matches this query.
 
 
 ## Using the index API
 
-Use the index API to ingest a single document to an index. {/* <DocLink id="" text="index API"/> */}
-
-Following the previous example, a new document will be added to the `book` 
-index.
+Use the index API to ingest a single document to an index. Following the 
+previous example, a new document will be added to the `book` index.
 
 ```bash
 curl -X POST "${ES_URL}books/_doc/"
