@@ -38,7 +38,10 @@ GET /_search
 Here is the equivalent command in cURL:
 
 ```bash
-curl -XGET "http://localhost:9200/_search" -d'
+curl "${ES_URL}/_search" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "query": {
     "match_all": {}

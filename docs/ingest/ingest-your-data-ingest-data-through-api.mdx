@@ -90,7 +90,7 @@ You can check if a book is in the index by calling the search API and specifying
 either of the properties of the book in a `match` query, for example:
 
 ```bash
-curl -X GET "${ES_URL}/books/_search?pretty" \
+curl "${ES_URL}/books/_search?pretty" \
 -H "Authorization: ApiKey ${API_KEY}" \
 -H "Content-Type: application/json" \
 -d'
