@@ -30,9 +30,10 @@ The following example uses the bulk API to ingest book-related data into an
 index called `book`. The API call creates the index if it doesn't exist already.
 
 ```bash
-curl -X POST "${ES_URL}/_bulk?pretty" 
--H "Authorization: ApiKey ${API_KEY}"
--H "Content-Type: application/json" -d'
+curl -X POST "${ES_URL}/_bulk?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 { "index" : { "_index" : "books" } }
 {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
 { "index" : { "_index" : "books" } }
@@ -163,9 +164,10 @@ You can check if a book is in the index by calling the search API and specifying
 either of the properties of the book in a `match` query, for example:
 
 ```bash
-curl -X GET "${ES_URL}/books/_search?pretty"
--H "Authorization: ApiKey ${API_KEY}"
--H "Content-Type: application/json" -d'
+curl -X GET "${ES_URL}/books/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "query": {
     "match": {
@@ -187,9 +189,10 @@ Use the index API to ingest a single document to an index. Following the
 previous example, a new document will be added to the `book` index.
 
 ```bash
-curl -X POST "${ES_URL}books/_doc/"
--H "Authorization: ApiKey ${API_KEY}"
--H "Content-Type: application/json" -d'
+curl -X POST "${ES_URL}books/_doc/" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "title": "Neuromancer",
   "author": "William Gibson",
