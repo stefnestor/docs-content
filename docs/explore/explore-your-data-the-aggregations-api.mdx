@@ -1,7 +1,7 @@
 ---
-id: serverlessElasticsearchExploreYourDataTheAggregationsApi
-slug: /serverless/elasticsearch/explore-your-data-the-aggregations-api
-title: The Aggregations API
+id: serverlessElasticsearchExploreYourDataAggregations
+slug: /serverless/elasticsearch/explore-your-data-aggregations
+title: Aggregations
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'aggregations', 'reference' ]
 status: in review
@@ -33,12 +33,15 @@ Aggregations help you answer questions like:
 
 ## Run an aggregation
 
-You can run aggregations as part of a [search](((ref))/search-your-data.html) by specifying the [search API's](((ref))/search-your-data.html) `aggs` parameter. The
+You can run aggregations as part of a <DocLink id="serverlessElasticsearchSearchYourData">search</DocLink> by specifying the <DocLink id="serverlessElasticsearchSearchYourDataTheSearchApi">search API</DocLink>'s `aggs` parameter. The
 following search runs a [terms aggregation](((ref))/search-aggregations-bucket-terms-aggregation.html) on
 `my-field`:
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "aggs": {
     "my-agg-name": {
@@ -59,29 +62,17 @@ Aggregation results are in the response's `aggregations` object:
 {/* TESTRESPONSE[s/\.\.\.$/"took": "$body.took", "timed_out": false, "_shards": "$body._shards", /] */}
 {/* TESTRESPONSE[s/"hits": \[\.\.\.\]/"hits": "$body.hits.hits"/] */}
 {/* TESTRESPONSE[s/"buckets": \[\]/"buckets":\[\{"key":"get","doc_count":5\}\]/] */}
-```console-result
+```json
 {
   "took": 78,
   "timed_out": false,
-  "_shards": {
-    "total": 1,
-    "successful": 1,
-    "skipped": 0,
-    "failed": 0
-  },
-  "hits": {
-    "total": {
-      "value": 5,
-      "relation": "eq"
-    },
-    "max_score": 1.0,
-    "hits": [...]
-  },
+  "_shards": {...},
+  "hits": {...},
   "aggregations": {
     "my-agg-name": {                            [^1]
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
-      "buckets": []
+      "buckets": [...]
     }
   }
 }
@@ -93,7 +84,10 @@ Aggregation results are in the response's `aggregations` object:
 Use the `query` parameter to limit the documents on which an aggregation runs:
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "query": {
     "range": {
@@ -122,7 +116,10 @@ By default, searches containing an aggregation return both search hits and
 aggregation results. To return only aggregation results, set `size` to `0`:
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "size": 0,
   "aggs": {
@@ -141,8 +138,12 @@ curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: ap
 ## Run multiple aggregations
 
 You can specify multiple aggregations in the same request:
+
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "aggs": {
     "my-first-agg-name": {
@@ -171,7 +172,10 @@ sub-aggregation calculates an average value for each bucket of documents. There
 is no level or depth limit for nesting sub-aggregations.
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "aggs": {
     "my-agg-name": {
@@ -200,7 +204,7 @@ The response nests sub-aggregation results under their parent aggregation:
 {/* TESTRESPONSE[s/\.\.\./"took": "$body.took", "timed_out": false, "_shards": "$body._shards", "hits": "$body.hits",/] */}
 {/* TESTRESPONSE[s/"key": "foo"/"key": "get"/] */}
 {/* TESTRESPONSE[s/"value": 75.0/"value": $body.aggregations.my-agg-name.buckets.0.my-sub-agg-name.value/] */}
-```console-result
+```json
 {
   ...
   "aggregations": {
@@ -228,7 +232,10 @@ The response nests sub-aggregation results under their parent aggregation:
 Use the `meta` object to associate custom metadata with an aggregation:
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "aggs": {
     "my-agg-name": {
@@ -249,7 +256,7 @@ curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: ap
 
 The response returns the `meta` object in place:
 
-```console-result
+```json
 {
   ...
   "aggregations": {
@@ -272,7 +279,10 @@ By default, aggregation results include the aggregation's name but not its type.
 To return the aggregation type, use the `typed_keys` query parameter.
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?typed_keys&pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?typed_keys&pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "aggs": {
     "my-agg-name": {
@@ -302,7 +312,7 @@ the aggregated field.
 
 {/* TESTRESPONSE[s/\.\.\./"took": "$body.took", "timed_out": false, "_shards": "$body._shards", "hits": "$body.hits",/] */}
 {/* TESTRESPONSE[s/"buckets": \[\]/"buckets":\[\{"key":1070000.0,"doc_count":5\}\]/] */}
-```console-result
+```json
 {
   ...
   "aggregations": {
@@ -320,8 +330,12 @@ When a field doesn't exactly match the aggregation you need, you
 should aggregate on a [runtime field](((ref))/runtime.html):
 
 ```bash
-curl -X GET "localhost:9200/my-index-000001/_search?size=0&pretty" -H 'Content-Type: application/json' -d'
+curl "${ES_URL}/my-index/_search?pretty" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
+  "size": 0,
   "runtime_mappings": {
     "message.length": {
       "type": "long",
@@ -352,11 +366,11 @@ for using a runtime field varies from aggregation to aggregation.
 For faster responses, ((es)) caches the results of frequently run aggregations in
 the [shard request cache](((ref))/shard-request-cache.html). To get cached results, use the
 same [`preference` string](((ref))/search-shard-routing.html#shard-and-node-preference) for each search. If you
-don't need search hits, <DocLink id="serverlessElasticsearchExploreYourDataTheAggregationsApi" section="return-only-aggregation-results">set `size` to `0`</DocLink> to avoid
+don't need search hits, <DocLink id="serverlessElasticsearchExploreYourDataAggregations" section="return-only-aggregation-results">set `size` to `0`</DocLink> to avoid
 filling the cache.
 
 ((es)) routes searches with the same preference string to the same shards. If the
-shards' data doesn’t change between searches, the shards return cached
+shards' data doesn't change between searches, the shards return cached
 aggregation results.
 
 ## Limits for `long` values
