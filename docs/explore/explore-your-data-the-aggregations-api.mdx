@@ -4,12 +4,12 @@ slug: /serverless/elasticsearch/explore-your-data-the-aggregations-api
 title: The Aggregations API
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'aggregations', 'reference' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 An aggregation summarizes your data as metrics, statistics, or other analytics.
 Aggregations help you answer questions like:
@@ -37,8 +37,8 @@ You can run aggregations as part of a [search](((ref))/search-your-data.html) by
 following search runs a [terms aggregation](((ref))/search-aggregations-bucket-terms-aggregation.html) on
 `my-field`:
 
-```console
-GET /my-index-000001/_search
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
 {
   "aggs": {
     "my-agg-name": {
@@ -48,6 +48,7 @@ GET /my-index-000001/_search
     }
   }
 }
+'
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/my-field/http.request.method/] */}
@@ -91,8 +92,8 @@ Aggregation results are in the response's `aggregations` object:
 
 Use the `query` parameter to limit the documents on which an aggregation runs:
 
-```console
-GET /my-index-000001/_search
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
 {
   "query": {
     "range": {
@@ -110,6 +111,7 @@ GET /my-index-000001/_search
     }
   }
 }
+'
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/my-field/http.request.method/] */}
@@ -119,8 +121,8 @@ GET /my-index-000001/_search
 By default, searches containing an aggregation return both search hits and
 aggregation results. To return only aggregation results, set `size` to `0`:
 
-```console
-GET /my-index-000001/_search
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
 {
   "size": 0,
   "aggs": {
@@ -131,6 +133,7 @@ GET /my-index-000001/_search
     }
   }
 }
+'
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/my-field/http.request.method/] */}
@@ -138,9 +141,8 @@ GET /my-index-000001/_search
 ## Run multiple aggregations
 
 You can specify multiple aggregations in the same request:
-
-```console
-GET /my-index-000001/_search
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
 {
   "aggs": {
     "my-first-agg-name": {
@@ -155,6 +157,7 @@ GET /my-index-000001/_search
     }
   }
 }
+'
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/my-field/http.request.method/] */}
@@ -167,8 +170,8 @@ terms aggregation with an [avg](((ref))/search-aggregations-metrics-avg-aggregat
 sub-aggregation calculates an average value for each bucket of documents. There
 is no level or depth limit for nesting sub-aggregations.
 
-```console
-GET /my-index-000001/_search
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
 {
   "aggs": {
     "my-agg-name": {
@@ -185,6 +188,7 @@ GET /my-index-000001/_search
     }
   }
 }
+'
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/_search/_search?size=0/] */}
@@ -223,8 +227,8 @@ The response nests sub-aggregation results under their parent aggregation:
 
 Use the `meta` object to associate custom metadata with an aggregation:
 
-```console
-GET /my-index-000001/_search
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?pretty" -H 'Content-Type: application/json' -d'
 {
   "aggs": {
     "my-agg-name": {
@@ -237,7 +241,9 @@ GET /my-index-000001/_search
     }
   }
 }
+'
 ```
+
 {/* TEST[setup:my_index] */}
 {/* TEST[s/_search/_search?size=0/] */}
 
@@ -265,8 +271,8 @@ The response returns the `meta` object in place:
 By default, aggregation results include the aggregation's name but not its type.
 To return the aggregation type, use the `typed_keys` query parameter.
 
-```console
-GET /my-index-000001/_search?typed_keys
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?typed_keys&pretty" -H 'Content-Type: application/json' -d'
 {
   "aggs": {
     "my-agg-name": {
@@ -277,6 +283,8 @@ GET /my-index-000001/_search?typed_keys
     }
   }
 }
+'
+
 ```
 {/* TEST[setup:my_index] */}
 {/* TEST[s/typed_keys/typed_keys&size=0/] */}
@@ -311,13 +319,13 @@ the aggregated field.
 When a field doesn't exactly match the aggregation you need, you
 should aggregate on a [runtime field](((ref))/runtime.html):
 
-```console
-GET /my-index-000001/_search?size=0
+```bash
+curl -X GET "localhost:9200/my-index-000001/_search?size=0&pretty" -H 'Content-Type: application/json' -d'
 {
   "runtime_mappings": {
     "message.length": {
       "type": "long",
-      "script": "emit(doc['message.keyword'].value.length())"
+      "script": "emit(doc[\u0027message.keyword\u0027].value.length())"
     }
   },
   "aggs": {
@@ -329,36 +337,8 @@ GET /my-index-000001/_search?size=0
     }
   }
 }
+'
 ```
-{/* TEST[setup:my_index] */}
-
-{/*
-
-```console-result
-{
-  "timed_out": false,
-  "took": "$body.took",
-  "_shards": {
-    "total": 1,
-    "successful": 1,
-    "failed": 0,
-    "skipped": 0
-  },
-  "hits": "$body.hits",
-  "aggregations": {
-    "message_length": {
-      "buckets": [
-        {
-          "key": 30.0,
-          "doc_count": 5
-        }
-      ]
-    }
-  }
-}
-```
-
-*/}
 
 Scripts calculate field values dynamically, which adds a little
 overhead to the aggregation. In addition to the time spent calculating,
