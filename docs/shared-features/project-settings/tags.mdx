@@ -1,7 +1,7 @@
 ---
 id: serverlessTags
 slug: /serverless/tags
-title: Tags
+title: ((tags-app))
 description: Use tags to categorize your saved objects, then filter for related objects based on shared tags.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
 status: rough content
@@ -13,11 +13,12 @@ import RoughContent from '../../partials/rough-content-notice.mdx'
 
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
 
-To get started, go to **((tags-app))** in **((project-settings))** or **((project-settings)) > ((manage-app))**:
+To get started, go to **((project-settings)) > ((manage-app)) > ((tags-app))**:
 
 ![Tags management](images/tag-management.png)
 
 {/*
+TBD: What are the serverless RBAC requirements?
 ## Required permissions
 
 To create tags, you must meet the minimum requirements.
@@ -50,6 +51,7 @@ Create a tag to assign to your saved objects.
 ## Assign a tag to an object
 
 {/*
+TBD: Do these RBAC requirements exist in Serverless?
 To assign and remove tags, you must have `write` permission on the objects to which you assign the tags.
 */}
 
@@ -71,4 +73,3 @@ When you delete a tag, you remove it from all saved objects that use it.
 1. Click **Delete tag**.
 
 To assign, delete, or clear multiple tags, select them in the **Tags** view, and then select the action from the **selected tags** menu.
-
