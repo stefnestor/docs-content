@@ -32,28 +32,28 @@ npm install @elastic/elasticsearch-serverless
 
 ## Initialize the client
 
-Initialize the client using your API key and Cloud URL:
+Initialize the client using your Serverless project URL and API key, both provided by Elastic:
 
 ```js
 const { Client } = require('@elastic/elasticsearch-serverless')
 const client = new Client({
-  cloud: { id: '<cloud-id>' },
-  auth: { apiKey: 'base64EncodedKey' }
+  node: 'https://', // serverless project URL
+  auth: { apiKey: 'your_api_key' }, // project API key
 })
 ```
 
-To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
+To get API keys or the URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
 
 ## Using the API
 
-After you've initialized the client, you can start ingesting documents. You can 
-use the Bulk API for this. This API enables you to index, update, and delete 
-several documents in one request.
+After you've initialized the client, you can start ingesting documents.
+You can use the Bulk API for this.
+This API enables you to index, update, and delete several documents in one request.
 
 ### Creating an index and ingesting documents
 
 You can call the `bulk` helper API with a list of documents and a handler for 
-what action to perform on each handler. 
+what action to perform on each document. 
 
 The following is an example of bulk indexing some classic books into the `books` 
 index:
@@ -97,15 +97,14 @@ await client.get({
 
 ### Searching
 
-Now that some data is available, you can search your documents using the 
-**Search API**:
+Now that some data is available, you can search your documents using the **Search API**:
 
 ```js
 const result = await client.search({
   index: 'books',
   query: {
     match: {
-      author: 'Ray Bradbury'
+      author: 'ray bradbury'
     }
   }
 })
