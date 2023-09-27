@@ -39,13 +39,13 @@ data in **Discover**.
 
 Tell ((kib)) where to find the data you want to explore, and then specify the time range in which to view that data.
 
-1. To add the ecommerce sample data, in the main meny select **Home** > **Try sample data** > **Other sample data sets** and under **Sample eCommerce orders** click **Add data**.
+1. To add the ecommerce sample data from the home page select **Try sample data > Other sample data sets** and under **Sample eCommerce orders** click **Add data**.
 
 2. Click **View data** and select **Discover**.
 
 To create a data view for your own data in Discover, click **Create a data view**.
 
-!["Create a data view"](images/discover-create-a-data-view.png)
+<DocImage size="l" url="images/discover/discover-create-a-data-view.png" alt="Create a data view" />
 
 3. Adjust the time range to view data for the **Last 7 days**.
 
@@ -60,10 +60,6 @@ The range selection is based on the default time field in your data. If you are 
 **Discover** includes a table that shows all the documents that match your search. By default, the document table includes a column for the time field and a column that lists all other fields in the document. You’ll modify the document table to display your fields of interest.
 
 1. In the sidebar, enter `ma` in the search field to find the `manufacturer` field.
-
-    <DocCallOut title="Note">
-    You can use wildcards in field searches.  For example, `goe*dest` finds `geo.dest` and `geo.src.dest`.
-    </DocCallOut>
 
 2. In the **Available fields** list, click `manufacturer` to view its most popular values.
 
@@ -118,7 +114,7 @@ To search particular fields and build more complex queries, use the ((kib)) Quer
 Search the ecommerce data for documents where the country matches US:
 
 1. Enter `g`, and then select **geoip.country_iso_code**.
-1. Select *:* for equals some value and **US**, and then click the refresh button or press the Enter key.
+1. Select **:** for equals some value and **US**, and then click the refresh button or press the Enter key.
 1. For a more complex search, try:
 
     ```ts
@@ -160,9 +156,9 @@ Dive into an individual document to view its fields and the documents that occur
 
 ## Save your search for later use
 
-Save your search so you can use it later, generate a CSV report, or use it to create visualizations, dashboards, and Canvas workpads. Saving a search saves the query text, filters, and current view of **Discover**, including the columns selected in the document table, the sort order, and the ((data-source)).
+Save your search so you can use it later, generate a CSV report, or use it to create visualizations, Dashboards, and Canvas workpads. Saving a search saves the query text, filters, and current view of **Discover**, including the columns selected in the document table, the sort order, and the ((data-source)).
 
-1. In the toolbar, click **Save**.
+1. In the upper right toolbar, click **Save**.
 
 2. Give your search a title.
 
@@ -177,7 +173,9 @@ If a field can be [aggregated](((ref))/search-aggregations.html), you can quickl
 
 2. In the popup, click **Visualize**.
 
+<DocCallOut title="Note">
     ((kib)) creates a visualization best suited for this field.
+</DocCallOut>
 
 3. From the **Available fields** list, drag and drop `manufacturer.keyword` onto the workspace.
 
@@ -189,7 +187,7 @@ For geo point fields, if you click **Visualize**, your data appears in a map.
 
 ## Share your findings
 
-To share your findings with a larger audience, click **Share** in the **Discover** toolbar.
+To share your findings with a larger audience, click **Share** in the upper right toolbar.
 
 <div id="alert-from-Discover"></div>
 
