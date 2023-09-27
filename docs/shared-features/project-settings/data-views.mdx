@@ -1,7 +1,7 @@
 ---
 id: serverlessDataViews
 slug: /serverless/data-views
-title: Data views
+title: ((data-views-app))
 description: Elastic requires a ((data-source)) to access the ((es)) data that you want to explore.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
 status: rough content
@@ -43,7 +43,7 @@ If you loaded your own data, follow these steps to create a ((data-source)):
 
  1. Open {/***Lens** or*/}**Discover** then open the data view menu.
     ![How to set the ((data-source)) in Discover](images/discover-find-data-view.png)
-    Alternatively, go to the **((data-views-app))** app in **((project-settings)) > ((manage-app))** or **((project-settings))**.
+    Alternatively, go to **((project-settings)) > ((manage-app)) > ((data-views-app))**.
 
 1. Click **Create a ((data-source))**.
 
@@ -79,7 +79,7 @@ If you loaded your own data, follow these steps to create a ((data-source)):
 
 1.  Click **Save ((data-source)) to Elastic**.
 
-You can manage your data view in the **((data-views-app))** app.
+You can manage your data views in **((project-settings)) > ((manage-app)) > ((data-views-app))**.
 
 ### Create a temporary ((data-source))
 
@@ -165,7 +165,7 @@ Deleting a ((data-source)) does not remove any indices or data documents from ((
 
 <DocCallOut color="warning" title="Deleting a ((data-source)) breaks all visualizations, saved searches, and other saved objects that reference the data view." />
 
-1. Go to the **((data-views-app))** app in **((project-settings))** or **((project-settings)) > ((manage-app))**.
+1. Go to **((project-settings)) > ((manage-app)) > ((data-views-app))**.
 
 1. Find the ((data-source)) that you want to delete, and then
     click <DocIcon type="trash" title="Delete" /> in the **Actions** column.

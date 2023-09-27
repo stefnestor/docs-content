@@ -1,7 +1,7 @@
 ---
 id: serverlessIndexManagement
 slug: /serverless/index-management
-title: Index management
+title: ((index-manage-app))
 description: View index settings, mappings, and statistics and perform operations, such as refreshing, flushing, and clearing the cache.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
 status: rough content
@@ -15,26 +15,13 @@ This content applies to: <DocBadge template="elasticsearch" slug="/serverless/el
 
 <div id="index-mgmt"></div>
 
-Elastic's **((index-manage-app))** features are an easy, convenient way to manage your
-cluster's indices, data streams, and index templates.
+Elastic's index management features are an easy, convenient way to manage your cluster's indices, data streams, and index templates.
 Practicing good index management ensures your data is stored correctly and in the most cost-effective way possible.
 {/* <DocLink id="enElasticsearchReferenceDataStreams">data streams</DocLink> , and <DocLink id="enElasticsearchReferenceIndexTemplates">index
 templates</DocLink>. */}
 
-{/* <div id="index-mgmt-wyl"></div>
-
-## What you'll learn
-
-You'll learn how to:
-
-* View and edit index settings.
-* View mappings and statistics for an index.
-* Perform index-level operations, such as refreshes.
-* View and manage data streams.
-* Create index templates to automatically configure new data streams and indices.
-
-<div id="index-mgm-req-permissions"></div>
-
+{/*
+TBD: Are these RBAC requirements valid for Serverless?
 ## Required permissions
 
 If you use ((es)) ((security-features)), the following <DocLink id="enElasticsearchReferenceSecurityPrivileges">security privileges</DocLink> are required:
@@ -47,17 +34,19 @@ If you use ((es)) ((security-features)), the following <DocLink id="enElasticsea
 
 To add these privileges, go to **Stack Management > Security > Roles**.
 
-<div id="view-edit-indices"></div> */}
+*/}
 
 ## View and edit indices
 
-Go to **((index-manage-app))** in **((project-settings))** or **((project-settings)) > ((manage-app))**.
+Go to **((project-settings)) > ((manage-app)) > ((index-manage-app))**:
 
 ![((index-manage-app)) UI](images/index-management-indices.png)
 {/* TO-DO: This screenshot needs to be refreshed since it doesn't show all of the pertinent tabs */}
 
 The **((index-manage-app))** page contains an overview of your indices.
-{/* Badges indicate if an index is a <DocLink id="enElasticsearchReferenceCcrPutFollow">follower index</DocLink>, a
+{/*
+TBD: Do these badges exist in Serverless?
+Badges indicate if an index is a <DocLink id="enElasticsearchReferenceCcrPutFollow">follower index</DocLink>, a
 <DocLink id="enElasticsearchReferenceRollupGetRollupIndexCaps">rollup index</DocLink>, or <DocLink id="enElasticsearchReferenceUnfreezeIndexApi">frozen</DocLink>. Clicking a badge narrows the list to only indices of that type. */}
 You can also filter indices using the search bar.
 

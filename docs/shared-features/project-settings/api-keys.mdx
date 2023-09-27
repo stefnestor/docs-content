@@ -1,7 +1,7 @@
 ---
 id: serverlessApiKeys
 slug: /serverless/api-keys
-title: API keys
+title: ((api-keys-app))
 description: API keys allow access to the ((stack)) on behalf of a user.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
 status: rough content
@@ -21,7 +21,7 @@ They ensure that only authorized users or applications interact with the ((stack
 For example, if you extract data from an ((es)) cluster on a daily basis, you might create an API key tied to your credentials, configure it with minimum access, and then put the API credentials into a cron job.
 Or, you might create API keys to automate ingestion of new data from remote sources, without a live user interaction.
 
-You can manage your keys in the **API keys** app:
+You can manage your keys in **((project-settings)) > ((manage-app)) > ((api-keys-app))**:
 
 !["API keys UI"](images/api-key-management.png)
 {/* TBD: This image was refreshed but should be automated */}
@@ -44,11 +44,13 @@ cluster privileges to use API keys in Elastic.  API keys can also be seen in a r
 
 ## Create an API key
 
-In the **API keys** app, click **Create API key**:
+In **((api-keys-app))**, click **Create API key**:
 
 !["Create API key UI"](images/create-personal-api-key.png)
 
-Once created, you can copy the API key (Base64 encoded) and use it to send requests to ((es)) on your behalf. For example:
+Once created, you can copy the API key (Base64 encoded) and use it to send requests to ((es)) on your behalf. 
+
+For example:
 
 ```bash
 curl --location --request GET 'http://localhost:5601/api/security/role' \
@@ -67,7 +69,7 @@ API keys are intended for programmatic access. Do not use API keys to authentica
 
 ## Update an API key
 
-To update a key in **API keys**, click on the name of the key.
+In **((api-keys-app))**, click on the name of the key.
 You can only update the `Restrict privileges` and `Include metadata` fields.
 
 {/* TBD: Refer to the update API key documentation to learn more about updating personal API keys. */}
@@ -76,10 +78,12 @@ You can only update the `Restrict privileges` and `Include metadata` fields.
 
 ## View and delete API keys
 
-The **API keys** app lists your API keys, including the name, date created, and status.
+The **((api-keys-app))** app lists your API keys, including the name, date created, and status.
 If an API key expires, its status changes from `Active` to `Expired`.
 
-{/* If you have `manage_security` or `manage_api_key` permissions,
+{/* 
+TBD: RBAC requirements for serverless?
+If you have `manage_security` or `manage_api_key` permissions,
 you can view the API keys of all users, and see which API key was
 created by which user in which realm.
 If you have only the `manage_own_api_key` permission, you see only a list of your own keys. */}
