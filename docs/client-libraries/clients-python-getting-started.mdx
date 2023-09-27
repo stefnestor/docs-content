@@ -35,14 +35,14 @@ python -m pip install elasticsearch_serverless
 
 ## Initialize the client
 
-Initialize the client using your API key and Cloud URL:
+Initialize the client using your API key and Serverless URL:
 
 ```python
 from elasticsearch_serverless import Elasticsearch
 
 client = Elasticsearch(
-    cloud_id="my-cloud-url",  # Cloud ID provided by Elastic
-    api_key=('api-key-id', 'api-key-secret'),  # API key ID and secret
+    "https://...",  # URL provided by Elastic
+    api_key='api-key-id',  # API key provided by Elastic
 )
 ```
 
@@ -66,7 +66,24 @@ index:
 
 ```python
 client.indices.create(index="books")
-TO DO
+client.index(
+    index="books",
+    id=1,
+    document={
+        "title": "Infinite Jest",
+        "author": "David Foster Wallace",
+        "published_on": datetime(1996, 2, 1),
+    }
+)
+client.index(
+    index="books",
+    id=2,
+    document={
+        "title": "Ulysses",
+        "author": "James Joyce",
+        "published_on": datetime(1922, 2, 2),
+    }
+)
 ```
 
 
@@ -75,7 +92,7 @@ TO DO
 You can get documents by using the following code:
 
 ```python
-client.get(index="my_index", id="my_document_id")
+client.get(index="books", id=1)
 ```
 
 ### Searching
@@ -86,7 +103,7 @@ Now that some data is available, you can search your documents using the
 ```python
 client.search(index="books", query={
     "match": {
-        "name": "snow"
+        "title": "infinite"
     }
 })
 ```
@@ -96,7 +113,10 @@ client.search(index="books", query={
 You can call the `update` API to update a document:
 
 ```python
-
+client.update(index="books", id=2, doc={
+    "author": "James Augustine Aloysius Joyce",
+    "pages": 732,
+})
 ```
 
 ### Deleting a document
@@ -104,7 +124,7 @@ You can call the `update` API to update a document:
 You can call the `delete` API to delete a document:
 
 ```python
-client.delete(index="books", id="my_document_id")
+client.delete(index="books", id=2)
 ```
 
 
@@ -112,5 +132,5 @@ client.delete(index="books", id="my_document_id")
 
 
 ```python
-client.indices.delete(index="my_index")
+client.indices.delete(index="books")
 ```
