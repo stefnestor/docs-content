@@ -65,24 +65,15 @@ The following is an example of indexing some classic books into the `books`
 index:
 
 ```python
-client.indices.create(index="books")
-client.index(
-    index="books",
-    id=1,
-    document={
-        "title": "Infinite Jest",
-        "author": "David Foster Wallace",
-        "published_on": datetime(1996, 2, 1),
-    }
-)
-client.index(
-    index="books",
-    id=2,
-    document={
-        "title": "Ulysses",
-        "author": "James Joyce",
-        "published_on": datetime(1922, 2, 2),
-    }
+client.bulk(
+    body=[
+        {"index": {"_index": "books", "_id": "1"}},
+        {"title": "Infinite Jest", "author": "David Foster Wallace", "published_on": datetime(1996, 2, 1)},
+        {"index": {"_index": "books", "_id": "2"}},
+        {"title": "Ulysses", "author": "James Joyce", "published_on": datetime(1922, 2, 2)},
+        {"index": {"_index": "books", "_id": "3"}},
+        {"title": "Just Kids", "author": "Patti Smith", "published_on": datetime(2010, 1, 19)},
+    ],
 )
 ```
 
@@ -92,7 +83,7 @@ client.index(
 You can get documents by using the following code:
 
 ```python
-client.get(index="books", id=1)
+client.get(index="books", id="1")
 ```
 
 ### Searching
@@ -113,7 +104,7 @@ client.search(index="books", query={
 You can call the `update` API to update a document:
 
 ```python
-client.update(index="books", id=2, doc={
+client.update(index="books", id="2", doc={
     "author": "James Augustine Aloysius Joyce",
     "pages": 732,
 })
@@ -124,7 +115,7 @@ client.update(index="books", id=2, doc={
 You can call the `delete` API to delete a document:
 
 ```python
-client.delete(index="books", id=2)
+client.delete(index="books", id="3")
 ```
 
 
