@@ -17,7 +17,8 @@ Elasticsearch operations with it.
 
 ## Requirements
 
-* Python 3.7 or higher installed on your system.
+* Python 3.7 or higher
+* <DocLink id="https://pip.pypa.io/en/stable/" text="`pip`" />
 
 ## Installation
 
@@ -27,7 +28,7 @@ You can install the Elasticsearch Serverless Python client with the following
 commands:
 
 ```bash
-
+python -m pip install elasticsearch_serverless
 ```
 
 
@@ -36,7 +37,12 @@ commands:
 Initialize the client using your API key and Cloud URL:
 
 ```python
+from elasticsearch_serverless import Elasticsearch
 
+client = Elasticsearch(
+    cloud_id="my-cloud-url",  # Cloud ID provided by Elastic
+    api_key=('api-key-id', 'api-key-secret'),  # API key ID and secret
+)
 ```
 
 To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
@@ -58,14 +64,9 @@ The following is an example of indexing some classic books into the `books`
 index:
 
 ```python
-
+client.indices.create(index="books")
+TO DO
 ```
-
-When you use the client to make a request to Elasticsearch, it returns an API 
-response object. You can check the HTTP return code by calling `status` and the 
-HTTP headers by calling `headers` on the response object. The response object 
-also behaves as a Hash, so you can access the body values directly as seen on 
-the previous example with ``.
 
 
 ### Getting documents
@@ -73,7 +74,7 @@ the previous example with ``.
 You can get documents by using the following code:
 
 ```python
-
+client.get(index="my_index", id="my_document_id")
 ```
 
 ### Searching
@@ -82,7 +83,11 @@ Now that some data is available, you can search your documents using the
 **Search API**:
 
 ```python
-
+client.search(index="books", query={
+    "match": {
+        "name": "snow"
+    }
+})
 ```
 
 ### Updating a document
@@ -98,7 +103,7 @@ You can call the `update` API to update a document:
 You can call the `delete` API to delete a document:
 
 ```python
-
+client.delete(index="books", id="my_document_id")
 ```
 
 
@@ -106,5 +111,5 @@ You can call the `delete` API to delete a document:
 
 
 ```python
-
+client.indices.delete(index="my_index")
 ```
