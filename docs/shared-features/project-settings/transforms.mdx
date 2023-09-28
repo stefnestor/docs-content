@@ -21,7 +21,8 @@ indices that summarize the behavior of users or sessions or other entities in
 your data. Or you can use ((transforms)) to find the latest document among all the
 documents that have a certain unique key.
 
-* [Overview](((ref))/transform-overview.html)
+For more information, check out:
+
 * [When to use transforms](((ref))/transform-usage.html)
 * [Generating alerts for transforms](((ref))/transform-alerts.html)
 * [Transforms at scale](((ref))/transform-scale.html)
@@ -31,16 +32,15 @@ documents that have a certain unique key.
 * [Troubleshooting transforms](((ref))/transform-troubleshooting.html)
 * [Limitations](((ref))/transform-limitations.html)
 
-{/*  <DocLink id="enElasticsearchReferenceTransformOverview">((transform-cap)) overview</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformSetup">Set up ((transforms))</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformUsage">When to use ((transforms))</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformAlerts">Generating alerts for ((transforms))</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformScale">Working with ((transforms)) at scale</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformCheckpoints">How ((transform)) checkpoints work</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformApiQuickref">API quick reference</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceEcommerceTransforms">Tutorial: Transforming the eCommerce sample data</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformExamples">((transform-cap)) examples</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformPainlessExamples">Painless examples for ((transforms))</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformTroubleshooting">Troubleshooting ((transforms))</DocLink> */}
-{/*  <DocLink id="enElasticsearchReferenceTransformLimitations">((transform-cap)) limitations</DocLink> */}
+## Create and manage ((transforms))
 
+In **((project-settings)) > ((manage-app)) > ((transforms-app))**, you can
+create, edit, stop, start, reset, and delete ((transforms)):
+
+!["((transforms-app)) app"](images/transform-management.png)
+
+When you create a ((transform)), you must choose between two types: _pivot_ and _latest_.
+You must also decide whether you want the ((transform)) to run once or continuously.
+For more information, go to [((transforms-cap)) overview](((ref))/transform-overview.html).
+
+{/* To stop, start, or delete multiple ((transforms)), select their checkboxes then click.... */}
