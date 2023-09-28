@@ -7,10 +7,6 @@ tags: [ 'serverless', 'elasticsearch', 'troubleshooting' ]
 status: rough content
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
-
-<RoughContent />
-
 When you query your data, Elasticsearch may return an error, no search results,
 or results in an unexpected order. This guide describes how to troubleshoot
 searches.
@@ -24,22 +20,25 @@ name or when the data has been indexed to a different data stream or index.
 Use the **Exists API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesExists">exists API</DocLink> */} to check whether a data stream, index, or
 alias exists:
 
-```console
-HEAD my-data-stream
+```bash
+curl ${ES_URL}/my-data-stream \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 
 Use the **Data stream stats API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDataStreamStatsApi">data stream stats API</DocLink> */} to list all data
 streams:
 
-```console
-GET /_data_stream/_stats?human=true
+```bash
+curl "${ES_URL}/_data_stream/_stats?human=true" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 
 Use the **Get index API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesGetIndex">get index API</DocLink> */} to list all indices and their
 aliases:
 
-```console
-GET _all?filter_path=*.aliases
+```bash
+curl "${ES_URL}/_all?filter_path=*.aliases" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 
 Instead of an error, it is possible to retrieve partial search results if some
@@ -47,8 +46,9 @@ of the indices you're querying are unavailable.
 Set `ignore_unavailable` to
 `true`:
 
-```console
-GET /my-alias/_search?ignore_unavailable=true
+```bash
+curl "${ES_URL}/my-alias/_search?ignore_unavailable=true" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 
 ## Ensure the data stream or index contains data
@@ -60,11 +60,19 @@ data may have been indexed to a data stream or index with another name.
 Use the **Count API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchCount">count API</DocLink> */} to retrieve the number of documents in a data
 stream or index. Check that `count` in the response is not 0.
 
+```bash
+curl -X PUT "${ES_URL}/my-index-000001" \
+-H "kbn-xsrf: reporting" \
+-H "Authorization: ApiKey ${API_KEY}"
+```
+
 {/*
 
-```console
-PUT my-index-000001
-{
+```bash
+curl -X PUT "${ES_URL}/my-index-000001" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
   "mappings": {
     "properties": {
       "@timestamp": {
@@ -78,13 +86,14 @@ PUT my-index-000001
       }
     }
   }
-}
+}'
 ```
 
 */}
 
-```console
-GET /my-index-000001/_count
+```bash
+curl "${ES_URL}/my-index-000001/_count" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 {/* TEST[continued] */}
 
@@ -99,8 +108,9 @@ configured with the correct time field.
 Querying a field that does not exist will not return any results. Use the **field capabilities API**
  <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchFieldCaps">field capabilities API</DocLink> */} to check whether a field exists:
 
-```console
-GET /my-index-000001/_field_caps?fields=my-field
+```bash
+curl "${ES_URL}/my-index-000001/_field_caps?fields=my-field" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 {/* TEST[continued] */}
 
@@ -136,8 +146,9 @@ searchable and aggregatable.
 A field's capabilities are determined by its <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceMapping">mapping</DocLink> */}. To retrieve
 the mapping, use the **Get mapping API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesGetMapping">get mapping API</DocLink> */}:
 
-```console
-GET /my-index-000001/_mappings
+```bash
+curl "${ES_URL}/my-index-000001/_mappings" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 {/* TEST[continued] */}
 
@@ -145,12 +156,14 @@ If you query a `text` field, pay attention to the analyzer that may have been
 configured. You can use the **Analyze API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesAnalyze">analyze API</DocLink> */} to check how a
 field's analyzer processes values and query terms:
 
-```console
-GET /my-index-000001/_analyze
-{
-  "field" : "my-field",
-  "text" : "this is a test"
-}
+```bash
+curl -X POST "${ES_URL}/my-index-000001/_analyze" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
+  "field": "my-field",
+  "text": "this is a test"
+}'
 ```
 {/* TEST[continued] */}
 
@@ -163,15 +176,17 @@ Use the `exists` query <DocBadge><DocIcon size="s" type="unlink" title="missing 
 documents that return a value for a field. Check that `count` in the response is
 not 0.
 
-```console
-GET /my-index-000001/_count
-{
+```bash
+curl -X GET "${ES_URL}/my-index-000001/_count" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
   "query": {
     "exists": {
       "field": "my-field"
     }
   }
-}
+}'
 ```
 {/* TEST[continued] */}
 
@@ -180,9 +195,11 @@ to check the field's values. For `keyword` fields, you can use a terms aggregati
  <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchAggregationsBucketTermsAggregation">terms aggregation</DocLink> */} to retrieve
 the field's most common values:
 
-```console
-GET /my-index-000001/_search?filter_path=aggregations
-{
+```bash
+curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
   "size": 0,
   "aggs": {
     "top_values": {
@@ -192,7 +209,7 @@ GET /my-index-000001/_search?filter_path=aggregations
       }
     }
   }
-}
+}'
 ```
 {/* TEST[continued] */}
 
@@ -200,17 +217,19 @@ For numeric fields, you can use the stats aggregation
  <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsStatsAggregation">stats aggregation</DocLink> */} to get an
 idea of the field's value distribution:
 
-```console
-GET my-index-000001/_search?filter_path=aggregations
-{
+```shell
+curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
   "aggs": {
-    "my-num-field-stats": {
+    "my-num-field-stats": { 
       "stats": {
         "field": "my-num-field"
       }
     }
   }
-}
+}'
 ```
 {/* TEST[continued] */}
 
@@ -224,8 +243,9 @@ time range. For example, if you are trying to query the latest data for the
 `@timestamp` field, run the following to see if the max `@timestamp` falls
 within the attempted range:
 
-```console
-GET my-index-000001/_search?sort=@timestamp:desc&size=1
+```bash
+curl "${ES_URL}/my-index-000001/_search?sort=@timestamp:desc&size=1" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 {/* TEST[continued] */}
 
@@ -240,9 +260,11 @@ The **Validate API** <DocBadge><DocIcon size="s" type="unlink" title="missing li
 `rewrite` parameter to return the Lucene query an Elasticsearch query is
 rewritten into:
 
-```console
-GET /my-index-000001/_validate/query?rewrite=true
-{
+```bash
+curl -X GET "${ES_URL}/my-index-000001/_validate/query?rewrite=true" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
   "query": {
     "match": {
       "user.id": {
@@ -251,20 +273,24 @@ GET /my-index-000001/_validate/query?rewrite=true
       }
     }
   }
-}
+}'
 ```
 {/* TEST[continued] */}
 
 Use the **Explain API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchExplain">explain API</DocLink> */} to find out why a specific document
 matches or doesn’t match a query:
 
-```console
-GET /my-index-000001/_explain/0
-{
-  "query" : {
-    "match" : { "message" : "elasticsearch" }
+```bash
+curl -X GET "${ES_URL}/my-index-000001/_explain/0" \
+-H "Content-Type: application/json" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-d '{
+  "query": {
+    "match": {
+      "message": "elasticsearch"
+    }
   }
-}
+}'
 ```
 {/* TEST[setup:messages] */}
 
@@ -288,8 +314,9 @@ that is queried when a query specifies no explicit field. Use the **Get index se
  <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceIndicesGetSettings">get index settings API</DocLink> */} to retrieve the settings for an
 index:
 
-```console
-GET /my-index-000001/_settings
+```bash
+curl "${ES_URL}/my-index-000001/_settings" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 {/* TEST[continued] */}
 
