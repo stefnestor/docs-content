@@ -4,19 +4,19 @@ slug: /serverless/data-views
 title: ((data-views-app))
 description: Elastic requires a ((data-source)) to access the ((es)) data that you want to explore.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
 
 A ((data-source)) can point to one or more indices, [data streams](((ref))/data-streams.html), or [index aliases](((ref))/alias.html).
 For example, a ((data-source)) can point to your log data from yesterday or all indices that contain your data.
 
-{/* <div id="data-views-read-only-access"></div>
+{/*
 
 ## Required permissions
 
@@ -32,17 +32,14 @@ For example, a ((data-source)) can point to your log data from yesterday or all 
     refer to <DocLink id="enKibanaXpackSecurityAuthorization">Granting access to ((kib))</DocLink>.
 */}
 
-<div id="settings-create-pattern"></div>
-
 ## Create a data view
 
-If you collected data using one of the ingest options, uploaded a file, or added sample data, you get a ((data-source)) for free, and can start exploring your data.
-If you loaded your own data, follow these steps to create a ((data-source)):
+After you've loaded your data, follow these steps to create a ((data-source)):
 
 {/* <DocImage size="m" url="images/discover-find-data-view.png" alt="How to set the ((data-source)) in Discover" /> */}
 
  1. Open {/***Lens** or*/}**Discover** then open the data view menu.
-    ![How to set the ((data-source)) in Discover](images/discover-find-data-view.png)
+    <DocImage size="l" url="images/discover-find-data-view.png" alt="How to set the ((data-source)) in Discover" />
     Alternatively, go to **((project-settings)) > ((manage-app)) > ((data-views-app))**.
 
 1. Click **Create a ((data-source))**.
@@ -94,7 +91,7 @@ A temporary ((data-source)) remains in your space until you change apps, or unti
 
 <DocCallOut title="Temporary ((data-sources)) are not available in the ((data-views-app)) app." />
 
-{/* <div id="rollup-data-view"></div>
+{/*
 
 ### Use ((data-sources)) with rolled up data
 
@@ -106,7 +103,7 @@ rollup_logstash,kibana_sample_data_logs
 ```
 For an example, refer to <DocLink id="enKibanaDataRollups" section="try-it-create-and-visualize-rolled-up-data">Create and visualize rolled up data</DocLink>. */}
 
-{/* <div id="management-cross-cluster-search"></div>
+{/*
 
 ### Use ((data-sources)) with ((ccs))
 

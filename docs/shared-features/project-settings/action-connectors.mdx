@@ -4,12 +4,12 @@ slug: /serverless/action-connectors
 title: ((connectors-app))
 description: Configure connections to third party systems for use in cases and rules.
 tags: [ 'serverless' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
 
@@ -198,8 +198,7 @@ For a comparison of the Elastic subscription levels, go to
 [the subscription page](((subscriptions))).
 
 </DocCallOut> */}
-{/* 
-<div id="connector-management"></div> */}
+
 {/* 
 ## Managing connectors
 
@@ -216,8 +215,6 @@ features. For more information, go to <DocLink id="enKibanaAlertingSetup" sectio
 ## Connector networking configuration
 
 Use the <DocLink id="enKibanaAlertActionSettingsKb" section="action-settings">action configuration settings</DocLink> to customize connector networking configurations, such as proxies, certificates, or TLS settings. You can set configurations that apply to all your connectors or use `xpack.actions.customHostSettings` to set per-host configurations.
-
-<div id="connectors-list"></div>
 
 ## Connector list
 
@@ -242,8 +239,6 @@ When this happens the action will fail to run and errors appear in the ((kib)) l
 
 </DocCallOut>
 
-<div id="creating-new-connector"></div>
-
 ## Creating a new connector
 
 New connectors can be created with the **Create connector** button, which guides
@@ -262,8 +257,6 @@ You can also manage connectors as resources with the [Elasticstack provider](htt
 For more details, refer to the [elasticstack_kibana_action_connector](https://registry.terraform.io/providers/elastic/elasticstack/latest/docs/resources/kibana_action_connector) resource.
 </DocCallOut>
 
-<div id="importing-and-exporting-connectors"></div>
-
 ## Importing and exporting connectors
 
 To import and export connectors, use the
@@ -275,8 +268,6 @@ If a connector is missing sensitive information after the import, a **Fix**
 button appears in **((connectors-ui))**.
 
 ![Connectors with missing secrets](images/action-types/management-connectors-connectors-with-missing-secrets.png)
-
-<div id="monitoring-connectors"></div>
 
 ## Monitoring connectors
 
