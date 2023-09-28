@@ -4,16 +4,14 @@ slug: /serverless/maintenance-windows
 title: ((maint-windows-app))
 description: Suppress rule notifications for scheduled periods of time.
 tags: [ 'serverless', 'Observability', 'Security' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
-
-<div id="maintenance-windows"></div>
 
 <DocCallOut template="technical_preview" />
 You can schedule single or recurring maintenance windows to temporarily reduce rule notifications.
@@ -29,7 +27,6 @@ Alerts continue to be generated, however notifications are suppressed as follows
 When the alert recovers, there are no notifications--even if the recovery occurs after the maintenance window ends.
 - When an alert occurs before a maintenance window and recovers during or after the maintenance window, notifications are sent as usual.
 
-<div id="setup-maintenance-windows"></div>
 {/* 
 TBD: What RBAC requirements exist in Serverless?
 ## Configure access to maintenance windows
