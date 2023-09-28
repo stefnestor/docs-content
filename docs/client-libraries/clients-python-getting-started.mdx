@@ -29,7 +29,7 @@ You can install the Elasticsearch Serverless Python client with the following
 commands:
 
 ```bash
-python -m pip install elasticsearch_serverless
+python -m pip install elasticsearch-serverless
 ```
 
 
@@ -41,7 +41,7 @@ Initialize the client using your API key and Serverless URL:
 from elasticsearch_serverless import Elasticsearch
 
 client = Elasticsearch(
-    "https://...",  # URL provided by Elastic
+    "https://...:443",  # URL provided by Elastic plus port 443
     api_key='api-key-id',  # API key provided by Elastic
 )
 ```
@@ -83,7 +83,8 @@ client.bulk(
 You can get documents by using the following code:
 
 ```python
-client.get(index="books", id="1")
+response = client.get(index="books", id="1")
+print(response.body)
 ```
 
 ### Searching
@@ -92,11 +93,14 @@ Now that some data is available, you can search your documents using the
 **Search API**:
 
 ```python
-client.search(index="books", query={
+response = client.search(index="books", query={
     "match": {
         "title": "infinite"
     }
 })
+
+for hit in response["hits"]["hits"]:
+    print(hit["_source"])
 ```
 
 ### Updating a document
