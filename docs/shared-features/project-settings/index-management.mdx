@@ -2,18 +2,16 @@
 id: serverlessIndexManagement
 slug: /serverless/index-management
 title: ((index-manage-app))
-description: View index settings, mappings, and statistics and perform operations, such as refreshing, flushing, and clearing the cache.
+description: Perform CRUD operations on indices and data streams. View index settings, mappings, and statistics.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
-
-<div id="index-mgmt"></div>
 
 Elastic's index management features are an easy, convenient way to manage your cluster's indices, data streams, and index templates.
 Practicing good index management ensures your data is stored correctly and in the most cost-effective way possible.
@@ -21,7 +19,18 @@ Practicing good index management ensures your data is stored correctly and in th
 templates</DocLink>. */}
 
 {/*
+## What you'll learn
+
+You'll learn how to:
+
+* View and edit index settings.
+* View mappings and statistics for an index.
+* Perform index-level operations, such as refreshes.
+* View and manage data streams.
+* Create index templates to automatically configure new data streams and indices.
+
 TBD: Are these RBAC requirements valid for Serverless?
+
 ## Required permissions
 
 If you use ((es)) ((security-features)), the following <DocLink id="enElasticsearchReferenceSecurityPrivileges">security privileges</DocLink> are required:
@@ -76,8 +85,6 @@ The menu includes the following actions:
 * <DocLink id="enElasticsearchReferenceSetUpLifecyclePolicy">**Add lifecycle policy**</DocLink>
 */}
 
-<div id="manage-data-streams"></div>
-
 ## Manage data streams
 
 The **Data Streams** view lists your data streams and lets you examine or delete them.
@@ -95,8 +102,6 @@ To view information about the stream's backing indices, click the number in the 
 TO-DO: This screenshot is not accurate since it contains several toggles that don't exist in serverless.
 ![Backing index](images/index-mgmt-management_index_data_stream_backing_index.png)
 */}
-
-<div id="manage-index-templates"></div>
 
 ## Manage index templates
 

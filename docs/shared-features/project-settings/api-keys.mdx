@@ -4,16 +4,14 @@ slug: /serverless/api-keys
 title: ((api-keys-app))
 description: API keys allow access to the ((stack)) on behalf of a user.
 tags: [ 'serverless', 'Elasticsearch', 'Observability', 'Security' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../../partials/rough-content-notice.mdx'
+import InReview from '../../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
-
-<div id="api-keys"></div>
 
 API keys are security mechanisms used to authenticate and authorize access to ((stack)) resources.
 They ensure that only authorized users or applications interact with the ((stack)).
@@ -32,15 +30,11 @@ A _managed API key_ is created and managed by ((kib)) to correctly run backgroun
 
 {/* TBD (accurate?) Secondary credentials have the same or lower access rights. */}
 
-<div id="api-keys-security-privileges"></div>
-
 {/* ## Security privileges
 
 You must have the `manage_security`, `manage_api_key`, or the `manage_own_api_key` 
 cluster privileges to use API keys in Elastic.  API keys can also be seen in a readonly view with access to the page and the `read_security` cluster privilege. To manage roles, open the main menu, then click 
 **Stack Management > Roles**, or use the <DocLink id="enKibanaRoleManagementApi">Role Management API</DocLink>.  */}
-
-<div id="create-api-key"></div>
 
 ## Create an API key
 
@@ -48,24 +42,16 @@ In **((api-keys-app))**, click **Create API key**:
 
 !["Create API key UI"](images/create-personal-api-key.png)
 
-Once created, you can copy the API key (Base64 encoded) and use it to send requests to ((es)) on your behalf. 
-
-For example:
+Once created, you can copy the encoded API key and use it to send requests to the ((es)) HTTP API. For example:
 
 ```bash
-curl --location --request GET 'http://localhost:5601/api/security/role' \
---header 'Content-Type: application/json;charset=UTF-8' \
---header 'kbn-xsrf: true' \
---header 'Authorization: ApiKey aVZlLUMzSUJuYndxdDJvN0k1bU46aGxlYUpNS2lTa2FKeVZua1FnY1VEdw==' \
+curl "${ES_URL}" \
+-H "Authorization: ApiKey ${API_KEY}"
 ```
 
 <DocCallOut title="Important" color="warning">
-
-API keys are intended for programmatic access. Do not use API keys to authenticate access via a web browser.
-
+API keys are intended for programmatic access. Don't use API keys to authenticate access using a web browser.
 </DocCallOut>
-
-<div id="udpate-api-key"></div>
 
 ## Update an API key
 
@@ -73,8 +59,6 @@ In **((api-keys-app))**, click on the name of the key.
 You can only update the `Restrict privileges` and `Include metadata` fields.
 
 {/* TBD: Refer to the update API key documentation to learn more about updating personal API keys. */}
-
-<div id="view-api-keys"></div>
 
 ## View and delete API keys
 
