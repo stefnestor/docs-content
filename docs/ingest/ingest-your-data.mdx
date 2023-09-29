@@ -4,15 +4,12 @@ slug: /serverless/elasticsearch/ingest-your-data
 title: Ingest your data
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'ingest', 'overview' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
-
-
-<div id="ec-cloud-ingest-data"></div>
+<InReview />
 
 You have options for ingesting, or indexing, data into ((serverless-full)). 
 You can ingest data through <DocLink id="serverlessElasticsearchIngestDataThroughApi" text="API"/>, 
@@ -21,14 +18,12 @@ You can ingest data through <DocLink id="serverlessElasticsearchIngestDataThroug
 [connector clients](((enterprise-search-ref))/connectors.html). 
 The best ingest option--or options--for your use case depends on whether you are indexing general content or time-series (timestamped) data.
 
-<div id="ec-ingest-methods"></div>
 
 **General content** 
 
 General content includes HTML pages, catalogs, files, and other content that does not update continuously. 
 This data can be updated, but the value of the content remains relatively constant over time.
-You can send data directly to Elasticseach from your application using an Elastic language client. 
-Otherwise use Elastic content [connectors](((enterprise-search-ref))/connectors.html) or the Elastic [web crawler](((enterprise-search-ref))/crawler.html).
+You can send data directly to ((serverless-full)) from your application using API or connector clients.
 
 **Times series (timestamped) data**
 
