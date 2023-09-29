@@ -17,7 +17,9 @@ Elasticsearch operations with it.
 
 ## Requirements
 
-* Python 3.7 or higher installed on your system.
+* Python 3.7 or higher
+* [`pip`](https://pip.pypa.io/en/stable/)
+
 
 ## Installation
 
@@ -27,16 +29,21 @@ You can install the Elasticsearch Serverless Python client with the following
 commands:
 
 ```bash
-
+python -m pip install elasticsearch-serverless
 ```
 
 
 ## Initialize the client
 
-Initialize the client using your API key and Cloud URL:
+Initialize the client using your API key and Serverless URL:
 
 ```python
+from elasticsearch_serverless import Elasticsearch
 
+client = Elasticsearch(
+    "https://...",  # URL provided by Elastic
+    api_key='api-key-id',  # API key provided by Elastic
+)
 ```
 
 To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
@@ -58,14 +65,17 @@ The following is an example of indexing some classic books into the `books`
 index:
 
 ```python
-
+client.bulk(
+    body=[
+        {"index": {"_index": "books", "_id": "1"}},
+        {"title": "Infinite Jest", "author": "David Foster Wallace", "published_on": datetime(1996, 2, 1)},
+        {"index": {"_index": "books", "_id": "2"}},
+        {"title": "Ulysses", "author": "James Joyce", "published_on": datetime(1922, 2, 2)},
+        {"index": {"_index": "books", "_id": "3"}},
+        {"title": "Just Kids", "author": "Patti Smith", "published_on": datetime(2010, 1, 19)},
+    ],
+)
 ```
-
-When you use the client to make a request to Elasticsearch, it returns an API 
-response object. You can check the HTTP return code by calling `status` and the 
-HTTP headers by calling `headers` on the response object. The response object 
-also behaves as a Hash, so you can access the body values directly as seen on 
-the previous example with ``.
 
 
 ### Getting documents
@@ -73,7 +83,8 @@ the previous example with ``.
 You can get documents by using the following code:
 
 ```python
-
+response = client.get(index="books", id="1")
+print(response.body)
 ```
 
 ### Searching
@@ -82,7 +93,14 @@ Now that some data is available, you can search your documents using the
 **Search API**:
 
 ```python
+response = client.search(index="books", query={
+    "match": {
+        "title": "infinite"
+    }
+})
 
+for hit in response["hits"]["hits"]:
+    print(hit["_source"])
 ```
 
 ### Updating a document
@@ -90,7 +108,10 @@ Now that some data is available, you can search your documents using the
 You can call the `update` API to update a document:
 
 ```python
-
+client.update(index="books", id="2", doc={
+    "author": "James Augustine Aloysius Joyce",
+    "pages": 732,
+})
 ```
 
 ### Deleting a document
@@ -98,7 +119,7 @@ You can call the `update` API to update a document:
 You can call the `delete` API to delete a document:
 
 ```python
-
+client.delete(index="books", id="3")
 ```
 
 
@@ -106,5 +127,5 @@ You can call the `delete` API to delete a document:
 
 
 ```python
-
+client.indices.delete(index="books")
 ```

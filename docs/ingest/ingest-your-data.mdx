@@ -14,8 +14,11 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <div id="ec-cloud-ingest-data"></div>
 
-You have options for ingesting, or indexing, data into Elasticsearch. 
-You can use Elastic Agent integrations, Beats, Logstash, Elastic language clients, Elastic connectors, or the Enterprise Search web crawler. 
+You have options for ingesting, or indexing, data into ((serverless-full)). 
+You can ingest data through <DocLink id="serverlessElasticsearchIngestDataThroughApi" text="API"/>, 
+<DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsLogstash" text="Logstash"/>, 
+<DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" text="Beats"/>, or 
+[connector clients](((enterprise-search-ref))/connectors.html). 
 The best ingest option--or options--for your use case depends on whether you are indexing general content or time-series (timestamped) data.
 
 <div id="ec-ingest-methods"></div>
@@ -30,14 +33,4 @@ Otherwise use Elastic content [connectors](((enterprise-search-ref))/connectors.
 **Times series (timestamped) data**
 
 Time series, or timestamped data, describes data that changes frequently and "flows" over time, such as stock quotes, system metrics, and network traffic data.
-Elastic Agent integrations are the preferred way to index time series data. 
-If no Elastic Agent integration is available for your data source, use Beats to collect your data.
-If no Beat is available for your data source, use Logstash to collect your data. 
-
-
-<div id="ec-ingest-solutions"></div>
-
-**Ingest data for Elastic solutions:**
-
-* Add data to Elastic Observability
-* Add data to Elastic Security
+Use ((beats)) or ((ls)) to collect time series data.
