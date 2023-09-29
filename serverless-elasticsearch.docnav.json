@@ -136,7 +136,8 @@
         },
         {
           "id": "serverlessElasticsearchExploreYourDataAlerting",
-          "classic-sources": [ "enKibanaCreateAndManageRules" ]
+          "classic-sources": [ "enKibanaCreateAndManageRules" ],
+          "label": "Alerts"
         }
       ]
     }
