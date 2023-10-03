@@ -269,19 +269,19 @@ Add a panel title:
 
 2. In the **Title** field, enter `Page views by location and referrer`, then click **Apply**.
 
-# Visualization panels
+## Visualization panels
 
-intro
+Visualization panels are how you display visualizstions of your data and what make Kibana such a useful tool. Panels are designed to build interactive dashboards. 
 
-## Create and add panels
+### Create and add panels
 
-You create panels new panels, which you can access from the dashboard toolbar or the **Visualize Library**, or add panels that are saved in the **Visualize Library**, or search results from <DocLink id="serverlessElasticsearchExploreYourDataDiscoverYourData" section="save-your-search-for-later-use">**Discover**</DocLink>.
+Create new panels, which can be accessed from the dashboard toolbar or the **Visualize Library**, or add panels that are saved in the **Visualize Library**, or search results from <DocLink id="serverlessElasticsearchExploreYourDataDiscoverYourData" section="save-your-search-for-later-use">**Discover**</DocLink>.
 
-**Panels/visualizations added to the **Visualize Library** are avaialbe to all dashboards.** 
+Panels added to the **Visualize Library** are avaialbe to all dashboards. 
 
 To create panels from the dashboard:
 
-1. From the main menu, then click **Dashboard** and select **[Logs] Web Traffic**.
+1. From the main menu, click **Dashboard** and select **[Logs] Web Traffic**.
 
 1. Click **Edit** then click **Create visualization**.
 
@@ -293,7 +293,7 @@ To create panels from the dashboard:
 
 To create panels from the **Visualize Library**:
 
-1. From the main menu, then click **Visualize Library**.
+1. From the main menu, click **Visualize Library**.
 
 1. Click **Create visualization**, then select an editor from the options.
 
@@ -307,7 +307,7 @@ To create panels from the **Visualize Library**:
 
 To add existing panels from the **Visualize Library**:
 
-1. From the main menu, then click **Dashboard** and select **[Logs] Web Traffic**.
+1. From the main menu, click **Dashboard** and select **[Logs] Web Traffic**.
 
 1. Click **Edit** then in the dashboard toolbar, click **Add from library**.
 
@@ -315,15 +315,15 @@ To add existing panels from the **Visualize Library**:
 
 <div id="save-panels"></div>
 
-## Save panels
+### Save panels
 
 Consider where you want to save and add the panel in ((kib)).
 
 <div id="save-to-visualize-library"></div>
 
-### Save to the Visualize Library
+#### Save to the Visualize Library
 
-To use the panel on other dashboards and **Canvas** workpads, save the panel to the **Visualize Library**. When panels are saved in the **Visualize Library**, <DocIcon type="folderCheck" title="Visualize Library" /> appears in the panel header.
+To use the panel on other dashboards, save the panel to the **Visualize Library**. When panels are saved in the **Visualize Library**, <DocIcon type="folderCheck" title="Visualize Library" /> appears in the panel header.
 
 If you created the panel from the dashboard:
 
@@ -335,7 +335,7 @@ If you created the panel from the **Visualize Library**:
 
 1. In the editor, click **Save**.
 
-1. Under **Save vizualization** enter a Title, Descriptioin, and decide if you want to save the new panel to an exisitng dashboard, a new dasboard, or to the Visualize Library.
+1. Under **Save vizualization** enter a **Title**, **Description**, and decide if you want to save the new panel to an exisitng dashboard, a new dasboard, or to the **Visualize Library**.
 
 1. Click **Save and go to Dashboard**.
 
@@ -343,7 +343,7 @@ If you created the panel from the **Visualize Library**:
 
 <div id="save-to-the-dashboard"></div>
 
-### Save to the dashboard
+#### Save to the dashboard
 
 Return to the dashboard and add the panel without specifying the save options or adding the panel to the **Visualize Library**. 
 
@@ -357,7 +357,7 @@ If you created the panel from the **Visualize Library**:
 
 1. Click **Save**.
 
-1. Under **Save vizualization** enter a **Title**, **Descriptioin**, and decide if you want to save the new panel to an exisitng dashboard, a new dasboard, or to the **Visualize Library**.
+1. Under **Save vizualization** enter a **Title**, **Description**, and decide if you want to save the new panel to an exisitng dashboard, a new dasboard, or to the **Visualize Library**.
 
 1. Click **Save and go to Dashboard**.
 
@@ -371,7 +371,7 @@ To add unsaved panels to the **Visualize Library**:
 
 <div id="arrange-panels"></div>
 
-## Arrange panels
+### Arrange panels
 
 Compare the data in your panels side-by-side, organize panels by priority, resize the panels so they all appear on the dashboard without scrolling down, and more.
 
@@ -385,7 +385,7 @@ In the toolbar, click **Edit**, then use the following options:
 
 <div id="add-text"></div>
 
-## Add text panels
+### Add text panels
 
 Add **Text** panels to your dashboard that display important information, instructions, and more. You create **Text** panels using GitHub-flavored Markdown text.
 
@@ -397,9 +397,7 @@ Add **Text** panels to your dashboard that display important information, instru
 
 1. To save the new text panel to your dashboard click **Save**.
 
-Your new text panel displayes on your dashboard. 
-
-## Add image panels
+### Add image panels
 
 To personalize your dashboards, add your own logos and graphics with the **Image** panel. You can upload images from your computer, or add images from an external link.
 
@@ -413,8 +411,6 @@ To personalize your dashboards, add your own logos and graphics with the **Image
 
 1. To save the new image panel to your dashboard click **Save**.
 
-Your new image panel displayes on your dashboard. 
-
 To manage your uploaded image files, open the main menu, then click **Stack Management > Kibana > Files**. 
 
 <DocCallOut title="Warning" color="warning">
@@ -426,7 +422,7 @@ When importing a dashboard with an image panel, and the image file is unavailabl
 
 <div id="edit-panels"></div>
 
-## Edit panels
+### Edit panels
 
 To make changes to the panel, use the panel menu options.
 
@@ -464,24 +460,7 @@ To make changes to the panel, use the panel menu options.
 
 * **More > Delete from dashboard** &mdash; Removes the panel from the dashboard. 
 
-    If you want to use the panel later, make sure that you save the panel to the **Visualize Library**.  
-
 <div id="search-or-filter-your-data"></div>
-
-## Search and filter your data
-
-((kib)) supports several ways to search your data and apply ((es)) filters. You can combine the filters with any panel
-filter to display the data want to you see.
-
-For more information about ((kib)) and ((es)) filters, refer to <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enKibanaKibanaConceptsAnalysts">((kib)) concepts</DocLink> */}.
-
-To apply a panel-level time filter:
-
-1. Open the panel menu, then select **Panel settings**.
-
-1. Select **Apply a custom time range**.
-
-1. Enter the time range you want to view, then click **Apply**.
 
 
 
