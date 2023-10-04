@@ -2,36 +2,40 @@
 id: serverlessElasticsearchGetStarted
 slug: /serverless/elasticsearch/get-started
 title: Get started
-description: Get started with Elasticsearch Serverless in a few steps
+description: Get started with ((es-serverless)) in a few steps
 tags: [ 'serverless', 'elasticsearch', 'getstarted', 'overview' ]
-status: publish ready
+status: in review
 ---
 
-Follow along to set up your Elasticsearch Serverless project and get started with some sample documents.
+import InReview from '../partials/in-review-notice.mdx'
+
+<InReview />
+
+Follow along to set up your ((es-serverless)) project and get started with some sample documents.
 Then, choose how to continue with your own data.
 
 ## Create project
 
-Use your Elastic Cloud account to create a fully-managed Elasticsearch Serverless project:
+Use your Elastic Cloud account to create a fully-managed ((es-serverless)) project:
 
 1. Navigate to [cloud.elastic.co](https://cloud.elastic.co/) and create a new account or log in to your existing account.
 
 1. Within **Fully-managed projects**, choose **Create project**.
 
-1. Choose the **Elasticsearch Serverless** project type.
+1. Choose the **((es-serverless))** project type.
 
 1. Provide a name for the project and optionally edit the project settings, such as the cloud platform region.
    Select **Create project** to continue.
 
 1. Once the project is ready, select **Continue**.
 
-You should now see the getting started screen within your Elasticsearch project, and you're ready to create an API key.
+You should now see the getting started screen within your ((es)) project, and you're ready to create an API key.
 
 ## Create key
 
-Create an API key, which will enable you to access the Elasticsearch API to ingest and search sample data.
+Create an API key, which will enable you to access the ((es)) API to ingest and search sample data.
 
-1. Within the **Get started with Elasticsearch** page, scroll to **Prepare an API Key** and select **New**.
+1. Within the **Get started with ((es))** page, scroll to **Prepare an API Key** and select **New**.
 
 1. Within **Create an API key**, enter a name for your key and its expiration.
    Select **Create API Key** to finish.
@@ -44,7 +48,7 @@ You will use the `encoded` value when sending API requests.
 ## Copy URL
 
 Next, copy the URL of your API endpoint.
-You'll send all Elasticsearch API requests to this URL.
+You'll send all ((es)) API requests to this URL.
 
 1. Scroll to **Copy your connection details**.
 
@@ -98,7 +102,7 @@ This process is also called "indexing".
 You can index multiple documents using a single `POST` request to the `_bulk` API endpoint.
 The request body specifies the documents to store and the indices in which to store them.
 
-Elasticsearch will automatically create the index and map each document value to one of its data types.
+((es)) will automatically create the index and map each document value to one of its data types.
 Include the `?pretty` option to receive a human-readable response.
 
 Run the following command to index some sample documents into the `books` index:
@@ -136,7 +140,7 @@ You should receive a response indicating there were no errors:
 ## Search data
 
 To search, send a `POST` request to the `_search` endpoint, specifying the index to search.
-Use the Elasticsearch query DSL to construct your request body.
+Use the ((es)) query DSL to construct your request body.
 
 Run the following command to search the `books` index for documents containing `snow`:
 
@@ -193,7 +197,7 @@ You should receive a response with the results:
 ## Continue on your own
 
 Congratulations!
-You've set up an Elasticsearch Serverless project, and you've ingested and searched some sample data.
+You've set up an ((es-serverless)) project, and you've ingested and searched some sample data.
 Now you're ready to continue on your own.
 
 ### Explore
@@ -201,7 +205,7 @@ Now you're ready to continue on your own.
 Want to explore the sample documents or your own data?
 
 By creating a data view, you can explore data using several UI tools: Discover, Dashboard, or the Visualize Library.
-Or, use Elasticsearch aggregations to explore your data using the API.
+Or, use ((es)) aggregations to explore your data using the API.
 
 See:
 
