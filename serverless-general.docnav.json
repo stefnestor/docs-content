@@ -35,12 +35,6 @@
         },
         {
           "id": "serverlessGeneralBillingHistory"
-        },
-        {
-          "id": "serverlessGeneralBillingContacts"
-        },
-        {
-          "id": "serverlessGeneralStopCharges"
         }
       ]
     }
