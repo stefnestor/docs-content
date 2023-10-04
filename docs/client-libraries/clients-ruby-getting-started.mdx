@@ -11,9 +11,9 @@ import InReview from '../partials/in-review-notice.mdx'
 
 <InReview />
 
-This page guides you through the installation process of the Serverless Ruby
+This page guides you through the installation process of the ((es-serverless)) Ruby
 client, shows you how to initialize the client, and how to perform basic
-Elasticsearch operations with it.
+((es)) operations with it.
 
 
 ## Requirements
@@ -91,7 +91,7 @@ To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElast
 ## Using the API
 
 After you've initialized the client, you can start ingesting documents. You can use
-the Bulk API for this. This API enables you to index, update, and delete several
+the `bulk` API for this. This API enables you to index, update, and delete several
 documents in one request.
 
 <DocCallOut title="Note">
@@ -151,7 +151,7 @@ You can get documents by using the following code:
 ### Searching
 
 Now that some data is available, you can search your documents using the
-**Search API**:
+`search` API:
 
 ```ruby
 > response = client.search(index: 'books', q: 'snow')

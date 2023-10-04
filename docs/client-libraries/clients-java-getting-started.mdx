@@ -4,34 +4,33 @@ slug: /serverless/elasticsearch/java-client-getting-started
 title: Getting started with the Serverless Java client
 description: This page contains quickstart information about the Serverless Java client.
 tags: [ 'serverless', 'elasticsearch', 'java', 'how to' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
-This page guides you through the installation process of the Serverless Java 
+This page guides you through the installation process of the ((es-serverless)) Java 
 client, shows you how to initialize the client, and how to perform basic 
-Elasticsearch operations with it.
+((es)) operations with it.
 
 ## Requirements
 
 * Java 8 or later.
 * A JSON object mapping library to allow seamless integration of
-your application classes with the Elasticsearch API. The examples below
+your application classes with the ((es)) API. The examples below
 show usage with Jackson.
 
 ## Installation
 
 
-You can add the Elasticsearch Serverless Java client to your Java project using 
+You can add the ((es-serverless)) Java client to your Java project using 
 either Gradle or Maven.
 
 ### Using Gradle
 
-You can install the Elasticsearch Serverless Java client with the following 
-commands:
+You can install the ((es-serverless)) Java client as a Gradle dependency:
 
 ```groovy
 dependencies {
@@ -42,7 +41,8 @@ dependencies {
 
 ### Using Maven
 
-In the `pom.xml` of your project, add the following dependencies:
+You can install the ((es-serverless)) Java client as a Maven dependency, add
+the following to the `pom.xml` of your project:
 
 ```xml
 <project>
@@ -94,8 +94,7 @@ To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElast
 
 ## Using the API
 
-After you instantiated a client with your API key and Elasticsearch endpoint, 
-you can start ingesting documents into the Elasticsearch Service.
+After you initialized the client, you can start ingesting documents.
 
 
 ### Creating an index and ingesting documents
@@ -119,7 +118,7 @@ logger.info("Indexed with version " + response.version());
 ### Searching
 
 Now that some data is available, you can search your documents using the 
-**Search API**:
+`search` API:
 
 ```java
 String searchText = "bike";
@@ -137,8 +136,9 @@ SearchResponse<Product> response = esClient.search(s -> s
 ```
 
 A few things to note in the above example:
+
 * The search query is built using a hierarchy of lambda expressions that closely 
-follows the Elasticsearch JSON API. Lambda expressions allows you to be guided 
+follows the ((es)) HTTP API. Lambda expressions allows you to be guided 
 by your IDE's autocompletion, without having to import (or even know!) the 
 actual classes representing a query.
 * The last parameter `Product.class` instructs the client to return results as 
@@ -147,7 +147,7 @@ actual classes representing a query.
 
 ### Updating
 
-You can update your documents using the Update API:
+You can update your documents using the `update` API:
 
 ```java
 Product product = new Product("bk-1", "City bike", 123.0);
