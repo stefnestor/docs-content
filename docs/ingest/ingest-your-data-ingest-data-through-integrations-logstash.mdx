@@ -14,11 +14,11 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 ((ls)) is an open source data collection engine with real-time pipelining capabilities.
 It supports a wide variety of data sources, and can dynamically unify data from disparate sources and normalize the data into destinations of your choice. 
 
-((ls)) can collect data using a variety of ((ls)) input plugins, enrich and transform the data if needed, and output it to ((serverless-full)) using the logstash-elasticsearch-output plugin.
-Use ((ls)) to extend <DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" text="Beats"/> for advanced use cases such as data routed to multiple destinations or when you need to make your data persistent. 
+((ls)) can collect data using a variety of ((ls)) [input plugins](((logstash-ref))/input-plugins.html), enrich and transform the data with ((ls)) [filter plugins](((logstash-ref))/filter-plugins.html), 
+and output the data to ((serverless-full)) using the ((ls)) [Elasticsearch output plugin](((logstash-ref))/plugins-outputs-elasticsearch.html).
 
-Check out the [Logstash product page](https://www.elastic.co/logstash) for more info.
-When you're ready, dive into the [Logstash documentation](((logstash-ref))/index.html).
+You can use ((ls)) to extend <DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" text="Beats"/> for advanced use cases, 
+such as data routed to multiple destinations or when you need to make your data persistent. 
 
 
 <DocCallOut id="ls-serverless-notes" title="Logstash for Elastic Serverless">
@@ -34,3 +34,15 @@ Some differences to note between ((serverless-full)) and self-managed ((es)):
 - **((ls)) monitoring** for ((serverless-full)) is still under development. 
 
 </DocCallOut>
+
+## Requirements
+
+To use ((ls)) to send data to ((serverless-full)), you must be using:
+- ((ls)) 8.10.1 or later
+- ((ls)) [Elasticsearch output plugin](((logstash-ref))/plugins-outputs-elasticsearch.html) updated to the latest version
+
+## Next steps
+
+Check out the [Logstash product page](https://www.elastic.co/logstash) for more info.
+When you're ready, dive into the [Logstash documentation](((logstash-ref))/index.html).
+
