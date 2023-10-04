@@ -2,207 +2,221 @@
 id: serverlessElasticsearchGetStarted
 slug: /serverless/elasticsearch/get-started
 title: Get started
-# description: Description to be written
+description: Get started with Elasticsearch Serverless in a few steps
 tags: [ 'serverless', 'elasticsearch', 'getstarted', 'overview' ]
-status: rough content
+status: publish ready
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+Follow along to set up your Elasticsearch Serverless project and get started with some sample documents.
+Then, choose how to continue with your own data.
 
-<RoughContent />
+## Create project
 
-Get started with Elasticsearch in a few steps.
-Ingest, search, and explore some sample data after setting up your project:
+Use your Elastic Cloud account to create a fully-managed Elasticsearch Serverless project:
 
-1. [Set up project](#set-up-project)
-2. [Ingest](#ingest)
-3. [Search](#search)
-4. [Explore](#explore)
+1. Navigate to [cloud.elastic.co](https://cloud.elastic.co/) and create a new account or log in to your existing account.
 
-## Set up your project
+1. Within **Fully-managed projects**, choose **Create project**.
 
-A project allows you to use one of the Elastic solutions -- Elasticsearch Serverless, Observability, Security -- and run them in an autoscaled and fully-managed environment, where you don't have to manage the underlying Elasticsearch cluster and Kibana instances.
+1. Choose the **Elasticsearch Serverless** project type.
 
-### Create your project
+1. Provide a name for the project and optionally edit the project settings, such as the cloud platform region.
+   Select **Create project** to continue.
 
-1. Navigate to [cloud.elastic.co](https://cloud.elastic.co/).
+1. Once the project is ready, select **Continue**.
 
-1. Log in to your Elastic Cloud account and select **Create project** from the **Fully-managed projects** panel.
+You should now see the getting started screen within your Elasticsearch project, and you're ready to create an API key.
 
-2. Choose **Elasticsearch Serverless**.
+## Create key
 
-3. Edit your project settings.
+Create an API key, which will enable you to access the Elasticsearch API to ingest and search sample data.
 
-   **Cloud provider**: The cloud platform where you’ll deploy your project. We currently support Amazon Web Services (AWS).
+1. Within the **Get started with Elasticsearch** page, scroll to **Prepare an API Key** and select **New**.
 
-   **Region**: The cloud platform’s region where your project will live. The region should be as close as possible to the location of your data.
+1. Within **Create an API key**, enter a name for your key and its expiration.
+   Select **Create API Key** to finish.
 
-   You can also check [the pricing details](https://cloud.elastic.co/pricing) to see how you consume Elasticsearch Serverless.
+The API key is displayed as a set of values, including `id`, `name`, `expiration`, `api_key`, and `encoded`.
+Store this information securely—it is displayed only once.
 
-4. Select **Create project**. It takes a few minutes before your project gets created. 
+You will use the `encoded` value when sending API requests.
 
-Once the project is ready, select **Continue** to open the **Get started with Elasticsearch** main page. From here, you can select your favorite language client, ingest data, and start searching and exploring within minutes.
+## Copy URL
 
-### Create an API key
+Next, copy the URL of your API endpoint.
+You'll send all Elasticsearch API requests to this URL.
 
-An API key is a private, unique identifier for authentication and authorization. You'll need a private API key to securely connect to your project. You can use an existing key, or create a new one.
+1. Scroll to **Copy your connection details**.
 
-1. On the **Get started with Elasticsearch** page, scroll down to **Prepare an API Key** and click **New**.
+1. Find the value for **Cloud URL**.
 
-2. From the **Create an API key** panel, enter a name for your key and its expiration. Then click **Create API key**.
+Store this value along with your `encoded` API key.
+You'll use both values in the next step.
 
-After you created your API key, it is displayed with its ID, name, expiration date, and its encoded version. Save this information somewhere safe as it is displayed only once and it is not stored anywhere in the project.
+## Test connection
 
-#### Using an API key
+We'll use the `curl` command to test your connection and make additional API requests.
+(See [Install curl](https://everything.curl.dev/get) if you need to install this program.)
 
-Pass your `encoded` API key in an `Authorization` header using the `ApiKey` scheme:
+`curl` will need access to your Cloud URL and `encoded` API key.
+Within your terminal, assign these values to the environment variables `ES_URL` and `API_KEY`.
+
+For example:
+
+```bash
+export ES_URL="https://dda7de7f1d264286a8fc9741c7741690.es.us-east-1.aws.elastic.cloud:443"
+export API_KEY="ZFZRbF9Jb0JDMEoxaVhoR2pSa3Q6dExwdmJSaldRTHFXWEp4TFFlR19Hdw=="
+```
+
+Then run the following command to test your connection:
 
 ```bash
 curl "${ES_URL}" \
--H "Authorization: ApiKey ${API_KEY}"
+  -H "Authorization: ApiKey ${API_KEY}" \
+  -H "Content-Type: application/json"
 ```
 
-## Ingest
+You should receive a response similar to the following:
 
-Let's create an index and ingest some data!
+```json
+{
+  "name" : "serverless",
+  "cluster_name" : "dda7de7f1d264286a8fc9741c7741690",
+  "cluster_uuid" : "ws0IbTBUQfigmYAVMztkZQ",
+  "version" : { ... },
+  "tagline" : "You Know, for Search"
+}
+```
 
-Use the `_bulk` API to create an index called `books` and add some data to it in 
-a single API call:
+Now you're ready to ingest and search some sample documents.
 
-<DocTabs> 
-  <DocTab name="curl">
-    ```bash
-    # Call the `_bulk` API to create the index and ingest the documents:
-    curl -X POST "${ES_URL}/_bulk?pretty" \
-    -H "Authorization: ApiKey ${API_KEY}" \
-    -H "Content-Type: application/json" \
-    -d'
-    { "index" : { "_index" : "books" } }
-    {"title": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
-    { "index" : { "_index" : "books" } }
-    {"title": "Revelation Space", "author": "Alastair Reynolds", "release_date": "2000-03-15", "page_count": 585}
-    { "index" : { "_index" : "books" } }
-    {"title": "1984", "author": "George Orwell", "release_date": "1985-06-01", "page_count": 328}
-    { "index" : { "_index" : "books" } }
-    {"title": "Fahrenheit 451", "author": "Ray Bradbury", "release_date": "1953-10-15", "page_count": 227}
-    { "index" : { "_index" : "books" } }
-    {"title": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
-    { "index" : { "_index" : "books" } }
-    {"title": "The Handmaid'\''s Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
-    { "index" : { "_index" : "books" } }
-    {"title": "Neuromancer", "author": "William Gibson", "release_date": "1984-07-01", "page_count": 271}
-    { "index" : { "_index" : "books" } }
-    {"title": "Count Zero", "author": "William Gibson", "release_date": "1986-01-02", "page_count": 256}
-    { "index" : { "_index" : "books" } }
-    {"title": "Mona Lisa Overdrive", "author": "William Gibson", "release_date": "1988-06-01", "page_count": 251}
-    { "index" : { "_index" : "books" } }
-    {"title": "Virtual light", "author": "William Gibson", "release_date": "1993-09-06", "page_count": 304}
-    { "index" : { "_index" : "books" } }
-    {"title": "Idoru", "author": "William Gibson", "release_date": "1994-09-04", "page_count": 304}
-    { "index" : { "_index" : "books" } }
-    {"title": "All Tomorrow'\''s Parties", "author": "William Gibson", "release_date": "1999-10-07", "page_count": 320}
-    { "index" : { "_index" : "books" } }
-    {"title": "The Colour of Magic", "author": "Terry Pratchett", "release_date": "1983-11-24", "page_count": 288}
-    { "index" : { "_index" : "books" } }
-    {"title": "The Light Fantastic", "author": "Terry Pratchett", "release_date": "1986-06-02", "page_count": 288}
-    { "index" : { "_index" : "books" } }
-    {"title": "Világló részletek", "author": "Nádas Péter", "release_date": "2017-06-08", "page_count": 1212} 
-    '
-    # Check the API response to make sure that the items are indexed correctly.
-    ```
-  </DocTab>
-  <DocTab name="Ruby">
-    ```ruby
-    # First, initialize your client:
-    client = ElasticsearchServerless::Client.new(
-    api_key: 'your_api_key',
-    url: 'https://your_cloud_url'
-    )
-    # Then build your data:
-    body = [
-    { index: { _index: 'books', data: {title: "Snow Crash", author: "Neal Stephenson", release_date: "1992-06-01", page_count: 470} } },
-    { index: { _index: 'books', data: {title: "Revelation Space", author: "Alastair Reynolds", release_date: "2000-03-15", page_count: 585} } },
-    { index: { _index: 'books', data: {title: "1984", author: "George Orwell", release_date: "1949-06-08", page_count: 328} } },
-    { index: { _index: 'books', data: {title: "Fahrenheit 451", author: "Ray Bradbury", release_date: "1953-10-15", page_count: 227} } },
-    { index: { _index: 'books', data: {title: "Brave New World", author: "Aldous Huxley", release_date: "1932-06-01", page_count: 268} } },
-    { index: { _index: 'books', data: {title: "The Handmaid's Tale", author: "Margaret Atwood", release_date: "1985-06-01", page_count: 311} } },
-    { index: { _index: 'books', data: {title: "Neuromancer", author: "William Gibson", release_date: "1984-07-01", page_count: 271}}},
-    { index: { _index: 'books', data: {title: "Count Zero", author: "William Gibson", release_date: "1986-01-02", page_count: 256}}},
-    { index: { _index: 'books', data: {title: "Mona Lisa Overdrive", author: "William Gibson", release_date: "1988-06-01", page_count: 251}}},
-    { index: { _index: 'books', data: {title: "Virtual light", author: "William Gibson", release_date: "1993-09-06", page_count: 304}}},
-    { index: { _index: 'books', data: {title: "Idoru", author: "William Gibson", release_date: "1994-09-04", page_count: 304}}},
-    { index: { _index: 'books', data: {title: "All Tomorrow's Parties", author: "William Gibson", release_date: "1999-10-07", page_count: 320}}},
-    { index: { _index: 'books', data: {title: "The Colour of Magic", author: "Terry Pratchett", release_date: "1983-11-24", page_count: 288}}},
-    { index: { _index: 'books', data: {title: "The Light Fantastic", author: "Terry Pratchett", release_date: "1986-06-02", page_count: 288}}},
-    { index: { _index: 'books', data: {title: "Világló részletek", author: "Nádas Péter", release_date: "2017-06-08", page_count: 1212}}}
-    ]
-    # Ingest the data via the bulk API:
-    > response = client.bulk(body: body)
-    # You can check the response if the items are indexed and have an ID:
-    > response['items']
-    =>
-    [{"index"=>{"_index"=>"books", "_id"=>"Pdink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>0, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Ptink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>1, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"P9ink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>2, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"QNink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>3, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Qdink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>4, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Qtink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>5, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Adink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>6, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Pbink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>7, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"P9knk4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>8, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"QNisk4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>9, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Qdinl4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>10, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Qtink3cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>11, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Paink4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>12, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"Gtine4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>13, "_primary_term"=>1, "status"=>201}},
-      {"index"=>{"_index"=>"books", "_id"=>"H9inc4cBmDx329iqhzM2", "_version"=>1, "result"=>"created", "_shards"=>{"total"=>2, "successful"=>1, "failed"=>0}, "_seq_no"=>14, "_primary_term"=>1, "status"=>201}}]
-    ```
-  </DocTab>
-</DocTabs>
+## Ingest data
 
-## Search
+To ingest data, you must create an index and store some documents.
+This process is also called "indexing".
 
-Now search for documents in the `books` index that contain the word `snow`:
+You can index multiple documents using a single `POST` request to the `_bulk` API endpoint.
+The request body specifies the documents to store and the indices in which to store them.
 
-<DocTabs>
-  <DocTab name="curl">
-    Run a search using the `_search` API:
+Elasticsearch will automatically create the index and map each document value to one of its data types.
+Include the `?pretty` option to receive a human-readable response.
 
-    ```bash
-    curl "${ES_URL}/books/_search" \
-    -H "Authorization: ApiKey ${API_KEY}" \
-    -H "Content-Type: application/json" \
-     -d '
-    {
-        "query": {
-            "match": { "_all": "snow" }
-        }
+Run the following command to index some sample documents into the `books` index:
+
+```bash
+curl -X POST "${ES_URL}/_bulk?pretty" \
+  -H "Authorization: ApiKey ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '
+{ "index" : { "_index" : "books" } }
+{"name": "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470}
+{ "index" : { "_index" : "books" } }
+{"name": "Revelation Space", "author": "Alastair Reynolds", "release_date": "2000-03-15", "page_count": 585}
+{ "index" : { "_index" : "books" } }
+{"name": "1984", "author": "George Orwell", "release_date": "1985-06-01", "page_count": 328}
+{ "index" : { "_index" : "books" } }
+{"name": "Fahrenheit 451", "author": "Ray Bradbury", "release_date": "1953-10-15", "page_count": 227}
+{ "index" : { "_index" : "books" } }
+{"name": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
+{ "index" : { "_index" : "books" } }
+{"name": "The Handmaids Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
+'
+```
+
+You should receive a response indicating there were no errors:
+
+```json
+{
+  "errors" : false,
+  "took" : 1260,
+  "items" : [ ... ]
+}
+```
+
+## Search data
+
+To search, send a `POST` request to the `_search` endpoint, specifying the index to search.
+Use the Elasticsearch query DSL to construct your request body.
+
+Run the following command to search the `books` index for documents containing `snow`:
+
+```bash
+curl -X POST "${ES_URL}/books/_search?pretty" \
+  -H "Authorization: ApiKey ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '
+{
+  "query": {
+    "query_string": {
+      "query": "snow"
     }
-    '
-    ```
-  </DocTab>
-  <DocTab name="Ruby">
-    Run a search using the `search` API:
+  }
+}
+'
+```
 
-    ```ruby
-    response = client.search(index: 'books', q: 'snow')
-    response['hits']['hits']
-    ```
+You should receive a response with the results:
 
-    Result:
-    
-    ```ruby
-    [{"_index"=>"books", "_id"=>"Pdink4cBmDx329iqhzM2", "_score"=>1.5904956, "_source"=>{"title"=>"Snow Crash", "author"=>"Neal Stephenson", "release_date"=>"1992-06-01", "page_count"=>470}}]
-    ```
-  </DocTab>
-</DocTabs>
+```json
+{
+  "took" : 24,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.5904956,
+    "hits" : [
+      {
+        "_index" : "books",
+        "_id" : "Z3hf_IoBONQ5TXnpLdlY",
+        "_score" : 1.5904956,
+        "_source" : {
+          "name" : "Snow Crash",
+          "author" : "Neal Stephenson",
+          "release_date" : "1992-06-01",
+          "page_count" : 470
+        }
+      }
+    ]
+  }
+}
+```
 
-## Explore
+## Continue on your own
 
-* Select **Discover**.
+Congratulations!
+You've set up an Elasticsearch Serverless project, and you've ingested and searched some sample data.
+Now you're ready to continue on your own.
 
-* Write some queries to explore the data (potentially with ES|QL).
+### Explore
 
-* Select **Dashboard**.
+Want to explore the sample documents or your own data?
 
-* Create a visualization.
+By creating a data view, you can explore data using several UI tools: Discover, Dashboard, or the Visualize Library.
+Or, use Elasticsearch aggregations to explore your data using the API.
+
+See:
+
+- <DocLink id="serverlessElasticsearchExploreYourData" />
+
+### Build
+
+Ready to build your own solution?
+
+Learn more details about ingestion APIs and additional ingestion tools that help you send and sync data from various sources.
+And learn more about the search API and its query DSL.
+
+See:
+
+- <DocLink id="serverlessElasticsearchIngestYourData" />
+- <DocLink id="serverlessElasticsearchSearchYourData" />
+- <DocLink id="serverlessElasticsearchSearchYourDataTheSearchApi" />
+- <DocLink id="serverlessElasticsearchHttpApis" />
