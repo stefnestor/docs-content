@@ -16,9 +16,9 @@ Then, choose how to continue with your own data.
 
 ## Create project
 
-Use your Elastic Cloud account to create a fully-managed ((es-serverless)) project:
+Use your ((ecloud)) account to create a fully-managed ((es-serverless)) project:
 
-1. Navigate to [cloud.elastic.co](https://cloud.elastic.co/) and create a new account or log in to your existing account.
+1. Navigate to [cloud.elastic.co](((ess-console))) and create a new account or log in to your existing account.
 
 1. Within **Fully-managed projects**, choose **Create project**.
 
@@ -33,11 +33,11 @@ You should now see the getting started screen within your ((es)) project, and yo
 
 ## Create key
 
-Create an API key, which will enable you to access the ((es)) API to ingest and search sample data.
+Create an API key, which will enable you to access the ((es)) API to ingest and search data.
 
-1. Within the **Get started with ((es))** page, scroll to **Prepare an API Key** and select **New**.
+1. On the **Get started with ((es))** page, scroll to **Prepare an API Key** and select **New**.
 
-1. Within **Create an API key**, enter a name for your key and its expiration.
+1. In **Create an API key**, enter a name for your key and its expiration.
    Select **Create API Key** to finish.
 
 The API key is displayed as a set of values, including `id`, `name`, `expiration`, `api_key`, and `encoded`.
@@ -63,7 +63,7 @@ We'll use the `curl` command to test your connection and make additional API req
 (See [Install curl](https://everything.curl.dev/get) if you need to install this program.)
 
 `curl` will need access to your Cloud URL and `encoded` API key.
-Within your terminal, assign these values to the environment variables `ES_URL` and `API_KEY`.
+Within your terminal, assign these values to the `ES_URL` and `API_KEY` environment variables.
 
 For example:
 
@@ -204,7 +204,7 @@ Now you're ready to continue on your own.
 
 Want to explore the sample documents or your own data?
 
-By creating a data view, you can explore data using several UI tools: Discover, Dashboard, or the Visualize Library.
+By creating a data view, you can explore data using several UI tools, such as Discover or Dashboards.
 Or, use ((es)) aggregations to explore your data using the API.
 
 See:
@@ -215,7 +215,7 @@ See:
 
 Ready to build your own solution?
 
-Learn more details about ingestion APIs and additional ingestion tools that help you send and sync data from various sources.
+Learn more details about ways you send and sync data to ((es)) from various sources.
 And learn more about the search API and its query DSL.
 
 See:
