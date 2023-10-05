@@ -11,9 +11,9 @@ import RoughContent from '../partials/rough-content-notice.mdx'
 
 <RoughContent />
 
-This page guides you through the installation process of the Serverless PHP  
+This page guides you through the installation process of the ((es-serverless)) PHP  
 client, shows you how to initialize the client, and how to perform basic 
-Elasticsearch operations with it.
+((es)) operations with it.
 
 
 ## Requirements
@@ -26,7 +26,7 @@ Elasticsearch operations with it.
 
 ### Using the command line
 
-You can install the Elasticsearch Serverless PHP client with the following 
+You can install the ((es-serverless)) PHP client with the following 
 commands:
 
 ```bash
@@ -47,7 +47,7 @@ To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElast
 ## Using the API
 
 After you've initialized the client, you can start ingesting documents. You can use
-the Bulk API for this. This API enables you to index, update, and delete several
+the `bulk` API for this. This API enables you to index, update, and delete several
 documents in one request.
 
 
@@ -63,7 +63,7 @@ index:
 
 ```
 
-When you use the client to make a request to Elasticsearch, it returns an API 
+When you use the client to make a request to ((es)), it returns an API 
 response object. You can check the HTTP return code by calling `status` and the 
 HTTP headers by calling `headers` on the response object. The response object 
 also behaves as a Hash, so you can access the body values directly as seen on 

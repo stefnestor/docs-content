@@ -44,9 +44,6 @@
         {
           "id": "serverlessElasticsearchKibanaApiConventions",
           "classic-sources": [ "enKibanaApi" ]
-        },
-        {
-          "id": "serverlessElasticsearchHttpApisReferences"
         }
       ]
     },

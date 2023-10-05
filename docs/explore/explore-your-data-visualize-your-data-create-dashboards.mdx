@@ -4,24 +4,38 @@ slug: /serverless/elasticsearch/explore-your-data-dashboards
 title: Create dashboards
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'dashboards', 'how to' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
-
-<div id="create-a-dashboard-of-panels-with-web-server-data"></div>
+<InReview />
 
 Learn the most common way to create a dashboard from your own data. The tutorial will use sample data from the perspective of an analyst looking at website logs, but this type of dashboard works on any type of data.
 
-<div id="add-the-data-and-create-the-dashboard"></div>
+<div id="open-the-dashboard"></div>
 
-## Add the data and create the dashboard
+## Open the dashboard
+
+Begin with an empty dashboard, or open an existing dashboard.
+
+1. Open the main menu, then click **Dashboard**.
+
+1. On the **Dashboards** page, choose one of the following options:
+
+* To start with an empty dashboard, click **Create dashboard**.
+
+    When you create a dashboard, you are automatically in edit mode and can make changes. 
+
+* To open an existing dashboard, click the dashboard **Title** you want to open.
+
+    When you open an existing dashboard, you are in view mode. To make changes, click **Edit** in the toolbar. 
+
+## Add data and create a dashboard
 
 Add the sample web logs data, and create and set up the dashboard.
 
-1. On the home page, click **Try sample data**.
+1. On the **Dashboard** page, click **Add some sample data**.
 
 2. Click **Other sample data sets**. 
 
@@ -31,25 +45,58 @@ Create the dashboard where you'll display the visualization panels.
 
 1. Open the main menu, then click **Dashboard**.
 
-2. Click **Create dashboard**.
+2. Click **[Logs] Web Traffic**.
 
-3. Set the time filter to your desired time range.
+By default some visualization panels have been created for you using the sample data. Go to [Create visualization](/serverless/elasticsearch/explore-your-data-visualizations) to learn about the different visualizations.  
 
-You're now ready to create some vizualization panels. Go to [Create vizualization](/serverless/elasticsearch/explore-your-data-visualizations) to learn about the different vizualizations.  
+![dashboard with default visualizations using sample data](images/dashboards/dashboard-example.png)
 
-## Arrange the dashboard panels
+## Reset the dashboard
 
-Resize and move the panels so they all appear on the dashboard without scrolling.
+To remove any changes you've made, reset the dashboard to the last saved changes.
 
-## Save the dashboard
+1. In the toolbar, click **Reset**.
 
-Once you have created some vizualizations of your web server data, save the dashboard.
+1. Click **Reset dashboard**.
+
+## Save dashboards
+
+When you've finished making changes to the dashboard, save it.
 
 1. In the toolbar, click **Save**.
 
-1. On the **Save dashboard** window, enter `Logs dashboard` in the **Title** field.
+1. To exit **Edit** mode, click **Switch to view mode**. 
 
-1. Select **Store time with dashboard**.
+## Add dashboard settings
 
-1. Click **Save**.
+When creating a new dashboard you can add the title, tags, design options, and more to the dashboard.
 
+1. In the toolbar, click **Settings**.
+
+2. On the **Dashboard settings** flyout, enter the **Title** and an optional **Description**.
+
+3. Add any applicable **Tags**. 
+
+4. Specify the following settings:
+
+* **Store time with dashboard** &mdash; Saves the specified time filter.
+
+* **Use margins between panels** &mdash; Adds a margin of space between each panel.
+
+* **Show panel titles** &mdash; Displays the titles in the panel headers.
+
+* **Sync color palettes across panels** &mdash; Applies the same color palette to all panels on the dashboard.
+
+* **Sync cursor across panels** &mdash; When you hover your cursor over a panel, the cursor on all other related dashboard charts automatically appears.
+
+* **Sync tooltips across panels** &mdash; When you hover your cursor over a panel, the tooltips on all other related dashboard charts automatically appears.
+
+5. Click **Apply**. 
+
+## Share dashboards
+
+To share the dashboard with a larger audience, click **Share** in the toolbar. For detailed information about the sharing options, refer to [Reporting](https://www.elastic.co/guide/en/kibana/current/reporting-getting-started.html).
+
+## Export dashboards
+
+To automate ((kib)), you can export dashboards as JSON using the [Export objects API](https://www.elastic.co/guide/en/kibana/current/saved-objects-api-export.html). It is important to export dashboards with all necessary references.
