@@ -112,7 +112,7 @@ print($response->getBody()->getContents());
 print($response->asString());
 ```
 
-Moreover, the response body can be accessed as associative array or as object.
+The response body can be accessed as associative array or as object.
 
 ```php
 var_dump($response['items']); # associative array
@@ -141,7 +141,7 @@ $response = $client->get(index: "books", id: $id);
 
 ### Searching
 
-You can search your documents using the **Search API**:
+You can search your documents using the `search` API:
 
 ```php
 # Search for all the books written by Ray Bradbury
@@ -152,10 +152,10 @@ printf("Documents found: %d\n", $response['hits']['total']['value']); # total do
 print_r($response['hits']['hits']); # list of books
 ```
 
-For more information about the Search query parameters and the response type
-you can refer to the 
+For more information about the `search` API's query parameters and the response type,
+refer to the 
 [Search API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)
-documentation page of ((es)).
+docs.
 
 
 ### Updating documents
@@ -181,21 +181,6 @@ $response = $client->delete(index: "books", id: $id);
 printf("Operation result: %s\n", $response['result']); # You get "deleted" a as result.
 ```
 
-If you try to get the document ID, you will get a `ClientResponseException` with 
-a `404 Not Found` message, as follows:
-
-```php
-use Elastic\Elasticsearch\Serverless\Exception\ClientResponseException;
-
-$id = '<insert the document ID>';
-try {
-    $response = $client->get(index: "books", id: $id);
-} catch (ClientResponseException $e) {
-    printf("The document does not exist: %s\n", $e->getMessage());
-    printf("HTTP status code: %d\n", $e->getResponse()->getStatusCode());
-}
-printf("Operation result: %s\n", $response['result']); # You get "deleted" as a result.
-```
 
 
 ### Deleting an index
@@ -208,8 +193,3 @@ if ($response['acknowledged']) {
     print("Index successfully removed!");
 }
 ```
-
-This operation is possible only if the associated API key has 
-`delete_index`or 
-[manage index privilege](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-privileges.html#privileges-list-indices)
-for the target index. 
