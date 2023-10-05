@@ -4,12 +4,12 @@ slug: /serverless/elasticsearch/nodejs-client-getting-started
 title: Getting started with the Serverless Node.js client
 description: Set up and use the Node.js client for ((es-serverless)).
 tags: [ 'serverless', 'elasticsearch', 'nodejs', 'how to' ]
-status: in review
+status: rough content
 ---
 
 This page guides you through the installation process of the ((es-serverless)) Node.js 
 client, shows you how to initialize the client, and how to perform basic 
-((es)) operations with it.
+Elasticsearch operations with it.
 
 ## Requirements
 
@@ -19,7 +19,7 @@ client, shows you how to initialize the client, and how to perform basic
 
 ### Using the command line
 
-You can install the ((es-serverless)) Node.js client with the following 
+You can install the Elasticsearch Serverless Node.js client with the following 
 commands:
 
 ```bash
@@ -28,7 +28,7 @@ npm install @elastic/elasticsearch-serverless
 
 ## Initialize the client
 
-Initialize the client using your API key and Cloud URL:
+Initialize the client using your Serverless project URL and API key, both provided by Elastic:
 
 ```js
 const { Client } = require('@elastic/elasticsearch-serverless')
@@ -43,7 +43,7 @@ To get API keys or the URL for a project, see <DocLink id="serverlessElasticsear
 ## Using the API
 
 After you've initialized the client, you can start ingesting documents.
-You can use the `bulk` API for this.
+You can use the Bulk API for this.
 This API enables you to index, update, and delete several documents in one request.
 
 ### Creating an index and ingesting documents
@@ -93,7 +93,7 @@ await client.get({
 
 ### Searching
 
-Now that some data is available, you can search your documents using the `search` API:
+Now that some data is available, you can search your documents using the **Search API**:
 
 ```js
 const result = await client.search({
@@ -145,7 +145,7 @@ await client.indices.delete({ index: 'books' })
 
 ## TypeScript
 
-The Node.js client is implemented in TypeScript. IDEs that support
+The Node.js client is implemented in TypeScript, so any IDEs supporting 
 TypeScript-based autocompletion should automatically find and load the 
 appropriate declaration files in the package's `lib` directory.
 The source TypeScript can also be 

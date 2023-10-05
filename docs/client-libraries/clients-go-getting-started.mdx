@@ -4,12 +4,12 @@ slug: /serverless/elasticsearch/go-client-getting-started
 title: Getting started with the Serverless Go Client
 description: Set up and use the Go client for ((es-serverless)).
 tags: [ 'serverless', 'elasticsearch', 'go', 'how to' ]
-status: in review
+status: rough content
 ---
 
 This page guides you through the installation process of the ((es-serverless)) Go 
 client, shows you how to initialize the client, and how to perform basic 
-((es)) operations with it.
+Elasticsearch operations with it.
 
 
 ## Requirements
@@ -22,7 +22,7 @@ client, shows you how to initialize the client, and how to perform basic
 
 ### Using the command line
 
-You can install the ((es-serverless)) Go client with the following 
+You can install the Elasticsearch Serverless Go client with the following 
 commands:
 
 ```bash
@@ -47,7 +47,7 @@ To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElast
 ## Using the API
 
 After you've initialized the client, you can start ingesting documents. You can 
-use the `bulk` API for this. This API enables you to index, update, and delete 
+use the Bulk API for this. This API enables you to index, update, and delete 
 several documents in one request.
 
 
@@ -79,7 +79,7 @@ response, err := bulk.Do(context.TODO())
 fmt.Printf("%#v", response.Items)
 ```
 
-When you use the client to make a request to ((es)), it returns an API 
+When you use the client to make a request to Elasticsearch, it returns an API 
 response object. You can access the body values directly as seen on
 the previous example with `res`.
 
@@ -96,7 +96,7 @@ client.Get("my_index", id).Do(context.TODO())
 ### Searching
 
 Now that some data is available, you can search your documents using the 
-`search` API:
+**Search API**:
 
 ```go
 client.Search().

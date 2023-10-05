@@ -2,12 +2,14 @@
 id: serverlessElasticsearchExploreYourDataDiscoverYourData
 slug: /serverless/elasticsearch/explore-your-data-discover-your-data
 title: Discover your data
-description: Learn how to use Discover to gain insights into your data.
+# description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'discover data', 'how to' ]
-status: in review
+status: rough content
 ---
 
 <div id="discover"></div>
+
+You have questions about your data. What pages on your website contain a specific word or phrase? What events were logged most recently? What processes take longer than 500 milliseconds to respond?
 
 With **Discover**, you can quickly search and filter your data, get information
 about the structure of the fields, and display your findings in a visualization.
@@ -16,7 +18,7 @@ You can also customize and save your searches and place them on a dashboard.
 ## Explore and query your data
 
 This tutorial shows you how to use **Discover** to search large amounts of
-data and understand what’s going on at any given time. This tutorial uses the book sample data set from the <DocLink id="serverlessElasticsearchGetStarted">Get started page</DocLink>.
+data and understand what’s going on at any given time. This tutorial uses the ecommerce sample data set which is avalible from the ((kib)) homepage.
 
 You’ll learn to:
 
@@ -33,36 +35,17 @@ data in **Discover**.
 
 Tell ((kib)) where to find the data you want to explore, and then specify the time range in which to view that data.
 
-1. Once the book sample data has been ingested, navigate to **Explore > Discover** and click **Create data view**.
+1. Open the main menu, and select **Discover**.
 
-2. Give your data view a name.
+2. To view the ecommerce sample data, open the ((data-source)) menu, and then select **Kibana Sample Data Ecommerce**.
 
-<DocImage size="xxl" url="images/discover/create-data-view.png" alt="Create a data view" />
+To create a data view for your own data, click **Create a data view**.
 
-3. Start typing in the **Index pattern** field, and the names of indices, data streams, and aliases that match your input will be displayed.
+3. Adjust the time range to view data for the **Last 7 days**.
 
-- To match multiple sources, use a wildcard (*), for example, `b*` and any indices starting with the letter `b` display.
+The range selection is based on the default time field in your data. If you are using the sample data, this value was set when you added the data. If you  are using your own data, and it does not have a time field, the range selection is not available.  
 
-- To match multiple sources, enter their names separated by a comma. Do not include a space after the comma. For example `books,magazines` would match two indices: `books` and `magazines`.
-
-- To exclude a source, use a minus sign (-), for example `-books`.
-
-4. In the **Timestamp** field dropdown, and then select `release_date`.
-
-- If you don't set a time field, you can't use global time filters on your dashboards. Leaving the time field unset might be useful if you have multiple time fields and want to create dashboards that combine visualizations based on different timestamps.
-
-- If your index doesn't have time-based data, choose **I don't want to use the time filter**.
-
-5. Click **Show advanced settings** to:
-
-- Display hidden and system indices.
-- Specify your own data view name. For example, enter your Elasticsearch index alias name.
-
-6. Click **Save data view to ((kib))**.
-
-7. Adjust the time range to view data for the **Last 40 years** to view all your book data.
-
- <DocImage size="xxl" url="images/discover/book-data.png" alt="Your book data displayed" />
+4. To view the count of documents for a given time in the specified range, click and drag the mouse over the chart.
 
 <div id="explore-fields-in-your-data"></div>
 
@@ -70,13 +53,19 @@ Tell ((kib)) where to find the data you want to explore, and then specify the ti
 
 **Discover** includes a table that shows all the documents that match your search. By default, the document table includes a column for the time field and a column that lists all other fields in the document. You’ll modify the document table to display your fields of interest.
 
-1. In the sidebar, enter `au` in the search field to find the `author` field.
+1. In the sidebar, enter `ma` in the search field to find the `manufacturer` field.
 
-2. In the **Available fields** list, click `author` to view its most popular values.
+    <DocCallOut title="Note">
+    You can use wildcards in field searches.  For example, `goe*dest` finds `geo.dest` and `geo.src.dest`.
+    </DocCallOut>
+
+2. In the **Available fields** list, click `manufacturer` to view its most popular values.
 
 **Discover** shows the top 10 values and the number of records used to calculate those values.
 
 3. Click <DocIcon type="plusInCircleFilled" title="Add" /> to toggle the field into the document table. You can also drag the field from the **Available fields** list into the document table.
+
+4. Find the `customer_first_name` and `customer_last_name` fields and add them to the document table. 
 
 ## Add a field to your ((data-source))
 
@@ -102,17 +91,15 @@ the same way you do with other fields.
 
 6. In the sidebar, search for the **hello** field, and then add it to the document table.
 
-7. Create a second field named `authorabbrev` that combines the authors last name and first initial.
+7. Create a second field named `customer` that combines customer last name and first initial.
 
     ```ts
-    String str = doc['author.keyword'].value;
+    String str = doc['customer_first_name.keyword'].value;
     char ch1 = str.charAt(0);
-    emit(doc['author.keyword'].value + ", " + ch1);
+    emit(doc['customer_last_name.keyword'].value + ", " + ch1);
     ```
 
-8. Add `authorabbrev` to the document table.
-
-<DocImage size="xxl" url="images/discover/add-fields.png" alt="How the fields you just created should display" />
+8. Remove `customer_first_name` and `customer_last_name` from the document table, and then add `customer`.
 
 <div id="search-in-discover"></div>
 
@@ -122,10 +109,15 @@ One of the unique capabilities of **Discover** is the ability to combine free te
 
 To search particular fields and build more complex queries, use the ((kib)) Query language. As you type, KQL prompts you with the fields you can search and the operators you can use to build a structured query.
 
-Search the book data to find out which books have more than 500 pages:
+Search the ecommerce data for documents where the country matches US:
 
-1. Enter `p`, and then select **page_count**.
-2. Select **>** for greater than and enter **500**, then click the refresh button or press the Enter key to see which books have more than 500 pages.
+1. Enter `g`, and then select **geoip.country_iso_code**.
+1. Select *:* for equals some value and **US**, and then click the refresh button or press the Enter key.
+1. For a more complex search, try:
+
+    ```ts
+    geoip.country_iso_code : US and products.taxless_price >= 75
+    ```
 
 <div id="filter-in-discover"></div>
 
@@ -136,10 +128,10 @@ filters enable you to zero in on subsets of those documents.
 You can filter results to include or exclude specific fields, filter for a value in a range,
 and more.
 
-Exclude documents where the author is not Terry Pratchett:
+Exclude documents where day of week is not Wednesday:
 
 1. Click <DocIcon type="plusInCircleFilled" title="Add" /> next to the query bar.
-2. In the **Add filter** pop-up, set the field to **author**, the operator to **is not**, and the value to **Terry Pratchett**.
+2. In the **Add filter** pop-up, set the field to **day_of_week**, the operator to **is not**, and the value to **Wednesday**.
 3. Click **Add filter**.
 4. Continue your exploration by adding more filters.
 5. To remove a filter, click the close icon (x) next to its name in the filter bar.
@@ -162,9 +154,9 @@ Dive into an individual document to view its fields and the documents that occur
 
 ## Save your search for later use
 
-Save your search so you can use it later, generate a CSV report, or use it to create visualizations, Dashboards, and Canvas workpads. Saving a search saves the query text, filters, and current view of **Discover**, including the columns selected in the document table, the sort order, and the ((data-source)).
+Save your search so you can use it later, generate a CSV report, or use it to create visualizations, dashboards, and Canvas workpads. Saving a search saves the query text, filters, and current view of **Discover**, including the columns selected in the document table, the sort order, and the ((data-source)).
 
-1. In the upper right toolbar, click **Save**.
+1. In the toolbar, click **Save**.
 
 2. Give your search a title.
 
@@ -175,25 +167,23 @@ Save your search so you can use it later, generate a CSV report, or use it to cr
 ## Visualize your findings
 If a field can be [aggregated](((ref))/search-aggregations.html), you can quickly visualize it from **Discover**.
 
-1. In the sidebar, find and then click `release_date`.
+1. In the sidebar, find and then click `day_of_week`.
 
 2. In the popup, click **Visualize**.
 
-<DocCallOut title="Note">
     ((kib)) creates a visualization best suited for this field.
-</DocCallOut>
 
-3. From the **Available fields** list, drag and drop `page_count` onto the workspace.
+3. From the **Available fields** list, drag and drop `manufacturer.keyword` onto the workspace.
 
 4. Save your visualization for use on a dashboard.
 
-For geographical point fields, if you click **Visualize**, your data appears in a map.
+For geo point fields, if you click **Visualize**, your data appears in a map.
 
 <div id="share-your-findings"></div>
 
 ## Share your findings
 
-To share your findings with a larger audience, click **Share** in the upper right toolbar.
+To share your findings with a larger audience, click **Share** in the **Discover** toolbar.
 
 <div id="alert-from-Discover"></div>
 

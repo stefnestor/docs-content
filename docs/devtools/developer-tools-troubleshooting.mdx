@@ -4,7 +4,7 @@ slug: /serverless/elasticsearch/dev-tools-troubleshooting
 title: Troubleshooting
 description: Troubleshoot searches in ((es)).
 tags: [ 'serverless', 'elasticsearch', 'troubleshooting' ]
-status: in review
+status: rough content
 ---
 
 When you query your data, Elasticsearch may return an error, no search results,
@@ -17,64 +17,50 @@ Elasticsearch returns an `index_not_found_exception` when the data stream, index
 or alias you try to query does not exist. This can happen when you misspell the
 name or when the data has been indexed to a different data stream or index.
 
-Use the [**Exists API**](((ref))/indices-exists.html) {/*  <DocLink id="enElasticsearchReferenceIndicesExists">exists API</DocLink> */} to check whether a data stream, index, or
+Use the **Exists API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesExists">exists API</DocLink> */} to check whether a data stream, index, or
 alias exists:
 
-```bash
-curl ${ES_URL}/my-data-stream \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+HEAD my-data-stream
 ```
 
-Use the [**Data stream stats API**](((ref))/data-stream-stats-api.html)
-{/*  <DocLink id="enElasticsearchReferenceDataStreamStatsApi">data stream stats API</DocLink> */} to list all data streams:
+Use the **Data stream stats API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceDataStreamStatsApi">data stream stats API</DocLink> */} to list all data
+streams:
 
-```bash
-curl "${ES_URL}/_data_stream/_stats?human=true" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET /_data_stream/_stats?human=true
 ```
 
-Use the [**Get index API**](((ref))/indices-get-index.html)
- {/*  <DocLink id="enElasticsearchReferenceIndicesGetIndex">get index API</DocLink> */} to list all indices and their aliases:
+Use the **Get index API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesGetIndex">get index API</DocLink> */} to list all indices and their
+aliases:
 
-```bash
-curl "${ES_URL}/_all?filter_path=*.aliases" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET _all?filter_path=*.aliases
 ```
 
-Instead of an error, it is possible to retrieve partial search results if some 
+Instead of an error, it is possible to retrieve partial search results if some
 of the indices you're querying are unavailable.
-Set `ignore_unavailable` to `true`:
+Set `ignore_unavailable` to
+`true`:
 
-```bash
-curl "${ES_URL}/my-alias/_search?ignore_unavailable=true" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET /my-alias/_search?ignore_unavailable=true
 ```
 
 ## Ensure the data stream or index contains data
 
 When a search request returns no hits, the data stream or index may contain no
-data.
-This can happen when there is a data ingestion issue.
-For example, the data may have been indexed to a data stream or index with another name.
+data. This can happen when there is a data ingestion issue. For example, the
+data may have been indexed to a data stream or index with another name.
 
-Use the [**Count API**](((ref))/search-count.html) 
-{/*  <DocLink id="enElasticsearchReferenceSearchCount">count API</DocLink> */} to retrieve the number of documents in a data
-stream or index.
-Check that `count` in the response is not 0.
-
-```bash
-curl -X PUT "${ES_URL}/my-index-000001" \
--H "kbn-xsrf: reporting" \
--H "Authorization: ApiKey ${API_KEY}"
-```
+Use the **Count API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchCount">count API</DocLink> */} to retrieve the number of documents in a data
+stream or index. Check that `count` in the response is not 0.
 
 {/*
 
-```bash
-curl -X PUT "${ES_URL}/my-index-000001" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
+```console
+PUT my-index-000001
+{
   "mappings": {
     "properties": {
       "@timestamp": {
@@ -88,14 +74,13 @@ curl -X PUT "${ES_URL}/my-index-000001" \
       }
     }
   }
-}'
+}
 ```
 
 */}
 
-```bash
-curl "${ES_URL}/my-index-000001/_count" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET /my-index-000001/_count
 ```
 {/* TEST[continued] */}
 
@@ -107,18 +92,16 @@ configured with the correct time field.
 
 ## Check that the field exists and its capabilities
 
-Querying a field that does not exist will not return any results.
-Use the [**Field capabilities API**](((ref))/search-field-caps.html)
-{/* <DocLink id="enElasticsearchReferenceSearchFieldCaps">field capabilities API</DocLink> */} to check whether a field exists:
+Querying a field that does not exist will not return any results. Use the **field capabilities API**
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchFieldCaps">field capabilities API</DocLink> */} to check whether a field exists:
 
-```bash
-curl "${ES_URL}/my-index-000001/_field_caps?fields=my-field" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET /my-index-000001/_field_caps?fields=my-field
 ```
 {/* TEST[continued] */}
 
-If the field does not exist, check the data ingestion process.
-The field may have a different name.
+If the field does not exist, check the data ingestion process. The field may
+have a different name.
 
 If the field exists, the request will return the field's type and whether it is
 searchable and aggregatable.
@@ -146,65 +129,56 @@ searchable and aggregatable.
 
 ## Check the field's mappings
 
-A field's capabilities are determined by its [mapping](((ref))/mapping.html). {/*  <DocLink id="enElasticsearchReferenceMapping">mapping</DocLink> */}
-To retrieve the mapping, use the [**Get mapping API**](((ref))/indices-get-mapping.html): {/*  <DocLink id="enElasticsearchReferenceIndicesGetMapping">get mapping API</DocLink> */}
+A field's capabilities are determined by its <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceMapping">mapping</DocLink> */}. To retrieve
+the mapping, use the **Get mapping API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesGetMapping">get mapping API</DocLink> */}:
 
-```bash
-curl "${ES_URL}/my-index-000001/_mappings" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET /my-index-000001/_mappings
 ```
 {/* TEST[continued] */}
 
 If you query a `text` field, pay attention to the analyzer that may have been
-configured.
-You can use the [**Analyze API**](((ref))/indices-analyze.html)
- {/*  <DocLink id="enElasticsearchReferenceIndicesAnalyze">analyze API</DocLink> */} to check how a field's analyzer processes values and query terms:
+configured. You can use the **Analyze API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesAnalyze">analyze API</DocLink> */} to check how a
+field's analyzer processes values and query terms:
 
-```bash
-curl -X POST "${ES_URL}/my-index-000001/_analyze" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
-  "field": "my-field",
-  "text": "this is a test"
-}'
+```console
+GET /my-index-000001/_analyze
+{
+  "field" : "my-field",
+  "text" : "this is a test"
+}
 ```
 {/* TEST[continued] */}
 
-To change the mapping of an existing field use the [**Update mapping API**](((ref))/indices-put-mapping.html).
+To change the mapping of an existing field, refer to
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceIndicesPutMapping" section="change-the-mapping-of-an-existing-field">Changing the mapping of a field</DocLink> */}.
 
 ## Check the field's values
 
-Use the `exists` query {/*  <DocLink id="enElasticsearchReferenceQueryDslExistsQuery">`exists` query</DocLink> */} to check whether there are
-documents that return a value for a field.
-Check that `count` in the response is
+Use the `exists` query <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceQueryDslExistsQuery">`exists` query</DocLink> */} to check whether there are
+documents that return a value for a field. Check that `count` in the response is
 not 0.
 
-```bash
-curl -X GET "${ES_URL}/my-index-000001/_count" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
+```console
+GET /my-index-000001/_count
+{
   "query": {
     "exists": {
       "field": "my-field"
     }
   }
-}'
+}
 ```
 {/* TEST[continued] */}
 
-If the field is aggregatable, you can use [aggregations](((ref))/search-aggregations.html) {/*  <DocLink id="enElasticsearchReferenceSearchAggregations">aggregations</DocLink> */}
-to check the field's values.
-For `keyword` fields, you can use a `terms` aggregation
- {/* <DocLink id="enElasticsearchReferenceSearchAggregationsBucketTermsAggregation">terms aggregation</DocLink> */} to retrieve
+If the field is aggregatable, you can use aggregations <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchAggregations">aggregations</DocLink> */}
+to check the field's values. For `keyword` fields, you can use a terms aggregation
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchAggregationsBucketTermsAggregation">terms aggregation</DocLink> */} to retrieve
 the field's most common values:
 
-```bash
-curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
+```console
+GET /my-index-000001/_search?filter_path=aggregations
+{
   "size": 0,
   "aggs": {
     "top_values": {
@@ -214,25 +188,25 @@ curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
       }
     }
   }
-}'
+}
 ```
 {/* TEST[continued] */}
 
-For numeric fields, you can use [stats aggregation](((ref))/search-aggregations-metrics-stats-aggregation.html) {/* <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsStatsAggregation">stats aggregation</DocLink> */}  to get an idea of the field's value distribution:
+For numeric fields, you can use the stats aggregation
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsStatsAggregation">stats aggregation</DocLink> */} to get an
+idea of the field's value distribution:
 
-```shell
-curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
+```console
+GET my-index-000001/_search?filter_path=aggregations
+{
   "aggs": {
-    "my-num-field-stats": { 
+    "my-num-field-stats": {
       "stats": {
         "field": "my-num-field"
       }
     }
   }
-}'
+}
 ```
 {/* TEST[continued] */}
 
@@ -242,14 +216,12 @@ The field may have a different name.
 ## Check the latest value
 
 For time-series data, confirm there is non-filtered data within the attempted
-time range. 
-For example, if you are trying to query the latest data for the
+time range. For example, if you are trying to query the latest data for the
 `@timestamp` field, run the following to see if the max `@timestamp` falls
 within the attempted range:
 
-```bash
-curl "${ES_URL}/my-index-000001/_search?sort=@timestamp:desc&size=1" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET my-index-000001/_search?sort=@timestamp:desc&size=1
 ```
 {/* TEST[continued] */}
 
@@ -260,16 +232,13 @@ curl "${ES_URL}/my-index-000001/_search?sort=@timestamp:desc&size=1" \
 When a query returns unexpected results, Elasticsearch offers several tools to
 investigate why.
 
-The [**Validate API**](((ref))/search-validate.html) {/*  <DocLink id="enElasticsearchReferenceSearchValidate">validate API</DocLink> */} 
-enables you to validate a query. 
-Use the `rewrite` parameter to return the Lucene query an Elasticsearch query is
+The **Validate API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge> {/*  <DocLink id="enElasticsearchReferenceSearchValidate">validate API</DocLink> */} enables you to validate a query. Use the
+`rewrite` parameter to return the Lucene query an Elasticsearch query is
 rewritten into:
 
-```bash
-curl -X GET "${ES_URL}/my-index-000001/_validate/query?rewrite=true" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
+```console
+GET /my-index-000001/_validate/query?rewrite=true
+{
   "query": {
     "match": {
       "user.id": {
@@ -278,28 +247,25 @@ curl -X GET "${ES_URL}/my-index-000001/_validate/query?rewrite=true" \
       }
     }
   }
-}'
+}
 ```
 {/* TEST[continued] */}
 
-Use the [**Explain API**](((ref))/search-explain.html) {/*  <DocLink id="enElasticsearchReferenceSearchExplain">explain API</DocLink> */} to find out why a specific document matches or doesn’t match a query:
+Use the **Explain API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchExplain">explain API</DocLink> */} to find out why a specific document
+matches or doesn’t match a query:
 
-```bash
-curl -X GET "${ES_URL}/my-index-000001/_explain/0" \
--H "Content-Type: application/json" \
--H "Authorization: ApiKey ${API_KEY}" \
--d '{
-  "query": {
-    "match": {
-      "message": "elasticsearch"
-    }
+```console
+GET /my-index-000001/_explain/0
+{
+  "query" : {
+    "match" : { "message" : "elasticsearch" }
   }
-}'
+}
 ```
 {/* TEST[setup:messages] */}
 
-The [**Profile API**](((ref))/search-profile.html)
- {/*  <DocLink id="enElasticsearchReferenceSearchProfile">profile API</DocLink> */} provides detailed timing information about a search request.
+The **profile API** <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceSearchProfile">profile API</DocLink> */} provides detailed timing information about a
+search request.
 For a visual representation of the results, use the <DocLink id="serverlessElasticsearchDevToolsSearchProfiler" text="Search Profiler"/>.
 
 <DocCallOut title="Note">
@@ -312,35 +278,32 @@ You can now copy the query sent to ((es)) for further analysis in Console.
 
 ## Check index settings
 
-Index settings {/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">Index settings</DocLink> */} can influence search results. 
-For example, the `index.query.default_field` setting, which determines the field
-that is queried when a query specifies no explicit field. 
-Use the [**Get index settings API**](((ref))/indices-get-settings.html)
- {/* <DocLink id="enElasticsearchReferenceIndicesGetSettings">get index settings API</DocLink> */} 
- to retrieve the settings for an index:
+Index settings <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">Index settings</DocLink> */} can influence search results. For
+example, the `index.query.default_field` setting, which determines the field
+that is queried when a query specifies no explicit field. Use the **Get index settings API**
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceIndicesGetSettings">get index settings API</DocLink> */} to retrieve the settings for an
+index:
 
-```bash
-curl "${ES_URL}/my-index-000001/_settings" \
--H "Authorization: ApiKey ${API_KEY}"
+```console
+GET /my-index-000001/_settings
 ```
 {/* TEST[continued] */}
 
-You can update dynamic index settings with the [**Update index settings API**](((ref))/indices-update-settings.html) {/*  <DocLink id="enElasticsearchReferenceIndicesUpdateSettings">update index settings API</DocLink> */}. 
-Changing dynamic index settings for a data stream {/*  <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-dynamic-index-setting-for-a-data-stream">Changing dynamic index settings for a data stream</DocLink> */} requires changing the index template used by the data stream.
+You can update dynamic index settings with the <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceIndicesUpdateSettings">update index settings API</DocLink> */}. <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>
+{/*  <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-dynamic-index-setting-for-a-data-stream">Changing dynamic index settings for a data stream</DocLink> */} requires changing the index template used by the data stream.
 
 For static settings, you need to create a new index with the correct settings.
-Next, you can reindex the data into that index.
-{/*For data streams, refer to <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-static-index-setting-for-a-data-stream">Change a static index setting
+Next, you can reindex the data into that index. For data streams, refer to
+ <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-static-index-setting-for-a-data-stream">Change a static index setting
 for a data stream</DocLink> */}.
 
 <div id="troubleshooting-slow-searches"></div>
 
 ## Find slow queries
 
-[Slow logs](((ref))/index-modules-slowlog.html) {/* <DocLink id="enElasticsearchReferenceIndexModulesSlowlog">Slow logs</DocLink> */} 
-can help pinpoint slow performing search requests. 
-Additionally, [enabling audit logging](((ref))/enable-audit-logging.html) {/*  <DocLink id="enElasticsearchReferenceAuditingSettings">audit logging</DocLink> */} 
-can help determine query source.
+Slow logs <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/* <DocLink id="enElasticsearchReferenceIndexModulesSlowlog">Slow logs</DocLink> */} can help pinpoint slow performing search
+requests. Additionally , enabling <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceAuditingSettings">audit logging</DocLink> */} audit logging can help determine
+query source.
 Add the following settings to the `elasticsearch.yml` configuration file
 to trace queries.
 The resulting logging is verbose, so disable these settings when not
@@ -352,4 +315,4 @@ xpack.security.audit.logfile.events.include: _all
 xpack.security.audit.logfile.events.emit_request_body: true
 ```
 
-Refer to the following blog for more information: [Advanced tuning: finding and fixing slow Elasticsearch queries](https://www.elastic.co/blog/advanced-tuning-finding-and-fixing-slow-elasticsearch-queries).
+Refer to [Advanced tuning: finding and fixing slow Elasticsearch queries](https://www.elastic.co/blog/advanced-tuning-finding-and-fixing-slow-elasticsearch-queries) for more information.
