@@ -44,9 +44,6 @@
         {
           "id": "serverlessElasticsearchKibanaApiConventions",
           "classic-sources": [ "enKibanaApi" ]
-        },
-        {
-          "id": "serverlessElasticsearchHttpApisReferences"
         }
       ]
     },
@@ -72,10 +69,6 @@
       "items": [
         {
           "id": "serverlessElasticsearchIngestDataThroughApi"
-        },
-        {
-          "id": "serverlessElasticsearchIngestDataThroughIntegrations",
-          "classic-sources": [ "enCloudEcCloudIngestData" ]
         },
         {
           "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
@@ -114,7 +107,8 @@
         },
         {
           "id": "serverlessElasticsearchExploreYourDataAlerting",
-          "classic-sources": [ "enKibanaCreateAndManageRules" ]
+          "classic-sources": [ "enKibanaCreateAndManageRules" ],
+          "label": "Alerts"
         }
       ]
     }

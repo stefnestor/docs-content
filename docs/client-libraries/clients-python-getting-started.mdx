@@ -4,12 +4,12 @@ slug: /serverless/elasticsearch/python-client-getting-started
 title: Getting started with the Serverless Python client
 description: Set up and use the Python client for ((es-serverless)).
 tags: [ 'serverless', 'elasticsearch', 'python', 'how to' ]
-status: rough content
+status: in review
 ---
 
 This page guides you through the installation process of the ((es-serverless)) Python 
 client, shows you how to initialize the client, and how to perform basic 
-Elasticsearch operations with it.
+((es)) operations with it.
 
 ## Requirements
 
@@ -21,7 +21,7 @@ Elasticsearch operations with it.
 
 ### Using the command line
 
-You can install the Elasticsearch Serverless Python client with the following 
+You can install the ((es-serverless)) Python client with the following 
 commands:
 
 ```bash
@@ -37,8 +37,8 @@ Initialize the client using your API key and Serverless URL:
 from elasticsearch_serverless import Elasticsearch
 
 client = Elasticsearch(
-    "https://...:443",  # URL provided by Elastic plus port 443
-    api_key='api-key-id',  # API key provided by Elastic
+    "https://...",  # Your project's Cloud URL
+    api_key='api-key',  # API key for your project
 )
 ```
 
@@ -48,7 +48,7 @@ To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElast
 ## Using the API
 
 After you've initialized the client, you can start ingesting documents. You can use
-the Bulk API for this. This API enables you to index, update, and delete several
+the `bulk` API for this. This API enables you to index, update, and delete several
 documents in one request.
 
 
@@ -86,7 +86,7 @@ print(response.body)
 ### Searching
 
 Now that some data is available, you can search your documents using the 
-**Search API**:
+`search` API:
 
 ```python
 response = client.search(index="books", query={

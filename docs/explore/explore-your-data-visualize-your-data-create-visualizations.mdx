@@ -4,10 +4,8 @@ slug: /serverless/elasticsearch/explore-your-data-visualizations
 title: Create visualizations
 description: Create charts, graphs, maps, and more from your ((es-serverless)) data.
 tags: [ 'serverless', 'elasticsearch', 'visualize', 'how to' ]
-status: rough content
+status: in review
 ---
-
-<div id="create-a-dashboard-of-panels-with-web-server-data"></div>
 
 Learn how to create some visualization panels to add to your dashboard. 
 This tutorial uses the same web logs sample data from [Create dashboards](/serverless/elasticsearch/explore-your-data-dashboards).
@@ -77,7 +75,6 @@ To emphasize the change in **Median of bytes** over time, change the visualizati
 
 * In the **Suggestions**, click the line chart.
 * In the editor toolbar, open the **Visualization type** dropdown, then select **Line**.
-* In the layer pane, open the **Layer visualization type** menu, then click **Line**.
 
 To increase the minimum time interval:
 
@@ -97,9 +94,9 @@ To save space on the dashboard, hide the axis labels.
 
 Since you removed the axis labels, add a panel title:
 
-1. Open the panel menu, then select **Edit panel settings**.
+1. Open the panel menu, then select **Panel settings**.
 
-2. In the **Title** field, enter `Median of bytes`, then click **Save**.
+2. In the **Title** field, enter `Median of bytes`, then click **Apply**.
 
 ## View the top values of a field
 
@@ -177,9 +174,9 @@ To display the values as a percentage of the sum of all values, use the **Pie** 
 
 Add a panel title:
 
-1. Open the panel menu, then select **Edit panel settings**.
+1. Open the panel menu, then select **Panel settings**.
 
-2. In the **Title** field, enter `Sum of bytes from large requests`, then click **Save**.
+2. In the **Title** field, enter `Sum of bytes from large requests`, then click **Apply**.
 
 ## View the distribution of a number field
 
@@ -205,9 +202,9 @@ The distribution of a number can help you find patterns. For example, you can an
 
 Add a panel title:
 
-1. Open the panel menu, then select **Edit panel settings**.
+1. Open the panel menu, then select **Panel settings**.
 
-2. In the **Title** field, enter `Website traffic`, then click **Save**.
+2. In the **Title** field, enter `Website traffic`, then click **Apply**.
 
 ## Create a multi-level chart
 
@@ -217,7 +214,7 @@ Add a panel title:
 
 2. Open the **Visualization type** dropdown, then select **Treemap**.
 
-3. From the **Available fields** list, drag **Records** to the **Size by** field in the layer pane. 
+3. From the **Available fields** list, drag **Records** to the **Metric** field in the layer pane. 
 
 4. In the layer pane, click **Add or drag-and-drop a field** for **Group by**.
 
@@ -261,9 +258,188 @@ Remove the documents that do not match the filter criteria:
 
 Add a panel title:
 
-1. Open the panel menu, then select **Edit panel settings**.
+1. Open the panel menu, then select **Panel settings**.
 
-2. In the **Title** field, enter `Page views by location and referrer`, then click **Save**.
+2. In the **Title** field, enter `Page views by location and referrer`, then click **Apply**.
+
+## Visualization panels
+
+Visualization panels are how you display visualizations of your data and what make Kibana such a useful tool. Panels are designed to build interactive dashboards. 
+
+### Create and add panels
+
+Create new panels, which can be accessed from the dashboard toolbar or the **Visualize Library**, or add panels that are saved in the **Visualize Library**, or search results from <DocLink id="serverlessElasticsearchExploreYourDataDiscoverYourData" section="save-your-search-for-later-use">**Discover**</DocLink>.
+
+Panels added to the **Visualize Library** are available to all dashboards. 
+
+To create panels from the dashboard:
+
+1. From the main menu, click **Dashboard** and select **[Logs] Web Traffic**.
+
+1. Click **Edit** then click **Create visualization**.
+
+1. From the **Avalible fields** drag and drop the data you want to visualize.
+
+1. Click **Save and return**.
+
+1. Click **Save** to add the new panel to your dashboard. 
+
+To create panels from the **Visualize Library**:
+
+1. From the main menu, click **Visualize Library**.
+
+1. Click **Create visualization**, then select an editor from the options.
+
+1. Click **Save** once you have created your new visualization.
+
+1. In the modal, enter a **Title**, **Description**, and decide if you want to save the new panel to an existing dashboard, a new dashboard, or to the **Visualize Library**.
+
+1. Save the panel. 
+
+To add existing panels from the **Visualize Library**:
+
+1. From the main menu, click **Dashboard** and select **[Logs] Web Traffic**.
+
+1. Click **Edit** then in the dashboard toolbar, click **Add from library**.
+
+1. Click the panel you want to add to the dashboard, then click *X*.
+
+### Save panels
+
+Consider where you want to save and add the panel in ((kib)).
+
+#### Save to the Visualize Library
+
+To use the panel on other dashboards, save the panel to the **Visualize Library**. When panels are saved in the **Visualize Library**, <DocIcon type="folderCheck" title="Visualize Library" /> appears in the panel header.
+
+If you created the panel from the dashboard:
+
+1. Open the panel menu and click **More > Save to library**.
+
+1. Enter the **Title** and click **Save**.
+
+If you created the panel from the **Visualize Library**:
+
+1. In the editor, click **Save**.
+
+1. Under **Save visualization** enter a **Title**, **Description**, and decide if you want to save the new panel to an existing dashboard, a new dashboard, or to the **Visualize Library**.
+
+1. Click **Save and go to Dashboard**.
+
+1. Click **Save**.
+
+#### Save to the dashboard
+
+Return to the dashboard and add the panel without specifying the save options or adding the panel to the **Visualize Library**. 
+
+If you created the panel from the dashboard:
+
+1. In the editor, click **Save and return**.
+
+1. Click **Save**.
+
+If you created the panel from the **Visualize Library**:
+
+1. Click **Save**.
+
+1. Under **Save visualization** enter a **Title**, **Description**, and decide if you want to save the new panel to an existing dashboard, a new dashboard, or to the **Visualize Library**.
+
+1. Click **Save and go to Dashboard**.
+
+1. Click **Save**.
+
+To add unsaved panels to the **Visualize Library**:
+
+1. Open the panel menu, then select **More > Save to library**.
+
+1. Enter the panel title, then click **Save**.
+
+### Arrange panels
+
+Compare the data in your panels side-by-side, organize panels by priority, resize the panels so they all appear on the dashboard without scrolling down, and more.
+
+In the toolbar, click **Edit**, then use the following options:
+
+* To move, click and hold the panel header, then drag to the new location.
+
+* To resize, click the resize control, then drag to the new dimensions.
+
+* To maximize to fullscreen, open the panel menu, then click **More > Maximize panel**.
+
+### Add text panels
+
+Add **Text** panels to your dashboard that display important information, instructions, and more. You create **Text** panels using [GitHub-flavored Markdown](https://github.github.com/gfm/) text.
+
+1. On the dashboard, click **Edit**.
+
+1. Click **Add panel** and select **<DocIcon type="visText" title="Create new text" /> Text**.
+
+1. Check the rendered text, then click **Save and return**. 
+
+1. To save the new text panel to your dashboard click **Save**.
+
+### Add image panels
+
+To personalize your dashboards, add your own logos and graphics with the **Image** panel. You can upload images from your computer, or add images from an external link.
+
+1. On the dashboard, click **Edit**.
+
+1. Click **Add panel** and select **<DocIcon type="image" title="Add image" /> Image**.
+
+1. Use the editor to add an image.
+
+1. Click **Save**.
+
+1. To save the new image panel to your dashboard click **Save**.
+
+To manage your uploaded image files, open the main menu, then click **Stack Management > Kibana > Files**. 
+
+<DocCallOut title="Warning" color="warning">
+
+When you export a dashboard, the uploaded image files are not exported. 
+When importing a dashboard with an image panel, and the image file is unavailable, the image panel displays a `not found` warning. Such panels have to be fixed manually by re-uploading the image using the panel's image editor.
+
+</DocCallOut>
+
+<div id="edit-panels"></div>
+
+### Edit panels
+
+To make changes to the panel, use the panel menu options.
+
+1. In the toolbar, click **Edit**.
+
+1. Open the panel menu, then use the following options:
+
+* **Edit Lens** &mdash; Opens **Lens** so you can make changes to the visualization. 
+
+* **Edit visualization** &mdash; Opens the editor so you can make changes to the panel.
+
+* **Edit map** &mdash; Opens the editor so you can make changes to the map panel. 
+
+    The above options display in accordance to the type of visualization the panel is made up of. 
+    
+* **Edit Lens** &mdash; Opens aggregation-based visualizations in **Lens**.
+
+* **Clone panel** &mdash; Opens a copy of the panel on your dashboard.
+
+* **Panel settings** &mdash; Opens the **Panel settings** window to change the **title**, **description**, and **time range**.
+
+* **More > Inspect** &mdash; Opens an editor so you can view the data and the requests that collect that data. 
+
+* **More > Explore data in Discover** &mdash; Opens that panels data in **Discover**.
+
+* **More > Save to library** &mdash; Saves the panel to the **Visualize Library**. 
+
+* **More > Maximize panel** &mdash; Maximizes the panel to full screen.
+
+* **More > Download as CSV** &mdash; Downlaods the data as a CSV file. 
+
+* **More > Replace panel** &mdash; Opens the **Visualize Library** so you can select a new panel to replace the existing panel.
+
+* **More > Copy to dashboard** &mdash; Copy the panel to a different dashboard.
+
+* **More > Delete from dashboard** &mdash; Removes the panel from the dashboard. 
 
 
 
