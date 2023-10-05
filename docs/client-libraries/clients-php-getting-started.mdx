@@ -3,36 +3,32 @@ id: serverlessElasticsearchPhpGettingStarted
 slug: /serverless/elasticsearch/php-client-getting-started
 title: Getting started with the Serverless PHP client
 description: This page contains quickstart information about the Serverless PHP client.
-tags: [ 'serverless', 'elasticsearch', 'php', 'how to' ]
-status: rough content
+tags: ["serverless", "elasticsearch", "php", "how to"]
+status: in review
 ---
 
-import InReview from '../partials/in-review-notice.mdx'
+import InReview from "../partials/in-review-notice.mdx";
 
 <InReview />
 
-This page guides you through the installation process of the ((es-serverless)) 
-PHP client, shows you how to initialize the client, and how to perform basic 
+This page guides you through the installation process of the ((es-serverless))
+PHP client, shows you how to initialize the client, and how to perform basic
 ((es)) operations with it.
-
 
 ## Requirements
 
-* PHP 8.0 or higher installed on your system.
-
+- PHP 8.0 or higher installed on your system.
 
 ## Installation
 
-
 ### Using the command line
 
-You can install the ((es-serverless)) PHP client using 
+You can install the ((es-serverless)) PHP client using
 [composer](https://getcomposer.org/) with the following commands:
 
 ```bash
 composer require elastic/elasticsearch-serverless
 ```
-
 
 ## Initialize the client
 
@@ -49,23 +45,22 @@ $client = ClientBuilder::create()
   ->build();
 ```
 
-To get API keys or the Cloud URL for a project, see 
-<DocLink id="serverlessElasticsearchGetStarted" />.
+To get API keys or the Cloud URL for a project, see
 
+<DocLink id="serverlessElasticsearchGetStarted" />.
 
 ## Using the API
 
-After you've initialized the client, you can start ingesting documents. You can 
-use the `bulk` API for this. This API enables you to index, update, and delete 
+After you've initialized the client, you can start ingesting documents. You can
+use the `bulk` API for this. This API enables you to index, update, and delete
 several documents in one request.
-
 
 ### Creating an index and ingesting documents
 
 You can call the `bulk` API with a body parameter, an array of actions (index)
 and documents.
 
-The following is an example of indexing some classic books into the `books` 
+The following is an example of indexing some classic books into the `books`
 index:
 
 ```php
@@ -89,9 +84,9 @@ $response = $client->bulk(body: $body);
 print_r($response['items']);
 ```
 
-When you use the client to make a request to ((es)), it returns an API response 
-object. This object implements the [PSR-7](https://www.php-fig.org/psr/psr-7/) 
-interface, that means you can check the for the HTTP status using the following 
+When you use the client to make a request to ((es)), it returns an API response
+object. This object implements the [PSR-7](https://www.php-fig.org/psr/psr-7/)
+interface, that means you can check the for the HTTP status using the following
 method:
 
 ```php
@@ -119,7 +114,7 @@ var_dump($response['items']); # associative array
 var_dump($response->items);   # object
 ```
 
-There are also methods to render the response as array, object, string and 
+There are also methods to render the response as array, object, string and
 boolean values.
 
 ```php
@@ -129,7 +124,6 @@ var_dump($response->asString()); // response body as string (JSON)
 var_dump($response->asBool());   // true if HTTP response code between 200 and 300
 ```
 
-
 ### Getting documents
 
 You can get documents by using the following code:
@@ -137,7 +131,6 @@ You can get documents by using the following code:
 ```php
 $response = $client->get(index: "books", id: $id);
 ```
-
 
 ### Searching
 
@@ -153,10 +146,9 @@ print_r($response['hits']['hits']); # list of books
 ```
 
 For more information about the `search` API's query parameters and the response type,
-refer to the 
+refer to the
 [Search API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html)
 docs.
-
 
 ### Updating documents
 
@@ -170,7 +162,6 @@ $response = $client->update(index: "books", id: $id, body: $body);
 printf("Operation result: %s\n", $response['result']); # You get 'updated' as a result.
 ```
 
-
 ### Deleting documents
 
 You can call the `delete` API to delete a document:
@@ -180,8 +171,6 @@ $id = '<insert the document ID>';
 $response = $client->delete(index: "books", id: $id);
 printf("Operation result: %s\n", $response['result']); # You get "deleted" a as result.
 ```
-
-
 
 ### Deleting an index
 
