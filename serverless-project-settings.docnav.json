@@ -1,7 +1,7 @@
 {
-  "mission": "Shared features and capabilities",
-  "id": "serverless-related-docs",
-  "landingPageId": "serverlessSharedFeatureDocs",
+  "mission": "Project and management settings",
+  "id": "serverless-project-settings",
+  "landingPageId": "serverlessProjectAndManagementSettings",
   "icon": "logoElastic",
   "description": "Description to be written",
   "items": [
@@ -66,35 +66,10 @@
       ]
     },
     {
-      "pageId": "serverlessVisualizeLibrary"
-    },
-    {
       "pageId": "serverlessIntegrations"
     },
     {
       "pageId": "serverlessFleetAndElasticAgent"
-    },
-    {
-      "pageId": "serverlessDevtoolsDeveloperTools",
-      "classic-sources": ["enKibanaDevtoolsKibana"],
-      "items": [
-        {
-          "id": "serverlessDevtoolsRunApiRequestsInTheConsole",
-          "classic-sources": ["enKibanaConsoleKibana"]
-        },
-        {
-          "id": "serverlessDevtoolsProfileQueriesAndAggregations",
-          "classic-sources": ["enKibanaXpackProfiler"]
-        },
-        {
-          "id": "serverlessDevtoolsDebugGrokExpressions",
-          "classic-sources": ["enKibanaXpackGrokdebugger"]
-        },
-        {
-          "id": "serverlessDevtoolsDebugPainlessScripts",
-          "classic-sources":["enKibanaPainlesslab"]
-        }
-      ]
     }
   ]
 }
