@@ -13,9 +13,9 @@ This content applies to: <DocBadge template="observability" slug="/serverless/ob
 <div id="xpack-grokdebugger"></div>
 
 You can build and debug grok patterns in the **Grok Debugger** before you use them in your data processing pipelines.
-Grok is a pattern matching syntax that you can use to parse arbitrary text and structure it.
+Grok is a pattern-matching syntax that you can use to parse and structure arbitrary text.
 Grok is good for parsing syslog, apache, and other webserver logs, mysql logs, and in general,
-any log format that is written for human consumption.
+any log format written for human consumption.
 
 Grok patterns are supported in ((es)) [runtime fields](((ref))/runtime.html),
 the ((es)) [grok ingest processor](((ref))/grok-processor.html),
@@ -46,7 +46,7 @@ For more information, refer to <DocLink id="serverlessGeneralAssignUserRoles" />
 </DocCallOut>
 
 1. From the main menu, click **Developer Tools**, then click **Grok Debugger**.
-1. In **Sample Data**, enter a message that is representative of the data that you want to parse.
+1. In **Sample Data**, enter a message that is representative of the data you want to parse.
 For example:
 
     ```ruby
@@ -72,7 +72,6 @@ For example:
 
 ## Test custom patterns
 
-{/* TODO: Figure out if custom patterns are supported. */}
 
 If the default grok pattern dictionary doesn't contain the patterns you need,
 you can define, test, and debug custom patterns using the **Grok Debugger**.
@@ -113,4 +112,4 @@ You must specify each pattern definition on its own line.
 
     !["Debugging a custom pattern"](images/grok-debugger-custom-pattern.png)
 
-    If an error occurs, you can continue iterating over the custom pattern until the output matches the event that you expect.
+    If an error occurs, you can continue iterating over the custom pattern until the output matches your expected event.
