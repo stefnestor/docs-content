@@ -2,7 +2,7 @@
 id: serverlessElasticsearchApiConventions
 slug: /serverless/elasticsearch/api-conventions
 title: Elasticsearch API conventions
-description: The ((es)) REST APIs have conventions for headers, request bodies, and data types.
+description: The ((es)) REST APIs have conventions for headers, request bodies, and units of data.
 tags: [ 'serverless', 'elasticsearch', 'API', 'reference' ]
 status: in review
 ---
@@ -41,11 +41,11 @@ To learn about creating keys, go to <DocLink id="serverlessApiKeys"/>.
 ### Content-type
 
 The type of the content sent in a request body must be specified using the `Content-Type` header.
-The value of this header must map to one of the supported formats that the API supports.
+The value of this header must map to one of the formats that the API supports.
 Most APIs support JSON, YAML, CBOR, and SMILE.
 The bulk and multi-search APIs support NDJSON, JSON, and SMILE; other types will result in an error response.
 
-When using the `source` query string parameter, the content type must be specified using the `source_content_type` query string parameter.
+If you use the `source` query string parameter, you must specify the content type with the `source_content_type` query string parameter.
 
 ((es)) APIs support only UTF-8-encoded JSON.
 Any other encoding headings sent with a request are ignored.
@@ -69,13 +69,8 @@ Because it's used only for traces, you can safely generate a unique `traceparent
 * <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging" section="deprecation-logging">Deprecation logs</DocLink>
 */}
 
-For example, the following `traceparent` value would produce the following
-`trace.id` value in the logs:
-
-```txt
-`traceparent`: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
-`trace.id`: 0af7651916cd43dd8448eb211c80319c
-```
+For example, a `traceparent` value of `00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01` would produce the following
+`trace.id` value in the logs: `0af7651916cd43dd8448eb211c80319c`.
 
 ### X-Opaque-Id
 
@@ -104,8 +99,6 @@ However, it is recommended that you limit these values to a finite set, such as 
 Don't generate a unique `X-Opaque-Id` header for every request.
 Too many unique `X-Opaque-Id` values can prevent ((es)) from deduplicating warnings in the deprecation logs.
 
-<div id="get-requests"></div>
-
 ## Request bodies
 
 A number of ((es)) APIs with GET operations--most notably the search API--support a request body.
@@ -113,227 +106,87 @@ While the GET operation makes sense in the context of retrieving information, GE
 
 All ((es)) APIs with GET operations that require a body can also be submitted as POST requests.
 Alternatively, you can pass the request body as the `source` query string parameter when using GET.
-When you use this method, the `source_content_type` parameter should also be passed with a media type value that indicates the formatof the source, such as `application/json`.
+When you use this method, the `source_content_type` parameter should also be passed with a media type value that indicates the format of the source, such as `application/json`.
 
-<div id="api-cron-expressions"></div>
 
-## Cron expressions
+## Data units
 
-A cron expression is a string of the following form:
+There are common conventions for specifying units of data, such as bytes, meters, and days in ((es)) APIs. 
 
-```shell
-<seconds> <minutes> <hours> <day_of_month> <month> <day_of_week> [year]
-```
-((es)) APIs use the cron parser from the [Quartz Job Scheduler](https://quartz-scheduler.org). 
-For more information about writing Quartz cron expressions, see the [Quartz CronTrigger Tutorial](http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html).
+### Byte size units
 
-All schedule times are in coordinated universal time (UTC); other timezones are not supported.
+If you specify the size of data, you must also specify its unit.
 
-<DocCallOut title="You can use the elasticsearch-croneval command line tool to validate your cron expressions." />
+| Unit | Description |
+|---|---|
+| `b` | bytes |
+| `kb` | kilobytes |
+| `mb` | megabytes |
+| `gb` | gigabytes |
+| `tb` | terabytes |
+| `pb` | petabytes |
 
-{/* MISSING LINKS
-TIP: You can use the <<elasticsearch-croneval>> command line tool to validate your cron expressions.
-*/}
+For example, set a buffer size parameter to `10kb` for 10 kilobytes.
+Note that these units use powers of 1024, so `1kb` means 1024 bytes.
 
-<div id="cron-elements"></div>
+### Distance units
 
-### Cron expression elements
+If you specify a distance and without a unit, the default unit is typically `meters`.
 
-All elements are required except for `year`. 
+| Unit | Description |
+|---|---|
+| `mi` or `miles` | miles |
+| `yd` or `yards` | yards |
+| `ft` or `feet` | feet |
+| `in` or `inch` | inches |
+| `km` or `kilometers` | kilometers |
+| `m` or `meters` | meters |
+| `cm` or `centimeters` | centimeters |
+| `mm` or `millimeters` | millimeters |
+| `NM`, `nmi`, or `nauticalmiles` | nautical miles |
 
-`<seconds>`
-: (Required)
-  Valid values: `0`-`59` and the special characters `,` `-` `*` `/`
+For example, set the `distance` parameter in a geo-distance query to `"2mi"` for 2 miles.
 
-`<minutes>` 
-: (Required)
-  Valid values: `0`-`59` and the special characters `,` `-` `*` `/`
+### Time units
 
-`<hours>` 
-: (Required)
-  Valid values: `0`-`23` and the special characters `,` `-` `*` `/`
+If you specify a duration of time, you must also specify its unit.
 
-`<day_of_month>`
-: (Required)
-  Valid values: `1`-`31` and the special characters `,` `-` `*` `/` `?` `L` `W`
+| Unit | Description |
+|---|---|
+| `d` | days |
+| `h` | hours |
+| `m` | minutes |
+| `s` | seconds |
+| `ms` | milliseconds |
+| `micros` | microseconds |
+| `nanos` | nanoseconds |
 
-`<month>`
-: (Required)
-  Valid values: `1`-`12`, `JAN`-`DEC`, `jan`-`dec`, and the special characters `,` `-` `*` `/`
+For example, set a `timeout` parameter to `2d` for 2 days.
 
-`<day_of_week>`
-: (Required)
-  Valid values: `1`-`7`, `SUN`-`SAT`, `sun`-`sat`,  and the special characters `,` `-` `*` `/` `?` `L` `#`
+## Date math
 
-`<year>`
-: (Optional)
-  Valid values: `1970`-`2099` and the special characters `,` `-` `*` `/`
-
-<div id="cron-special-characters"></div>
-
-### Cron special characters
-
-{/* DocDefList is used since basic definition list fails for special characters. */}
-
-<DocDefList>
-  <DocDefTerm>*</DocDefTerm>
-  <DocDefDescription>
-  (Required)
-  Selects every possible value for a field.
-  For example, `*` in the `hours` field means "every hour".
-  </DocDefDescription>
-
-  <DocDefTerm>?</DocDefTerm>
-  <DocDefDescription>
-  No specific value. Use when you don't care what the value is.
-  For example, if you want the schedule to trigger on a particular day of the month, but don't care what day of the week that happens to be, you can specify `?` in the `day_of_week` field.
-  </DocDefDescription>
-
-  <DocDefTerm>-</DocDefTerm>
-  <DocDefDescription>
-  A range of values (inclusive).
-  Use to separate a minimum and maximum value.
-  For example, if you want the schedule to trigger every hour between 9:00 a.m. and 5:00 p.m., you could specify `9-17` in the `hours` field.
-  </DocDefDescription>
-
-  <DocDefTerm>,</DocDefTerm>
-  <DocDefDescription>
-  Multiple values.
-  Use to separate multiple values for a field.
-  For example, if you want the schedule to trigger every Tuesday and Thursday, you could specify `TUE,THU` in the `day_of_week` field.
-  </DocDefDescription>
-
-  <DocDefTerm>/</DocDefTerm>
-  <DocDefDescription>
-  Increment.
-  Use to separate values when specifying a time increment.
-  The first value represents the starting point, and the second value represents the interval.
-  For example, if you want the schedule to trigger every 20 minutes starting at the top of the hour, you could specify `0/20` in the `minutes` field.
-  Similarly, specifying `1/5` in `day_of_month` field will trigger every 5 days starting on the first day of the month.
-  </DocDefDescription>
-
-  <DocDefTerm> L</DocDefTerm>
-  <DocDefDescription>
-  Last.
-  Use in the `day_of_month` field to mean the last day of the month--day 31 for January, day 28 for February in non-leap years, day 30 for April, and so on.
-  Use alone in the `day_of_week` field in place of `7` or `SAT`, or after a particular day of the week to select the last day of that type in the month.
-  For example `6L` means the last Friday of the month.
-  You can specify `LW` in the `day_of_month` field to specify the last weekday of the month.
-  Avoid using the `L` option when specifying lists or ranges of values, as the results likely won't be what you expect.
-  </DocDefDescription>
-
-  <DocDefTerm>W</DocDefTerm>
-  <DocDefDescription>
-  Weekday.
-  Use to specify the weekday (Monday-Friday) nearest the given day.
-  As an example, if you specify `15W` in the `day_of_month` field and the 15th is a Saturday, the schedule will trigger on the 14th.
-  If the 15th is a Sunday, the schedule will trigger on Monday the 16th.
-  If the 15th is a Tuesday, the schedule will trigger on Tuesday the 15th.
-  However if you specify `1W` as the value for `day_of_month`, and the 1st is a Saturday, the schedule will trigger on Monday the 3rd--it won't jump over the month boundary.
-  You can specify `LW` in the `day_of_month` field to specify the last weekday of the month. You can only use the `W` option when the `day_of_month` is a single day--it is not valid when specifying a range or list of days.
-  </DocDefDescription>
-
-  <DocDefTerm>#</DocDefTerm>
-  <DocDefDescription>
-  Nth XXX day in a month.
-  Use in the `day_of_week` field to specify the nth XXX day of the month.
-  For example, if you specify `6#1`, the schedule will trigger on the first Friday of the month.
-  Note that if you specify `3#5` and there are not 5 Tuesdays in a particular month, the schedule won't trigger that month.
-  </DocDefDescription>
-
-</DocDefList>
-
-<div id="cron-expression-examples"></div>
-### Examples
-
-<div id="cron-example-daily"></div>
-#### Setting daily triggers
-
-`0 5 9 * * ?`
-: Trigger at 9:05 a.m. UTC every day.
-
-`0 5 9 * * ? 2020`
-: Trigger at 9:05 a.m. UTC every day during the year 2020.
-
-<div id="cron-example-range"></div>
-#### Restricting triggers to a range of days or times
-
-`0 5 9 ? * MON-FRI`
-: Trigger at 9:05 a.m. UTC Monday through Friday.
-
-`0 0-5 9 * * ?`
-: Trigger every minute starting at 9:00 a.m. UTC and ending at 9:05 a.m. UTC every day.
-
-<div id="cron-example-interval"></div>
-#### Setting interval triggers
-
-`0 0/15 9 * * ?`
-: Trigger every 15 minutes starting at 9:00 a.m. UTC and ending at 9:45 a.m. UTC every day.
-
-`0 5 9 1/3 * ?`
-: Trigger at 9:05 a.m. UTC every 3 days every month, starting on the first day of the month.
-
-<div id="cron-example-day"></div>
-#### Setting schedules that trigger on a particular day
-
-`0 1 4 1 4 ?`
-: Trigger every April 1st at 4:01 a.m. UTC.
-
-`0 0,30 9 ? 4 WED`
-: Trigger at 9:00 a.m. UTC and at 9:30 a.m. UTC every Wednesday in the month of April.
-
-`0 5 9 15 * ?`
-: Trigger at 9:05 a.m. UTC on the 15th day of every month.
-
-`0 5 9 15W * ?`
-: Trigger at 9:05 a.m. UTC on the nearest weekday to the 15th of every month.
-
-`0 5 9 ? * 6#1`
-: Trigger at 9:05 a.m. UTC on the first Friday of every month.
-
-<div id="cron-example-last"></div>
-#### Setting triggers using last
-
-`0 5 9 L * ?`
-: Trigger at 9:05 a.m. UTC on the last day of every month.
-
-`0 5 9 ? * 2L`
-: Trigger at 9:05 a.m. UTC on the last Monday of every month.
-
-`0 5 9 LW * ?`
-: Trigger at 9:05 a.m. UTC on the last weekday of every month.
-
-<div id="api-date-math-index-names"></div>
-
-## Date math support in index and index alias names
-
-Date math name resolution lets you to search a range of time series indices or index aliases rather than searching all of your indices and filtering the results.
+Most ((es)) APIs that accept an index or index alias argument support date math.
+Date math name resolution enables you to search a range of time series indices or index aliases rather than searching all of your indices and filtering the results.
 Limiting the number of searched indices reduces cluster load and improves search performance.
 For example, if you are searching for errors in your daily logs, you can use a date math name template to restrict the search to the past two days.
 
-Most ((es)) APIs that accept an index or index alias argument support date math.
 A date math name takes the following form:
 
 ```txt
 <static_name{date_math_expr{date_format|time_zone}}>
 ```
-
-Where:
-
-|  |  |
-|---|---|
-| `static_name` | Static text |
-| `date_math_expr` | Dynamic date math expression that computes the date dynamically |
-| `date_format` | Optional format in which the computed date should be rendered. Defaults to `yyyy.MM.dd`. Format should be compatible with java-time https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html |
-| `time_zone` | Optional time zone. Defaults to `UTC`. |
+- `static_name` is static text.
+- `date_math_expr` is a dynamic date math expression that computes the date dynamically.
+- `date_format` is the optional format in which the computed date should be rendered. Defaults to `yyyy.MM.dd`. The format should be compatible with [java-time](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html).
+- `time_zone` is the optional time zone. Defaults to `UTC`.
 
 <DocCallOut title="Pay attention to the use of lower and uppercase letters in the date_format.">
-For example, `mm` denotes minute of hour, while `MM` denotes month of year. Similarly `hh` denotes the hour in the
-`1-12` range in combination with `AM/PM`, while `HH` denotes the hour in the `0-23` 24-hour range.
+For example, `mm` denotes the minute of the hour, while `MM` denotes the month of the year.
+Similarly `hh` denotes the hour in the `1-12` range in combination with `AM/PM`, while `HH` denotes the hour in the `0-23` 24-hour range.
 </DocCallOut>
 
-Date math expressions are resolved locale-independent.
-Consequently, it is not possible to use any other calendars than the Gregorian calendar.
+Date math expressions are resolved independent of the locale.
+Consequently, you cannot use any calendars other than the Gregorian calendar.
 
 You must enclose date math names in angle brackets.
 If you use the name in a request path, special characters must be URI encoded.
@@ -369,12 +222,10 @@ The following example shows different forms of date math names and the final nam
 | `<logstash-{now/M-1M{yyyy.MM}}>`          | `logstash-2024.02` |
 | `<logstash-{now/d{yyyy.MM.dd\|+12:00}}>`  | `logstash-2024.03.23` |
 
-To use the characters `{` and `}` in the static part of a name template, escape themwith a backslash `\`.
+To use the characters `{` and `}` in the static part of a name template, escape them with a backslash `\`.
 For example, `<elastic\\{ON\\}-{now/M}>` resolves to `elastic{ON}-2024.03.01`
 
-The following example shows a search request that searches the ((ls)) indices for the past
-three days, assuming the indices use the default ((ls)) index name format,
-(`logstash-YYYY.MM.dd`):
+The following example shows a search request that searches the ((ls)) indices for the past three days, assuming the indices use the default ((ls)) index name format (`logstash-YYYY.MM.dd`):
 
 ```console
 # GET /<logstash-{now/d-2d}>,<logstash-{now/d-1d}>,<logstash-{now/d}>/_search
@@ -388,168 +239,3 @@ GET /%3Clogstash-%7Bnow%2Fd-2d%7D%3E%2C%3Clogstash-%7Bnow%2Fd-1d%7D%3E%2C%3Clogs
 }
 ```
 {/* TBD: Snippet testing */}
-{/* TEST[s/^/PUT logstash-2016.09.20\nPUT logstash-2016.09.19\nPUT logstash-2016.09.18\n/] */}
-{/* TEST[s/now/2016.09.20%7C%7C/] */}
-
-## Multi-target syntax
-
-Most ((es)) APIs that accept a `<data-stream>`, `<index>`, or `<target>` request path parameter also support _multi-target syntax_.
-
-In multi-target syntax, you can use a comma-separated list to run a request on multiple resources, such as data streams, indices, or aliases.
-You can also use [glob-like](((wikipedia))/Glob_(programming)) wildcard (`*`) expressions to target resources that match a pattern.
-For example, `test*`, `*test`, `te*t`, or `*test*`.
-
-You can exclude targets using the `-` character.
-For example, `test*,-test3`.
-
-<DocCallOut title="Aliases are resolved after wildcard expressions." color="warning">
-This can result in a request that targets an excluded alias.
-For example, if `test3` is an index alias, the pattern `test*,-test3` still targets the indices for `test3`. 
-To avoid this, exclude the concrete indices for the alias instead.
-</DocCallOut>
-
-{/* 
-TBD: Is this section related to cross-cluster searches? Is it applicable to serverless?
-You can also exclude clusters from a list of clusters to search using the `-` character.
-For example, `remote*:*,-remote1:*,-remote4:*` will search all clusters with an alias that starts with "remote" except for "remote1" and "remote4".
-Note that to exclude a cluster with this notation you must exclude all of its indexes.
-Excluding a subset of indexes on a remote cluster is currently not supported.
-For example, `remote*:*,-remote1:logs*` this will throw an exception. */}
-
-<div id="multi-hidden"></div>
-### Hidden data streams and indices
-
-For most APIs, wildcard expressions do not match hidden data streams and indices by default.
-To match hidden data streams and indices using a wildcard expression, you must specify the `expand_wildcards` query parameter.
-
-Alternatively, querying an index pattern starting with a dot, such as `.alerting_hist*`, will match hidden indices by default.
-This is intended to mirror UNIX file-globbing behavior and provide a smoother transition path to hidden indices.
-
-You can create hidden data streams by setting `data_stream.hidden` to `true` in the stream's matching index template.
-You can hide indices using the `index.hidden` index setting.
-
-{/* MISSING LINK:
-<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge> <DocLink id="enElasticsearchReferenceIndicesPutTemplate">index template</DocLink>
-<DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge><DocLink id="enElasticsearchReferenceIndexModules" section="index-hidden">`index.hidden`</DocLink>
-*/}
-
-The backing indices for data streams are hidden automatically.
-Some features, such as ((ml)), store information in hidden indices.
-
-Global index templates that match all indices are not applied to hidden indices.
-
-<div id="system-indices"></div>
-
-### System indices
-
-((es)) modules and plugins can store configuration and state information in internal _system indices_.
-You should not directly access or modify system indices as they contain data essential to the operation of the system.
-
-<DocCallOut title="Direct access to system indices is deprecated and
-will no longer be allowed in a future major version." color="warning" />
-
-<div id="api-compatibility"></div>
-
-
-<div id="api-url-access-control"></div>
-
-{/*
-TBD: Since this requires access to elasticsearch.yml, is it still valid for Serverless?
-## URL-based access control
-
-Many users use a proxy with URL-based access control to secure access to ((es)) data streams and indices.
-For multi-search, multi-get, and bulk requests, the user has the choice of specifying a data stream or index in the URL and on each individual request within the request body.
-This can make URL-based access control challenging.
-
-To prevent the user from overriding the data stream or index specified in the URL, set `rest.action.multi.allow_explicit_index` to `false` in `elasticsearch.yml`.
-
-This causes  ((es)) to reject requests that explicitly specify a data stream or index in the request body. */}
-
-## Data types
-
-There are conventions related to the values that you specify in your query parameters and request and response bodies.
-
-### Boolean values
-
-All REST API parameters (both request parameters and JSON body) support providing boolean "false" as the value `false` and boolean "true" as the value `true`.
-All other values will raise an error.
-
-### Number values
-
-All REST APIs support providing numbered parameters as `string` on top of supporting the native JSON number types.
-
-### Byte size units
-
-Whenever the byte size of data needs to be specified, the value must specify the unit.
-For example, set a buffer size parameter to `10kb` for 10 kilobytes.
-Note that these units use powers of 1024, so `1kb` means 1024 bytes.
-The supported units are:
-
-|  |  |
-|---|---|
-| `b` | Bytes |
-| `kb` | Kilobytes |
-| `mb` | Megabytes |
-| `gb` | Gigabytes |
-| `tb` | Terabytes |
-| `pb` | Petabytes |
-
-<div id="distance-units"></div>
-
-### Distance units
-
-Wherever distances need to be specified, such as the `distance` parameter in the geo-distance query, the default unit is meters.
-Distances can be specified in other units, such as `"1km"` or `"2mi"` (2 miles).
-
-The supported units are:
-
-|  |  |
-|---|---|
-| Mile | `mi` or `miles` |
-| Yard | `yd` or `yards` |
-| Feet | `ft` or `feet` |
-| Inch | `in` or `inch` |
-| Kilometer | `km` or `kilometers` |
-| Meter | `m` or `meters` |
-| Centimeter | `cm` or `centimeters` |
-| Millimeter | `mm` or `millimeters` |
-| Nautical mile | `NM`, `nmi`, or `nauticalmiles` |
-
-<div id="time-units"></div>
-
-### Time units
-
-Whenever durations are specified, it must also specify the unit.
-For example, set a `timeout` parameter to `2d` for 2 days.
-
-The supported units are:
-
-|  |  |
-|---|---|
-| `d` | Days |
-| `h` | Hours |
-| `m` | Minutes |
-| `s` | Seconds |
-| `ms` | Milliseconds |
-| `micros` | Microseconds |
-| `nanos` | Nanoseconds |
-
-<div id="size-units"></div>
-
-### Unit-less quantities
-
-Unit-less quantities means that they don't have a "unit" like "bytes" or "Hertz" or "meter" or "long tonne".
-
-If one of these quantities is large, it will be output with unit modifiers.
-For example, `10m` for `10,000,000` or `7k` for `7000`.
-
-These are the supported multipliers:
-
-|  |  |
-|---|---|
-| `k` | Kilo |
-| `m` | Mega |
-| `g` | Giga |
-| `t` | Tera |
-| `p` | Peta |
-
