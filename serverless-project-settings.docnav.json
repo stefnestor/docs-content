@@ -8,6 +8,7 @@
     {
       "pageId": "serverlessProjectSettings",
       "classic-sources": ["enKibanaManagement"],
+      "label": "Management",
       "items": [
         {
           "id": "serverlessApiKeys",
