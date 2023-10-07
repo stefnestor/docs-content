@@ -32,7 +32,7 @@ You must create an API key and use the encoded value in the request header.
 For example:
 
 ```bash
-curl "${ES_URL}" \
+curl -X GET "${ES_URL}/_cat/indices?v=true" \
   -H "Authorization: ApiKey ${API_KEY}"
 ```
 
@@ -41,6 +41,21 @@ To learn about creating keys, go to <DocLink id="serverlessApiKeys"/>.
 ### Content-type
 
 The type of the content sent in a request body must be specified using the `Content-Type` header.
+For example:
+
+```bash
+curl -X GET "${ES_URL}/_search?pretty" \
+  -H "Authorization: ApiKey ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '
+  {
+    "query": {
+      "match_all": { "boost" : 1.2 }
+    }
+  }
+'
+```
+
 The value of this header must map to one of the formats that the API supports.
 Most APIs support JSON, YAML, CBOR, and SMILE.
 The bulk and multi-search APIs support NDJSON, JSON, and SMILE; other types will result in an error response.
@@ -75,6 +90,22 @@ For example, a `traceparent` value of `00-0af7651916cd43dd8448eb211c80319c-b7ad6
 ### X-Opaque-Id
 
 You can pass an `X-Opaque-Id` HTTP header to track the origin of a request in ((es)) logs and tasks.
+For example:
+
+```bash
+curl -X GET "${ES_URL}/_search?pretty" \
+  -H "Authorization: ApiKey ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "X-Opaque-Id: 123456"
+  -d '
+  {
+    "query": {
+      "match_all": { "boost" : 1.2 }
+    }
+  }
+'
+```
+
 ((es)) surfaces the `X-Opaque-Id` value in the:
 
 * Response of any request that includes the header
@@ -88,8 +119,7 @@ You can pass an `X-Opaque-Id` HTTP header to track the origin of a request in ((
 * \<\<_identifying_search_slow_log_origin,Slow logs>>
 * <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging" section="deprecation-logging">Deprecation logs</DocLink>
 */}
-For the deprecation logs, ((es)) also uses the `X-Opaque-Id` value to throttle
-and deduplicate deprecation warnings.
+For the deprecation logs, ((es)) also uses the `X-Opaque-Id` value to throttle and deduplicate deprecation warnings.
 {/* MISSING LINKS
 See \<\<_deprecation_logs_throttling>>.
 */}
