@@ -2,7 +2,7 @@
 id: serverlessElasticsearchApiConventions
 slug: /serverless/elasticsearch/api-conventions
 title: Elasticsearch API conventions
-description: The ((es)) REST APIs have conventions for headers, request bodies, and units of data.
+description: The ((es)) REST APIs have conventions for headers, request bodies, and date math.
 tags: [ 'serverless', 'elasticsearch', 'API', 'reference' ]
 status: in review
 ---
@@ -107,61 +107,6 @@ While the GET operation makes sense in the context of retrieving information, GE
 All ((es)) APIs with GET operations that require a body can also be submitted as POST requests.
 Alternatively, you can pass the request body as the `source` query string parameter when using GET.
 When you use this method, the `source_content_type` parameter should also be passed with a media type value that indicates the format of the source, such as `application/json`.
-
-
-## Data units
-
-There are common conventions for specifying units of data, such as bytes, meters, and days in ((es)) APIs. 
-
-### Byte size units
-
-If you specify the size of data, you must also specify its unit.
-
-| Unit | Description |
-|---|---|
-| `b` | bytes |
-| `kb` | kilobytes |
-| `mb` | megabytes |
-| `gb` | gigabytes |
-| `tb` | terabytes |
-| `pb` | petabytes |
-
-For example, set a buffer size parameter to `10kb` for 10 kilobytes.
-Note that these units use powers of 1024, so `1kb` means 1024 bytes.
-
-### Distance units
-
-If you specify a distance and without a unit, the default unit is typically `meters`.
-
-| Unit | Description |
-|---|---|
-| `mi` or `miles` | miles |
-| `yd` or `yards` | yards |
-| `ft` or `feet` | feet |
-| `in` or `inch` | inches |
-| `km` or `kilometers` | kilometers |
-| `m` or `meters` | meters |
-| `cm` or `centimeters` | centimeters |
-| `mm` or `millimeters` | millimeters |
-| `NM`, `nmi`, or `nauticalmiles` | nautical miles |
-
-For example, set the `distance` parameter in a geo-distance query to `"2mi"` for 2 miles.
-
-### Time units
-
-If you specify a duration of time, you must also specify its unit.
-
-| Unit | Description |
-|---|---|
-| `d` | days |
-| `h` | hours |
-| `m` | minutes |
-| `s` | seconds |
-| `ms` | milliseconds |
-| `micros` | microseconds |
-| `nanos` | nanoseconds |
-
-For example, set a `timeout` parameter to `2d` for 2 days.
 
 ## Date math
 
