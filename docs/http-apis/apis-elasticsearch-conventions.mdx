@@ -23,7 +23,7 @@ Check out <DocLink id="serverlessElasticsearchDevToolsConsole" />.
 ## Request headers
 
 When you call ((es)) APIs outside of the Console, you must provide a request header.
-The ((es)) APIs support the `Authorization`, `Content-Type`, `traceparent`, and `X-Opaque-Id` headers.
+The ((es)) APIs support the `Authorization`, `Content-Type`, and `X-Opaque-Id` headers.
 
 ### Authorization
 
@@ -66,6 +66,8 @@ If you use the `source` query string parameter, you must specify the content typ
 Any other encoding headings sent with a request are ignored.
 Responses are also UTF-8 encoded.
 
+{/*
+TBD: Is this something you specify in the request header or find in the response header?
 ### Traceparent
 
 ((es)) APIs support a `traceparent` HTTP header using the [official W3C trace context spec](https://www.w3.org/TR/trace-context/#traceparent-header).
@@ -78,14 +80,9 @@ Because it's used only for traces, you can safely generate a unique `traceparent
 * Slow logs
 * Deprecation logs
 
-{/* MISSING LINKS
-* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging">JSON ((es)) server logs</DocLink>
-* \<\<_identifying_search_slow_log_origin,Slow logs>>
-* <DocBadge><DocIcon size="s" type="unlink" title="missing link"/> missing link</DocBadge>{/*  <DocLink id="enElasticsearchReferenceLogging" section="deprecation-logging">Deprecation logs</DocLink>
-*/}
-
 For example, a `traceparent` value of `00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01` would produce the following
 `trace.id` value in the logs: `0af7651916cd43dd8448eb211c80319c`.
+*/}
 
 ### X-Opaque-Id
 
