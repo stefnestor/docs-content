@@ -76,9 +76,6 @@
         {
           "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats",
               "classic-sources": [ "enFleetBeatsAgentComparison" ]
-        },
-        {
-          "id": "serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
         }
       ]
     },
