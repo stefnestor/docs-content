@@ -2,7 +2,7 @@
 id: serverlessElasticsearchIngestYourData
 slug: /serverless/elasticsearch/ingest-your-data
 title: Ingest your data
-# description: Description to be written
+description: Add data to your ((es-serverless)) project.
 tags: [ 'serverless', 'elasticsearch', 'ingest', 'overview' ]
 status: in review
 ---
@@ -11,19 +11,18 @@ import InReview from '../partials/in-review-notice.mdx'
 
 <InReview />
 
-You have options for ingesting, or indexing, data into ((serverless-full)). 
-You can ingest data through <DocLink id="serverlessElasticsearchIngestDataThroughApi" text="API"/>, 
-<DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsLogstash" text="Logstash"/>, 
-<DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" text="Beats"/>, or 
-[connector clients](((enterprise-search-ref))/connectors.html). 
-The best ingest option--or options--for your use case depends on whether you are indexing general content or time series (timestamped) data.
+You have options for ingesting, or indexing, data into ((es-serverless)).
+You can ingest data through <DocLink id="serverlessElasticsearchIngestDataThroughApi" text="API"/>,
+<DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsLogstash" text="Logstash"/>, or
+<DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" text="Beats"/>.
+The best ingest option—or options—for your use case depends on whether you are indexing general content or time series (timestamped) data.
 
 
-**General content** 
+**General content**
 
-General content includes HTML pages, catalogs, files, and other content that does not update continuously. 
+General content includes HTML pages, catalogs, files, and other content that does not update continuously.
 This data can be updated, but the value of the content remains relatively constant over time.
-You can send data directly to ((serverless-full)) from your application using API or connector clients.
+You can send data directly to ((es)) from your application using API or connector clients.
 
 **Times series (timestamped) data**
 
