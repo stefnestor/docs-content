@@ -80,32 +80,6 @@
       ]
     },
     {
-      "pageId": "serverlessElasticsearchSearchYourData",
-      "items": [
-        {
-          "id": "serverlessElasticsearchSearchYourDataTheSearchApi"
-        },
-        {
-          "id": "serverlessElasticsearchSearchYourDataSearchApplications"
-        },
-        {
-          "id": "serverlessElasticsearchSearchYourDataSearchExactValues"
-        },
-        {
-          "id": "serverlessElasticsearchSearchYourDataFullTextSearch"
-        },
-        {
-          "id": "serverlessElasticsearchSearchYourDataSemanticSearch"
-        },
-        {
-          "id": "serverlessElasticsearchSearchYourDataVectorSearch"
-        },
-        {
-          "id": "serverlessElasticsearchSearchYourDataHybridSearch"
-        }
-      ]
-    },
-    {
       "pageId": "serverlessElasticsearchExploreYourData",
       "items": [
         {
