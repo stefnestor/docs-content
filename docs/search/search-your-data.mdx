@@ -4,13 +4,30 @@ slug: /serverless/elasticsearch/search-your-data
 title: Search your data
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'overview' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
-Provides an overview of using Elasticsearch for exact value search (term queries, wildcards, numbers, ranges, geo), full text search, semantic search, and vector search.
+A search query, or query, is a request for information about data in ((es)) data streams or indices.
 
-Also introduces the search API and Search Applications as two ways to search.
+You can think of a query as a question, written in a way ((es)) understands. Depending on your data, you can use a query to get answers to questions like:
+
+- What processes on my server take longer than 500 milliseconds to respond?
+- What users on my network ran regsvr32.exe within the last week?
+- What pages on my website contain a specific word or phrase?
+
+((es)) supports several search methods:
+
+**Search for exact values.**
+Search for [exact values or ranges](((ref))/term-level-queries.html)  of numbers, dates, IPs, or strings.
+
+**Full-text search.**
+Use [full text queries](((ref))/full-text-queries.html) to query [unstructured textual data](((ref))/analysis.html#analysis) and find documents that best match query terms.
+
+**Vector search.**
+Store vectors in ((es)) and use [approximate nearest neighbor (ANN) or k-nearest neighbor (kNN) search](((ref))/knn-search.html) to find vectors that are similar, supporting use cases like [semantic search](((ref))/semantic-search.html).
+
+To learn more, refer to [Search your data](((ref))/search-your-data.html).

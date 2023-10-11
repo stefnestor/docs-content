@@ -80,6 +80,9 @@
       ]
     },
     {
+      "pageId": "serverlessElasticsearchSearchYourData"
+    },
+    {
       "pageId": "serverlessElasticsearchExploreYourData",
       "items": [
         {
