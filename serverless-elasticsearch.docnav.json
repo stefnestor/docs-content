@@ -71,10 +71,10 @@
           "id": "serverlessElasticsearchIngestDataThroughApi"
         },
         {
-          "id": "serverlessElasticsearchIngestDataThroughIntegrationsLogstash"
+          "id": "serverlessElasticsearchIngestDataThroughLogstash"
         },
         {
-          "id": "serverlessElasticsearchIngestDataThroughIntegrationsBeats",
+          "id": "serverlessElasticsearchIngestDataThroughBeats",
               "classic-sources": [ "enFleetBeatsAgentComparison" ]
         }
       ]

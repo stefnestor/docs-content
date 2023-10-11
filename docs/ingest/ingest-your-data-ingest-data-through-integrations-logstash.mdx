@@ -1,8 +1,8 @@
 ---
-id: serverlessElasticsearchIngestDataThroughIntegrationsLogstash
-slug: /serverless/elasticsearch/ingest-data-through-integrations-logstash
+id: serverlessElasticsearchIngestDataThroughLogstash
+slug: /serverless/elasticsearch/ingest-data-through-logstash
 title: Logstash
-# description: Description to be written
+description: Use ((ls)) to ship data to ((es-serverless)).
 tags: [ 'serverless', 'elasticsearch', 'ingest', 'logstash', 'how to' ]
 status: in review
 ---
@@ -13,7 +13,7 @@ It supports a wide variety of data sources, and can dynamically unify data from 
 ((ls)) can collect data using a variety of ((ls)) [input plugins](((logstash-ref))/input-plugins.html), enrich and transform the data with ((ls)) [filter plugins](((logstash-ref))/filter-plugins.html),
 and output the data to ((es-serverless)) using the ((ls)) [Elasticsearch output plugin](((logstash-ref))/plugins-outputs-elasticsearch.html).
 
-You can use ((ls)) to extend <DocLink id="serverlessElasticsearchIngestDataThroughIntegrationsBeats" text="Beats"/> for advanced use cases,
+You can use ((ls)) to extend <DocLink id="serverlessElasticsearchIngestDataThroughBeats" text="Beats"/> for advanced use cases,
 such as data routed to multiple destinations or when you need to make your data persistent.
 
 
