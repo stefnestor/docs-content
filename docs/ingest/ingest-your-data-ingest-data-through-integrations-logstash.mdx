@@ -4,12 +4,12 @@ slug: /serverless/elasticsearch/ingest-data-through-integrations-logstash
 title: Logstash
 # description: Description to be written
 tags: [ 'serverless', 'elasticsearch', 'ingest', 'logstash', 'how to' ]
-status: rough content
+status: in review
 ---
 
-import RoughContent from '../partials/rough-content-notice.mdx'
+import InReview from '../partials/in-review-notice.mdx'
 
-<RoughContent />
+<InReview />
 
 ((ls)) is an open source data collection engine with real-time pipelining capabilities.
 It supports a wide variety of data sources, and can dynamically unify data from disparate sources and normalize the data into destinations of your choice.
@@ -24,13 +24,15 @@ such as data routed to multiple destinations or when you need to make your data 
 <DocCallOut id="ls-serverless-notes" title="Logstash for Elastic Serverless">
 
 ((ls)) is a powerful, versatile ETL (Extract, Transform, Load) engine that can play an important role in organizations of all sizes.
-Some capabilities and features for large, self-managed users aren't appropriate for the ((serverless-short)).
+Some capabilities and features for large, self-managed users aren't appropriate for ((serverless-short)).
 
-You'll use the logstash-output-elasticsearch plugin to send data to ((es-serverless)).
-Some differences to note between ((es-serverless) and self-managed ((es)):
+You'll use the ((ls)) [`((es)) output plugin`](((logstash-ref))/plugins-outputs-elasticsearch.html) to send data to ((es-serverless)).
+Some differences to note between ((es-serverless)) and self-managed ((es)):
 
-- ((serverless-short)) uses **Data Lifecycle Management (DLM)** instead of Index Lifecycle Management (ILM). If you add ILM settings to your elasticsearch output configuration, they are ignored and may cause errors.
-- Your logstash-output-elasticsearch configuration uses **API keys** to access ((es)) from ((ls)). User-based security settings are ignored and may cause errors.
+- Your logstash-output-elasticsearch configuration uses **API keys** to access ((es)) from ((ls)). 
+User-based security settings are ignored and may cause errors.
+- ((es-serverless)) uses **((dlm)) (((dlm-init)))** instead of ((ilm)) (((ilm-init))). 
+If you add ((ilm-init)) settings to your ((es)) output configuration, they are ignored and may cause errors.
 - **((ls)) monitoring** for ((serverless-short)) is still under development.
 
 </DocCallOut>
