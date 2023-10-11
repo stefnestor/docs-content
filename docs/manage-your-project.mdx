@@ -25,14 +25,75 @@ From the project page, you can:
 
 - **Manage members**. Add members and manage their access to this project or other resources of your organization.
 
-- **Edit Search Power**. Search Power controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project. Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
+## Features and usage
 
-  ![Edit Search Power](images/edit-search-power.png)
+You can also edit the features and usage for your project. Available features vary by project type.
 
-  We recommend running your typical search workload for 48-96 hours at the default Search Power setting of Balanced, and then adjust the setting based on search performance metrics if needed.
-
-- **Edit Search Data Lake**. The Search Data Lake provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable. You can specify different retention periods for each data source configured in your project.
-
-- **Edit Search Boost Window**. Search Boost provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake. The default Search Boost window size is 7 days. To request an update to this default, contact [Support](https://support.elastic.co/).
-
-- **Delete your project**. From the **Actions** menu on the top right corner, select **Delete project**. When you delete a project, you remove all the relevant data.
+<DocTable columns={[
+  {
+    "title": "Feature",
+    "width": "25%"
+  },
+  {
+    "title": "Description",
+    "width": "50%"
+  },
+  {
+    "title": "Availabile in",
+    "width": "25%"
+  }
+]}>
+  <DocRow>
+    <DocCell>
+      Search Power
+    </DocCell>
+    <DocCell>
+      Controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project.
+      
+      Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      Search Data Lake
+    </DocCell>
+    <DocCell>
+      Provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable.
+      
+      You can specify different retention periods for each data source configured in your project.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
+      <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" />
+      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      Search Boost Window
+    </DocCell>
+    <DocCell>
+      Provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake.
+      
+      The default Search Boost window size is 7 days. To request an update to this default, contact [Support](https://support.elastic.co/).
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
+      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      Project features
+    </DocCell>
+    <DocCell>
+      Controls add-on options, such as UEBATIP and bidirectional webhooks, for your security project.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
+    </DocCell>
+  </DocRow>
+</DocTable>
