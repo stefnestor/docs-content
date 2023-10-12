@@ -29,7 +29,12 @@ Some differences to note between ((es-serverless)) and self-managed ((es)):
 User-based security settings are ignored and may cause errors.
 - ((es-serverless)) uses **((dlm)) (((dlm-init)))** instead of ((ilm)) (((ilm-init))). 
 If you add ((ilm-init)) settings to your ((es)) output configuration, they are ignored and may cause errors.
-- **((ls)) monitoring** for ((serverless-short)) is still under development.
+- **((ls)) monitoring** for ((serverless-short)) is available through the [((ls)) Integration](https://github.com/elastic/integrations/blob/main/packages/logstash/_dev/build/docs/README.md) in <DocLink id="serverlessObservabilityWhatIsObservabilityServerless" text="Elastic Observability"/>.
+
+**Known issue**
+
+* The logstash-output-elasticsearch `hosts` setting defaults to port `:9200`. 
+Set the value to port `:443` instead. 
 
 </DocCallOut>
 
@@ -43,4 +48,3 @@ To use ((ls)) to send data to ((es-serverless)), you must be using:
 
 Check out the [Logstash product page](https://www.elastic.co/logstash) for more info.
 When you're ready, dive into the [Logstash documentation](((logstash-ref))/index.html).
-
