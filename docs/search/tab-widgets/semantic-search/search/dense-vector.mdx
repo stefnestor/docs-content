@@ -6,8 +6,11 @@ Text embeddings produced by dense vector models can be queried using a
 dense vector field, and a `query_vector_builder` clause with the model ID and 
 the query text.
 
-```console
-GET my-index/_search
+```bash
+curl -X GET "${ES_URL}/my-index/_search" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "knn": {
     "field": "my_embeddings.predicted_value",
@@ -21,5 +24,6 @@ GET my-index/_search
     }
   }
 }
+'
 ```
 {/* TEST[skip:TBD] */}

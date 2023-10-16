@@ -3,8 +3,11 @@
 
 This is how an ingest pipeline that uses a text embedding model is created:
 
-```console
-PUT _ingest/pipeline/my-text-embeddings-pipeline
+```bash
+curl -X PUT "${ES_URL}/_ingest/pipeline/my-text-embeddings-pipeline" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "description": "Text embedding pipeline",
   "processors": [
@@ -19,6 +22,7 @@ PUT _ingest/pipeline/my-text-embeddings-pipeline
     }
   ]
 }
+'
 ```
 [^1]: The model ID of the text embedding model you want to use.
 [^2]: The `field_map` object maps the input document field name (which is 

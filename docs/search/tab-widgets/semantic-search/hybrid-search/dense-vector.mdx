@@ -8,8 +8,11 @@ Hybrid search between a semantic and lexical query can be achieved by providing:
 * and a `rank` clause with the `rrf` parameter to rank documents using 
     reciprocal rank fusion.
 
-```console
-GET my-index/_search
+```bash
+curl -X GET "${ES_URL}/my-index/_search" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "query": {
     "match": {
@@ -31,5 +34,5 @@ GET my-index/_search
     "rrf": {}
   }
 }
+'
 ```
-{/* TEST[skip:TBD] */}

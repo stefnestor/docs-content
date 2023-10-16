@@ -3,8 +3,11 @@
 
 This is how an ingest pipeline that uses the ELSER model is created:
 
-```console
-PUT _ingest/pipeline/my-text-embeddings-pipeline 
+```bash
+curl -X PUT "${ES_URL}/_ingest/pipeline/my-text-embeddings-pipeline" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 { 
   "description": "Text embedding pipeline",
   "processors": [ 
@@ -21,6 +24,7 @@ PUT _ingest/pipeline/my-text-embeddings-pipeline
     } 
   ] 
 }
+'
 ```
 
 To ingest data through the pipeline to generate tokens with ELSER, refer to the 

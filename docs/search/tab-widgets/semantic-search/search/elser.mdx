@@ -6,9 +6,11 @@ ELSER text embeddings can be queried using a
 query enables you to query a rank features field or a sparse vector field, by 
 providing the model ID of the NLP model, and the query text:
 
-{/* TEST[skip:TBD] */}
-```console
-GET my-index/_search
+```bash
+curl -X GET "${ES_URL}/my-index/_search" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
    "query":{
       "text_expansion":{
@@ -19,5 +21,6 @@ GET my-index/_search
       }
    }
 }
+'
 ```
 [^1]: The field of type `sparse_vector`.
