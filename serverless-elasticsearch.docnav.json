@@ -83,13 +83,16 @@
       "pageId": "serverlessElasticsearchSearchYourData",
       "items": [
         {
-          "id": "serverlessElasticsearchSearchWithSynonyms"
+          "id": "serverlessElasticsearchKnnSearch"
         },
         {
           "id": "serverlessElasticsearchSemanticSearch"
         },
         {
           "id": "serverlessElasticsearchSemanticSearchElser"
+        },
+        {
+          "id": "serverlessElasticsearchSearchWithSynonyms"
         }
       ]
     },
