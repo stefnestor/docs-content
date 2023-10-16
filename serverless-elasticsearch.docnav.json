@@ -84,6 +84,12 @@
       "items": [
         {
           "id": "serverlessElasticsearchSearchWithSynonyms"
+        },
+        {
+          "id": "serverlessElasticsearchSemanticSearch"
+        },
+        {
+          "id": "serverlessElasticsearchSemanticSearchElser"
         }
       ]
     },

@@ -1,0 +1,23 @@
+
+
+
+ELSER text embeddings can be queried using a 
+[text expansion query](((ref))/query-dsl-text-expansion-query.html). The text expansion 
+query enables you to query a rank features field or a sparse vector field, by 
+providing the model ID of the NLP model, and the query text:
+
+{/* TEST[skip:TBD] */}
+```console
+GET my-index/_search
+{
+   "query":{
+      "text_expansion":{
+         "my_tokens":{  [^1]
+            "model_id":".elser_model_2",
+            "model_text":"the query string"
+         }
+      }
+   }
+}
+```
+[^1]: The field of type `sparse_vector`.
