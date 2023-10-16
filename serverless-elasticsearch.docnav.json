@@ -83,6 +83,9 @@
       "pageId": "serverlessElasticsearchSearchYourData",
       "items": [
         {
+          "id": "serverlessElasticsearchSearchYourDataTheSearchApi"
+        },
+        {
           "id": "serverlessElasticsearchKnnSearch"
         },
         {
