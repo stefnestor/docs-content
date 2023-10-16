@@ -89,10 +89,12 @@
           "id": "serverlessElasticsearchKnnSearch"
         },
         {
-          "id": "serverlessElasticsearchSemanticSearch"
-        },
-        {
-          "id": "serverlessElasticsearchSemanticSearchElser"
+          "id": "serverlessElasticsearchSemanticSearch",
+          "items": [
+            {
+            "id": "serverlessElasticsearchSemanticSearchElser"
+            }
+          ]
         },
         {
           "id": "serverlessElasticsearchSearchWithSynonyms"
