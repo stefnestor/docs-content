@@ -7,8 +7,11 @@ provide a `text_expansion` query and a full-text query. Next to the
 `sub_searches` clause, also provide a [`rank`](((ref))/search-search.html#request-body-rank) clause with
 the `rrf` parameter to rank documents using reciprocal rank fusion.
 
-```console
-GET my-index/_search
+```bash
+curl -X GET "${ES_URL}/my-index/_search" \
+-H "Authorization: ApiKey ${API_KEY}" \
+-H "Content-Type: application/json" \
+-d'
 {
   "sub_searches": [
     {
@@ -33,5 +36,6 @@ GET my-index/_search
     "rrf": {}
   }
 }
+'
 ```
-{/* TEST[skip:TBD] */}
+
