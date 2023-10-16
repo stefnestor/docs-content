@@ -8,7 +8,7 @@ status: in review
 ---
 
 <DocBadge template="technical preview" />
-Learn how to create some visualization panels to add to your dashboard. 
+Learn how to create some visualization panels to add to your dashboard.
 This tutorial uses the same web logs sample data from [Create dashboards](/serverless/elasticsearch/explore-your-data-dashboards).
 
 ## Open the visualization editor and get familiar with the data
@@ -57,20 +57,20 @@ The only number function that you can use with **clientip** is **Unique count**,
 
 ## View a metric over time
 
-There are two shortcuts you can use to view metrics over time. 
+There are two shortcuts you can use to view metrics over time.
 When you drag a numeric field to the workspace, the visualization editor adds the default
 time field from the ((data-source)). When you use the **Date histogram** function, you can
 replace the time field by dragging the field to the workspace.
 
 To visualize the **bytes** field over time:
 
-1. On the dashboard, click **Create visualization**. 
+1. On the dashboard, click **Create visualization**.
 
-2. From the **Available fields** list, drag **bytes** to the workspace. 
+2. From the **Available fields** list, drag **bytes** to the workspace.
 
-    The visualization editor creates a bar chart with the **timestamp** and **Median of bytes** fields. 
+    The visualization editor creates a bar chart with the **timestamp** and **Median of bytes** fields.
 
-3. To zoom in on the data, click and drag your cursor across the bars. 
+3. To zoom in on the data, click and drag your cursor across the bars.
 
 To emphasize the change in **Median of bytes** over time, change the visualization type to **Line** with one of the following options:
 
@@ -83,7 +83,7 @@ To increase the minimum time interval:
 
 2. Change the **Minimum interval** to **1d**, then click **Close**.
 
-    You can increase and decrease the minimum interval, but you are unable to decrease the interval below the configured **Advanced Settings**. 
+    You can increase and decrease the minimum interval, but you are unable to decrease the interval below the configured **Advanced Settings**.
 
 To save space on the dashboard, hide the axis labels.
 
@@ -106,9 +106,9 @@ Create a visualization that displays the most frequent values of **request.keywo
 The **Top values** function ranks the unique values of a field by another function.
 The values are the most frequent when ranked by a **Count** function, and the largest when ranked by the **Sum** function.
 
-1. On the dashboard, click **Create visualization**. 
+1. On the dashboard, click **Create visualization**.
 
-2. From the **Available fields** list, drag **clientip** to the **Vertical axis** field in the layer pane. 
+2. From the **Available fields** list, drag **clientip** to the **Vertical axis** field in the layer pane.
 
     The visualization editor automatically applies the **Unique count** function. If you drag **clientip** to the workspace, the editor adds the field to the incorrect axis.
 
@@ -134,13 +134,13 @@ The chart labels are unable to display because the **request.keyword** field con
 
 ## Compare a subset of documents to all documents
 
-Create a proportional visualization that helps you determine if your users transfer more bytes from documents under 10KB versus documents over 10Kb.
+Create a proportional visualization that helps you determine if your users transfer more bytes from documents under 10KB versus documents over 10KB.
 
-1. On the dashboard, click **Create visualization**. 
+1. On the dashboard, click **Create visualization**.
 
 2. From the **Available fields** list, drag **bytes** to the **Vertical axis** field in the layer pane.
 
-3. In the layer pane, click **Median of bytes**. 
+3. In the layer pane, click **Median of bytes**.
 
 4. Click the **Sum** quick function, then click **Close**.
 
@@ -149,7 +149,7 @@ Create a proportional visualization that helps you determine if your users trans
 To select documents based on the number range of a field, use the **Intervals** function.
 When the ranges are non numeric, or the query requires multiple clauses, you could use the **Filters** function.
 
-Specify the file size ranges: 
+Specify the file size ranges:
 
 1. In the layer pane, click **bytes**.
 
@@ -167,7 +167,7 @@ Specify the file size ranges:
 
 4. From the **Value format** dropdown, select **Bytes (1024)**, then click **Close**.
 
-To display the values as a percentage of the sum of all values, use the **Pie** chart. 
+To display the values as a percentage of the sum of all values, use the **Pie** chart.
 
 1. Open the **Visualization Type** dropdown, then select **Pie**.
 
@@ -183,7 +183,7 @@ Add a panel title:
 
 The distribution of a number can help you find patterns. For example, you can analyze the website traffic per hour to find the best time for routine maintenance.
 
-1. On the dashboard, click **Create visualization**. 
+1. On the dashboard, click **Create visualization**.
 
 2. From the **Available fields** list, drag **bytes** to **Vertical axis** field in the layer pane.
 
@@ -211,11 +211,11 @@ Add a panel title:
 
 **Table** and **Proportion** visualizations support multiple functions. For example, to create visualizations that break down the data by website traffic sources and user geography, apply the **Filters** and **Top values** functions.
 
-1. On the dashboard, click **Create visualization**. 
+1. On the dashboard, click **Create visualization**.
 
 2. Open the **Visualization type** dropdown, then select **Treemap**.
 
-3. From the **Available fields** list, drag **Records** to the **Metric** field in the layer pane. 
+3. From the **Available fields** list, drag **Records** to the **Metric** field in the layer pane.
 
 4. In the layer pane, click **Add or drag-and-drop a field** for **Group by**.
 
@@ -265,13 +265,13 @@ Add a panel title:
 
 ## Visualization panels
 
-Visualization panels are how you display visualizations of your data and what make Kibana such a useful tool. Panels are designed to build interactive dashboards. 
+Visualization panels are how you display visualizations of your data and what make Kibana such a useful tool. Panels are designed to build interactive dashboards.
 
 ### Create and add panels
 
 Create new panels, which can be accessed from the dashboard toolbar or the **Visualize Library**, or add panels that are saved in the **Visualize Library**, or search results from <DocLink id="serverlessElasticsearchExploreYourDataDiscoverYourData" section="save-your-search-for-later-use">**Discover**</DocLink>.
 
-Panels added to the **Visualize Library** are available to all dashboards. 
+Panels added to the **Visualize Library** are available to all dashboards.
 
 To create panels from the dashboard:
 
@@ -279,11 +279,11 @@ To create panels from the dashboard:
 
 1. Click **Edit** then click **Create visualization**.
 
-1. From the **Avalible fields** drag and drop the data you want to visualize.
+1. From the **Available fields** drag and drop the data you want to visualize.
 
 1. Click **Save and return**.
 
-1. Click **Save** to add the new panel to your dashboard. 
+1. Click **Save** to add the new panel to your dashboard.
 
 To create panels from the **Visualize Library**:
 
@@ -295,7 +295,7 @@ To create panels from the **Visualize Library**:
 
 1. In the modal, enter a **Title**, **Description**, and decide if you want to save the new panel to an existing dashboard, a new dashboard, or to the **Visualize Library**.
 
-1. Save the panel. 
+1. Save the panel.
 
 To add existing panels from the **Visualize Library**:
 
@@ -331,7 +331,7 @@ If you created the panel from the **Visualize Library**:
 
 #### Save to the dashboard
 
-Return to the dashboard and add the panel without specifying the save options or adding the panel to the **Visualize Library**. 
+Return to the dashboard and add the panel without specifying the save options or adding the panel to the **Visualize Library**.
 
 If you created the panel from the dashboard:
 
@@ -375,7 +375,7 @@ Add **Text** panels to your dashboard that display important information, instru
 
 1. Click **Add panel** and select **<DocIcon type="visText" title="Create new text" /> Text**.
 
-1. Check the rendered text, then click **Save and return**. 
+1. Check the rendered text, then click **Save and return**.
 
 1. To save the new text panel to your dashboard click **Save**.
 
@@ -393,11 +393,11 @@ To personalize your dashboards, add your own logos and graphics with the **Image
 
 1. To save the new image panel to your dashboard click **Save**.
 
-To manage your uploaded image files, open the main menu, then click **Stack Management > Kibana > Files**. 
+To manage your uploaded image files, open the main menu, then click **Stack Management > Kibana > Files**.
 
 <DocCallOut title="Warning" color="warning">
 
-When you export a dashboard, the uploaded image files are not exported. 
+When you export a dashboard, the uploaded image files are not exported.
 When importing a dashboard with an image panel, and the image file is unavailable, the image panel displays a `not found` warning. Such panels have to be fixed manually by re-uploading the image using the panel's image editor.
 
 </DocCallOut>
@@ -412,35 +412,35 @@ To make changes to the panel, use the panel menu options.
 
 1. Open the panel menu, then use the following options:
 
-* **Edit Lens** &mdash; Opens **Lens** so you can make changes to the visualization. 
+* **Edit Lens** &mdash; Opens **Lens** so you can make changes to the visualization.
 
 * **Edit visualization** &mdash; Opens the editor so you can make changes to the panel.
 
-* **Edit map** &mdash; Opens the editor so you can make changes to the map panel. 
+* **Edit map** &mdash; Opens the editor so you can make changes to the map panel.
 
-    The above options display in accordance to the type of visualization the panel is made up of. 
-    
+    The above options display in accordance to the type of visualization the panel is made up of.
+
 * **Edit Lens** &mdash; Opens aggregation-based visualizations in **Lens**.
 
 * **Clone panel** &mdash; Opens a copy of the panel on your dashboard.
 
 * **Panel settings** &mdash; Opens the **Panel settings** window to change the **title**, **description**, and **time range**.
 
-* **More > Inspect** &mdash; Opens an editor so you can view the data and the requests that collect that data. 
+* **More > Inspect** &mdash; Opens an editor so you can view the data and the requests that collect that data.
 
 * **More > Explore data in Discover** &mdash; Opens that panels data in **Discover**.
 
-* **More > Save to library** &mdash; Saves the panel to the **Visualize Library**. 
+* **More > Save to library** &mdash; Saves the panel to the **Visualize Library**.
 
 * **More > Maximize panel** &mdash; Maximizes the panel to full screen.
 
-* **More > Download as CSV** &mdash; Downlaods the data as a CSV file. 
+* **More > Download as CSV** &mdash; Downloads the data as a CSV file.
 
 * **More > Replace panel** &mdash; Opens the **Visualize Library** so you can select a new panel to replace the existing panel.
 
 * **More > Copy to dashboard** &mdash; Copy the panel to a different dashboard.
 
-* **More > Delete from dashboard** &mdash; Removes the panel from the dashboard. 
+* **More > Delete from dashboard** &mdash; Removes the panel from the dashboard.
 
 
 
