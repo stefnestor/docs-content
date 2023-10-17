@@ -80,7 +80,26 @@
       ]
     },
     {
-      "pageId": "serverlessElasticsearchSearchYourData"
+      "pageId": "serverlessElasticsearchSearchYourData",
+      "items": [
+        {
+          "id": "serverlessElasticsearchSearchYourDataTheSearchApi"
+        },
+        {
+          "id": "serverlessElasticsearchKnnSearch"
+        },
+        {
+          "id": "serverlessElasticsearchSemanticSearch",
+          "items": [
+            {
+            "id": "serverlessElasticsearchSemanticSearchElser"
+            }
+          ]
+        },
+        {
+          "id": "serverlessElasticsearchSearchWithSynonyms"
+        }
+      ]
     },
     {
       "pageId": "serverlessElasticsearchExploreYourData",
