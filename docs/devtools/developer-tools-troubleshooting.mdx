@@ -254,8 +254,6 @@ curl "${ES_URL}/my-index-000001/_search?sort=@timestamp:desc&size=1" \
 ```
 {/* TEST[continued] */}
 
-<div id="troubleshooting-searches-validate-explain-profile"></div>
-
 ## Validate, explain, and profile queries
 
 When a query returns unexpected results, Elasticsearch offers several tools to
@@ -309,8 +307,6 @@ Next, select **Request**.
 You can now copy the query sent to ((es)) for further analysis in Console.
 </DocCallOut>
 
-<div id="troubleshooting-searches-settings"></div>
-
 ## Check index settings
 
 Index settings {/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">Index settings</DocLink> */} can influence search results. 
@@ -326,31 +322,9 @@ curl "${ES_URL}/my-index-000001/_settings" \
 ```
 {/* TEST[continued] */}
 
-You can update dynamic index settings with the [**Update index settings API**](((ref))/indices-update-settings.html) {/*  <DocLink id="enElasticsearchReferenceIndicesUpdateSettings">update index settings API</DocLink> */}. 
-Changing dynamic index settings for a data stream {/*  <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-dynamic-index-setting-for-a-data-stream">Changing dynamic index settings for a data stream</DocLink> */} requires changing the index template used by the data stream.
+You can update dynamic index settings with the [**Update index settings API**](((ref))/indices-update-settings.html){/*  <DocLink id="enElasticsearchReferenceIndicesUpdateSettings">update index settings API</DocLink> */}. Changing dynamic index settings for a data stream {/*  <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-dynamic-index-setting-for-a-data-stream">Changing dynamic index settings for a data stream</DocLink> */} requires changing the index template used by the data stream.
 
 For static settings, you need to create a new index with the correct settings.
 Next, you can reindex the data into that index.
 {/*For data streams, refer to <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-static-index-setting-for-a-data-stream">Change a static index setting
-for a data stream</DocLink> */}.
-
-<div id="troubleshooting-slow-searches"></div>
-
-## Find slow queries
-
-[Slow logs](((ref))/index-modules-slowlog.html) {/* <DocLink id="enElasticsearchReferenceIndexModulesSlowlog">Slow logs</DocLink> */} 
-can help pinpoint slow performing search requests. 
-Additionally, [enabling audit logging](((ref))/enable-audit-logging.html) {/*  <DocLink id="enElasticsearchReferenceAuditingSettings">audit logging</DocLink> */} 
-can help determine query source.
-Add the following settings to the `elasticsearch.yml` configuration file
-to trace queries.
-The resulting logging is verbose, so disable these settings when not
-troubleshooting.
-
-```yaml
-xpack.security.audit.enabled: true
-xpack.security.audit.logfile.events.include: _all
-xpack.security.audit.logfile.events.emit_request_body: true
-```
-
-Refer to the following blog for more information: [Advanced tuning: finding and fixing slow Elasticsearch queries](https://www.elastic.co/blog/advanced-tuning-finding-and-fixing-slow-elasticsearch-queries).
+for a data stream</DocLink> */}
