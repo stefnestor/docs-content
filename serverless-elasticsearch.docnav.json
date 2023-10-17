@@ -86,6 +86,9 @@
           "id": "serverlessElasticsearchSearchYourDataTheSearchApi"
         },
         {
+          "id": "serverlessElasticsearchSearchWithSynonyms"
+        },
+        {
           "id": "serverlessElasticsearchKnnSearch"
         },
         {
@@ -95,9 +98,6 @@
             "id": "serverlessElasticsearchSemanticSearchElser"
             }
           ]
-        },
-        {
-          "id": "serverlessElasticsearchSearchWithSynonyms"
         }
       ]
     },
