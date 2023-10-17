@@ -9,16 +9,16 @@ status: in review
 
 <DocBadge template="technical preview" />
 You have options for ingesting, or indexing, data into ((es-serverless)).
-You can ingest data through <DocLink id="serverlessElasticsearchIngestDataThroughApi" text="API"/>,
-<DocLink id="serverlessElasticsearchIngestDataThroughLogstash" text="Logstash"/>, or
-<DocLink id="serverlessElasticsearchIngestDataThroughBeats" text="Beats"/>.
+You can ingest data through the <DocLink id="serverlessElasticsearchIngestDataThroughApi">((es)) API</DocLink>,
+<DocLink id="serverlessElasticsearchIngestDataThroughBeats">((beats))</DocLink>, or
+<DocLink id="serverlessElasticsearchIngestDataThroughLogstash">((ls))</DocLink>.
 The best ingest option—or options—for your use case depends on whether you are indexing general content or time series (timestamped) data.
 
 **General content**
 
 General content includes HTML pages, catalogs, files, and other content that does not update continuously.
 This data can be updated, but the value of the content remains relatively constant over time.
-You can send data directly to ((es)) from your application using API or connector clients.
+You can send data directly to ((es)) from your application using the API.
 
 **Times series (timestamped) data**
 
