@@ -946,46 +946,46 @@ To run an exact kNN search, use a `script_score` query with a vector function.
     the field for approximate kNN, omit the `index` mapping option or set it to
     `false`. This can significantly improve indexing speed.
 
-```bash
-curl -X PUT "${ES_URL}/product-index" \
--H "Authorization: ApiKey ${API_KEY}" \
--H "Content-Type: application/json" \
--d '
-{
-  "mappings": {
-    "properties": {
-      "product-vector": {
-        "type": "dense_vector",
-        "dims": 5,
-        "index": false
-      },
-      "price": {
-        "type": "long"
+    ```bash
+    curl -X PUT "${ES_URL}/product-index" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+    -d '
+    {
+      "mappings": {
+        "properties": {
+          "product-vector": {
+            "type": "dense_vector",
+            "dims": 5,
+            "index": false
+          },
+          "price": {
+            "type": "long"
+          }
+        }
       }
     }
-  }
-}
-'
-```
+    '
+    ```
 
 1. Index your data.
 
-```bash
-curl -X POST "${ES_URL}/product-index/_bulk?refresh=true" \
--H "Authorization: ApiKey ${API_KEY}" \
--H "Content-Type: application/json" \
--d '
-{ "index": { "_id": "1" } }
-{ "product-vector": [230.0, 300.33, -34.8988, 15.555, -200.0], "price": 1599 }
-{ "index": { "_id": "2" } }
-{ "product-vector": [-0.5, 100.0, -13.0, 14.8, -156.0], "price": 799 }
-{ "index": { "_id": "3" } }
-{ "product-vector": [0.5, 111.3, -13.0, 14.8, -156.0], "price": 1099 }
-...
-'
-```
-{/* TEST[continued] */}
-{/* TEST[s/\.\.\.//] */}
+    ```bash
+    curl -X POST "${ES_URL}/product-index/_bulk?refresh=true" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+    -d '
+    { "index": { "_id": "1" } }
+    { "product-vector": [230.0, 300.33, -34.8988, 15.555, -200.0], "price": 1599 }
+    { "index": { "_id": "2" } }
+    { "product-vector": [-0.5, 100.0, -13.0, 14.8, -156.0], "price": 799 }
+    { "index": { "_id": "3" } }
+    { "product-vector": [0.5, 111.3, -13.0, 14.8, -156.0], "price": 1099 }
+    ...
+    '
+    ```
+    {/* TEST[continued] */}
+    {/* TEST[s/\.\.\.//] */}
 
 1. Use the search API to run a `script_score` query containing
     a [vector function](((ref))/query-dsl-script-score-query.html#vector-functions).
@@ -997,36 +997,42 @@ needed, you can use a [`match_all` query](((ref))/query-dsl-match-all-query.html
 parameter to match all documents. However, matching all documents can
 significantly increase search latency.
 
-```bash
-curl -X POST "${ES_URL}/product-index/_search" \
--H "Authorization: ApiKey ${API_KEY}" \
--H "Content-Type: application/json" \
--d '
-{
-  "query": {
-    "script_score": {
-      "query" : {
-        "bool" : {
-          "filter" : {
-            "range" : {
-              "price" : {
-                "gte": 1000
+    ```bash
+    curl -X POST "${ES_URL}/product-index/_search" \
+    -H "Authorization: ApiKey ${API_KEY}" \
+    -H "Content-Type: application/json" \
+    -d '
+    {
+      "query": {
+        "script_score": {
+          "query": {
+            "bool": {
+              "filter": {
+                "range": {
+                  "price": {
+                    "gte": 1000
+                  }
+                }
               }
+            }
+          },
+          "script": {
+            "source": "cosineSimilarity(params.queryVector, 'product-vector') + 1.0",
+            "params": {
+              "queryVector": [
+                -0.5,
+                90,
+                -10,
+                14.8,
+                -156
+              ]
             }
           }
         }
-      },
-      "script": {
-        "source": "cosineSimilarity(params.queryVector, 'product-vector') + 1.0",
-        "params": {
-          "queryVector": [-0.5, 90.0, -10, 14.8, -156.0]
-        }
       }
     }
-  }
-}
-'
-```
-{/* TEST[continued] */}
+    '
+    ```
+    {/* TEST[continued] */}
 </DocCallOut>
 
