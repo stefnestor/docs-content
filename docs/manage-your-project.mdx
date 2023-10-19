@@ -40,13 +40,13 @@ You can also edit the features and usage for your project. Available features va
     "width": "50%"
   },
   {
-    "title": "Availabile in",
+    "title": "Available in",
     "width": "25%"
   }
 ]}>
   <DocRow>
     <DocCell>
-      Search Power
+      **Search Power**
     </DocCell>
     <DocCell>
       Controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project.
@@ -59,7 +59,17 @@ You can also edit the features and usage for your project. Available features va
   </DocRow>
   <DocRow>
     <DocCell>
-      Search Data Lake
+      **Project features**
+    </DocCell>
+    <DocCell>
+      Controls <DocLink id="serverlessGeneralManageProject" section="project-features-add-ons">feature tiers and add-on options</DocLink> for your ((elastic-sec)) project.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
+    </DocCell>
+  </DocRow>  <DocRow>
+    <DocCell>
+      **Search Data Lake**
     </DocCell>
     <DocCell>
       Provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable.
@@ -74,7 +84,7 @@ You can also edit the features and usage for your project. Available features va
   </DocRow>
   <DocRow>
     <DocCell>
-      Search Boost Window
+      **Search Boost Window**
     </DocCell>
     <DocCell>
       Provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake.
@@ -86,15 +96,38 @@ You can also edit the features and usage for your project. Available features va
       <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
     </DocCell>
   </DocRow>
+</DocTable>
+
+<div id="project-features-add-ons"></div>
+
+### Project features and add-ons 
+
+<DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> For ((elastic-sec)) projects, edit the **Project features** to select a feature tier and enable add-on options for specific use cases. 
+
+<DocTable columns={[
+  { 
+    "title": "Feature tier", 
+    "width":"25%" 
+  }, 
+  { 
+    "title": "Description and add-ons",
+    "width":"75%" 
+  }
+]}>
   <DocRow>
+    <DocCell>**Security essentials**</DocCell>
     <DocCell>
-      Project features
+      Standard security analytics, detections, investigations, and collaborations. Allows these add-ons:
+      * **Endpoint essentials**: Endpoint protections with ((elastic-defend)).
+      * **Cloud essentials**: Cloud native security features.
     </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>**Security complete**</DocCell>
     <DocCell>
-      Controls add-on options, such as UEBATIP and bidirectional webhooks, for your security project.
-    </DocCell>
-    <DocCell>
-      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
+      Everything in **Security essentials** plus advanced features such as entity analytics, threat intelligence, and more. Allows these add-ons:
+        * **Endpoint complete**: Everything in **Endpoint essentials** plus advanced endpoint detection and response features.
+        * **Cloud complete**: Everything in **Cloud essentials** plus advanced cloud security features.
     </DocCell>
   </DocRow>
 </DocTable>
