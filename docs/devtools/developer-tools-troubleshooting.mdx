@@ -18,7 +18,7 @@ Elasticsearch returns an `index_not_found_exception` when the data stream, index
 or alias you try to query does not exist. This can happen when you misspell the
 name or when the data has been indexed to a different data stream or index.
 
-Use the [**Exists API**](((ref))/indices-exists.html) {/*  <DocLink id="enElasticsearchReferenceIndicesExists">exists API</DocLink> */} to check whether a data stream, index, or
+Use the [**Exists API**](/api-reference/search/indices-exists) to check whether a data stream, index, or
 alias exists:
 
 ```bash
@@ -26,23 +26,23 @@ curl ${ES_URL}/my-data-stream \
 -H "Authorization: ApiKey ${API_KEY}"
 ```
 
-Use the [**Data stream stats API**](((ref))/data-stream-stats-api.html)
-{/*  <DocLink id="enElasticsearchReferenceDataStreamStatsApi">data stream stats API</DocLink> */} to list all data streams:
+Use the [**Data stream stats API**](/api-reference/search/indices-data-streams-stats)
+to list all data streams:
 
 ```bash
 curl "${ES_URL}/_data_stream/_stats?human=true" \
 -H "Authorization: ApiKey ${API_KEY}"
 ```
 
-Use the [**Get index API**](((ref))/indices-get-index.html)
- {/*  <DocLink id="enElasticsearchReferenceIndicesGetIndex">get index API</DocLink> */} to list all indices and their aliases:
+Use the [**Get index API**](/api-reference/search/indices-get)
+to list all indices and their aliases:
 
 ```bash
 curl "${ES_URL}/_all?filter_path=*.aliases" \
 -H "Authorization: ApiKey ${API_KEY}"
 ```
 
-Instead of an error, it is possible to retrieve partial search results if some 
+Instead of an error, it is possible to retrieve partial search results if some
 of the indices you're querying are unavailable.
 Set `ignore_unavailable` to `true`:
 
@@ -58,8 +58,8 @@ data.
 This can happen when there is a data ingestion issue.
 For example, the data may have been indexed to a data stream or index with another name.
 
-Use the [**Count API**](((ref))/search-count.html) 
-{/*  <DocLink id="enElasticsearchReferenceSearchCount">count API</DocLink> */} to retrieve the number of documents in a data
+Use the [**Count API**](/api-reference/search/count-3)
+to retrieve the number of documents in a data
 stream or index.
 Check that `count` in the response is not 0.
 
@@ -109,8 +109,8 @@ configured with the correct time field.
 ## Check that the field exists and its capabilities
 
 Querying a field that does not exist will not return any results.
-Use the [**Field capabilities API**](((ref))/search-field-caps.html)
-{/* <DocLink id="enElasticsearchReferenceSearchFieldCaps">field capabilities API</DocLink> */} to check whether a field exists:
+Use the [**Field capabilities API**](/api-reference/search/field-caps)
+to check whether a field exists:
 
 ```bash
 curl "${ES_URL}/my-index-000001/_field_caps?fields=my-field" \
@@ -147,8 +147,8 @@ searchable and aggregatable.
 
 ## Check the field's mappings
 
-A field's capabilities are determined by its [mapping](((ref))/mapping.html). {/*  <DocLink id="enElasticsearchReferenceMapping">mapping</DocLink> */}
-To retrieve the mapping, use the [**Get mapping API**](((ref))/indices-get-mapping.html): {/*  <DocLink id="enElasticsearchReferenceIndicesGetMapping">get mapping API</DocLink> */}
+A field's capabilities are determined by its [mapping](((ref))/mapping.html).
+To retrieve the mapping, use the [**Get mapping API**](/api-reference/search/indices-get-mapping-1):
 
 ```bash
 curl "${ES_URL}/my-index-000001/_mappings" \
@@ -158,8 +158,8 @@ curl "${ES_URL}/my-index-000001/_mappings" \
 
 If you query a `text` field, pay attention to the analyzer that may have been
 configured.
-You can use the [**Analyze API**](((ref))/indices-analyze.html)
- {/*  <DocLink id="enElasticsearchReferenceIndicesAnalyze">analyze API</DocLink> */} to check how a field's analyzer processes values and query terms:
+You can use the [**Analyze API**](/api-reference/search/indices-analyze)
+to check how a field's analyzer processes values and query terms:
 
 ```bash
 curl -X POST "${ES_URL}/my-index-000001/_analyze" \
@@ -172,11 +172,11 @@ curl -X POST "${ES_URL}/my-index-000001/_analyze" \
 ```
 {/* TEST[continued] */}
 
-To change the mapping of an existing field use the [**Update mapping API**](((ref))/indices-put-mapping.html).
+To change the mapping of an existing field use the [**Update mapping API**](/api-reference/search/indices-put-mapping).
 
 ## Check the field's values
 
-Use the `exists` query {/*  <DocLink id="enElasticsearchReferenceQueryDslExistsQuery">`exists` query</DocLink> */} to check whether there are
+Use the `exists` query to check whether there are
 documents that return a value for a field.
 Check that `count` in the response is
 not 0.
@@ -195,10 +195,10 @@ curl -X GET "${ES_URL}/my-index-000001/_count" \
 ```
 {/* TEST[continued] */}
 
-If the field is aggregatable, you can use [aggregations](((ref))/search-aggregations.html) {/*  <DocLink id="enElasticsearchReferenceSearchAggregations">aggregations</DocLink> */}
+If the field is aggregatable, you can use <DocLink id="serverlessElasticsearchExploreYourDataAggregations" text="aggregations" />
 to check the field's values.
 For `keyword` fields, you can use a `terms` aggregation
- {/* <DocLink id="enElasticsearchReferenceSearchAggregationsBucketTermsAggregation">terms aggregation</DocLink> */} to retrieve
+to retrieve
 the field's most common values:
 
 ```bash
@@ -227,7 +227,7 @@ curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
 -H "Authorization: ApiKey ${API_KEY}" \
 -d '{
   "aggs": {
-    "my-num-field-stats": { 
+    "my-num-field-stats": {
       "stats": {
         "field": "my-num-field"
       }
@@ -243,7 +243,7 @@ The field may have a different name.
 ## Check the latest value
 
 For time-series data, confirm there is non-filtered data within the attempted
-time range. 
+time range.
 For example, if you are trying to query the latest data for the
 `@timestamp` field, run the following to see if the max `@timestamp` falls
 within the attempted range:
@@ -259,8 +259,8 @@ curl "${ES_URL}/my-index-000001/_search?sort=@timestamp:desc&size=1" \
 When a query returns unexpected results, Elasticsearch offers several tools to
 investigate why.
 
-The [**Validate API**](((ref))/search-validate.html) {/*  <DocLink id="enElasticsearchReferenceSearchValidate">validate API</DocLink> */} 
-enables you to validate a query. 
+The [**Validate API**](/api-reference/search/indices-validate-query-2)
+enables you to validate a query.
 Use the `rewrite` parameter to return the Lucene query an Elasticsearch query is
 rewritten into:
 
@@ -281,7 +281,7 @@ curl -X GET "${ES_URL}/my-index-000001/_validate/query?rewrite=true" \
 ```
 {/* TEST[continued] */}
 
-Use the [**Explain API**](((ref))/search-explain.html) {/*  <DocLink id="enElasticsearchReferenceSearchExplain">explain API</DocLink> */} to find out why a specific document matches or doesn’t match a query:
+Use the [**Explain API**](((ref))/search-explain.html) to find out why a specific document matches or doesn’t match a query:
 
 ```bash
 curl -X GET "${ES_URL}/my-index-000001/_explain/0" \
@@ -298,7 +298,7 @@ curl -X GET "${ES_URL}/my-index-000001/_explain/0" \
 {/* TEST[setup:messages] */}
 
 The [**Profile API**](((ref))/search-profile.html)
- {/*  <DocLink id="enElasticsearchReferenceSearchProfile">profile API</DocLink> */} provides detailed timing information about a search request.
+provides detailed timing information about a search request.
 For a visual representation of the results, use the <DocLink id="serverlessElasticsearchDevToolsSearchProfiler" text="Search Profiler"/>.
 
 <DocCallOut title="Note">
@@ -309,12 +309,11 @@ You can now copy the query sent to ((es)) for further analysis in Console.
 
 ## Check index settings
 
-Index settings {/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">Index settings</DocLink> */} can influence search results. 
+Index settings {/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">Index settings</DocLink> */} can influence search results.
 For example, the `index.query.default_field` setting, which determines the field
-that is queried when a query specifies no explicit field. 
-Use the [**Get index settings API**](((ref))/indices-get-settings.html)
- {/* <DocLink id="enElasticsearchReferenceIndicesGetSettings">get index settings API</DocLink> */} 
- to retrieve the settings for an index:
+that is queried when a query specifies no explicit field.
+Use the [**Get index settings API**](/api-reference/search/indices-get-settings-1)
+to retrieve the settings for an index:
 
 ```bash
 curl "${ES_URL}/my-index-000001/_settings" \
@@ -322,7 +321,7 @@ curl "${ES_URL}/my-index-000001/_settings" \
 ```
 {/* TEST[continued] */}
 
-You can update dynamic index settings with the [**Update index settings API**](((ref))/indices-update-settings.html){/*  <DocLink id="enElasticsearchReferenceIndicesUpdateSettings">update index settings API</DocLink> */}. Changing dynamic index settings for a data stream {/*  <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-dynamic-index-setting-for-a-data-stream">Changing dynamic index settings for a data stream</DocLink> */} requires changing the index template used by the data stream.
+You can update dynamic index settings with the [**Update index settings API**](/api-reference/search/indices-put-settings-1). Changing dynamic index settings for a data stream {/*  <DocLink id="enElasticsearchReferenceModifyDataStreams" section="change-a-dynamic-index-setting-for-a-data-stream">Changing dynamic index settings for a data stream</DocLink> */} requires changing the index template used by the data stream.
 
 For static settings, you need to create a new index with the correct settings.
 Next, you can reindex the data into that index.
