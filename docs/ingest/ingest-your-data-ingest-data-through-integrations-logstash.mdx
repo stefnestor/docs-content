@@ -47,7 +47,29 @@ To use ((ls)) to send data to ((es-serverless)), you must be using:
 - ((ls)) [Elasticsearch input plugin v4.18.0](https://www.elastic.co/guide/en/logstash-versioned-plugins/current/v4.18.0-plugins-inputs-elasticsearch.html) or later
 - ((ls)) [Elasticsearch filter plugin v3.16.0](https://www.elastic.co/guide/en/logstash-versioned-plugins/current/v3.16.0-plugins-filters-elasticsearch.html) or later
 
+## API keys for connecting ((ls)) to ((es-serverless))
+
+Use the **Security: API key** section in the UI to <DocLink id="serverlessApiKeys">create an API key</DocLink> 
+for securely connecting the ((ls)) ((es)) output to ((es-serverless)).  
+We recommend creating a unique API key per ((ls)) instance.
+You can create as many API keys as necessary.
+
+When you set up your API keys, use the metadata option to tag each API key with details that are meaningful to you. 
+This step makes managing multiple API keys easier.
+
+After you generate an API key, add it to your ((ls)) [Elasticsearch output plugin](((logstash-ref))/plugins-outputs-elasticsearch.html) config file's `api_key` setting. 
+Here's an example:
+
+```bash
+output {
+  elasticsearch {
+    api_key => "TiNAGG4BaaMdaH1tRfuU:KnR6yE41RrSowb0kQ0HWoA" 
+  }
+}
+```
+
 ## Next steps
 
-Check out the [Logstash product page](https://www.elastic.co/logstash) for more info.
-When you're ready, dive into the [Logstash documentation](((logstash-ref))/index.html).
+Check out the [Logstash product page](https://www.elastic.co/logstash) to see what ((ls)) can do for you.
+When you're ready, 
+ dive into the [Logstash documentation](((logstash-ref))/index.html).
