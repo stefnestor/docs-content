@@ -15,13 +15,7 @@
       "pageId": "serverlessElasticsearchClients",
       "items": [
         {
-          "id": "serverlessElasticsearchGoGettingStarted"
-        },
-        {
-          "id": "serverlessElasticsearchJavaGettingStarted"
-        },
-        {
-          "id": "serverlessElasticsearchDotNetGettingStarted"
+          "id": "serverlessElasticsearchPythonGettingStarted"
         },
         {
           "id": "serverlessElasticsearchNodejsGettingStarted"
@@ -30,12 +24,17 @@
           "id": "serverlessElasticsearchPhpGettingStarted"
         },
         {
-          "id": "serverlessElasticsearchPythonGettingStarted"
+          "id": "serverlessElasticsearchGoGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchDotNetGettingStarted"
         },
         {
           "id": "serverlessElasticsearchRubyGettingStarted"
         },
-
+        {
+          "id": "serverlessElasticsearchJavaGettingStarted"
+        }
       ]
     },
     {
