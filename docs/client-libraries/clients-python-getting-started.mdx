@@ -62,6 +62,8 @@ The following is an example of indexing some classic books into the `books`
 index:
 
 ```python
+from datetime import datetime
+
 client.bulk(
     body=[
         {"index": {"_index": "books", "_id": "1"}},
