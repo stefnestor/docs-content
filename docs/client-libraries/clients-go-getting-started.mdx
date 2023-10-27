@@ -15,7 +15,7 @@ client, shows you how to initialize the client, and how to perform basic
 
 ## Requirements
 
-* Go 1.13 or higher installed on your system.
+* Go 1.20 or higher installed on your system.
 
 
 ## Installation
@@ -31,6 +31,25 @@ go get -u github.com/elastic/elasticsearch-serverless-go@latest
 ```
 
 
+## Imports
+
+The following snippets use these imports:
+
+```go
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"strconv"
+
+	"github.com/elastic/elasticsearch-serverless-go"
+	"github.com/elastic/elasticsearch-serverless-go/typedapi/types"
+	"github.com/elastic/elasticsearch-serverless-go/typedapi/types/enums/result"
+)
+```
+
+
 ## Initialize the client
 
 Initialize the client using your API key and Cloud URL:
@@ -40,6 +59,9 @@ client, err := elasticsearch.NewClient(elasticsearch.Config{
 	APIKey: "you_api_key",
 	Address: "https://my-project-url",
 })
+if err != nil {
+    log.Fatal(err)
+}
 ```
 
 To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
@@ -61,6 +83,13 @@ The following is an example of indexing some classic books into the `books`
 index:
 
 ```go
+type Book struct {
+    Name        string `json:"name"`
+    Author      string `json:"author"`
+    ReleaseDate string `json:"release_date"`
+    PageCount   int    `json:"page_count"`
+}
+
 books := []Book{
     {Name: "Snow Crash", Author: "Neal Stephenson", ReleaseDate: "1992-06-01", PageCount: 470},
     {Name: "Revelation Space", Author: "Alastair Reynolds", ReleaseDate: "2000-03-15", PageCount: 585},
@@ -72,17 +101,24 @@ books := []Book{
 indexName := "books"
 
 bulk := client.Bulk()
-for _, book := range books {
-    bulk.CreateOp(types.CreateOperation{Index_: &indexName}, book)
+for i, book := range books {
+    id := strconv.Itoa(i)
+    err := bulk.CreateOp(types.CreateOperation{Index_: &indexName, Id_: &id}, book)
+    if err != nil {
+        log.Fatal(err)
+    }
 }
-response, err := bulk.Do(context.TODO())
+bulkRes, err := bulk.Do(context.TODO())
+if err != nil {
+    log.Fatal(err)
+}
 
-fmt.Printf("%#v", response.Items)
+fmt.Printf("Bulk: %#v\n", bulkRes.Items)
 ```
 
 When you use the client to make a request to ((es)), it returns an API 
 response object. You can access the body values directly as seen on
-the previous example with `res`.
+the previous example with `bulkRes`.
 
 
 ### Getting documents
@@ -90,7 +126,15 @@ the previous example with `res`.
 You can get documents by using the following code:
 
 ```go
-client.Get("my_index", id).Do(context.TODO())
+getRes, err := client.Get(indexName, "5").Do(context.TODO())
+if err != nil {
+    log.Fatal(err)
+}
+book := Book{}
+if err := json.Unmarshal(getRes.Source_, &book); err != nil {
+    log.Fatal(err)
+}
+fmt.Printf("Get book: %#v\n", book)
 ```
 
 
@@ -100,32 +144,60 @@ Now that some data is available, you can search your documents using the
 `search` API:
 
 ```go
-client.Search().
-	Index("books").
-	Q("snow").
-	Do(context.TODO())
+searchRes, err := client.Search().
+    Index("books").
+    Q("snow").
+    Do(context.TODO())
+if err != nil {
+    log.Fatal(err)
+}
+
+bookSearch := []Book{}
+for _, hit := range searchRes.Hits.Hits {
+    book := Book{}
+    if err := json.Unmarshal(hit.Source_, &book); err != nil {
+        log.Fatal(err)
+    }
+    bookSearch = append(bookSearch, book)
+}
+fmt.Printf("Search books: %#v\n", bookSearch)
 ```
 
 ### Updating a document
 
-You can call the `update` API to update a document:
+You can call the `Update` API to update a document, in this example updating the 
+`page_count` for "The Handmaid's Tale" with id "5":
 
 ```go
-client.Update("books", "document_id").
-		Doc(
-			struct {
-				PageCount int `json:"page_count"`
-			}{PageCount: 312},
-		).
-		Do(context.TODO())
+updateRes, err := client.Update("books", "5").
+    Doc(
+        struct {
+            PageCount int `json:"page_count"`
+        }{PageCount: 312},
+    ).
+    Do(context.TODO())
+if err != nil {
+    log.Fatal(err)
+}
+
+if updateRes.Result == result.Updated {
+    fmt.Printf("Update book: %#v\n", updateRes)
+}
 ```
 
 ### Deleting a document
 
-You can call the `delete` API to delete a document:
+You can call the `Delete` API to delete a document:
 
 ```go
-client.Delete("books", "document_id").Do(context.TODO())
+deleteRes, err := client.Delete("books", "5").Do(context.TODO())
+if err != nil {
+    log.Fatal(err)
+}
+
+if deleteRes.Result == result.Deleted {
+    fmt.Printf("Delete book: %#v\n", deleteRes)
+}
 ```
 
 
@@ -133,5 +205,12 @@ client.Delete("books", "document_id").Do(context.TODO())
 
 
 ```go
-client.Indices.Delete("books").Do(context.TODO())
+indexDeleteRes, err := client.Indices.Delete("books").Do(context.TODO())
+if err != nil {
+    log.Fatal(err)
+}
+
+if indexDeleteRes.Acknowledged {
+    fmt.Printf("Delete index: %#v\n", indexDeleteRes)
+}
 ```
