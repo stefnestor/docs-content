@@ -8,8 +8,8 @@ status: in review
 ---
 
 <DocBadge template="technical preview" />
-This page guides you through the installation process of the ((es-serverless)) Java 
-client, shows you how to initialize the client, and how to perform basic 
+This page guides you through the installation process of the Java
+client for ((es-serverless)), shows you how to initialize the client, and how to perform basic
 ((es)) operations with it.
 
 ## Requirements
@@ -22,12 +22,12 @@ show usage with Jackson.
 ## Installation
 
 
-You can add the ((es-serverless)) Java client to your Java project using 
+You can add the Java client to your Java project using
 either Gradle or Maven.
 
 ### Using Gradle
 
-You can install the ((es-serverless)) Java client as a Gradle dependency:
+You can install the Java client as a Gradle dependency:
 
 ```groovy
 dependencies {
@@ -38,7 +38,7 @@ dependencies {
 
 ### Using Maven
 
-You can install the ((es-serverless)) Java client as a Maven dependency, add
+You can install the Java client as a Maven dependency, add
 the following to the `pom.xml` of your project:
 
 ```xml
@@ -96,7 +96,7 @@ After you initialized the client, you can start ingesting documents.
 
 ### Creating an index and ingesting documents
 
-The following is an example of indexing a document, here a `Product` application 
+The following is an example of indexing a document, here a `Product` application
 object in the `products` index:
 
 ```java
@@ -114,7 +114,7 @@ logger.info("Indexed with version " + response.version());
 
 ### Searching
 
-Now that some data is available, you can search your documents using the 
+Now that some data is available, you can search your documents using the
 `search` API:
 
 ```java
@@ -134,11 +134,11 @@ SearchResponse<Product> response = esClient.search(s -> s
 
 A few things to note in the above example:
 
-* The search query is built using a hierarchy of lambda expressions that closely 
-follows the ((es)) HTTP API. Lambda expressions allows you to be guided 
-by your IDE's autocompletion, without having to import (or even know!) the 
+* The search query is built using a hierarchy of lambda expressions that closely
+follows the ((es)) HTTP API. Lambda expressions allows you to be guided
+by your IDE's autocompletion, without having to import (or even know!) the
 actual classes representing a query.
-* The last parameter `Product.class` instructs the client to return results as 
+* The last parameter `Product.class` instructs the client to return results as
 `Product` application objects instead of raw JSON.
 
 
@@ -157,7 +157,7 @@ esClient.update(u -> u
 );
 ```
 
-### Delete 
+### Delete
 
 You can also delete documents:
 

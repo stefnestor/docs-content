@@ -8,8 +8,8 @@ status: in review
 ---
 
 <DocBadge template="technical preview" />
-This page guides you through the installation process of the ((es-serverless)) Go 
-client, shows you how to initialize the client, and how to perform basic 
+This page guides you through the installation process of the Go
+client for ((es-serverless)), shows you how to initialize the client, and how to perform basic
 ((es)) operations with it.
 
 
@@ -23,7 +23,7 @@ client, shows you how to initialize the client, and how to perform basic
 
 ### Using the command line
 
-You can install the ((es-serverless)) Go client with the following 
+You can install the Go client with the following
 commands:
 
 ```bash
@@ -69,17 +69,17 @@ To get API keys or the Elasticsearch Endpoint for a project, see <DocLink id="se
 
 ## Using the API
 
-After you've initialized the client, you can start ingesting documents. You can 
-use the `bulk` API for this. This API enables you to index, update, and delete 
+After you've initialized the client, you can start ingesting documents. You can
+use the `bulk` API for this. This API enables you to index, update, and delete
 several documents in one request.
 
 
 ### Creating an index and ingesting documents
 
-You can call the `bulk` API with a body parameter, an array of hashes that 
-define the action, and a document. 
+You can call the `bulk` API with a body parameter, an array of hashes that
+define the action, and a document.
 
-The following is an example of indexing some classic books into the `books` 
+The following is an example of indexing some classic books into the `books`
 index:
 
 ```go
@@ -116,7 +116,7 @@ if err != nil {
 fmt.Printf("Bulk: %#v\n", bulkRes.Items)
 ```
 
-When you use the client to make a request to ((es)), it returns an API 
+When you use the client to make a request to ((es)), it returns an API
 response object. You can access the body values directly as seen on
 the previous example with `bulkRes`.
 
@@ -140,7 +140,7 @@ fmt.Printf("Get book: %#v\n", book)
 
 ### Searching
 
-Now that some data is available, you can search your documents using the 
+Now that some data is available, you can search your documents using the
 `search` API:
 
 ```go
@@ -165,7 +165,7 @@ fmt.Printf("Search books: %#v\n", bookSearch)
 
 ### Updating a document
 
-You can call the `Update` API to update a document, in this example updating the 
+You can call the `Update` API to update a document, in this example updating the
 `page_count` for "The Handmaid's Tale" with id "5":
 
 ```go

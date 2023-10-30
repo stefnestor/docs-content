@@ -8,8 +8,8 @@ status: in review
 ---
 
 <DocBadge template="technical preview" />
-This page guides you through the installation process of the ((es-serverless)) Python 
-client, shows you how to initialize the client, and how to perform basic 
+This page guides you through the installation process of the Python
+client for ((es-serverless)), shows you how to initialize the client, and how to perform basic
 ((es)) operations with it.
 
 ## Requirements
@@ -22,7 +22,7 @@ client, shows you how to initialize the client, and how to perform basic
 
 ### Using the command line
 
-You can install the ((es-serverless)) Python client with the following 
+You can install the Python client with the following
 commands:
 
 ```bash
@@ -55,10 +55,10 @@ documents in one request.
 
 ### Creating an index and ingesting documents
 
-You can call the `bulk` API with a body parameter, an array of hashes that 
-define the action, and a document. 
+You can call the `bulk` API with a body parameter, an array of hashes that
+define the action, and a document.
 
-The following is an example of indexing some classic books into the `books` 
+The following is an example of indexing some classic books into the `books`
 index:
 
 ```python
@@ -88,7 +88,7 @@ print(response.body)
 
 ### Searching
 
-Now that some data is available, you can search your documents using the 
+Now that some data is available, you can search your documents using the
 `search` API:
 
 ```python
