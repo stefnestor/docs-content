@@ -90,7 +90,7 @@ GET /_search
 
 Select **Variables** to create, edit, and delete variables.
 
-![Variables](images/console-variables.png)
+<DocImage size="l" url="images/console-variables.png" alt="Variabless" />
 
 You can refer to these variables in the paths and bodies of your requests.
 Each variable can be referenced multiple times.
@@ -99,7 +99,7 @@ Each variable can be referenced multiple times.
 GET ${pathVariable}
 {
   "query": {
-    "match": {
+    "query_string": {
       "${bodyNameVariable}": "${bodyValueVariable}"
     }
   }
