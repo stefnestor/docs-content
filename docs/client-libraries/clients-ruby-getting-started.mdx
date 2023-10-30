@@ -16,7 +16,7 @@ client, shows you how to initialize the client, and how to perform basic
 ## Requirements
 
 * Ruby 3.0 or higher installed on your system.
-* To use the `elasticsearch-serverless` gem, you must have an API key and Cloud URL for an ((es-serverless)) project.
+* To use the `elasticsearch-serverless` gem, you must have an API key and Elasticsearch Endpoint for an ((es-serverless)) project.
 
 
 ## Installation
@@ -76,7 +76,7 @@ bundle exec rake console
 
 ## Initialize the client
 
-Initialize the client using your API key and Cloud URL:
+Initialize the client using your API key and Elasticsearch Endpoint:
 
 ```ruby
 client = ElasticsearchServerless::Client.new(
@@ -85,7 +85,7 @@ client = ElasticsearchServerless::Client.new(
 )
 ```
 
-To get API keys or the Cloud URL for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
+To get API keys or the Elasticsearch Endpoint for a project, see <DocLink id="serverlessElasticsearchGetStarted" />.
 
 
 ## Using the API
