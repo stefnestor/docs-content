@@ -8,7 +8,7 @@ status: in review
 ---
 
 <DocBadge template="technical preview" />
-This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
+This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
 
 In **((project-settings)) > ((manage-app)) > ((ls-pipelines-app))**, you can control multiple ((ls)) instances and pipeline configurations.
 
@@ -23,8 +23,8 @@ The `pipelines.yml` file and settings such as `path.config` and `config.string` 
 
 ## Manage pipelines
 
-{/* 
-TBD: What is the appropriate RBAC for Serverless?
+{/*
+TBD: What is the appropriate RBAC for serverless?
 If ((kib)) is protected with basic authentication, make sure your ((kib)) user has
 the `logstash_admin` role as well as the `logstash_writer` role that you created
 when you configured Logstash to use basic authentication. Additionally,
@@ -48,7 +48,7 @@ Pipeline
   You don't have to worry about whitespace or indentation.
 
 Pipeline workers
-: The number of parallel workers used to run the filter and output stages of the pipeline. 
+: The number of parallel workers used to run the filter and output stages of the pipeline.
 
 Pipeline batch size
 : The maximum number of events an individual worker thread collects before

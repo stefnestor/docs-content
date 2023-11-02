@@ -1,2 +1,2 @@
 # serverless-general-docs
-Staging location for Serverless general docs
+Staging location for serverless general docs

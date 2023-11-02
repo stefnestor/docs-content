@@ -8,7 +8,7 @@ status: in review
 ---
 
 <DocBadge template="technical preview" />
-This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> 
+This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" /> <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" /> <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
 
 [Ingest pipelines](((ref))/ingest.html) let you perform common transformations on your data before indexing.
 For example, you can use pipelines to remove fields, extract values from text, and enrich your data.
@@ -18,7 +18,7 @@ Each processor runs sequentially, making specific changes to incoming documents.
 After the processors have run, ((es)) adds the transformed documents to your data stream or index.
 
 {/*
-TBD: Do these requirements apply in Serverless?
+TBD: Do these requirements apply in serverless?
 ## Prerequisites
 
 - Nodes with the ingest node role handle pipeline processing. To use ingest pipelines, your cluster must have at least one node with the ingest role. For heavy ingest loads, we recommend creating dedicated ingest nodes.
