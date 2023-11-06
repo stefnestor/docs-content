@@ -4,7 +4,6 @@ slug: /serverless/elasticsearch/manage-project
 title: Manage your project
 description: Configure project-wide features and usage.
 tags: [ 'serverless', 'elasticsearch', 'project', 'manage' ]
-status: in review
 ---
 
 <DocBadge template="technical preview" />
@@ -50,7 +49,7 @@ You can also edit the features and usage for your project. Available features va
     </DocCell>
     <DocCell>
       Controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project.
-      
+
       Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
     </DocCell>
     <DocCell>
@@ -73,7 +72,7 @@ You can also edit the features and usage for your project. Available features va
     </DocCell>
     <DocCell>
       Provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable.
-      
+
       You can specify different retention periods for each data source configured in your project.
     </DocCell>
     <DocCell>
@@ -88,7 +87,7 @@ You can also edit the features and usage for your project. Available features va
     </DocCell>
     <DocCell>
       Provides accelerated query speed for frequently used data. Increasing the boost window results in improved search and analytics performance for more data in your Search Lake.
-      
+
       The default Search Boost window size is 7 days. To request an update to this default, contact [Support](https://support.elastic.co/).
     </DocCell>
     <DocCell>
@@ -100,18 +99,18 @@ You can also edit the features and usage for your project. Available features va
 
 <div id="project-features-add-ons"></div>
 
-### Project features and add-ons 
+### Project features and add-ons
 
-<DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> For ((elastic-sec)) projects, edit the **Project features** to select a feature tier and enable add-on options for specific use cases. 
+<DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> For ((elastic-sec)) projects, edit the **Project features** to select a feature tier and enable add-on options for specific use cases.
 
 <DocTable columns={[
-  { 
-    "title": "Feature tier", 
-    "width":"25%" 
-  }, 
-  { 
+  {
+    "title": "Feature tier",
+    "width":"25%"
+  },
+  {
     "title": "Description and add-ons",
-    "width":"75%" 
+    "width":"75%"
   }
 ]}>
   <DocRow>

@@ -5,13 +5,12 @@ title: ((rules-app))
 description: Alerting works by running checks on a schedule to detect conditions defined by a rule.
 tags: [ 'serverless', 'Elasticsearch', 'alerting', 'learn' ]
 related: ['serverlessActionConnectors', 'serverlessElasticsearchExploreYourDataAlertings']
-status: in review
 ---
 
 <DocBadge template="technical preview" />
 This content applies to: <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
 
-In general, a rule consists of three parts: 
+In general, a rule consists of three parts:
 
 * _Conditions_: what needs to be detected?
 * _Schedule_: when/how often should detection checks run?
@@ -111,7 +110,7 @@ To get notified only once when a server exceeds the threshold, you can set the a
 </DocCallOut>
 
 {/*
-Each action definition is therefore a template: all the parameters needed to invoke a service are supplied except for specific values that are only known at the time the rule condition is detected. 
+Each action definition is therefore a template: all the parameters needed to invoke a service are supplied except for specific values that are only known at the time the rule condition is detected.
 
 In the server monitoring example, the `email` connector type is used, and `server` is mapped to the body of the email, using the template string `CPU on {{server}} is high`.
 
@@ -148,7 +147,7 @@ The following example ties these concepts together:
 
 ![Rules, connectors, alerts and actions work together to convert detection into action](images/rule-concepts-summary.svg)
 
-1. Any time a rule's conditions are met, an alert is created. This example checks for servers with average CPU \> 0.9. Three servers meet the condition, so three alerts are created. 
+1. Any time a rule's conditions are met, an alert is created. This example checks for servers with average CPU \> 0.9. Three servers meet the condition, so three alerts are created.
 1. Alerts create actions according to the action frequency, as long as they are not muted or throttled. When actions are created, its properties are filled with actual values. In this example, three actions are created when the threshold is met, and the template string `{{server}}` is replaced with the appropriate server name for each alert.
 1. ((kib)) runs the actions, sending notifications by using a third party integration like an email service.
 1. If the third party integration has connection parameters or credentials, ((kib)) fetches these from the appropriate connector.
