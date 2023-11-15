@@ -1,0 +1,208 @@
+---
+id: serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient
+slug: /serverless/elasticsearch/ingest-data-through-integrations-connector-client
+title: Connector clients
+description: Set up and deploy self-managed connectors that run on your own infrastructure.
+tags: [ 'serverless', 'elasticsearch', 'ingest', 'connector', how to' ]
+status: in review
+---
+
+<DocCallOut color="warning" title="Note">
+    This page contains high-level instructions about setting up connector clients in your project's UI. 
+    Because prerequisites and configuration details vary by data source, you'll need to refer to the individual connector documentation for specific details.
+</DocCallOut>
+
+A _connector_ is a type of [Elastic integration](https://www.elastic.co/integrations/data-integrations) that syncs data from an original data source to ((es)).
+Each connector extracts the original files, records, or objects; and transforms them into documents within ((es)).
+
+_Connector clients_ are **self-managed** connectors that you run on your own infrastructure.
+These connectors are written in Python and the source code is available in the [`elastic/connectors`](https://github.com/elastic/connectors/tree/main/connectors/sources) repo.
+
+## Available connectors
+
+Connector clients are available for the following third-party data sources:
+
+<DocAccordion buttonContent="Click to expand">
+
+{/* TODO: Update links if these references move*/}
+- [Azure Blob Storage](https://www.elastic.co/guide/en/enterprise-search/master/connectors-azure-blob.html)
+- [Confluence](https://www.elastic.co/guide/en/enterprise-search/master/connectors-confluence.html)
+- [Dropbox](https://www.elastic.co/guide/en/enterprise-search/master/connectors-dropbox.html)
+- [GitHub](https://www.elastic.co/guide/en/enterprise-search/master/connectors-github.html)
+- [Gmail](https://www.elastic.co/guide/en/enterprise-search/master/connectors-gmail.html)
+- [Google Cloud Storage](https://www.elastic.co/guide/en/enterprise-search/master/connectors-google-cloud.html)
+- [Google Drive](https://www.elastic.co/guide/en/enterprise-search/master/connectors-google-drive.html)
+- [Jira](https://www.elastic.co/guide/en/enterprise-search/master/connectors-jira.html)
+- [MongoDB](https://www.elastic.co/guide/en/enterprise-search/master/connectors-mongodb.html)
+- [MicrosoftSQL](https://www.elastic.co/guide/en/enterprise-search/master/connectors-ms-sql.html)
+- [MySQL](https://www.elastic.co/guide/en/enterprise-search/master/connectors-mysql.html)
+- [Network drive](https://www.elastic.co/guide/en/enterprise-search/master/connectors-network-drive.html)
+- [OneDrive](https://www.elastic.co/guide/en/enterprise-search/master/connectors-onedrive.html)
+- [Oracle](https://www.elastic.co/guide/en/enterprise-search/master/connectors-oracle.html)
+- [PostgreSQL](https://www.elastic.co/guide/en/enterprise-search/master/connectors-postgresql.html)
+- [S3](https://www.elastic.co/guide/en/enterprise-search/master/connectors-s3.html)
+- [Salesforce](https://www.elastic.co/guide/en/enterprise-search/master/connectors-salesforce.html)
+- [ServiceNow](https://www.elastic.co/guide/en/enterprise-search/master/connectors-servicenow.html)
+- [SharePoint Online](https://www.elastic.co/guide/en/enterprise-search/master/connectors-sharepoint-online.html)
+- [SharePoint Server](https://www.elastic.co/guide/en/enterprise-search/master/connectors-sharepoint.html)
+- [Slack](https://www.elastic.co/guide/en/enterprise-search/master/connectors-slack.html)
+</DocAccordion>
+
+## Overview
+
+Because connector clients are self-managed on your own infrastructure, they run outside of your ((es)) serverless project.
+
+You can run them from source or in a Docker container.
+
+<DocCallOut title="Workflow">
+    In order to set up, configure, and run a connector you'll be moving between your third-party service, the ((es)) Serverless UI, and your terminal.
+    At a high-level, the workflow looks like this:
+    1. Satisfy any data source prerequisites (e.g., create an OAuth application).
+    2. Create a connector in the UI.
+    3. Deploy the connector service from source or with Docker.
+    4. Enter data source configuration details in the UI.
+</DocCallOut>
+
+### Data source prerequisites
+
+The first decision you need to make before deploying a connector is which third party service (data source) you want to sync to ((es)).
+See the list of [available connectors](#available-connectors).
+
+Note that each data source will have specific prerequisites you'll need to meet to authorize the connector to access its data.
+For example, certain data sources may require you to create an OAuth application, or create a service account.
+You'll need to check the [individual connector documentation](#available-connectors) for these details.
+
+## Initial setup in UI
+
+In your project's UI, go to **((es)) > Connectors**.
+Read the high-level instructions under **Create a connector** to make sure you understand the process.
+Follow these steps:
+
+1. Select **Create a connector**.
+2. Choose a third-party service from the list of connector types.
+3. Add a name and optional description to identify the connector.
+4. Copy the `connector_id`, `service_type`, and `elasticsearch.host` values printed to the screen.
+You'll need to update these values in your [`config.yml`](https://github.com/elastic/connectors/blob/main/config.yml) file.
+5. Make a note of your **((es)) endpoint** and **API key** values. You can create a new API key under **Security > API keys**.
+6. Run the connector code using one of the [options](#deploy-self-managed-connector) documented on this page.
+
+## Deploy your self-managed connector
+
+To use connector clients, you must deploy the connector service so your connector can talk to your ((es)) instance.
+The source code is hosted in the `elastic/connectors` repository.
+
+You have two deployment options:
+- Run from **source**
+- Run with **Docker**
+
+<DocCallOut title="">
+  You'll need the following values handy to update your `config.yml` file:
+  - `elasticsearch.host`: Your ((es)) endpoint. Find this in the **Get started** step in the UI.
+  - `elasticsearch.api_key`: Your ((es)) API key. You can create API keys under **Security > API keys**. Once you connector is running, you'll be able to create a new API key that is limited to only access the connector's index.
+  - `connector_id`: Unique id for your connector. Printed to the screen when you create a new connector.
+  - `service_type`: Original data source type. Printed to the screen when you create a new connector.
+</DocCallOut>
+
+<DocTabs hasBorder>
+  <DocTab name="Source">
+    **Run from source**
+
+    This is a good option if you're comfortable working with Python and want to iterate quickly locally.
+    First, you need to clone the `elastic/connectors` repository.
+
+    Follow these steps:
+
+    - Clone or fork the repository locally with the following command:
+      ```shell
+      git clone https://github.com/elastic/connectors
+      ```
+    - Open the [`config.yml` configuration file](https://github.com/elastic/connectors/blob/main/config.yml) in your editor of choice.
+    - Replace the values for `host` (your ((es)) endpoint), `api_key`, `connector_id`, and `service_type`.
+
+      <DocCallOut title="Tip">
+      Learn more about the `config.yml` file in the [repo docs](https://github.com/elastic/connectors/blob/main/docs/CONFIG.md).
+      </DocCallOut>
+
+    **Run the connector service**
+
+    Once you've configured the connector code, you can run the connector service.
+
+    In your terminal or IDE:
+
+    - `cd` into the root of your `elastic/connectors` clone/fork.
+    - Run the following commands to compile and run the connector service:
+
+      ```shell
+      make install
+      make run
+      ```
+
+   The connector service should now be running in your terminal. Your project's UI will let you know that the connector has successfully connected to your ((es)) instance.
+
+   Here we're working locally. In a production setup, you'll deploy the connector service to your own infrastructure.
+  </DocTab>
+  <DocTab name="Docker">
+    **Run with Docker**
+
+    You can also deploy connector clients using Docker.
+    This is a good option if you don't want to worry about your local Python environment.
+    The [individual connector references](#available-connectors) contain concrete instructions on how to run your connector with Docker.
+    Refer to [`DOCKER.md`](https://github.com/elastic/connectors/blob/main/docs/DOCKER.md) in the repo for a more detailed guide.
+
+    At a high-level, these are the steps you'll follow:
+
+    - Create a Docker network.
+    - Create a directory to be mounted into the Docker image.
+    - Download the sample configuration file ([`config.yml`](https://github.com/elastic/connectors/blob/main/config.yml)) into that directory.
+    - Update the config file with your specific values:
+      - `host` (your ((es)) endpoint)
+      - `api_key` (((es)) API key)
+      - `connector_id`
+      - `service_type`
+    - Run the Docker image with the Connector Service
+  </DocTab>
+</DocTabs>
+
+## Enter data source details in UI
+
+Once the connector service is running, it's time to head back to the UI to finalize the connector configuration.
+You should now see the **Configure your connector** step in your project's UI.
+
+In this step, you need to add the specific connection details about your data source instance, like URL, authorization credentials, etc.
+These **details will vary** based on the third-party data source you’re connecting to.
+
+For example, the Sharepoint Online connector requires the following details about your Sharepoint instance:
+- **Tenant ID**
+- **Tenant name**
+- **Client ID**
+- **Secret value**
+- **Comma-separated list of tables**
+
+## Connect to an index
+
+Once you've entered the data source details, you need to connect to an index.
+This is the final step in your project's UI, before you can run a sync.
+
+You can choose to sync to an existing ((es)) index, or create a new index for your connector.
+You can also create an API key that is limited to only access your selected index.
+
+<DocCallOut color="warning" title="Index name prefix">
+  Due to a bug, you must prefix your index name with `search-`, otherwise you will hit an error.
+  For example, `search-my-index` is a valid index name, but `my-index` is not.
+</DocCallOut>
+
+<DocCallOut title="Note">
+  When choosing an existing index for the connector to sync to, please ensure mappings are defined and are appropriate for incoming data. Connectors will not successfully sync to existing indices without mappings. If you are unsure about managing index mappings, choose to have your connector create the new index.
+</DocCallOut>
+
+Once this step is completed, you're ready to run a sync.
+When a sync is launched you'll start to see documents being added to your ((es)) index.
+
+Learn [how syncing works](https://github.com/elastic/connectors/blob/main/docs/DEVELOPING.md#syncing) in the `elastic/connectors` repo docs.
+
+## Learn more
+
+- Read the main [Elastic connectors documentation](https://www.elastic.co/guide/en/enterprise-search/current/connectors.html)
+- The [Elastic connector framework](https://github.com/elastic/connectors/tree/main#connector-framework) enables you to:
+  - Customize existing connector clients.
+  - Build your own connector clients.
