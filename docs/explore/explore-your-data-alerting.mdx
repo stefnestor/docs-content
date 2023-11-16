@@ -7,7 +7,7 @@ tags: [ 'serverless', 'elasticsearch', 'alerting', 'how-to' ]
 ---
 
 <DocBadge template="technical preview" />
-In **((alerts-app))** or **((project-settings)) > ((manage-app)) > ((rules-app))** you can:
+In **((alerts-app))** or **((project-settings)) → ((manage-app)) → ((rules-app))** you can:
 
 * Create and edit rules
 * Manage rules including enabling/disabling, muting/unmuting, and deleting
@@ -104,7 +104,7 @@ When an alert is created, it generates actions. If the conditions that caused th
   : The conditions for the rule are no longer met and recovery actions should be generated.
 
 <DocCallOut title="Flapping alerts">
-The `flapping` state is possible only if you have enabled alert flapping detection in **((rules-ui))** > **Settings**. A look back window and threshold are used to determine whether alerts are flapping. For example, you can specify that the alert must change status at least 6 times in the last 10 runs. If the rule has actions that run when the alert status changes, those actions are suppressed while the alert is flapping.
+The `flapping` state is possible only if you have enabled alert flapping detection in **((rules-ui))** → **Settings**. A look back window and threshold are used to determine whether alerts are flapping. For example, you can specify that the alert must change status at least 6 times in the last 10 runs. If the rule has actions that run when the alert status changes, those actions are suppressed while the alert is flapping.
 </DocCallOut>
 
 If there are rule actions that failed to run successfully, you can see the details on the **History** tab.

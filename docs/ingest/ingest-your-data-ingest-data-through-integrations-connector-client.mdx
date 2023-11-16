@@ -74,7 +74,7 @@ You'll need to check the [individual connector documentation](#available-connect
 
 ## Initial setup in UI
 
-In your project's UI, go to **((es)) > Connectors**.
+In your project's UI, go to **((es)) → Connectors**.
 Read the high-level instructions under **Create a connector** to make sure you understand the process.
 Follow these steps:
 
@@ -83,7 +83,7 @@ Follow these steps:
 3. Add a name and optional description to identify the connector.
 4. Copy the `connector_id`, `service_type`, and `elasticsearch.host` values printed to the screen.
 You'll need to update these values in your [`config.yml`](https://github.com/elastic/connectors/blob/main/config.yml) file.
-5. Make a note of your **((es)) endpoint** and **API key** values. You can create a new API key under **Security > API keys**.
+5. Make a note of your **((es)) endpoint** and **API key** values. You can create a new API key under **Security → API keys**.
 6. Run the connector code using one of the [options](#deploy-self-managed-connector) documented on this page.
 
 ## Deploy your self-managed connector
@@ -98,7 +98,7 @@ You have two deployment options:
 <DocCallOut title="">
   You'll need the following values handy to update your `config.yml` file:
   - `elasticsearch.host`: Your ((es)) endpoint. Find this in the **Get started** step in the UI.
-  - `elasticsearch.api_key`: Your ((es)) API key. You can create API keys under **Security > API keys**. Once you connector is running, you'll be able to create a new API key that is limited to only access the connector's index.
+  - `elasticsearch.api_key`: Your ((es)) API key. You can create API keys under **Security → API keys**. Once you connector is running, you'll be able to create a new API key that is limited to only access the connector's index.
   - `connector_id`: Unique id for your connector. Printed to the screen when you create a new connector.
   - `service_type`: Original data source type. Printed to the screen when you create a new connector.
 </DocCallOut>

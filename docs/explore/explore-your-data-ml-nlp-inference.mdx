@@ -21,7 +21,7 @@ you can use it to perform ((nlp)) tasks in ingest pipelines.
 
 ## Add an ((infer)) processor to an ingest pipeline
 
-In ((kib)), you can create and edit pipelines under **Content** > **Pipelines**.
+In ((kib)), you can create and edit pipelines under **Content** → **Pipelines**.
 
 <div style={{ textAlign: "center" }}><DocImage url="images/ml/ml-nlp-pipeline-lang.png" alt="Creating a pipeline in the Stack Management app" /></div>
 
@@ -152,7 +152,7 @@ You can now use your ingest pipeline to perform NLP tasks on your data.
 
 Before you add data, consider which mappings you want to use. For example, you
 can create explicit mappings with the create index API in the
-**((dev-tools-app))** > **Console**:
+**((dev-tools-app))** → **Console**:
 
 ```console
 PUT ner-test
@@ -265,7 +265,7 @@ If you encounter problems while using your trained model in an ingest pipeline,
 check the following possible causes:
 
 1. The trained model is not deployed in your cluster. You can view its status in
-    **((ml-app))** > **Model Management** or use the
+    **((ml-app))** → **Model Management** or use the
     [get trained models statistics API](((ref))/get-trained-models-stats.html). 
     Unless you are using the built-in `lang_ident_model_1` model, you must 
     ensure your model is successfully deployed. Refer to 
