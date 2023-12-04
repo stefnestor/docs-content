@@ -51,21 +51,7 @@
       ]
     },
     {
-      "pageId": "serverlessElasticsearchDevTools",
-      "items": [
-        {
-          "id": "serverlessElasticsearchDevToolsConsole",
-          "classic-sources": [ "enKibanaConsoleKibana" ]
-        },
-        {
-          "id": "serverlessElasticsearchDevToolsSearchProfiler",
-          "classic-sources": [ "enKibanaXpackProfiler" ]
-        },
-        {
-          "id": "serverlessElasticsearchDevToolsTroubleshooting",
-          "classic-sources": [ "enElasticsearchReferenceTroubleshootingSearches" ]
-        }
-      ]
+      "pageId": "serverlessElasticsearchDevTools"
     },
     {
       "pageId": "serverlessElasticsearchIngestYourData",
