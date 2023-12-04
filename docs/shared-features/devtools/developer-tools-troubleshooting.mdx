@@ -194,11 +194,7 @@ curl -X GET "${ES_URL}/my-index-000001/_count" \
 ```
 {/* TEST[continued] */}
 
-If the field is aggregatable, you can use 
-<DocLink id="serverlessElasticsearchExploreYourDataAggregations" text="aggregations" />
-to check the field's values.
-For `keyword` fields, you can use a `terms` aggregation to retrieve the field's 
-most common values:
+If the field is aggregatable, you can use <DocLink id="serverlessElasticsearchExploreYourDataAggregations" text="aggregations" /> to check the field's values. For `keyword` fields, you can use a `terms` aggregation to retrieve the field's most common values:
 
 ```bash
 curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
@@ -218,8 +214,7 @@ curl -X GET "${ES_URL}/my-index-000001/_search?filter_path=aggregations" \
 ```
 {/* TEST[continued] */}
 
-For numeric fields, you can use 
-[stats aggregation](((ref))/search-aggregations-metrics-stats-aggregation.html) {/* <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsStatsAggregation">stats aggregation</DocLink> */}  
+For numeric fields, you can use [stats aggregation](((ref))/search-aggregations-metrics-stats-aggregation.html) {/* <DocLink id="enElasticsearchReferenceSearchAggregationsMetricsStatsAggregation">stats aggregation</DocLink> */}  
 to get an idea of the field's value distribution:
 
 ```shell
