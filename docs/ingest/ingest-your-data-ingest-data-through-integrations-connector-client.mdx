@@ -92,8 +92,8 @@ To use connector clients, you must deploy the connector service so your connecto
 The source code is hosted in the `elastic/connectors` repository.
 
 You have two deployment options:
-- Run from **source**
-- Run with **Docker**
+- Run from [source](#run-from-source)
+- Run with [Docker](#run-with-docker)
 
 <DocCallOut title="">
   You'll need the following values handy to update your `config.yml` file:
@@ -103,65 +103,60 @@ You have two deployment options:
   - `service_type`: Original data source type. Printed to the screen when you create a new connector.
 </DocCallOut>
 
-<DocTabs hasBorder>
-  <DocTab name="Source">
-    **Run from source**
+### Run from source
 
-    This is a good option if you're comfortable working with Python and want to iterate quickly locally.
-    First, you need to clone the `elastic/connectors` repository.
+This is a good option if you're comfortable working with Python and want to iterate quickly locally.
+First, you need to clone the `elastic/connectors` repository.
 
-    Follow these steps:
+Follow these steps:
 
-    - Clone or fork the repository locally with the following command:
-      ```shell
-      git clone https://github.com/elastic/connectors
-      ```
-    - Open the [`config.yml` configuration file](https://github.com/elastic/connectors/blob/main/config.yml) in your editor of choice.
-    - Replace the values for `host` (your ((es)) endpoint), `api_key`, `connector_id`, and `service_type`.
+- Clone or fork the repository locally with the following command:
+  ```shell
+  git clone https://github.com/elastic/connectors
+  ```
+- Open the [`config.yml` configuration file](https://github.com/elastic/connectors/blob/main/config.yml) in your editor of choice.
+- Replace the values for `host` (your ((es)) endpoint), `api_key`, `connector_id`, and `service_type`.
 
-      <DocCallOut title="Tip">
-      Learn more about the `config.yml` file in the [repo docs](https://github.com/elastic/connectors/blob/main/docs/CONFIG.md).
-      </DocCallOut>
+  <DocCallOut title="Tip">
+  Learn more about the `config.yml` file in the [repo docs](https://github.com/elastic/connectors/blob/main/docs/CONFIG.md).
+  </DocCallOut>
 
-    **Run the connector service**
+**Run the connector service**
 
-    Once you've configured the connector code, you can run the connector service.
+Once you've configured the connector code, you can run the connector service.
 
-    In your terminal or IDE:
+In your terminal or IDE:
 
-    - `cd` into the root of your `elastic/connectors` clone/fork.
-    - Run the following commands to compile and run the connector service:
+- `cd` into the root of your `elastic/connectors` clone/fork.
+- Run the following commands to compile and run the connector service:
 
-      ```shell
-      make install
-      make run
-      ```
+  ```shell
+  make install
+  make run
+  ```
 
-   The connector service should now be running in your terminal. Your project's UI will let you know that the connector has successfully connected to your ((es)) instance.
+The connector service should now be running in your terminal. Your project's UI will let you know that the connector has successfully connected to your ((es)) instance.
 
-   Here we're working locally. In a production setup, you'll deploy the connector service to your own infrastructure.
-  </DocTab>
-  <DocTab name="Docker">
-    **Run with Docker**
+Here we're working locally. In a production setup, you'll deploy the connector service to your own infrastructure.
 
-    You can also deploy connector clients using Docker.
-    This is a good option if you don't want to worry about your local Python environment.
-    The [individual connector references](#available-connectors) contain concrete instructions on how to run your connector with Docker.
-    Refer to [`DOCKER.md`](https://github.com/elastic/connectors/blob/main/docs/DOCKER.md) in the repo for a more detailed guide.
+### Run with Docker
 
-    At a high-level, these are the steps you'll follow:
+You can also deploy connector clients using Docker.
+This is a good option if you don't want to worry about your local Python environment.
+The [individual connector references](#available-connectors) contain concrete instructions on how to run your connector with Docker.
+Refer to [`DOCKER.md`](https://github.com/elastic/connectors/blob/main/docs/DOCKER.md) in the repo for a more detailed guide.
 
-    - Create a Docker network.
-    - Create a directory to be mounted into the Docker image.
-    - Download the sample configuration file ([`config.yml`](https://github.com/elastic/connectors/blob/main/config.yml)) into that directory.
-    - Update the config file with your specific values:
-      - `host` (your ((es)) endpoint)
-      - `api_key` (((es)) API key)
-      - `connector_id`
-      - `service_type`
-    - Run the Docker image with the Connector Service
-  </DocTab>
-</DocTabs>
+At a high-level, these are the steps you'll follow:
+
+- Create a Docker network.
+- Create a directory to be mounted into the Docker image.
+- Download the sample configuration file ([`config.yml`](https://github.com/elastic/connectors/blob/main/config.yml)) into that directory.
+- Update the config file with your specific values:
+  - `host` (your ((es)) endpoint)
+  - `api_key` (((es)) API key)
+  - `connector_id`
+  - `service_type`
+- Run the Docker image with the Connector Service
 
 ## Enter data source details in UI
 
