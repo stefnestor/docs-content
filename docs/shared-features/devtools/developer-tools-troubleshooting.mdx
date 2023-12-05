@@ -150,10 +150,9 @@ GET /my-index-000001/_count
 }
 ```
 
-If the field is aggregatable, you can use <DocLink id="serverlessElasticsearchExploreYourDataAggregations" text="aggregations" />
-to check the field's values.
-For `keyword` fields, you can use a `terms` aggregation to retrieve the field's 
-most common values:
+If the field is aggregatable, you can use <DocLink id="serverlessElasticsearchExploreYourDataAggregations" text="aggregations" /> 
+to check the field's values. For `keyword` fields, you can use a `terms` 
+aggregation to retrieve the field's most common values:
 
 ```js
 GET /my-index-000001/_search?filter_path=aggregations
