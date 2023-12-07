@@ -103,16 +103,7 @@
         },
         {
           "id": "serverlessElasticsearchExploreYourDataVisualizeYourData",
-          "classic-sources": [ "enKibanaDashboard" ],
-          "items": [
-            {
-              "id": "serverlessElasticsearchExploreYourDataDashboards",
-              "classic-sources": [ "enKibanaCreateADashboardOfPanelsWithWebServerData" ]
-            },
-            {
-              "id": "serverlessElasticsearchExploreYourDataVisualizations"
-            }
-          ]
+          "classic-sources": [ "enKibanaDashboard" ]
         },
         {
           "id": "serverlessElasticsearchExploreYourDataAlerting",
