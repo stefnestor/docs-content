@@ -142,21 +142,59 @@ Here we're working locally. In a production setup, you'll deploy the connector s
 ### Run with Docker
 
 You can also deploy connector clients using Docker.
-This is a good option if you don't want to worry about your local Python environment.
-The [individual connector references](#available-connectors) contain concrete instructions on how to run your connector with Docker.
-Refer to [`DOCKER.md`](https://github.com/elastic/connectors/blob/main/docs/DOCKER.md) in the repo for a more detailed guide.
+Follow these instructions.
 
-At a high-level, these are the steps you'll follow:
+**Step 1: Download sample configuration file**
 
-- Create a Docker network.
-- Create a directory to be mounted into the Docker image.
-- Download the sample configuration file ([`config.yml`](https://github.com/elastic/connectors/blob/main/config.yml)) into that directory.
-- Update the config file with your specific values:
-  - `host` (your ((es)) endpoint)
-  - `api_key` (((es)) API key)
-  - `connector_id`
-  - `service_type`
-- Run the Docker image with the Connector Service
+You can either download the configuration file manually or run the following command:
+
+```shell
+curl https://raw.githubusercontent.com/elastic/connectors/main/config.yml --output ~/connectors-config/config.yml
+```
+
+You can change the `--output` argument value.
+
+**Step 2: Update the configuration file for your self-managed connector**
+
+Update the following settings to match your environment:
+
+* `elasticsearch.host`
+* `elasticsearch.api_key`
+* `connectors`
+
+Your configuration file should look like this:
+
+```yaml
+elasticsearch.host: <ELASTICSEARCH_ENDPOINT>
+elasticsearch.api_key: <ELASTICSEARCH_API_KEY>
+
+connectors:
+  -
+    connector_id: <CONNECTOR_ID_FROM_UI>
+    service_type: <SERVICE-NAME> # sharepoint_online (example)
+    api_key: <CONNECTOR_API_KEY> # Optional defaults to elasticsearch.api_key
+```
+
+**Step 3: Run the Docker image**
+
+Use the following command, substituting the values in curly braces.
+
+```shell
+docker run \
+-v ~/connectors-config:/config \
+--network "elastic" \
+--tty \
+--rm \
+docker.elastic.co/enterprise-search/elastic-connectors:{version}.0 \
+/app/bin/elastic-ingest \
+-c /config/config.yml # Path to your configuration file
+```
+
+Find all available Docker images in the [official Elastic Docker registry](https://www.docker.elastic.co/r/enterprise-search/elastic-connectors).
+
+  <DocCallOut title="Tip">
+  Each individual connector client reference contain instructions for deploying specific connectors using Docker.
+</DocCallOut>
 
 ## Enter data source details in UI
 
