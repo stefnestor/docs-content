@@ -50,12 +50,20 @@ and you define the retention settings for your data streams.
 
 You can run [hosted deployments](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html) of the ((stack)) on ((ecloud)). These hosted deployments provide more provisioning and advanced configuration options.
 
-| Option             | Serverless                                          | Hosted                                               |
-|--------------------|:----------------------------------------------------|:-----------------------------------------------------|
-| Cluster management | Elastic handles it                                  | You provision and manage your hosted clusters        |
-| Autoscaling        | Out of the box                                      | Available for you to enable                          |
-| Upgrades           | Automatically performed by Elastic                  | You choose when to upgrade                           |
-| Pricing            | Individual per project type and based on your usage | Based on provisioned hardware and subscription level |
+| Option             | Serverless                                                | Hosted                                                                            |
+|--------------------|:----------------------------------------------------------|:----------------------------------------------------------------------------------|
+| Cluster management | Fully managed by Elastic                                  | You provision and manage your hosted clusters. Shared responsibility with Elastic |
+| Scaling            | Autoscales out of the box                                 | Manual scaling or autoscaling available for you to enable                         |
+| Upgrades           | Automatically performed by Elastic                        | You choose when to upgrade                                                        |
+| Pricing            | Individual per project type and based on your usage       | Based on deployment size and subscription level                                   |
+| Performance        | Autoscales based on your usage                            | Manual scaling                                                                    |
+| Solutions          | Single solution per project                               | Full Elastic Stack per deployment                                                 |
+| User management    | Elastic Cloud managed users                               | Elastic Cloud managed users and native Kibana users                               |
+| API support        | A subset of [APIs](https://docs.elastic.co/api-reference) | All APIs                                                                          |
+| Backups            | Projects automatically backed up by Elastic               | Your responsibility with Snapshot & Restore                                       |
+| Data retention     |                                                           | Index Lifecycle Management                                                        |
+
+
 
 # Answers to common serverless questions
 
