@@ -6,6 +6,9 @@
   "description": "Description to be written",
   "items": [
     {
+      "pageId": "whatIsServerlessElastic"
+    },
+    {
       "label": "Invite your team",
       "pageId": "serverlessGeneralManageAccessToOrganization",
       "items": [
