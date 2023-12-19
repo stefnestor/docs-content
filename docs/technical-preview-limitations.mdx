@@ -1,0 +1,16 @@
+---
+id: serverlessTechnicalPreviewLimitations
+slug: /serverless/elasticsearch/technical-preview-limitations
+title: Technical preview limitations
+description: Review the limitations that apply to Elasticsearch projects.
+tags: [ 'serverless', 'elasticsearch']
+---
+
+<DocBadge template="technical preview" />
+
+Currently, workloads outside of the following ranges may experience higher latencies (greater than sub-second):
+
+- Search queries on indices greater than 30GB
+- Index queries per second (QPS) greater than 1000
+- Search queries per second (QPS) greater than 1800
+- Search queries on dense vectors
