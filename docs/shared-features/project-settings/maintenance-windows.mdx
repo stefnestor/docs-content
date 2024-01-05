@@ -13,10 +13,6 @@ This content applies to: <DocBadge template="observability" slug="/serverless/ob
 You can schedule single or recurring maintenance windows to temporarily reduce rule notifications.
 For example, a maintenance window prevents false alarms during planned outages.
 
-{/*
-TBD: Do they affect all rules in the project or is it finer control in serverless?
-Maintenance windows affect all rules in all ((kib)) apps and spaces.
-*/}
 Alerts continue to be generated, however notifications are suppressed as follows:
 
 - When an alert occurs during a maintenance window, there are no notifications.
@@ -50,5 +46,12 @@ A maintenance window can have any one of the following statuses:
 - `Running`: It is running.
 - `Finished`: It ended and does not have a repeat schedule.
 - `Archived`: It is archived. In a future release, archived maintenance windows will be queued for deletion.
+
+If you turn on **Filter alerts**, you can add filters to refine the scope of the maintenance window.
+For example, you can suppress notifications for alerts from specific rules:
+
+![The Create Maintenance Window user interface in ((kib)) with a filter](images/create-maintenance-window-filter.png)
+
+Note that you can select only a single category when you turn on filters.
 
 When you view alert details in ((kib)), each alert shows unique identifiers for maintenance windows that affected it.
