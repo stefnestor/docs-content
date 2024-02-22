@@ -26,7 +26,7 @@ You can index multiple JSON documents to an index and make it searchable using
 the bulk API.
 
 The following example uses the bulk API to ingest book-related data into an
-index called `book`. The API call creates the index if it doesn't exist already.
+index called `books`. The API call creates the index if it doesn't exist already.
 
 ```bash
 curl -X POST "${ES_URL}/_bulk?pretty" \
@@ -44,7 +44,7 @@ curl -X POST "${ES_URL}/_bulk?pretty" \
 { "index" : { "_index" : "books" } }
 {"title": "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268}
 { "index" : { "_index" : "books" } }
-{"title": "The Handmaid'\''s Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311}
+{"title": "The Blind Assassin", "author": "Margaret Atwood", "release_date": "2000-09-02", "page_count": 536}
 '
 ```
 
@@ -110,7 +110,7 @@ matches this query.
 ## Using the index API
 
 Use the index API to ingest a single document to an index. Following the
-previous example, a new document will be added to the `book` index.
+previous example, a new document will be added to the `books` index.
 
 ```bash
 curl -X POST "${ES_URL}/books/_doc/" \
