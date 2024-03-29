@@ -114,7 +114,7 @@ Follow these steps:
   ```shell
   git clone https://github.com/elastic/connectors
   ```
-- Open the [`config.yml` configuration file](https://github.com/elastic/connectors/blob/main/config.yml) in your editor of choice.
+- Create a `config.yml` configuration file by copying this [example](https://github.com/elastic/connectors/blob/main/config.yml.example).
 - Replace the values for `host` (your ((es)) endpoint), `api_key`, `connector_id`, and `service_type`.
 
   <DocCallOut title="Tip">
@@ -149,10 +149,10 @@ Follow these instructions.
 You can either download the configuration file manually or run the following command:
 
 ```shell
-curl https://raw.githubusercontent.com/elastic/connectors/main/config.yml --output ~/connectors-config/config.yml
+curl https://raw.githubusercontent.com/elastic/connectors/main/config.yml.example --output </absolute/path/to>/connectors-config/config.yml
 ```
 
-You can change the `--output` argument value.
+Change the `--output` argument value to the path where you want to save the configuration file.
 
 **Step 2: Update the configuration file for your self-managed connector**
 
@@ -177,17 +177,16 @@ connectors:
 
 **Step 3: Run the Docker image**
 
-Use the following command, substituting the values in curly braces.
+Use the following command, substituting values where necessary:
 
 ```shell
 docker run \
--v ~/connectors-config:/config \
---network "elastic" \
+-v "</absolute/path/to>/connectors-config:/config" \ # NOTE: change absolute path to match where config.yml is located on your machine
 --tty \
 --rm \
 docker.elastic.co/enterprise-search/elastic-connectors:{version}.0 \
 /app/bin/elastic-ingest \
--c /config/config.yml # Path to your configuration file
+-c /config/config.yml # Path to your configuration file in the container
 ```
 
 Find all available Docker images in the [official Elastic Docker registry](https://www.docker.elastic.co/r/enterprise-search/elastic-connectors).
