@@ -6,3 +6,7 @@
 
 # osx stuff
 .DS_Store
+
+# jetbrains
+*.iml
+.idea
