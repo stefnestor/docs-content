@@ -9,6 +9,9 @@
       "pageId": "whatIsServerlessElastic"
     },
     {
+      "pageId": "serverlessSignUpTrial"
+    },
+    {
       "label": "Invite your team",
       "pageId": "serverlessGeneralManageAccessToOrganization",
       "items": [
