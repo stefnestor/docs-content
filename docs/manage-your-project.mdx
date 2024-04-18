@@ -27,7 +27,13 @@ From the project page, you can:
 
 ## Features and usage
 
-You can also edit the features and usage for your project. Available features vary by project type.
+Once ingested, your data is stored in cost-efficient, general storage. A cache layer is available on top of the general storage for recent and frequently queried data that provides faster search speed. Data in this cache layer is considered search-ready.
+
+The total volume of search-ready data is the sum of the following:
+1. The volume of non-time series project data
+2. The volume of time series project data included in the **Search Boost Window**
+
+Each project type offers different settings that let you adjust the performance and volume of search-ready data, as well as the features available in your projects.
 
 <DocTable columns={[
   {
@@ -48,9 +54,13 @@ You can also edit the features and usage for your project. Available features va
       **Search Power**
     </DocCell>
     <DocCell>
-      Controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project.
+      Search Power affects search speed by controlling the number of VCUs (Virtual Compute Units) allocated to search-ready data in the project. Additional VCUs provide more compute resources and result in performance gains. 
 
-      Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
+      The **Cost-efficient** Search Power setting limits the available cache size, and generates cost savings by reducing search performance.
+
+      The **Balanced** Search Power setting ensures that there is sufficient cache for all search-ready data, in order to respond quickly to queries.
+
+      The **Performance** Search Power setting provides more computing resources in addition to the searchable data cache, in order to respond quickly to higher query volumes and more complex queries. 
     </DocCell>
     <DocCell>
       <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
@@ -68,12 +78,12 @@ You can also edit the features and usage for your project. Available features va
     </DocCell>
   </DocRow>  <DocRow>
     <DocCell>
-      **Search Data Lake**
+      **Data Retention**
     </DocCell>
     <DocCell>
-      Provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable.
+      Data retention policies determine how long your project data is retained.
 
-      You can specify different retention periods for each data source configured in your project.
+      You can specify different retention periods for specific data streams in your project.
     </DocCell>
     <DocCell>
       <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
@@ -86,9 +96,9 @@ You can also edit the features and usage for your project. Available features va
       **Search Boost Window**
     </DocCell>
     <DocCell>
-      Provides accelerated query speed for data residing on data streams. Increasing the boost window results in improved search and analytics performance for more data.
+      Non-time series data is always considered search-ready. The **Search Boost Window** determines the volume of time series project data that will be considered search-ready. 
 
-      The default Search Boost window size is 7 days.
+      Increasing the window results in a bigger portion of time series project data included in the total search-ready data volume.
     </DocCell>
     <DocCell>
       <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
