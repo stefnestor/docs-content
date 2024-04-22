@@ -2,16 +2,13 @@
 id: serverlessGeneralManageAccessToOrganization
 slug: /serverless/general/manage-access-to-organization
 title: Invite your team
-description: Learn how to manage members in your organization.
+description: Add members to your organization and projects.
 tags: [ 'serverless', 'general', 'organization', 'overview' ]
 ---
 
-<DocBadge template="technical preview" />
-Anyone can be invited to join an organization, whether the person has an Elastic Cloud account or not.
+To allow other users to interact with your projects, you must invite them to join your organization.
 
-An organization is where everything is grouped and managed in Elastic Cloud. Every organization has a unique identifier, and customer accounts and bills are invoiced at the organization level.
-
-The members of an organization can have <DocLink id="serverlessGeneralAssignUserRoles" text="different roles"/> that grant permissions to access organization-level resources.
+When inviting them, you also <DocLink id="serverlessGeneralAssignUserRoles" text="assign roles"/> to define their access to your organization resources and instances.
 
 1. Go to the user icon on the header bar and select **Organization**.
 
@@ -19,11 +16,15 @@ The members of an organization can have <DocLink id="serverlessGeneralAssignUser
 
    You can add multiple members by entering their email addresses separated by a space.
 
-   For each solution, you can grant access to one or more projects and assign roles to the users.
+   You can grant access to all projects of the same type with a unique role, or select individual roles for specific projects only.
+
+   <DocCallOut color="success">
+      In **Instance access**, The **Deployment** tab correspond to [hosted deployments](https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html), while **Elasticsearch**, **Observability**, and **Security** correspond to serverless projects.
+   </DocCallOut>
 
 3. Click **Send invites**.
 
-   Invitations to join an organization are sent by email. You have 72 hours to accept the invitation, after which it will expire. If you don’t get the invitation in the main inbox, check your spam folder.
+   Invitations to join an organization are sent by email. Invited users have 72 hours to accept the invitation. If they do not join within that period, you will have to send a new invitation.
 
 On the **Members** tab of the **Organization** page, you can view the list of current members, their status and role.
 
