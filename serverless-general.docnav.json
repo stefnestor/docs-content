@@ -39,7 +39,7 @@
           "id": "serverlessGeneralBillingHistory"
         },
         {
-          "id": "serverlessGeneralPricingModel"
+          "id": "serverlessBilling"
         }
       ]
     },
