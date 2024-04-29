@@ -9,24 +9,24 @@ tags: [ 'serverless', 'general', 'organization', 'roles', 'how to' ]
 <DocBadge template="technical preview" />
 Within an organization, users can have one or more roles and each role grants specific privileges.
 
-You can set a role for all projects of a specific type (Elasticsearch, Observability, Security). This also applies to new projects that will be created for that specific type.
-In alternative, you can set a role for each individual project. To do that, you have to set the role for all projects of that specific type to **None**.
+You can set a role:
+
+- globally, for all projects of the same type (Elasticsearch, Observability, or Security). In this case, the role will also apply to new projects created later.
+- individually, for specific projects only. To do that, you have to set the **Role for all instances** field of that specific project type to **None**.
 
 <DocImage size="l" url="images/individual-role.png" alt="Individual role" />
 
-The following roles are common to all project types:
+## Organization-level roles
 
 - **Organization owner**. Can manage all roles under the organization and has full access to all serverless projects, organization-level details, billing details, and subscription levels. This role is assigned by default to the person who created the organization.
 
 - **Billing admin**. Has access to all invoices and payment methods. Can make subscription changes.
 
-- **Deployment access**. Grants access to one or more deployments.
+## Instance access roles
 
-- **Project access**. Grants access to one or more projects and assign specific roles.
+Each serverless project type has a set of predefined roles that you can assign to your organization members.
 
-The following sections describe the predefined set of roles for each project type.
-
-## Elasticsearch serverless
+### Elasticsearch
 
 - **Admin**. Has full access to project management, properties, and security privileges. Admins log into projects with superuser role privileges.
 
@@ -34,7 +34,7 @@ The following sections describe the predefined set of roles for each project typ
 
 - **Viewer**. Has read-only access to project details, data, and features.
 
-## Observability
+### Observability
 
 - **Admin**. Has full access to project management, properties, and security privileges. Admins log into projects with superuser role privileges.
 
@@ -42,7 +42,7 @@ The following sections describe the predefined set of roles for each project typ
 
 - **Viewer**. Has read-only access to project details, data, and features.
 
-## Security
+### Security
 
 - **Admin**. Has full access to project management, properties, and security privileges. Admins log into projects with superuser role privileges.
 

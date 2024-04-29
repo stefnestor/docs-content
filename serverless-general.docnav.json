@@ -3,12 +3,17 @@
   "id": "serverless-general",
   "landingPageId": "serverlessGeneralWelcomeToServerless",
   "icon": "logoElastic",
-  "description": "Description to be written",
+  "description": "Create and manage serverless projects on Elastic Cloud",
   "items": [
     {
-      "label": "Invite your team",
-      "pageId": "serverlessGeneralManageAccessToOrganization",
+      "pageId": "whatIsServerlessElastic"
+    },
+    {
+      "pageId": "serverlessGeneralManageOrganization",
       "items": [
+        {
+          "id": "serverlessGeneralManageAccessToOrganization"
+        },
         {
           "id": "serverlessGeneralAssignUserRoles"
         },
@@ -16,9 +21,6 @@
           "id": "serverlessGeneralJoinOrganizationFromExistingCloudAccount"
         }
       ]
-    },
-    {
-      "pageId": "serverlessGeneralUserProfile"
     },
     {
       "pageId": "serverlessGeneralManageProject"
@@ -37,6 +39,9 @@
           "id": "serverlessGeneralBillingHistory"
         }
       ]
+    },
+    {
+      "pageId": "serverlessGeneralUserProfile"
     }
   ]
 }
