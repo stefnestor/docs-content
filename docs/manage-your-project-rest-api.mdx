@@ -1,0 +1,156 @@
+---
+id: serverlessGeneralManageProjectRestAPI
+slug: /serverless/elasticsearch/manage-project/
+title: REST APIs
+description: Manage projects using the REST API.
+tags: [ 'serverless', 'project', 'manage', 'rest', 'api']
+---
+
+<DocBadge template="technical preview" />
+Projects can be managed using the Elastic Cloud REST API. This API allows you to create, update, and delete projects, as well as manage project features and usage.
+
+## API Principles
+
+- The Elastic Cloud REST API is built following REST principles:
+  - Resources (such as projects) are represented as URIs.
+  - Standard HTTP response codes and verbs are used (GET, POST, PUT, PATCH and DELETE).
+  - API calls are stateless. Every request that you make happens in isolation from other calls and must include all the information necessary to fulfill the request.
+- JSON is the data interchange format.
+
+## Authentication
+
+API Keys are used to authenticate requests to the Elastic Cloud REST API.
+Learn how to create [API keys](https://www.elastic.co/guide/en/cloud/current/ec-api-authentication.html).
+
+The API Key should be provided in all API requests in the `Authorization` header such as:
+```bash
+"Authorization: ApiKey $API_KEY"
+```
+
+For example, if you interact with the API using the `curl` command:
+
+```bash
+curl -H "Authorization: ApiKey essu_..." https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch
+```
+
+## Open API Specification
+
+The Project Management API is documented using the [OpenAPI specification](https://en.wikipedia.org/wiki/OpenAPI_Specification). The current supported version of the specification is `3.0`.
+
+Here you can read the [API reference](https://docs.elastic.co/api-reference) or download the [OpenAPI specification](https://docs.elastic.co/api-reference/openapi/serverless-project-api.yml).
+
+This specification can be used to generate client SDKs, or on tools that support it, such as the [Swagger Editor](https://editor.swagger.io).
+
+
+## Examples
+
+In the following examples, for convenience, we will export the generated API key so that we can reuse it in every API request:
+
+```bash
+export API_KEY="YOUR_GENERATED_API_KEY"
+```
+
+### Create a Serverless Elasticsearch Project
+
+```bash
+curl -H "Authorization: ApiKey $API_KEY" \
+     -H "Content-Type: application/json" \
+     "https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch" \
+     -XPOST --data '{
+        "name": "{NAME}", [^1]
+        "region_id": "aws-eu-west-1" [^2]
+     }'
+```
+[^1]: Replace **`{NAME}`** with a more descriptive name in this call.
+[^2]: You can <DocLink id="serverlessGeneralManageProjectRestAPI" text="obtain a list of available regions" section="list-available-regions" />
+
+The response from the create project request will include the created project details, such as the project ID,
+the credentials to access the project, and the endpoints to access different apps such as Elasticsearch and Kibana.
+
+Example of Create Project response:
+```json
+{
+    "id": "cace8e65457043698ed3d99da2f053f6",
+    "endpoints": {
+        "elasticsearch": "https://sample-project-c990cb.es.us-east-1.aws.staging.elastic.cloud",
+        "kibana": "https://sample-project-c990cb-c990cb.kb.us-east-1.aws.staging.elastic.cloud"
+    },
+    "credentials": {
+        "username": "admin",
+        "password": "abcd12345"
+    }
+    (...)
+}
+```
+
+You may want to store the project id as an environment variable for the following requests:
+```bash
+export PROJECT_ID=cace8e65457043698ed3d99da2f053f6
+```
+
+### Get Project
+
+At any time you can retrieve your project through an API call:
+
+```bash
+curl -H "Authorization: ApiKey $API_KEY" \
+    "https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch/${PROJECT_ID}"
+```
+
+#### Get project status
+
+A 'status' endpoint indicates whether the project is initialized and ready for being used. The phase will change from "initializing" to "initialized" when the project is ready.:
+
+```bash
+curl -H "Authorization: ApiKey $API_KEY" \
+    "https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch/${PROJECT_ID}/status"
+```
+
+Example response:
+```json
+{
+    {"phase":"initializing"}
+}
+```
+
+### Reset Credentials
+
+If you lose the credentials provided at the time of the project creation, you can reset the credentials by using the following endpoint:
+
+```bash
+curl -H "Authorization: ApiKey $API_KEY" \
+    -XPOST \
+    "https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch/${PROJECT_ID}/_reset-credentials"
+```
+
+### Delete Project
+
+You can delete your project via the API:
+
+```bash
+curl -XDELETE -H "Authorization: ApiKey $API_KEY" \
+    "https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch/${PROJECT_ID}"
+```
+
+### Update Project
+
+You can update your project using PATCH semantics. Only those fields included in the body of the request will be updated.
+
+```bash
+curl -H "Authorization: ApiKey $API_KEY" \
+    -H "Content-Type: application/json" \
+    "https://api.elastic-cloud.com/api/v1/serverless/projects/elasticsearch/${PROJECT_ID}" \
+    -XPATCH --data '{
+        "name": "new name",
+        "alias": "new-project-alias"
+     }'
+```
+
+### List available regions
+
+The list of regions where projects can be created can be obtained using the API:
+
+```bash
+curl -H "Authorization: ApiKey $API_KEY" \
+    "https://api.elastic-cloud.com/api/v1/serverless/regions"
+```
