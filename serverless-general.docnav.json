@@ -27,7 +27,8 @@
       "pageId": "serverlessGeneralManageProject",
       "items": [
         {
-          "id": "serverlessGeneralManageProjectRestAPI"
+          "id": "serverlessGeneralManageProjectRestAPI",
+          "label": "REST API"
         }
       ]
     },
