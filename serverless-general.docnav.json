@@ -9,6 +9,9 @@
       "pageId": "whatIsServerlessElastic"
     },
     {
+      "pageId": "serverlessSignUpTrial"
+    },
+    {
       "pageId": "serverlessGeneralManageOrganization",
       "items": [
         {
