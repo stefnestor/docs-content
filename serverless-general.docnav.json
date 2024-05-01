@@ -26,7 +26,14 @@
       ]
     },
     {
-      "pageId": "serverlessGeneralManageProject"
+      "label": "Manage your projects",
+      "pageId": "serverlessGeneralManageProject",
+      "items": [
+        {
+          "id": "serverlessGeneralManageProjectRestAPI",
+          "label": "REST API"
+        }
+      ]
     },
     {
       "label": "Manage billing",
