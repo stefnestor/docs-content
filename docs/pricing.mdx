@@ -14,7 +14,7 @@ characteristics you need. We measure by Virtual Compute Units (VCUs), which is a
 slice of RAM, CPU and local disk for caching. The number of VCUs required will 
 depend on the amount and the rate of data sent to Elasticsearch and retained, 
 and the number of searches and latency you require for Searches. In addition, if 
-you required ((ml)) for inference or anomaly detection, those VCUs are also 
+you required ((ml)) for inference or NLP tasks, those VCUs are also 
 metered and billed.
 
 ## Information about the VCU types (Search, Ingest, and ML)
@@ -25,8 +25,7 @@ There are three VCU types in Elasticsearch:
 stored in Elasticsearch.
 * **Search** &mdash; The VCUs used to return search results with the latency and 
 Queries per Second (QPS) you require.
-* **Machine Learning** &mdash; The VCUs used to perform inference, anomaly 
-    detection and other ML activities.
+* **Machine Learning** &mdash; The VCUs used to perform inference, NLP tasks, and other ML activities.
 
 ## Information about the Search Lake dimension (GB)
 
