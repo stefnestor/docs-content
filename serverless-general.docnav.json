@@ -54,6 +54,9 @@
       ]
     },
     {
+      "pageId": "ServerlessServiceStatus"
+    },
+    {
       "pageId": "serverlessGeneralUserProfile"
     }
   ]
