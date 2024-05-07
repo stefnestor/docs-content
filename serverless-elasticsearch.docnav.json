@@ -59,7 +59,12 @@
         {
           "id": "serverlessElasticsearchIngestDataThroughApi"
         },
-        {"id":"serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"},
+        {
+          "id":"serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
+        },
+        {
+          "id":"serverlessElasticsearchIngestDataFileUpload"
+        },
         {
           "id": "serverlessElasticsearchIngestDataThroughLogstash"
         },
