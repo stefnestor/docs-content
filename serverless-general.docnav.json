@@ -31,7 +31,6 @@
       "items": [
         {
           "id": "serverlessGeneralManageProjectRestAPI",
-          "label": "REST API"
         }
       ]
     },
