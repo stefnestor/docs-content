@@ -30,7 +30,7 @@
       "pageId": "serverlessGeneralManageProject",
       "items": [
         {
-          "id": "serverlessGeneralManageProjectRestAPI",
+          "id": "serverlessGeneralManageProjectRestAPI"
         }
       ]
     },
