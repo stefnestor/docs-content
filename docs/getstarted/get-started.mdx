@@ -20,6 +20,10 @@ Use your ((ecloud)) account to create a fully-managed ((es)) project:
 
 1. Choose the ((es)) project type.
 
+1. Select a **configuration** for your project, based on your use case.
+     - **General purpose**. For general search use cases across various data types.
+     - **Optimized for Vectors**. For search use cases using vectors and near real-time retrieval.
+
 1. Provide a name for the project and optionally edit the project settings, such as the cloud platform region.
    Select **Create project** to continue.
 
@@ -95,6 +99,10 @@ You should receive a response similar to the following:
 Now you're ready to ingest and search some sample documents.
 
 ## Ingest data
+
+<DocCallOut>
+  This example uses ((es)) APIs to ingest data. If you'd prefer to upload a file using the UI, refer to <DocLink id="serverlessElasticsearchIngestDataFileUpload" />.
+</DocCallOut>
 
 To ingest data, you must create an index and store some documents.
 This process is also called "indexing".
