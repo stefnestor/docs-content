@@ -9,6 +9,12 @@
       "pageId": "serverlessElasticsearchWhatIsElasticsearchServerless"
     },
     {
+      "pageId": "serverlessTechnicalPreviewLimitations"
+    },
+    {
+      "pageId": "serverlessElasticsearchBilling"
+    },
+    {
       "pageId": "serverlessElasticsearchGetStarted"
     },
     {
@@ -116,12 +122,6 @@
           "label": "Alerts"
         }
       ]
-    },
-    {
-      "pageId": "serverlessTechnicalPreviewLimitations"
-    },
-    {
-      "pageId": "serverlessElasticsearchBilling"
     }
   ]
 }
