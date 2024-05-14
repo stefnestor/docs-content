@@ -1,12 +1,41 @@
 ---
 id: serverlessTechnicalPreviewLimitations
-slug: /serverless/elasticsearch/technical-preview-limitations
-title: Technical preview limitations
+slug: /serverless/elasticsearch/limitations
+title: Limitations
 description: Review the limitations that apply to Elasticsearch projects.
 tags: [ 'serverless', 'elasticsearch']
 ---
 
 <DocBadge template="technical preview" />
+
+## Available features and limitations
+
+Please note the following information about ((es)) on serverless. 
+
+### Differences to Elastic Cloud and self-managed offerings
+
+These changes are specific to ((es)) on serverless.
+
+- Uses data streams and data lifecycle management (DLM) instead of index lifecycle management (ILM)
+- APIs or settings related to sharding or replicas are not applicable, because these internals are fully managed
+- Watcher is unavailable
+- Elasticsearch-Hadoop is unavailable
+
+### Technical preview limitations
+
+The following limitations are due to ((es)) on serverless being in technical preview.
+These limitations will change as we continue to develop the product.
+
+- Custom plugins and custom bundles are currently unavailable
+- Reindexing from remote clusters is not currently supported
+- Cross-cluster search and cross-cluster replication are currently not supported
+- Snapshot and restore is not currently supported
+- The Clone Index API is not currently supported
+- Migrations from non-serverless ((es)) deployments are not currently supported
+- Custom roles are not currently available
+- Audit logging is not currently supported
+
+## Workload latencies
 
 Currently, workloads outside of the following ranges may experience higher latencies (greater than sub-second):
 
