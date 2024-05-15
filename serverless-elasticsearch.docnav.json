@@ -9,9 +9,6 @@
       "pageId": "serverlessElasticsearchWhatIsElasticsearchServerless"
     },
     {
-      "pageId": "serverlessTechnicalPreviewLimitations"
-    },
-    {
       "pageId": "serverlessElasticsearchBilling"
     },
     {
@@ -122,6 +119,9 @@
           "label": "Alerts"
         }
       ]
+    },
+    {
+      "pageId": "serverlessTechnicalPreviewLimitations"
     }
   ]
 }
