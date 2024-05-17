@@ -22,12 +22,12 @@ such as data routed to multiple destinations or when you need to make your data 
 ((ls)) is a powerful, versatile ETL (Extract, Transform, Load) engine that can play an important role in organizations of all sizes.
 Some capabilities and features for large, self-managed users aren't appropriate for ((serverless-short)).
 
-You'll use the ((ls)) [`((es)) output plugin`](((logstash-ref))/plugins-outputs-elasticsearch.html) to send data to ((es-serverless)).
-Some differences to note between ((es-serverless)) and self-managed ((es)):
+You'll use the ((ls)) [`((es)) output plugin`](((logstash-ref))/plugins-outputs-elasticsearch.html) to send data to ((es3)).
+Some differences to note between ((es3)) and self-managed ((es)):
 
 - Your logstash-output-elasticsearch configuration uses **API keys** to access ((es)) from ((ls)).
 User-based security settings are ignored and may cause errors.
-- ((es-serverless)) uses **((dlm)) (((dlm-init)))** instead of ((ilm)) (((ilm-init))).
+- ((es3)) uses **((dlm)) (((dlm-init)))** instead of ((ilm)) (((ilm-init))).
 If you add ((ilm-init)) settings to your ((es)) output configuration, they are ignored and may cause errors.
 - **((ls)) monitoring** for ((serverless-short)) is available through the [((ls)) Integration](https://github.com/elastic/integrations/blob/main/packages/logstash/_dev/build/docs/README.md) in <DocLink id="serverlessObservabilityWhatIsObservabilityServerless" text="Elastic Observability"/>.
 
@@ -40,17 +40,17 @@ Set the value to port `:443` instead.
 
 ## Requirements
 
-To use ((ls)) to send data to ((es-serverless)), you must be using:
+To use ((ls)) to send data to ((es3)), you must be using:
 - ((ls)) 8.10.1 or later
 - ((ls)) [Elasticsearch output plugin](((logstash-ref))/plugins-outputs-elasticsearch.html) 11.18.0 or later
 - ((ls)) [Elasticsearch input plugin](((logstash-ref))/plugins-inputs-elasticsearch.html) 4.18.0 or later
 - ((ls)) [Elasticsearch filter plugin](((logstash-ref))/plugins-filters-elasticsearch.html) 3.16.0 or later
 
 
-## API keys for connecting ((ls)) to ((es-serverless))
+## API keys for connecting ((ls)) to ((es3))
 
 Use the **Security: API key** section in the UI to <DocLink id="serverlessApiKeys">create an API key</DocLink>
-for securely connecting the ((ls)) ((es)) output to ((es-serverless)).
+for securely connecting the ((ls)) ((es)) output to ((es3)).
 We recommend creating a unique API key per ((ls)) instance.
 You can create as many API keys as necessary.
 
