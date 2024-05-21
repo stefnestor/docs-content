@@ -39,9 +39,11 @@ body:
       label: Which documentation set does this change impact?
       description: Stateful, Serverless, or both?
       options:
-        - Stateful and Serverless
-        - Stateful only
-        - Serverless only
+        - Elastic On-Prem and Cloud (all)
+        - Elastic On-Prem only
+        - Elastic Cloud (Hosted and Serverless) only
+        - Elastic Cloud Hosted only
+        - Elastic Cloud Serverless only
         - Unknown
       default: 0
     validations:
@@ -50,8 +52,8 @@ body:
     id: doc-set-differences
     attributes:
       label: Feature differences
-      description: If you selected both Stateful and Serverless above, please describe how, if at all, the feature differs in each deployment method.
-      placeholder: The feature is identical in Stateful and Serverless.
+      description: If you selected multiple deployment methods above, please describe how, if at all, the feature differs in each deployment method.
+      placeholder: The feature is identical in all deployment methods.
     validations:
       required: true
   - type: dropdown
