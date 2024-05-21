@@ -9,8 +9,8 @@ This repo contains most of our Elastic Serverless documentation, including:
 
 > Not the docs you're looking for? Try the following:
 > 
-> - For Elastic Observability, visit https://github.com/elastic/observability-docs.
-> - For Elastic Security, visit https://github.com/elastic/security-docs.
+> - For Elastic Observability, visit [elastic/observability-docs](https://github.com/elastic/observability-docs).
+> - For Elastic Security, visit [elastic/security-docs](https://github.com/elastic/security-docs).
 > - For all other documentation, click the **✏️ edit** button on any page to jump to its source in GitHub.
 
 ## Reviews
