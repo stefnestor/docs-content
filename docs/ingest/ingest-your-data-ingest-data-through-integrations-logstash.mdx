@@ -47,6 +47,13 @@ To use ((ls)) to send data to ((es3)), you must be using:
 - ((ls)) [Elasticsearch filter plugin](((logstash-ref))/plugins-filters-elasticsearch.html) 3.16.0 or later
 
 
+## Secure connection
+Serverless Elasticsearch simplifies secure communication between ((ls)) and ((es)).
+Configure the [Elasticsearch output](((logstash-ref))/plugins-outputs-elasticsearch.html) plugin to use 
+[`cloud_id`](((logstash-ref))/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-cloud_id) and 
+[`api_key`](((logstash-ref))/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-api_key). 
+No additional SSL configuration steps are needed.
+
 ## API keys for connecting ((ls)) to ((es3))
 
 Use the **Security: API key** section in the UI to <DocLink id="serverlessApiKeys">create an API key</DocLink>
