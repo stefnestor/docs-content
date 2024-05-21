@@ -121,6 +121,10 @@
       ]
     },
     {
+      "pageId": "serverlessDifferences",
+      "label": "Serverless differences"
+    },  
+    {
       "pageId": "serverlessTechnicalPreviewLimitations"
     }
   ]
