@@ -1,0 +1,131 @@
+{
+  "mission": "Elasticsearch",
+  "id": "serverless-elasticsearch",
+  "landingPageId": "serverlessElasticsearchWhatIsElasticsearchServerless",
+  "icon": "logoElasticsearch",
+  "description": "Description to be written",
+  "items": [
+    {
+      "pageId": "serverlessElasticsearchWhatIsElasticsearchServerless"
+    },
+    {
+      "pageId": "serverlessElasticsearchBilling"
+    },
+    {
+      "pageId": "serverlessElasticsearchGetStarted"
+    },
+    {
+      "pageId": "serverlessElasticsearchClients",
+      "items": [
+        {
+          "id": "serverlessElasticsearchGoGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchJavaGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchDotNetGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchNodejsGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchPhpGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchPythonGettingStarted"
+        },
+        {
+          "id": "serverlessElasticsearchRubyGettingStarted"
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessElasticsearchHttpApis",
+      "items": [
+        {
+          "id": "serverlessElasticsearchApiConventions",
+          "classic-sources": [ "enElasticsearchReferenceApiConventions" ]
+        },
+        {
+          "id": "serverlessElasticsearchKibanaApiConventions",
+          "classic-sources": [ "enKibanaApi" ]
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessElasticsearchDevTools"
+    },
+    {
+      "pageId": "serverlessElasticsearchIngestYourData",
+      "items": [
+        {
+          "id": "serverlessElasticsearchIngestDataThroughApi"
+        },
+        {
+          "id":"serverlessElasticsearchIngestDataThroughIntegrationsConnectorClient"
+        },
+        {
+          "id":"serverlessElasticsearchIngestDataFileUpload"
+        },
+        {
+          "id": "serverlessElasticsearchIngestDataThroughLogstash"
+        },
+        {
+          "id": "serverlessElasticsearchIngestDataThroughBeats",
+              "classic-sources": [ "enFleetBeatsAgentComparison" ]
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessElasticsearchSearchYourData",
+      "items": [
+        {
+          "id": "serverlessElasticsearchSearchYourDataTheSearchApi"
+        },
+        {
+          "id": "serverlessElasticsearchSearchWithSynonyms"
+        },
+        {
+          "id": "serverlessElasticsearchKnnSearch"
+        },
+        {
+          "id": "serverlessElasticsearchSemanticSearch",
+          "items": [
+            {
+            "id": "serverlessElasticsearchSemanticSearchElser"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessElasticsearchExploreYourData",
+      "items": [
+        {
+          "id": "serverlessElasticsearchExploreYourDataAggregations"
+        },
+        {
+          "id": "serverlessElasticsearchExploreYourDataDiscoverYourData",
+          "classic-sources": [ "enKibanaDiscover" ]
+        },
+        {
+          "id": "serverlessElasticsearchExploreYourDataVisualizeYourData",
+          "classic-sources": [ "enKibanaDashboard" ]
+        },
+        {
+          "id": "serverlessElasticsearchExploreYourDataAlerting",
+          "classic-sources": [ "enKibanaCreateAndManageRules" ],
+          "label": "Alerts"
+        }
+      ]
+    },
+    {
+      "pageId": "serverlessDifferences",
+      "label": "Serverless differences"
+    },  
+    {
+      "pageId": "serverlessTechnicalPreviewLimitations"
+    }
+  ]
+}

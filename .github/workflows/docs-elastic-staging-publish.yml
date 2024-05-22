@@ -1,4 +1,4 @@
-name: Staging Docs
+name: Docs
 
 on:
   pull_request_target:
