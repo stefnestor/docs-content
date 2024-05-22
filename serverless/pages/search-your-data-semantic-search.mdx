@@ -8,11 +8,11 @@ tags: ['elasticsearch', 'elser', 'semantic search']
 
 <DocBadge template="technical preview" />
 
-import DeployNlpModelWidget from './tab-widgets/semantic-search/deploy-nlp-model/widget.mdx'
-import FieldMappingsWidget from './tab-widgets/semantic-search/field-mappings/widget.mdx'
-import GenerateEmbeddingsWidget from './tab-widgets/semantic-search/generate-embeddings/widget.mdx'
-import SearchWidget from './tab-widgets/semantic-search/search/widget.mdx'
-import HybridSearchWidget from './tab-widgets/semantic-search/hybrid-search/widget.mdx'
+import DeployNlpModelWidget from './deploy-nlp-model-widget.mdx'
+import FieldMappingsWidget from './field-mappings-widget.mdx'
+import GenerateEmbeddingsWidget from './generate-embeddings-widget.mdx'
+import SearchWidget from './search-widget.mdx'
+import HybridSearchWidget from './hybrid-search-widget.mdx'
 
 <div id="semantic-search"></div>
 
@@ -28,7 +28,7 @@ meaning have similar representations.
 
 <div id="semantic-search-diagram"></div>
 
-<div style={{ textAlign: "center" }}><DocImage url="images/vector-search-oversimplification.png" alt="A simplified representation of encoding textual concepts as vectors" /></div>
+<div style={{ textAlign: "center" }}><DocImage url="../images/vector-search-oversimplification.png" alt="A simplified representation of encoding textual concepts as vectors" /></div>
 _A simplified representation of encoding textual concepts as vectors_
 
 At query time, ((es)) can use the same NLP model to convert a query into

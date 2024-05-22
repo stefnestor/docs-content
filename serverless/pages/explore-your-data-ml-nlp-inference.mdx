@@ -23,7 +23,7 @@ you can use it to perform ((nlp)) tasks in ingest pipelines.
 
 In ((kib)), you can create and edit pipelines under **Content** → **Pipelines**.
 
-<div style={{ textAlign: "center" }}><DocImage url="images/ml/ml-nlp-pipeline-lang.png" alt="Creating a pipeline in the Stack Management app" /></div>
+<div style={{ textAlign: "center" }}><DocImage url="../images/ml-nlp-pipeline-lang.png" alt="Creating a pipeline in the Stack Management app" /></div>
 
 1. Click **Create pipeline** or edit an existing pipeline.
 1. Add an [((infer)) processor](((ref))/inference-processor.html) to your pipeline:
@@ -242,7 +242,7 @@ Before you can verify the results of the pipelines, you must
 [create ((data-sources))](((kibana-ref))/data-views.html). Then you can explore 
 your data in **Discover**:
 
-<div style={{ textAlign: "center" }}><DocImage url="images/ml/ml-nlp-discover-ner.png" alt="A document from the NER pipeline in the Discover app" /></div>
+<div style={{ textAlign: "center" }}><DocImage url="../images/ml-nlp-discover-ner.png" alt="A document from the NER pipeline in the Discover app" /></div>
 
 The `ml.inference.predicted_value` field contains the output from the ((infer))
 processor. In this NER example, there are two documents that contain the
@@ -253,7 +253,7 @@ ISO identifier of the language with the highest probability and the
 `ml.inference.top_classes` fields contain the top five most probable languages
 and their scores:
 
-<div style={{ textAlign: "center" }}><DocImage url="images/ml/ml-nlp-discover-lang.png" alt="A document from the ((lang-ident)) pipeline in the Discover app" /></div>
+<div style={{ textAlign: "center" }}><DocImage url="../images/ml-nlp-discover-lang.png" alt="A document from the ((lang-ident)) pipeline in the Discover app" /></div>
 
 To learn more about ingest pipelines and all of the other processors that you
 can add, refer to [Ingest pipelines](((ref))/ingest.html).

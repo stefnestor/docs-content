@@ -32,7 +32,7 @@ The following example shows the results of profiling the `match_all` query.
 If you take a closer look at the information for the `.security_7` sample index, the
 **Cumulative time** field shows you that the query took 0.028ms to execute.
 
-![((searchprofiler)) `match_all` example](images/profiler-overview.png)
+![((searchprofiler)) `match_all` example](../images/profiler-overview.png)
 
 {/* <DocCallOut title="Note">
 
@@ -64,7 +64,7 @@ To query a specific index or type, you can use the **Index** filter.
 In the following example, the query is executed against the indices `.security-7` and `kibana_sample_data_ecommerce`.
 This is equivalent to making a request to `GET /.security-7,kibana_sample_data_ecommerce/_search`.
 
-!["Filtering by index and type"](images/profiler-filter.png)
+!["Filtering by index and type"](../images/profiler-filter.png)
 
 <div id="profile-complicated-query"></div>
 
@@ -129,7 +129,7 @@ take a look at a more complicated query.
 
 1. Select **Profile** to profile the query and visualize the results.
 
-    ![Profiling the more complicated query](images/profiler-gs8.png)
+    ![Profiling the more complicated query](../images/profiler-gs8.png)
 
     - The top `BooleanQuery` component corresponds to the `bool` in the query.
     - The second `BooleanQuery` corresponds to the `terms` query, which is internally
@@ -153,7 +153,7 @@ take a look at a more complicated query.
 
 1. Select **View details** to view the timing breakdown.
 
-    !["Drilling into the first shard's details"](images/profiler-gs10.png)
+    !["Drilling into the first shard's details"](../images/profiler-gs10.png)
 
     For more information about how the **((searchprofiler))** works, how timings are calculated, and
     how to interpret various results, refer to
@@ -318,4 +318,4 @@ query editor and select **Profile**.
 
 Your output should look similar to this:
 
-![Rendering pre-captured profiler JSON](images/profiler-json.png)
+![Rendering pre-captured profiler JSON](../images/profiler-json.png)

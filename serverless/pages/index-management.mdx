@@ -45,7 +45,7 @@ To add these privileges, go to **Stack Management → Security → Roles**.
 
 Go to **((project-settings)) → ((manage-app)) → ((index-manage-app))**:
 
-![((index-manage-app)) UI](images/index-management-indices.png)
+![((index-manage-app)) UI](../images/index-management-indices.png)
 {/* TO-DO: This screenshot needs to be refreshed since it doesn't show all of the pertinent tabs */}
 
 The **((index-manage-app))** page contains an overview of your indices.
@@ -61,7 +61,7 @@ on multiple indices, select their checkboxes and then open the **Manage** menu.
 * To drill down into the index mappings, settings, and statistics, click an index name. From this view, you can navigate to **Discover** to further explore the documents in the index.
 {/* <DocLink id="enElasticsearchReferenceIndexModules" section="index-settings">settings</DocLink>, <DocLink id="enElasticsearchReferenceMapping">mapping</DocLink> */}
 
-{/* ![((index-manage-app)) UI](images/index-management_index_details.png) */}
+{/* ![((index-manage-app)) UI](../images/index-management_index_details.png) */}
 {/* TO-DO: This screenshot needs to be refreshed since it doesn't show the appropriate context */}
 
 ## Manage data streams
@@ -75,7 +75,7 @@ A value in the data retention column indicates that the data stream is managed b
 This value is the time period for which your data is guaranteed to be stored. Data older than this period can be deleted by
 ((es)) at a later time.
 
-![Data stream details](images/management-data-stream.png)
+![Data stream details](../images/management-data-stream.png)
 
 To view information about the stream's backing indices, click the number in the **Indices** column.
 
@@ -88,14 +88,14 @@ This action is only available if your data stream is not managed by an ILM polic
 
 {/*
 TO-DO: This screenshot is not accurate since it contains several toggles that don't exist in serverless.
-![Backing index](images/index-mgmt-management_index_data_stream_backing_index.png)
+![Backing index](../images/index-mgmt-management_index_data_stream_backing_index.png)
 */}
 
 ## Manage index templates
 
 Create, edit, clone, and delete your index templates in the **Index Templates** view. Changes made to an index template do not affect existing indices.
 
-![Index templates](images/index-management-index-templates.png)
+![Index templates](../images/index-management-index-templates.png)
 {/* TO-DO: This screenshot is missing some tabs that exist in serverless */}
 
 If you don't have any templates, you can create one using the **Create template** wizard.
@@ -111,7 +111,7 @@ new indices.
 
 1. In the **Index Templates** view, open the **Create template** wizard.
 
-   ![Create wizard](images/index-mgmt/-index-mgmt-management_index_create_wizard.png)
+   ![Create wizard](../images/index-mgmt/-index-mgmt-management_index_create_wizard.png)
 
 1. In the **Name** field, enter `my-index-template`.
 
@@ -132,7 +132,7 @@ new indices.
     Component templates are optional. For this tutorial, do not add any component
     templates.
 
-    ![Component templates page](images/index-mgmt/-index-mgmt-management_index_component_template.png)
+    ![Component templates page](../images/index-mgmt/-index-mgmt-management_index_component_template.png)
 
 1. Define index settings. These are optional. For this tutorial, leave this
     section blank.
@@ -140,7 +140,7 @@ new indices.
 1. Define a mapping that contains an <DocLink id="enElasticsearchReferenceObject">object</DocLink> field named `geo` with a
     child  <DocLink id="enElasticsearchReferenceGeoPoint">`geo_point`</DocLink> field named `coordinates`:
 
-   ![Mapped fields page](images/index-mgmt/-index-mgmt-management-index-templates-mappings.png)
+   ![Mapped fields page](../images/index-mgmt/-index-mgmt-management-index-templates-mappings.png)
 
     Alternatively, you can click the **Load JSON** link and define the mapping as JSON:
 
@@ -241,7 +241,7 @@ An [enrich policy](((ref))/ingest-enriching-data.html) contains:
 * The enrich fields containing enrich data from the source indices that you want to add to incoming documents
 * An optional query.
 
-![Enrich policies](images/management-enrich-policies.png)
+![Enrich policies](../images/management-enrich-policies.png)
 
 When creating an enrich policy, the UI walks you through the configuration setup and selecting the fields.
 Before you can use the policy with an enrich processor, you must execute the policy.
