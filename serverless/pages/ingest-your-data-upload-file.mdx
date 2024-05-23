@@ -1,0 +1,34 @@
+---
+id: serverlessElasticsearchIngestDataFileUpload
+slug: /serverless/elasticsearch/ingest-data-file-upload
+title: Upload a file
+description: Add data to ((es)) using the File Uploader.
+tags: [ 'serverless', 'elasticsearch', 'ingest', 'how to' ]
+---
+
+<DocBadge template="technical preview" />
+
+You can upload files to ((es)) using the File Uploader.
+Use the visualizer to inspect the data before importing it.
+
+The following file formats are supported:
+
+- Delimited text files, such as CSV and TSV
+- Newline-delimited JSON
+- Log files with a common format for the timestamp
+
+## How to upload a file
+
+You'll find a link to the File Uploader on the ((es)) **Home** page.
+
+<DocImage size="xl" url="../images/file-uploader-homepage-link.png" alt="File upload link"/>
+
+Clicking **Upload a file** opens the File Uploader UI.
+
+<DocImage size="xl" url="../images/file-uploader-UI.png" alt="File upload UI"/>
+
+<DocCallOut color="warning" title="">
+    The upload feature is not intended for use as part of a repeated production
+process, but rather for the initial exploration of your data.
+</DocCallOut>
+
