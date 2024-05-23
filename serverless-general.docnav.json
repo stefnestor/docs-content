@@ -9,6 +9,9 @@
       "pageId": "whatIsServerlessElastic"
     },
     {
+      "pageId": "serverlessSignUpTrial"
+    },
+    {
       "pageId": "serverlessGeneralManageOrganization",
       "items": [
         {
@@ -23,7 +26,13 @@
       ]
     },
     {
-      "pageId": "serverlessGeneralManageProject"
+      "label": "Manage your projects",
+      "pageId": "serverlessGeneralManageProject",
+      "items": [
+        {
+          "id": "serverlessGeneralManageProjectRestAPI"
+        }
+      ]
     },
     {
       "label": "Manage billing",
@@ -37,8 +46,14 @@
         },
         {
           "id": "serverlessGeneralBillingHistory"
+        },
+        {
+          "id": "serverlessBilling"
         }
       ]
+    },
+    {
+      "pageId": "ServerlessServiceStatus"
     },
     {
       "pageId": "serverlessGeneralUserProfile"

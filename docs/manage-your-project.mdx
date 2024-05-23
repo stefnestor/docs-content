@@ -25,13 +25,21 @@ From the project page, you can:
 
 - **Manage members**. Add members and manage their access to this project or other resources of your organization.
 
-## Features and usage
+## Search AI Lake settings
 
-You can also edit the features and usage for your project. Available features vary by project type.
+Once ingested, your data is stored in cost-efficient, general storage. A cache layer is available on top of the general storage for recent and frequently queried data that provides faster search speed. Data in this cache layer is considered **search-ready**. 
+
+Together, these data storage layers form your project's **Search AI Lake**.
+
+The total volume of search-ready data is the sum of the following:
+1. The volume of non-time series project data
+2. The volume of time series project data included in the Search Boost Window
+
+Each project type offers different settings that let you adjust the performance and volume of search-ready data, as well as the features available in your projects.
 
 <DocTable columns={[
   {
-    "title": "Feature",
+    "title": "Setting",
     "width": "25%"
   },
   {
@@ -48,12 +56,44 @@ You can also edit the features and usage for your project. Available features va
       **Search Power**
     </DocCell>
     <DocCell>
-      Controls the number of VCUs (Virtual Compute Units) allocated per GB of data to your project.
+      Search Power affects search speed by controlling the number of VCUs (Virtual Compute Units) allocated to search-ready data in the project. Additional VCUs provide more compute resources and result in performance gains. 
 
-      Each VCU adds a combination of CPU, RAM, and data storage to your project, resulting in performance gains.
+      The **Cost-efficient** Search Power setting limits the available cache size, and generates cost savings by reducing search performance.
+
+      The **Balanced** Search Power setting ensures that there is sufficient cache for all search-ready data, in order to respond quickly to queries.
+
+      The **Performance** Search Power setting provides more computing resources in addition to the searchable data cache, in order to respond quickly to higher query volumes and more complex queries. 
     </DocCell>
     <DocCell>
       <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      **Search Boost Window**
+    </DocCell>
+    <DocCell>
+      Non-time series data is always considered search-ready. The **Search Boost Window** determines the volume of time series project data that will be considered search-ready. 
+
+      Increasing the window results in a bigger portion of time series project data included in the total search-ready data volume.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
+    </DocCell>
+  </DocRow>
+  <DocRow>
+    <DocCell>
+      **Data Retention**
+    </DocCell>
+    <DocCell>
+      Data retention policies determine how long your project data is retained.
+
+      You can specify different retention periods for specific data streams in your project.
+    </DocCell>
+    <DocCell>
+      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
+      <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" />
+      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
     </DocCell>
   </DocRow>
   <DocRow>
@@ -66,39 +106,12 @@ You can also edit the features and usage for your project. Available features va
     <DocCell>
       <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
     </DocCell>
-  </DocRow>  <DocRow>
-    <DocCell>
-      **Search Data Lake**
-    </DocCell>
-    <DocCell>
-      Provides cost-optimized storage for your data. By default, all data is stored indefinitely in the Search Data Lake and remains searchable.
-
-      You can specify different retention periods for each data source configured in your project.
-    </DocCell>
-    <DocCell>
-      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
-      <DocBadge template="observability" slug="/serverless/observability/what-is-observability-serverless" />
-      <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" />
-    </DocCell>
-  </DocRow>
-  <DocRow>
-    <DocCell>
-      **Search Boost Window**
-    </DocCell>
-    <DocCell>
-      Provides accelerated query speed for data residing on data streams. Increasing the boost window results in improved search and analytics performance for more data.
-
-      The default Search Boost window size is 7 days.
-    </DocCell>
-    <DocCell>
-      <DocBadge template="elasticsearch" slug="/serverless/elasticsearch/what-is-elasticsearch-serverless" />
-    </DocCell>
-  </DocRow>
+  </DocRow>  
 </DocTable>
 
 <div id="project-features-add-ons"></div>
 
-### Project features and add-ons
+## Project features and add-ons
 
 <DocBadge template="security" slug="/serverless/security/what-is-security-serverless" /> For ((elastic-sec)) projects, edit the **Project features** to select a feature tier and enable add-on options for specific use cases.
 
@@ -129,3 +142,28 @@ You can also edit the features and usage for your project. Available features va
     </DocCell>
   </DocRow>
 </DocTable>
+
+### Downgrading the feature tier 
+
+When you downgrade your Security project features selection from **Security Analytics Complete** to **Security Analytics Essentials**, the following features become unavailable:
+
+* All Entity Analytics features
+* The ability to use certain entity analytics-related integration packages, such as: 
+  * Data Exfiltration detection
+  * Lateral Movement detection
+  * Living off the Land Attack detection
+* Intelligence Indicators page
+* External rule action connectors
+* Case connectors
+* Endpoint response actions history
+* Endpoint host isolation exceptions
+* AI Assistant
+* Attack discovery
+
+And, the following data may be permanently deleted:
+* AI Assistant conversation history
+* AI Assistant settings
+* Entity Analytics user and host risk scores
+* Entity Analytics asset criticality information
+* Detection rule external connector settings
+* Detection rule response action settings
