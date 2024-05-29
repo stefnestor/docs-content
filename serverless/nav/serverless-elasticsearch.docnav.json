@@ -121,6 +121,9 @@
       ]
     },
     {
+      "pageId": "serverlessPlayground"
+    },
+    {
       "pageId": "serverlessDifferences",
       "label": "Serverless differences"
     },  
