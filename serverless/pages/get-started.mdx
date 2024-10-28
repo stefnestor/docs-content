@@ -16,18 +16,13 @@ Then, choose how to continue with your own data.
 Use your ((ecloud)) account to create a fully-managed ((es)) project:
 
 1. Navigate to [cloud.elastic.co](((ess-console))) and create a new account or log in to your existing account.
-
-1. Within **Fully-managed projects**, choose **Create project**.
-
+1. Within **Serverless Projects**, choose **Create project**.
 1. Choose the ((es)) project type.
-
 1. Select a **configuration** for your project, based on your use case.
      - **General purpose**. For general search use cases across various data types.
      - **Optimized for Vectors**. For search use cases using vectors and near real-time retrieval.
-
 1. Provide a name for the project and optionally edit the project settings, such as the cloud platform <DocLink slug="/serverless/regions" text="region"/>.
    Select **Create project** to continue.
-
 1. Once the project is ready, select **Continue**.
 
 You should now see **Get started with ((es))**, and you're ready to continue.
@@ -39,14 +34,14 @@ You should now see **Get started with ((es))**, and you're ready to continue.
 Create an API key, which will enable you to access the ((es)) API to ingest and search data.
 
 1. Scroll to **Add an API Key** and select **New**.
+1. In **Create API Key**, enter a name for your key and (optionally) set an expiration date.
+1. (Optional) Under **Control Security privileges**, you can set specific access permissions for this API key. By default, it has full access to all APIs.
+1. (Optional) The **Add metadata** section allows you to add custom key-value pairs to help identify and organize your API keys.
+1. Select **Create API Key** to finish.
 
-1. In **Create an API key**, enter a name for your key and its expiration.
-   Select **Create API Key** to finish.
-
-The API key is displayed as a set of values, including `id`, `name`, `expiration`, `api_key`, and `encoded`.
-Store this information securely—it is displayed only once.
-
-You will use the `encoded` value when sending API requests.
+After creation, you'll see your API key displayed as an encoded string.
+Store this encoded API key securely. It is displayed only once and cannot be retrieved later.
+You will use this encoded API key when sending API requests.
 
 <DocCallOut>
   You can't recover or retrieve a lost API key. Instead, you must delete the key and create a new one.
@@ -58,7 +53,6 @@ Next, copy the URL of your API endpoint.
 You'll send all ((es)) API requests to this URL.
 
 1. Scroll to **Copy your connection details**.
-
 1. Find the value for **Elasticsearch Endpoint**.
 
 Store this value along with your `encoded` API key.
