@@ -12,7 +12,6 @@ Elasticsearch allows you to build custom applications. Whether you have structur
 If you haven't used {es} before, first learn the basics in the https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html[core {es} documentation].
 ====
 
-
 {es} is one of the three available project types on <<intro,{serverless-full}>>.
 
 This project type enables you to use the core functionality of {es}: searching, indexing, storing, and analyzing data of all shapes and sizes.
@@ -32,11 +31,8 @@ a| [.card-title]#<<elasticsearch-get-started,*Create a project →*>># +
 Get started by creating your first {es} project on serverless.
 
 | 🔌
-a| [.card-title]#<<elasticsearch-get-started,*Connect to {es} →*>># +
+a| [.card-title]#<<elasticsearch-connecting-to-es-serverless-endpoint,*Connect to {es} →*>># +
 Learn how to connect your applications to your {es-serverless} endpoint.
-
-// TODO add coming link to new page about connecting to your serverless endpoint
-// <<elasticsearch-connecting-to-es-serverless-endpoint,*Connect your application →*>>
 
 | ⤵️
 a| [.card-title]#<<elasticsearch-ingest-your-data,*Ingest data →*>># +
