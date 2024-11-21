@@ -4,8 +4,6 @@
 // :description: Add data to your {es-serverless} project.
 // :keywords: serverless, elasticsearch, ingest, overview
 
-preview:[]
-
 You have many options for ingesting, or indexing, data into {es}:
 
 * <<elasticsearch-ingest-data-through-api,{es} API>>
