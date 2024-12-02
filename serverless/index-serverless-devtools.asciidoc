@@ -1,14 +1,14 @@
-[[devtools-developer-tools]]
-== Dev tools
+[role="exclude",id="devtools-developer-tools"]
+= Dev tools
 
-include::./pages/general-developer-tools.asciidoc[leveloffset=+2]
+include::./pages/general-developer-tools.asciidoc[leveloffset=+1]
 
-include::./pages/run-api-requests-in-the-console.asciidoc[leveloffset=+2]
+include::./pages/run-api-requests-in-the-console.asciidoc[leveloffset=+1]
 
-include::./pages/profile-queries-and-aggregations.asciidoc[leveloffset=+2]
+include::./pages/profile-queries-and-aggregations.asciidoc[leveloffset=+1]
 
-include::./pages/debug-grok-expressions.asciidoc[leveloffset=+2]
+include::./pages/debug-grok-expressions.asciidoc[leveloffset=+1]
 
-include::./pages/debug-painless-scripts.asciidoc[leveloffset=+2]
+include::./pages/debug-painless-scripts.asciidoc[leveloffset=+1]
 
-include::./pages/developer-tools-troubleshooting.asciidoc[leveloffset=+2]
+include::./pages/developer-tools-troubleshooting.asciidoc[leveloffset=+1]

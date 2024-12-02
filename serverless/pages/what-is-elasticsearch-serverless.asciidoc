@@ -4,7 +4,7 @@
 // :description: Build search solutions and applications with {es-serverless}.
 // :keywords: serverless, elasticsearch, overview
 
-{es} is an open source distributed search and analytics engine, scalable data store, and vector database. It’s optimized for speed and relevance on production-scale workloads.
+{es} is an open source distributed search and analytics engine, scalable data store, and vector database. It's optimized for speed and relevance on production-scale workloads.
 
 .Understanding Elasticsearch on serverless
 [IMPORTANT]

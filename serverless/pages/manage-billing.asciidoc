@@ -5,10 +5,10 @@
 // :keywords: serverless, general, billing, overview
 
 ++++
-<titleabbrev>Manage billing</titleabbrev>
+<titleabbrev>Billing</titleabbrev>
 ++++
 
-You can manage the billing details of your organization directly from the Elastic Cloud console.
+Manage the billing details of your organization directly from the Elastic Cloud console. Bills are invoiced according to the billing contact and details that you set for your organization.
 
 . Navigate to https://cloud.elastic.co/[cloud.elastic.co] and log in to your Elastic Cloud account.
 . Go to the user icon on the header bar and select **Billing**.
@@ -22,3 +22,4 @@ From the **Billing pages**, you can perform the following tasks:
 If you have a project that you're no longer using, refer to <<general-billing-stop-project,Stop charges for a project>>.
 
 To learn about the serverless pricing model, refer to <<general-serverless-billing,Serverless billing dimensions>> and our https://www.elastic.co/pricing/serverless-search[pricing page].
+

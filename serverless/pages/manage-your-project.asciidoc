@@ -1,21 +1,27 @@
 [[elasticsearch-manage-project]]
-= Manage your projects
+= Manage performance and general settings
 
 // :description: Configure project-wide features and usage.
 // :keywords: serverless, elasticsearch, project, manage
 
-To manage a project:
+++++
+<titleabbrev>Performance and general settings</titleabbrev>
+++++
+
+{serverless-full} projects are fully managed and automatically scaled by Elastic. You have the option of {es}, {observability}, or {elastic-sec} for your project. 
+
+Your project's performance and general data retention are controlled by the **Search AI Lake settings**. To manage these settings:
 
 . Navigate to https://cloud.elastic.co/[cloud.elastic.co].
 . Log in to your Elastic Cloud account.
 . Select your project from the **Serverless projects** panel and click **Manage**.
 
-From the project page, you can:
+//From the project page, you can:
 
-* **Rename your project**. In the **Overview** section, click **Edit** next to the project's name.
-* **Manage data and integrations**. Update your project data, including storage settings, indices, and data views, directly in your project.
-* **Manage API keys**. Access your project and interact with its data programmatically using {es} APIs.
-* **Manage members**. Add members and manage their access to this project or other resources of your organization.
+//* **Rename your project**. In the **Overview** section, click **Edit** next to the project's name.
+//* **Manage data and integrations**. Update your project data, including storage settings, indices, and data views, directly in your project.
+//* **Manage API keys**. Access your project and interact with its data programmatically using {es} APIs.
+//* **Manage members**. Add members and manage their access to this project or other resources of your organization.
 
 [discrete]
 [[elasticsearch-manage-project-search-ai-lake-settings]]

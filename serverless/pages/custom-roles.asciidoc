@@ -12,9 +12,9 @@ ifdef::serverlessCustomRoles[]
 
 This content applies to: {es-badge} {sec-badge}
 
-The built-in <<general-assign-user-roles,organization-level roles>> and <<general-assign-user-roles,instance access roles>> are great for getting started with {serverless-full}, and for system administrators who do not need more restrictive access.
+The built-in <<general-assign-user-roles-organization-level-roles,organization-level roles>> and <<general-assign-user-roles-instance-access-roles,instance access roles>> are great for getting started with {serverless-full}, and for system administrators who do not need more restrictive access.
 
-As an administrator, however, you have the ability to create your own roles to describe exactly the kind of access your users should have within a specific project.
+As an administrator, however, can create roles for users with the access they need within specific projects.
 For example, you might create a marketing_user role, which you then assign to all users in your marketing department.
 This role would grant access to all of the necessary data and features for this team to be successful, without granting them access they don't require.
 

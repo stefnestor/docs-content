@@ -1,13 +1,144 @@
 [[general-manage-organization]]
-= Manage your organization
+= Manage users and roles
 
-// :description: Manage your instances, users, and settings.
+// :description: Manage your Elastic Cloud organization.
 // :keywords: serverless, general, organization, overview
 
-When you sign up to Elastic Cloud, you create an **organization**.
+//An **organization** is the umbrella for all of your {ecloud} resources, including hosted deployments and serverless projects, users, and account settings. When you sign up to {ecloud}, you create an organization.
 
-This organization is the umbrella for all of your Elastic Cloud resources, users, and account settings. Every organization has a unique identifier. Bills are invoiced according to the billing contact and details that you set for your organization.
+In this article, learn how to:
 
-* <<general-manage-access-to-organization>>: Add members to your organization and projects.
-* <<general-manage-billing>>: Configure the billing details of your organization.
-* <<elasticsearch-manage-project>>: Configure project-wide features and usage.
+* <<general-manage-access-to-organization>>: Invite users in your organization to access serverless projects and specify their roles.
+* <<general-assign-user-roles>>: Assign predefined roles to users in your organization.
+* <<general-join-organization-from-existing-cloud-account>>: Join a new organization and bring over your projects.
+* <<general-leave-an-organization>>: Leave an organization.
+
+[discrete]
+[[general-manage-access-to-organization]]
+== Invite your team
+
+// :description: Add members to your organization and projects.
+// :keywords: serverless, general, organization, overview
+
+To allow other users to interact with your projects, you must invite them to join your organization and grant them access to your organization resources and instances.
+
+Alternatively, {cloud}/ec-saml-sso.html[configure {ecloud} SAML SSO] to enable your organization members to join the {ecloud} organization automatically. preview:[]
+
+. Go to the user icon on the header bar and select **Organization**.
+. On the **Members** page, click **Invite members**.
+. Enter the email addresses of the users you want to invite in the textbox.
++
+To add multiple members, enter the member email addresses, separated by a space.
++
+Grant access to all projects of the same type with a unique role, or select individual roles for specific projects.
+For more details about roles, refer to <<general-assign-user-roles>>.
+. Click **Send invites**.
++
+Invitations to join an organization are sent by email. Invited users have 72 hours to accept the invitation before it expires. If the invite has expired, an admin can resend the invitation.
+
+On the **Members** tab of the **Organization** page, view the list of current members, including status and role.
+
+In the **Actions** column, click the three dots to edit a member's role or revoke the invite.
+
+[discrete]
+[[general-assign-user-roles]]
+== Assign user roles and privileges
+
+Within an organization, users can have one or more roles and each role grants specific privileges.
+
+You must assign user roles when you <<general-manage-access-to-organization,invite users to join your organization>>.
+To subsequently edit the roles assigned to a user:
+
+. Go to the user icon on the header bar and select **Organization**.
+. Find the user on the **Members** tab of the **Organization** page. Click the member name to view and edit its roles.
+
+There are two types of roles you can assign to users:
+
+* **Oranization-level roles:** These roles apply to the entire organization and are not specific to any serverless project or hosted deployment.
+* **Instance access roles:** These roles are specific to each serverless project or hosted deployment.
+
+[discrete]
+[[general-assign-user-roles-organization-level-roles]]
+=== Organization-level roles
+
+* **Organization owner**. Can manage all roles under the organization and has full access to all serverless projects, organization-level details, billing details, and subscription levels. This role is assigned by default to the person who created the organization.
+* **Billing admin**. Has access to all invoices and payment methods. Can make subscription changes.
+
+[discrete]
+[[general-assign-user-roles-instance-access-roles]]
+=== Instance access roles
+
+Each serverless project type has a set of predefined roles that you can assign to your organization members.
+To assign the predefined roles:
+
+* globally, for all projects of the same type ({es-serverless}, {observability}, or {elastic-sec}). In this case, the role will also apply to new projects created later.
+* individually, for specific projects only. To do that, you have to set the **Role for all** field of that specific project type to **None**.
+
+For example, assign a user the developer role for a specific {es-serverless} project:
+
+[role="screenshot"]
+image::images/individual-role.png[Individual role]
+
+ifdef::serverlessCustomRoles[]
+
+You can optionally <<custom-roles,create custom roles in a project>>.
+To assign a custom role to users, go to "Instance access roles" and select it from the list under the specific project it was created in.
+
+endif::[]
+
+[discrete]
+[[general-assign-user-roles-table]]
+|===
+|Name  |Description  |Available
+
+|Admin |Has full access to project management, properties, and security privileges. Admins log into projects with superuser role privileges. |{es-badge}{obs-badge}{sec-badge}
+
+|Developer |Creates API keys, indices, data streams, adds connectors, and builds visualizations. |{es-badge}
+
+|Viewer |Has read-only access to project details, data, and features. |{es-badge}{obs-badge}{sec-badge}
+
+|Editor |Configures all Observability or Security projects. Has read-only access to data indices. Has full access to all project features. |{obs-badge}{sec-badge}
+
+|Tier 1 analyst |Ideal for initial alert triage. General read access, can create dashboards and visualizations. |{sec-badge}
+
+|Tier 2 analyst |Ideal for alert triage and beginning the investigation process. Can create cases. |{sec-badge}
+
+|Tier 3 analyst |Deeper investigation capabilities. Access to rules, lists, cases, Osquery, and response actions. |{sec-badge}
+
+|Threat intelligence analyst |Access to alerts, investigation tools, and intelligence pages. |{sec-badge}
+
+|Rule author |Access to detection engineering and rule creation. Can create rules from available data sources and add exceptions to reduce false positives. |{sec-badge}
+
+|SOC manager |Access to alerts, cases, investigation tools, endpoint policy management, and response actions. |{sec-badge}
+
+|Endpoint operations analyst |Access to endpoint response actions. Can manage endpoint policies, {fleet}, and integrations. |{sec-badge}
+
+|Platform engineer |Access to {fleet}, integrations, endpoints, and detection content. |{sec-badge}
+
+|Detections admin |All available detection engine permissions to include creating rule actions, such as notifications to third-party systems. |{sec-badge}
+
+|Endpoint policy manager |Access to endpoint policy management and related artifacts. Can manage {fleet} and integrations. |{sec-badge}
+|===
+
+
+[discrete]
+[[general-leave-an-organization]]
+== Leave an organization
+
+On the **Organization** page, click **Leave organization**.
+
+If you're the only user in the organization, you are able to leave only when you have deleted all projects and don't have any pending bills.
+
+[discrete]
+[[general-join-organization-from-existing-cloud-account]]
+== Join an organization from an existing Elastic Cloud account
+
+If you already belong to an organization, and you want to join a new one you will need to leave your existing organzation. 
+
+If you want to join a new organization, follow these steps:
+
+. Make sure you do not have active projects or deployments before you leave your current organization.
+. Delete your projects and clear any bills.
+. Leave your current organization.
+. Ask the administrator to invite you to the organization you want to join.
+. Accept the invitation that you will get by email.

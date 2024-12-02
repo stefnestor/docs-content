@@ -1,17 +1,13 @@
 [[general-sign-up-trial]]
-= Get started with serverless
+= Sign up for Elastic Cloud
 
 // :description: Information about signing up for a serverless Elastic Cloud trial
 // :keywords: serverless, general, signup
-
-There are two options to create serverless projects:
-
-* If you are an existing customer, https://cloud.elastic.co/login[log in to Elastic Cloud]. On the home page, you will see a new option to create serverless projects. Note that if you are already subscribed to Elastic Cloud, there is no specific trial for serverless projects.
-* If you are a new user, you can https://cloud.elastic.co/serverless-registration[sign up for a free 14-day trial], and you will be able to launch a serverless project.
+The following page provides information on how to sign up for an Elastic Cloud Serverless account, for information on how to sign up for hosted deployments, see https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html[Elasticsearch Service - How do i sign up?].
 
 [discrete]
 [[general-sign-up-trial-what-is-included-in-my-trial]]
-== What is included in my trial?
+== Trial features
 
 Your free 14-day trial includes:
 
@@ -19,6 +15,8 @@ Your free 14-day trial includes:
 
 A deployment lets you explore Elastic solutions for Search, Observability, and Security. Trial deployments run on the latest version of the Elastic Stack. They includes 8 GB of RAM spread out over two availability zones, and enough storage space to get you started. If you’re looking to evaluate a smaller workload, you can scale down your trial deployment.
 Each deployment includes Elastic features such as Maps, SIEM, machine learning, advanced security, and much more. You have some sample data sets to play with and tutorials that describe how to add your own data.
+
+To learn more about Elastic Cloud Hosted, check our https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html[Elasticsearch Service documentation].
 
 **One serverless project**
 
@@ -37,7 +35,7 @@ During the trial period, you are limited to one active hosted deployment and one
 
 [discrete]
 [[general-sign-up-trial-what-limits-are-in-place-during-a-trial]]
-== What limits are in place during a trial?
+== Trial limitations
 
 During the free 14 day trial, Elastic provides access to one hosted deployment and one serverless project. If all you want to do is try out Elastic, the trial includes more than enough to get you started. During the trial period, some limitations apply.
 
@@ -48,6 +46,8 @@ During the free 14 day trial, Elastic provides access to one hosted deployment a
 * Machine learning nodes are available up to 4GB RAM
 * Custom {es} plugins are not enabled
 
+To learn more about Elastic Cloud Hosted, check our https://www.elastic.co/guide/en/cloud/current/ec-getting-started.html[Elasticsearch Service documentation].
+
 **Serverless projects**
 
 * You can have one active serverless project at a time.
@@ -55,9 +55,9 @@ During the free 14 day trial, Elastic provides access to one hosted deployment a
 * Search Boost Window is limited to 7 days. This setting only exists in {es-serverless} projects
 * Scaling is limited for serverless projects in trials. Failures might occur if the workload requires memory or compute beyond what the above search power and search boost window setting limits can provide.
 
-**How to remove restrictions?**
+**Remove limitations**
 
-To remove limitations, subscribe to https://www.elastic.co/guide/en/cloud/current/ec-billing-details.html[Elastic Cloud]. Elastic Cloud subscriptions include the following benefits:
+Subscribe to https://www.elastic.co/guide/en/cloud/current/ec-billing-details.html[Elastic Cloud] for the following benefits:
 
 * Increased memory or storage for deployment components, such as {es} clusters, machine learning nodes, and APM server.
 * As many deployments and projects as you need.
@@ -68,13 +68,13 @@ You can subscribe to Elastic Cloud at any time during your trial. <<general-serv
 
 [discrete]
 [[general-sign-up-trial-how-do-i-get-started-with-my-trial]]
-== How do I get started with my trial?
+== Get started with your trial
 
 Start by checking out some common approaches for https://www.elastic.co/guide/en/cloud/current/ec-cloud-ingest-data.html#ec-ingest-methods[moving data into Elastic Cloud].
 
 [discrete]
 [[general-sign-up-trial-what-happens-at-the-end-of-the-trial]]
-== What happens at the end of the trial?
+== Maintain access to your trial projects and data
 
 When your trial expires, the deployment and project that you created during the trial period are suspended until you subscribe to https://www.elastic.co/guide/en/cloud/current/ec-billing-details.html[Elastic Cloud]. When you subscribe, you are able to resume your deployment and serverless project, and regain access to the ingested data. After your trial expires, you have 30 days to subscribe. After 30 days, your deployment, serverless project, and ingested data are permanently deleted.
 
@@ -82,17 +82,25 @@ If you’re interested in learning more ways to subscribe to Elastic Cloud, don�
 
 [discrete]
 [[general-sign-up-trial-how-do-i-sign-up-through-a-marketplace]]
-== How do I sign up through a marketplace?
+== Sign up through a marketplace
 
-If you’re interested in consolidated billing, subscribe from the AWS Marketplace, which allows you to skip the trial period and connect your AWS Marketplace email to your unique Elastic account.
+If you’re interested in consolidated billing, subscribe from the AWS Marketplace, which allows you to skip the trial period and connect your AWS Marketplace email to your unique Elastic account. For a list of regions supported, see <<regions,Regions>>.
 
 [NOTE]
 ====
 Serverless projects are only available for AWS Marketplace. Support for GCP Marketplace and Azure Marketplace will be added in the near future.
 ====
 
+[[general-user-profile]]
+== Update your user profile
+
+At any time, you can update your email address, change your password, or manage your multifactor authentication methods from your user profile.
+Check {cloud}/ec-account-user-settings.html[Edit user account settings] for more details.
+
 [discrete]
 [[general-sign-up-trial-how-do-i-get-help]]
-== How do I get help?
+== Get help and support
 
 We’re here to help. If you have any questions, reach out to https://cloud.elastic.co/support[Support].
+
+

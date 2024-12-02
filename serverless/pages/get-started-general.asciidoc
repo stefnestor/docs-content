@@ -1,0 +1,37 @@
+[[serverless-get-started]]
+= Get started
+
+There are two options to create serverless projects:
+
+* If you are a new user, https://cloud.elastic.co/serverless-registration[sign up for a free 14-day trial] to create a serverless project. For more information about the Elastic Cloud trials, check <<general-sign-up-trial-what-is-included-in-my-trial,Trial features>>.
+
+* If you are an existing customer, https://cloud.elastic.co/login[log in to Elastic Cloud]. On the home page, you will see a new option to create serverless projects.
+
+Choose the type of project that matches your needs and we'll help you get started with our solution guides.
+
+[cols="1,1"]
+|===
+|
+|
+
+| image:https://www.elastic.co/docs/assets/images/elasticsearch.png[width=150]
+a| [.card-title]#Elasticsearch# +
+Build custom search applications with Elasticsearch.
+
+<<what-is-elasticsearch-serverless,*View guide →*>>
+
+| image:https://www.elastic.co/docs/assets/images/observability.png[width=150]
+a| [.card-title]#Observability# +
+Monitor applications and systems with Elastic Observability.
+
+<<what-is-observability-serverless,*View guide →*>>
+
+| image:https://www.elastic.co/docs/assets/images/security.png[width=150]
+a| [.card-title]#Security# +
+Detect, investigate, and respond to threats with Elastic Security.
+
+<<what-is-security-serverless,*View guide →*>>
+
+|
+|
+|===

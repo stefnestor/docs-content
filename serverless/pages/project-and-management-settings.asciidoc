@@ -1,6 +1,7 @@
 // :description: Learn about capabilities available in multiple serverless solutions.
 // :keywords: serverless, observability, security, elasticsearch, overview
 
+[[project-settings]]
 The documentation in this section describes shared capabilities that are available in multiple solutions.
 Look for the doc badge on each page to see if the page is valid for your solution:
 
