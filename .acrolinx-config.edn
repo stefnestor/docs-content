@@ -1,6 +1,6 @@
 {
  :allowed-branchname-matches ["main"]
- :allowed-filename-matches ["packages/*/_dev/build/docs/*.md"] ;; Not sure if this will work. Need to check wildcards. Separate multiple folders as follows ["folder/" "folder2"]
+ :allowed-filename-matches ["docs/"] ;; Need to check if wildcards work. Separate multiple folders as follows ["folder/" "folder2"]
  :use-gh-statuses true
  :guidance-profile "a5004e01-d057-4190-86b2-ac1ed8a0dc8c" ;; Profile ID for "Elastic" (supplied by Acrolinx)
  :ignored-filetypes ["mod" "sum" "go" "txt"]
