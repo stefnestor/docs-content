@@ -271,10 +271,7 @@ toc:
       - file: docs-content/serverless/elasticsearch-ingest-data-file-upload.md
       - file: docs-content/serverless/elasticsearch-ingest-data-through-api.md
       - file: docs-content/serverless/elasticsearch-ingest-your-data.md
-      - file: docs-content/serverless/elasticsearch-knn-search.md
       - file: docs-content/serverless/elasticsearch-manage-project.md
-      - file: docs-content/serverless/elasticsearch-playground.md
-      - file: docs-content/serverless/elasticsearch-reference-semantic-search.md
       - file: docs-content/serverless/elasticsearch-search-your-data-the-search-api.md
       - file: docs-content/serverless/elasticsearch-search-your-data.md
       - file: docs-content/serverless/endpoint-protection-rules.md
@@ -602,7 +599,6 @@ toc:
       - file: elasticsearch/elasticsearch-reference/ip-filtering.md
       - file: elasticsearch/elasticsearch-reference/jwt-auth-realm.md
       - file: elasticsearch/elasticsearch-reference/kerberos-realm.md
-      - file: elasticsearch/elasticsearch-reference/knn-search.md
       - file: elasticsearch/elasticsearch-reference/ldap-realm.md
       - file: elasticsearch/elasticsearch-reference/mapping-roles.md
       - file: elasticsearch/elasticsearch-reference/mapping.md
@@ -630,7 +626,6 @@ toc:
       - file: elasticsearch/elasticsearch-reference/security-files.md
       - file: elasticsearch/elasticsearch-reference/security-limitations.md
       - file: elasticsearch/elasticsearch-reference/semantic-search-inference.md
-      - file: elasticsearch/elasticsearch-reference/semantic-search.md
       - file: elasticsearch/elasticsearch-reference/setting-up-authentication.md
       - file: elasticsearch/elasticsearch-reference/setup.md
       - file: elasticsearch/elasticsearch-reference/shard-allocation-filtering.md
@@ -669,7 +664,6 @@ toc:
       - file: kibana/kibana/logging-settings.md
       - file: kibana/kibana/management.md
       - file: kibana/kibana/osquery.md
-      - file: kibana/kibana/playground.md
       - file: kibana/kibana/reporting-getting-started.md
       - file: kibana/kibana/reporting-production-considerations.md
       - file: kibana/kibana/role-mappings.md
