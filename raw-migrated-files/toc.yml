@@ -508,7 +508,6 @@ toc:
       - file: docs-content/serverless/security-shared-exception-lists.md
       - file: docs-content/serverless/security-signals-to-cases.md
       - file: docs-content/serverless/security-third-party-actions.md
-      - file: docs-content/serverless/security-threat-intelligence.md
       - file: docs-content/serverless/security-timeline-templates-ui.md
       - file: docs-content/serverless/security-timelines-ui.md
       - file: docs-content/serverless/security-triage-alerts-with-elastic-ai-assistant.md
@@ -846,7 +845,6 @@ toc:
       - file: security-docs/security/environment-variable-capture.md
       - file: security-docs/security/ers-requirements.md
       - file: security-docs/security/es-overview.md
-      - file: security-docs/security/es-threat-intel-integrations.md
       - file: security-docs/security/es-ui-overview.md
       - file: security-docs/security/esql-queries-assistant.md
       - file: security-docs/security/event-filters.md
