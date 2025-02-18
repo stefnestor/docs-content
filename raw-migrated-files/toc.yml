@@ -387,7 +387,7 @@ toc:
       - file: docs-content/serverless/security-dashboards-overview.md
       - file: docs-content/serverless/security-data-quality-dash.md
       - file: docs-content/serverless/security-data-views-in-sec.md
-      - file: docs-content/serverless/security-detection-engine-overview.md
+      - file: docs-content/serverless/security-detection-engine-overview.md      
       - file: docs-content/serverless/security-detection-entity-dashboard.md
       - file: docs-content/serverless/security-detection-response-dashboard.md
       - file: docs-content/serverless/security-detections-requirements.md
@@ -476,7 +476,6 @@ toc:
       - file: elasticsearch/elasticsearch-reference/change-passwords-native-users.md
       - file: elasticsearch/elasticsearch-reference/configuring-stack-security.md
       - file: elasticsearch/elasticsearch-reference/data-management.md
-      - file: elasticsearch/elasticsearch-reference/data-streams.md
       - file: elasticsearch/elasticsearch-reference/defining-roles.md
       - file: elasticsearch/elasticsearch-reference/document-level-security.md
       - file: elasticsearch/elasticsearch-reference/documents-indices.md
