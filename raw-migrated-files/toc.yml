@@ -13,9 +13,7 @@ toc:
       - file: apm-agent-ruby/apm-agent-ruby/release-notes-4.x.md
   - file: cloud-on-k8s/cloud-on-k8s/index.md
     children:
-      - file: cloud-on-k8s/cloud-on-k8s/k8s-custom-http-certificate.md
       - file: cloud-on-k8s/cloud-on-k8s/k8s-securing-stack.md
-      - file: cloud-on-k8s/cloud-on-k8s/k8s-tls-certificates.md
       - file: cloud-on-k8s/cloud-on-k8s/k8s-upgrading-stack.md
   - file: cloud/cloud-enterprise/index.md
     children:
@@ -136,7 +134,6 @@ toc:
   - file: elasticsearch/elasticsearch-reference/index.md
     children:
       - file: elasticsearch/elasticsearch-reference/documents-indices.md
-      - file: elasticsearch/elasticsearch-reference/es-security-principles.md
       - file: elasticsearch/elasticsearch-reference/esql-using.md
       - file: elasticsearch/elasticsearch-reference/how-monitoring-works.md
       - file: elasticsearch/elasticsearch-reference/index-modules-allocation.md
@@ -150,8 +147,6 @@ toc:
       - file: elasticsearch/elasticsearch-reference/search-with-synonyms.md
       - file: elasticsearch/elasticsearch-reference/secure-cluster.md
       - file: elasticsearch/elasticsearch-reference/secure-monitoring.md
-      - file: elasticsearch/elasticsearch-reference/security-basic-setup-https.md
-      - file: elasticsearch/elasticsearch-reference/security-basic-setup.md
       - file: elasticsearch/elasticsearch-reference/security-files.md
       - file: elasticsearch/elasticsearch-reference/security-limitations.md
       - file: elasticsearch/elasticsearch-reference/semantic-search-inference.md
@@ -162,14 +157,11 @@ toc:
   - file: kibana/kibana/index.md
     children:
       - file: kibana/kibana/apm-settings-kb.md
-      - file: kibana/kibana/elasticsearch-mutual-tls.md
       - file: kibana/kibana/logging-settings.md
       - file: kibana/kibana/reporting-production-considerations.md
       - file: kibana/kibana/secure-reporting.md
-      - file: kibana/kibana/Security-production-considerations.md
       - file: kibana/kibana/upgrade-migrations-rolling-back.md
-      - file: kibana/kibana/upgrade.md
-      - file: kibana/kibana/using-kibana-with-security.md
+      - file: kibana/kibana/upgrade.md      
       - file: kibana/kibana/xpack-security.md
   - file: logstash/logstash/index.md
     children:
