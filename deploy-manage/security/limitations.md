@@ -1,5 +1,7 @@
 ---
-navigation_title: "Limitations"
+mapped_pages:
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/security-limitations.html
+navigation_title: Limitations
 ---
 
 # Security limitations [security-limitations]
@@ -23,7 +25,7 @@ Multi get and multi term vectors API throw IndexNotFoundException when trying to
 
 ## Filtered index aliases [_filtered_index_aliases]
 
-Aliases containing filters are not a secure way to restrict access to individual documents, due to the limitations described in [Index and field names can be leaked when using aliases](../../../deploy-manage/security.md#alias-limitations). The {{stack-security-features}} provide a secure way to restrict access to documents through the [document-level security](../../../deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level.md) feature.
+Aliases containing filters are not a secure way to restrict access to individual documents, due to the limitations described in [Index and field names can be leaked when using aliases](/deploy-manage/security.md#alias-limitations). The {{stack-security-features}} provide a secure way to restrict access to documents through the [document-level security](/deploy-manage/users-roles/cluster-or-deployment-auth/controlling-access-at-document-field-level.md) feature.
 
 
 ## Field and document level security limitations [field-document-limitations]
@@ -40,7 +42,7 @@ Until this limitation is addressed, avoid index and field names that contain con
 
 ## LDAP realm [_ldap_realm]
 
-The [LDAP Realm](../../../deploy-manage/users-roles/cluster-or-deployment-auth/ldap.md) does not currently support the discovery of nested LDAP Groups. For example, if a user is a member of `group_1` and `group_1` is a member of `group_2`, only `group_1` will be discovered. However, the [Active Directory Realm](../../../deploy-manage/users-roles/cluster-or-deployment-auth/active-directory.md) **does** support transitive group membership.
+The [LDAP Realm](/deploy-manage/users-roles/cluster-or-deployment-auth/ldap.md) does not currently support the discovery of nested LDAP Groups. For example, if a user is a member of `group_1` and `group_1` is a member of `group_2`, only `group_1` will be discovered. However, the [Active Directory Realm](/deploy-manage/users-roles/cluster-or-deployment-auth/active-directory.md) **does** support transitive group membership.
 
 
 ## Resource sharing check for users and API keys [can-access-resources-check]
@@ -50,4 +52,3 @@ The result of [async search](https://www.elastic.co/docs/api/doc/elasticsearch/o
 * Two different realms can have the same name on different nodes. This is not a recommended way to configure realms, therefore the resource sharing check does not attempt to detect this inconsistency.
 * Realms can be renamed. This can cause inconsistency for the resource sharing check when you submit an async search or scroll then rename the realm and try to retrieve the results. Hence, changing realm names should be handled with care since it can cause complications for more than just the resource sharing check.
 * The username is dynamically computed for realms backed by certain external authentication providers. For example, the username can be derived from part of the DN in an LDAP realm. It is in theory possible that two distinct users from the external system get mapped to the same username. Our recommendation is to avoid this situation in the first place. Hence, the resource sharing check does not account for this potential discrepancy.
-
