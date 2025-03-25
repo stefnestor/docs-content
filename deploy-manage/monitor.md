@@ -43,7 +43,11 @@ deployment:
 :::{include} /deploy-manage/monitor/_snippets/stack-monitoring-def.md
 :::
 
-In {{ece}} and {{ech}}, Elastic manages the installation and configuration of the monitoring agent for you, simplifying the stack monitoring setup process.
+In {{ece}} and {{ech}}, Elastic manages the installation and configuration of the monitoring agent for you, simplifying the stack monitoring setup process. To enable, see [](/deploy-manage/monitor/stack-monitoring/ece-ech-stack-monitoring).
+
+For {{self}}, see enablement options under [](/deploy-manage/monitor/stack-monitoring/elasticsearch-monitoring-self-managed.md).
+
+In {{eck}}, the operator manages the installation once enabled. For more information see [](/deploy-manage/monitor/stack-monitoring/eck-stack-monitoring).
 
 :::{include} /deploy-manage/monitor/_snippets/stack-monitoring-prod.md
 :::
@@ -56,7 +60,7 @@ deployment:
   ech:
 ```
 
-{{ece}} and {{ech}} provide out of the box tools for monitoring the health of your deployment and resolving health issues when they arise: 
+{{ece}} and {{ech}} provide out of the box tools for monitoring the health of your deployments and resolving health issues when they arise: 
 
 * [Cluster health information](/deploy-manage/monitor/cloud-health-perf.md#ec-es-cluster-health), including [health warnings](/deploy-manage/monitor/cloud-health-perf.md#ec-es-health-warnings)
 * A [JVM memory pressure indicator](/deploy-manage/monitor/ec-memory-pressure.md)
@@ -69,7 +73,7 @@ deployment:
 * [Platform monitoring](/deploy-manage/monitor/orchestrators/ece-platform-monitoring.md), including logs, metrics, and proxy logs
 
 :::{tip}
-Out of the box logs and metrics tools, including ECH preconfigured logs and metrics and ECE platform monitoring logs and metrics, are useful for providing information in a non-production environment. In a production environment, it’s important set up either AutoOps or stack monitoring to retain the logs and metrics that can be used to troubleshoot any health issues in your deployments. In the event of that you need to [contact our support team](/troubleshoot/index.md#contact-us), they can use the retained data to help diagnose any problems that you may encounter.
+Out of the box logs and metrics tools, including {{ech}} preconfigured logs and metrics and {{ece}} platform monitoring logs and metrics, are useful for providing information in a non-production environment. In a production environment, it’s important set up either AutoOps or stack monitoring to retain the logs and metrics that can be used to troubleshoot any health issues in your deployments. In the event of that you need to [contact our support team](/troubleshoot/index.md#contact-us), they can use the retained data to help diagnose any problems that you may encounter.
 :::
 
 To learn more about the health and performance tools in {{ecloud}}, refer to [](/deploy-manage/monitor/cloud-health-perf.md).
@@ -93,7 +97,7 @@ In addition to monitoring your cluster or deployment health and performance, you
 Learn how to enable monitoring of your orchestrator:
 
 * [ECK operator metrics](/deploy-manage/monitor/orchestrators/eck-metrics-configuration.md): Open and secure a metrics endpoint that can be used to monitor the operator’s performance and health. This endpoint can be scraped by third-party Kubernetes monitoring tools.
-* [ECK platform monitoring](/deploy-manage/monitor/orchestrators/ece-platform-monitoring.md): Learn about how ECE collects monitoring data for your installation in the `logging-and-metrics` deployment, and how to access monitoring data.
+* [ECE platform monitoring](/deploy-manage/monitor/orchestrators/ece-platform-monitoring.md): Learn about how ECE collects monitoring data for your installation in the `logging-and-metrics` deployment, and how to access monitoring data.
 
 :::{admonition} Monitoring {{ecloud}}
 Elastic monitors [{{ecloud}}](/deploy-manage/deploy/elastic-cloud.md) service metrics and performance as part of [our shared responsibility](https://www.elastic.co/cloud/shared-responsibility). We provide service availability information on our [service status page](/deploy-manage/cloud-organization/service-status.md).
