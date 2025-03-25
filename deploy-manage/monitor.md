@@ -43,11 +43,11 @@ deployment:
 :::{include} /deploy-manage/monitor/_snippets/stack-monitoring-def.md
 :::
 
-In {{ece}} and {{ech}}, Elastic manages the installation and configuration of the monitoring agent for you, simplifying the stack monitoring setup process. To enable, see [](/deploy-manage/monitor/stack-monitoring/ece-ech-stack-monitoring).
+In {{ece}} and {{ech}}, Elastic manages the installation and configuration of the monitoring agent for you, simplifying the stack monitoring setup process. To enable, see [](/deploy-manage/monitor/stack-monitoring/ece-ech-stack-monitoring.md).
 
 For {{self}}, see enablement options under [](/deploy-manage/monitor/stack-monitoring/elasticsearch-monitoring-self-managed.md).
 
-In {{eck}}, the operator manages the installation once enabled. For more information see [](/deploy-manage/monitor/stack-monitoring/eck-stack-monitoring).
+In {{eck}}, the operator manages the installation once enabled. For more information see [](/deploy-manage/monitor/stack-monitoring/eck-stack-monitoring.md).
 
 :::{include} /deploy-manage/monitor/_snippets/stack-monitoring-prod.md
 :::
