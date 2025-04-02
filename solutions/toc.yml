@@ -94,6 +94,7 @@ toc:
           - file: observability/get-started/quickstart-monitor-hosts-with-opentelemetry.md
           - file: observability/get-started/quickstart-unified-kubernetes-observability-with-elastic-distributions-of-opentelemetry-edot.md
           - file: observability/get-started/quickstart-collect-data-with-aws-firehose.md
+          - file: observability/get-started/quickstart-elastic-cloud-otel-endpoint.md
           - file: observability/get-started/add-data-from-splunk.md
           - file: observability/get-started/get-started-with-dashboards.md
       - file: observability/apps.md
@@ -314,6 +315,7 @@ toc:
                   - file: observability/apps/analyze-monitors.md
                   - file: observability/apps/inspect-uptime-duration-anomalies.md
               - file: observability/apps/configure-settings.md
+          - file: observability/otlp-visualize.md
           - file: observability/apps/tutorial-monitor-java-application.md
       - file: observability/cicd.md
       - file: observability/cloud.md
