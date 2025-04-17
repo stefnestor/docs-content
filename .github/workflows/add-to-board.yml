@@ -35,7 +35,7 @@ jobs:
           labels: needs-team
 
       - name: Add issue to the right project
-        uses: actions/add-to-project@v1
+        uses: actions/add-to-project@244f685bbc3b7adfa8466e08b698b5577571133e
         with:
           project-url: https://github.com/orgs/elastic/projects/${{ fromJson(env.PROJECT_ID_MAP)[github.event.label.name] }}
           github-token: ${{ secrets.ADD_TO_BOARD_TOKEN }}
