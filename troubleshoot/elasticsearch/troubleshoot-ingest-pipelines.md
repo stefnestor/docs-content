@@ -15,7 +15,7 @@ products:
 
 {{es}} [Ingest Pipelines](https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines) allow you to transform data during ingest. Per [write model](https://www.elastic.co/docs/deploy-manage/distributed-architecture/reading-and-writing-documents#basic-write-model), they run from `ingest` [node roles](https://www.elastic.co/docs/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles) under the `write` [thread pool](https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/thread-pool-settings).
 
-They can be edited under {{kb}}'s **Stack Management > Ingest Pipelines** and/or {{es}}'s [Modify Pipeline API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-pipeline). They store under {{es}}'s [cluster state](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state) as accessed from [List Pipelines](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline).
+They can be edited under {{kib}}'s **Stack Management > Ingest Pipelines** and/or {{es}}'s [Modify Pipeline API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-pipeline). They store under {{es}}'s [cluster state](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state) as accessed from [List Pipelines](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline).
 
 Ingest Piplines can be [Simulated](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate) during testing, but after go-live are triggered during event ingest from
 
@@ -59,7 +59,7 @@ There can be multiple timestamps associated with a single data event. By default
 * `event.created` for when an event first reached an Elastic product
 * `event.ingested` for when an event finished processing through an {{es}} Ingest Pipeline
 
-{{kb}} [Data Views](https://www.elastic.co/docs/explore-analyze/find-and-organize/data-views) default to `@timestamp` to fit most user's default expectations. While troubleshooting ingestion lag, we recommend creating a temporary Data View based on `event.ingested`. 
+{{kib}} [Data Views](https://www.elastic.co/docs/explore-analyze/find-and-organize/data-views) default to `@timestamp` to fit most user's default expectations. While troubleshooting ingestion lag, we recommend creating a temporary Data View based on `event.ingested`. 
 
 This potential timing difference is why Security Detection Rules allow for [setting a "Timestamp override"](https://www.elastic.co/docs/troubleshoot/security/detection-rules#troubleshoot-ingestion-pipeline-delay) which defaults to `event.ingested` when enabled.
 
