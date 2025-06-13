@@ -36,7 +36,7 @@ To capture an {{ls}} diagnostic:
 
 1. In a terminal, verify that your network access is sufficient to connect to your {{ls}} node by polling its root endpoint.
 
-    For example, with [the parameters](/docs/reference/logstash/logstash-settings-file) `api.http.host: 127.0.0.1` and `api.http.port: 9600` without authentication (default), you’d use the following curl request:
+    For example, with [the parameters](https://www.elastic.co/docs/reference/logstash/logstash-settings-file) `api.http.host: 127.0.0.1` and `api.http.port: 9600` without authentication (default), you’d use the following curl request:
 
     ```sh
     curl -X GET -k http://127.0.0.1:9600?pretty
@@ -82,7 +82,7 @@ To capture an {{ls}} diagnostic:
 When you poll your node, if you receive any response other than `200 0K`, then the diagnostic tool might not work as intended. The following are possible error codes and their resolutions:
 
 HTTP 401 `UNAUTHENTICATED`
-:   Your team has setup [{{ls}} API Security](/docs/reference/logstash/monitoring-logstash#monitoring-api-security) and one/both of your `api.auth.basic.username` or `api.auth.basic.password` pair is invalid.
+:   Your team has setup [{{ls}} API Security](https://www.elastic.co/docs/reference/logstash/monitoring-logstash#monitoring-api-security) and one/both of your `api.auth.basic.username` or `api.auth.basic.password` pair is invalid.
 
 HTTP 504 `BAD_GATEWAY`
 :   Your network is experiencing issues reaching the node. You might be using a proxy or firewall. Consider running the diagnostic tool from a different location, confirming your port, or using an IP instead of a URL domain.
