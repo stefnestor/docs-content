@@ -13,15 +13,15 @@ products:
 
 # Troubleshoot Ingest Pipelines [troubleshooting-pipelines]
 
-{{es}} [Ingest Pipelines](/docs/manage-data/ingest/transform-enrich/ingest-pipelines) allow you to transform data during ingest. Per [write model](/guide/en/elasticsearch/reference/8.18/docs-replication.html#basic-write-model), they run from `ingest` [node roles](/docs/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles) under the `write` [thread pool](/docs/reference/elasticsearch/configuration-reference/thread-pool-settings). 
+{{es}} [Ingest Pipelines](https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines) allow you to transform data during ingest. Per [write model](https://www.elastic.co/docs/deploy-manage/distributed-architecture/reading-and-writing-documents#basic-write-model), they run from `ingest` [node roles](https://www.elastic.co/docs/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles) under the `write` [thread pool](https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/thread-pool-settings).
 
 They can be edited under {{kb}}'s **Stack Management > Ingest Pipelines** and/or {{es}}'s [Modify Pipeline API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-pipeline). They store under {{es}}'s [cluster state](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state) as accessed from [List Pipelines](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline).
 
 Ingest Piplines can be [Simulated](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate) during testing, but after go-live are triggered during event ingest from
 
 * the query parameter `pipeline` flag the [create doc](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create) or [update doc](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update_) or [bulk modify docs](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) API request
-* the ingest target's backing [index setting](/docs/reference/elasticsearch/index-settings/index-modules#dynamic-index-settings) for `index.default_pipeline` and/or `index.final_pipeline`
-* an Ingest Pipeline may sub-call another as a [pipelinen processor](/docs/reference/enrich-processor/pipeline-processor)
+* the ingest target's backing [index setting](https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-modules#dynamic-index-settings) for `index.default_pipeline` and/or `index.final_pipeline`
+* an Ingest Pipeline may sub-call another as a [pipelinen processor](https://www.elastic.co/docs/reference/enrich-processor/pipeline-processor)
 
 ## Symptoms [troubleshooting-pipelines-symptoms]
 
@@ -30,7 +30,7 @@ You might notice an Ingest Pipeline is not running as performant as possible und
 
 ### High CPU [troubleshooting-pipelines-symptoms-cpu]
 
-While running, if Ingest Pipelines cause [high CPU usage](/docs/troubleshoot/elasticsearch/high-cpu-usage), their logger `org.elasticsearch.ingest.Pipeline` will show under [Node Hot Threads](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads). An example output might prefix like
+While running, if Ingest Pipelines cause [high CPU usage](https://www.elastic.co/docs/troubleshoot/elasticsearch/high-cpu-usage), their logger `org.elasticsearch.ingest.Pipeline` will show under [Node Hot Threads](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads). An example output might prefix like
 
 ```text
 ::: {instance-0000000001}{XXXXX}{XXXXX}{instance-0000000001}{XXXXX}{XXXXX}{hirst}{9.0.0}{XXXXX}{XXXXX}
@@ -43,27 +43,27 @@ While running, if Ingest Pipelines cause [high CPU usage](/docs/troubleshoot/ela
        app/org.elasticsearch.server@9.0.0/org.elasticsearch.ingest.Pipeline.execute(Pipeline.java:129)
 ```
 
-The most common sub-processor to flag is a [Script processor](/docs/reference/enrich-processor/script-processor) running [Painless](/docs/reference/scripting-languages/painless/painless) as noted by logger `org.elasticsearch.painless`.
+The most common sub-processor to flag is a [Script processor](https://www.elastic.co/docs/reference/enrich-processor/script-processor) running [Painless](https://www.elastic.co/docs/reference/scripting-languages/painless/painless) as noted by logger `org.elasticsearch.painless`.
 
 
 ### Task Queue [troubleshooting-pipelines-symptoms-queue]
 
-A non-performant Ingest Pipeline may cause a [Task Queue Backlog](/docs/troubleshoot/elasticsearch/task-queue-backlog) potentially with [Hot Spotting](/docs/troubleshoot/elasticsearch/hotspotting). Once sufficiently severe it would start causing [Rejected Requests](/docs/troubleshoot/elasticsearch/rejected-requests#check-rejected-tasks).
+A non-performant Ingest Pipeline may cause a [Task Queue Backlog](https://www.elastic.co/docs/troubleshoot/elasticsearch/task-queue-backlog) potentially with [Hot Spotting](https://www.elastic.co/docs/troubleshoot/elasticsearch/hotspotting). Once sufficiently severe it would start causing [Rejected Requests](https://www.elastic.co/docs/troubleshoot/elasticsearch/rejected-requests#check-rejected-tasks).
 
 
 ### Delayed timestamps [troubleshooting-pipelines-symptoms-delayed]
 
-There can be multiple timestamps associated with a single data event. By default in Elastic-built [Integrations](/docs/reference/integrations), every event [records](/docs/reference/ecs/ecs-principles-implementation#_timestamps)
+There can be multiple timestamps associated with a single data event. By default in Elastic-built [Integrations](https://www.elastic.co/docs/reference/integrations), every event [records](https://www.elastic.co/docs/reference/ecs/ecs-principles-implementation#_timestamps)
 
 * `@timestamp` for when an event originated
 * `event.created` for when an event first reached an Elastic product
 * `event.ingested` for when an event finished processing through an {{es}} Ingest Pipeline
 
-{{kb}} [Data Views](/docs/explore-analyze/find-and-organize/data-views) default to `@timestamp` to fit most user's default expectations. While troubleshooting ingestion lag, we recommend creating a temporary Data View based on `event.ingested`. 
+{{kb}} [Data Views](https://www.elastic.co/docs/explore-analyze/find-and-organize/data-views) default to `@timestamp` to fit most user's default expectations. While troubleshooting ingestion lag, we recommend creating a temporary Data View based on `event.ingested`. 
 
-This potential timing difference is why Security Detection Rules allow for [setting a "Timestamp override"](/docs/troubleshoot/security/detection-rules#troubleshoot-ingestion-pipeline-delay) which defaults to `event.ingested` when enabled.
+This potential timing difference is why Security Detection Rules allow for [setting a "Timestamp override"](https://www.elastic.co/docs/troubleshoot/security/detection-rules#troubleshoot-ingestion-pipeline-delay) which defaults to `event.ingested` when enabled.
 
-For user-managed Ingest Pipelines, you can create similar functionality by adding [Set Processor](/docs/reference/enrich-processor/set-processor) to the end of your Ingest Pipeline. As a simplified example if `event.ingested` is not already being set upstream in your data pipeline:
+For user-managed Ingest Pipelines, you can create similar functionality by adding [Set Processor](https://www.elastic.co/docs/reference/enrich-processor/set-processor) to the end of your Ingest Pipeline. As a simplified example if `event.ingested` is not already being set upstream in your data pipeline:
 
 ```console
 PUT _ingest/pipeline/my-pipeline
