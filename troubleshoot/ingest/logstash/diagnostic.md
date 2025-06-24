@@ -61,7 +61,7 @@ sudo ./diagnostics.sh --type logstash-local --host 127.0.0.1 --port 9600 --bypas
 :::{tab-item} Windows
 
 ```sh
-sudo .\diagnostics.bat --type logstash-local --host 127.0.0.1 --port 9600 --bypassDiagVerify
+.\diagnostics.bat --type logstash-local --host 127.0.0.1 --port 9600 --bypassDiagVerify
 ```
 
     ::::{tip}
