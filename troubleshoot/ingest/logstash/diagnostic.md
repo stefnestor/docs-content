@@ -50,17 +50,19 @@ To capture a {{ls}} diagnostic:
 
     The following command options are recommended:
 
-    **Unix-based systems**
+::::{tab-set}
+:::{tab-item} Unix-based systems
 
-    ```sh
-    sudo ./diagnostics.sh --type logstash-local --host 127.0.0.1 --port 9600 --bypassDiagVerify
-    ```
+```sh
+sudo ./diagnostics.sh --type logstash-local --host 127.0.0.1 --port 9600 --bypassDiagVerify
+```
+:::
+ 
+:::{tab-item} Windows
 
-    **Windows**
-
-    ```sh
-    sudo .\diagnostics.bat --type logstash-local --host 127.0.0.1 --port 9600 --bypassDiagVerify
-    ```
+```sh
+sudo .\diagnostics.bat --type logstash-local --host 127.0.0.1 --port 9600 --bypassDiagVerify
+```
 
     ::::{tip}
 
