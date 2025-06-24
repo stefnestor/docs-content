@@ -32,7 +32,7 @@ You can directly download the `diagnostics-X.X.X-dist.zip` file for the latest S
 
 ## Capture diagnostic information [diagnostic-capture]
 
-To capture an {{ls}} diagnostic:
+To capture a {{ls}} diagnostic:
 
 1. In a terminal, verify that your network access is sufficient to connect to your {{ls}} node by polling its root endpoint.
 
@@ -42,7 +42,7 @@ To capture an {{ls}} diagnostic:
     curl -X GET -k http://127.0.0.1:9600?pretty
     ```
 
-    If you receive a an HTTP 200 `OK` response, then you can proceed to the next step. If you receive a different response code, then [diagnose the issue](#diagnostic-non-200) before proceeding.
+    If you receive a an HTTP 200 `OK` response, you can proceed to the next step. If you receive a different response code, [diagnose the issue](#diagnostic-non-200) before proceeding.
 
 2. Using the same environment parameters, run the diagnostic tool script.
 
@@ -64,7 +64,7 @@ To capture an {{ls}} diagnostic:
 
     ::::{tip}
 
-    You can execute the script in three [modes](https://github.com/elastic/support-diagnostics#diagnostic-types):
+    You can run the script in three [modes](https://github.com/elastic/support-diagnostics#diagnostic-types):
 
     * `local` (default, recommended): Polls the [{{ls}} API](https://www.elastic.co/docs/api/doc/logstash/), gathers operating system info, and captures node logs.
     * `remote`: Establishes an ssh session to the applicable target server to pull the same information as `local`.
@@ -72,14 +72,14 @@ To capture an {{ls}} diagnostic:
 
     ::::
 
-3. When the script has completed, verify that no errors were logged to `diagnostic.log`. If the log file contains errors, then refer to [Diagnose errors in `diagnostic.log`](#diagnostic-log-errors).
+3. When the script has completed, verify that no errors were logged to `diagnostic.log`. If the log file contains errors, refer to [Diagnose errors in `diagnostic.log`](#diagnostic-log-errors).
 
-4. If the script completed without errors, then an archive with the format `<diagnostic type>-diagnostics-<DateTimeStamp>.zip` is created in the working directory, or an output directory you have specified. You can review or share the diagnostic archive as needed.
+4. If the script completed without errors, an archive with the format `<diagnostic type>-diagnostics-<DateTimeStamp>.zip` is created in the working directory, or an output directory you have specified. You can review or share the diagnostic archive as needed.
 
 
 ## Diagnose a non-200 node response [diagnostic-non-200]
 
-When you poll your node, if you receive any response other than `200 0K`, then the diagnostic tool might not work as intended. The following are possible error codes and their resolutions:
+When you poll your node, if you receive any response other than `200 0K`, the diagnostic tool might not work as intended. The following are possible error codes and their resolutions:
 
 HTTP 401 `UNAUTHENTICATED`
 :   Your team has setup [{{ls}} API Security](https://www.elastic.co/docs/reference/logstash/monitoring-logstash#monitoring-api-security) and one/both of your `api.auth.basic.username` or `api.auth.basic.password` pair is invalid.
