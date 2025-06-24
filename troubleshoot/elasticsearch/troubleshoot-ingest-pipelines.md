@@ -11,26 +11,26 @@ products:
   - id: elasticsearch
 ---
 
-# Troubleshoot Ingest Pipelines [troubleshooting-pipelines]
+# Troubleshoot Ingest pipelines [troubleshooting-pipelines]
 
 {{es}} [Ingest Pipelines](https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines) allow you to transform data during ingest. Per [write model](https://www.elastic.co/docs/deploy-manage/distributed-architecture/reading-and-writing-documents#basic-write-model), they run from `ingest` [node roles](https://www.elastic.co/docs/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles) under the `write` [thread pool](https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/thread-pool-settings).
 
-They can be edited under {{kib}}'s **Stack Management > Ingest Pipelines** and/or {{es}}'s [Modify Pipeline API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-pipeline). They store under {{es}}'s [cluster state](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state) as accessed from [List Pipelines](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline).
+You can edit ingest pipelines under {{kib}}'s **Stack Management > Ingest Pipelines** or from {{es}}'s [Modify Pipeline API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-pipeline). They store under {{es}}'s [cluster state](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state) as accessed from [List Pipelines](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline).
 
-Ingest Piplines can be [Simulated](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate) during testing, but after go-live are triggered during event ingest from
+Ingest pipelines can be [Simulated](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate) during testing, but after go-live are triggered during event ingest from
 
-* the query parameter `pipeline` flag the [create doc](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create) or [update doc](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update_) or [bulk modify docs](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) API request
-* the ingest target's backing [index setting](https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-modules#dynamic-index-settings) for `index.default_pipeline` and/or `index.final_pipeline`
-* an Ingest Pipeline may sub-call another as a [pipelinen processor](https://www.elastic.co/docs/reference/enrich-processor/pipeline-processor)
+* The query parameter `pipeline` flag the [create doc](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create) or [update doc](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update_) or [bulk modify docs](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) API request.
+* The ingest target's backing [index setting](https://www.elastic.co/docs/reference/elasticsearch/index-settings/index-modules#dynamic-index-settings) for `index.default_pipeline` and/or `index.final_pipeline`.
+* An Ingest Pipeline may sub-call another as a [pipelinen processor](https://www.elastic.co/docs/reference/enrich-processor/pipeline-processor).
 
 ## Symptoms [troubleshooting-pipelines-symptoms]
 
 You might notice an Ingest Pipeline is not running as performant as possible under load testing from one of the following symptoms.
 
 
-### High CPU [troubleshooting-pipelines-symptoms-cpu]
+### High CPU usage [troubleshooting-pipelines-symptoms-cpu]
 
-While running, if Ingest Pipelines cause [high CPU usage](https://www.elastic.co/docs/troubleshoot/elasticsearch/high-cpu-usage), their logger `org.elasticsearch.ingest.Pipeline` will show under [Node Hot Threads](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads). An example output might prefix like
+While running, if Ingest Pipelines cause [high CPU usage](https://www.elastic.co/docs/troubleshoot/elasticsearch/high-cpu-usage), their logger `org.elasticsearch.ingest.Pipeline` will show under [Node Hot Threads](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads). An example output might prefix like this:
 
 ```text
 ::: {instance-0000000001}{XXXXX}{XXXXX}{instance-0000000001}{XXXXX}{XXXXX}{hirst}{9.0.0}{XXXXX}{XXXXX}
@@ -53,11 +53,11 @@ A non-performant Ingest Pipeline may cause a [Task Queue Backlog](https://www.el
 
 ### Delayed timestamps [troubleshooting-pipelines-symptoms-delayed]
 
-There can be multiple timestamps associated with a single data event. By default in Elastic-built [Integrations](https://www.elastic.co/docs/reference/integrations), every event [records](https://www.elastic.co/docs/reference/ecs/ecs-principles-implementation#_timestamps)
+There can be multiple timestamps associated with a single data event. By default in Elastic-built [Integrations](https://www.elastic.co/docs/reference/integrations), every event [records](https://www.elastic.co/docs/reference/ecs/ecs-principles-implementation#_timestamps) the following:
 
-* `@timestamp` for when an event originated
-* `event.created` for when an event first reached an Elastic product
-* `event.ingested` for when an event finished processing through an {{es}} Ingest Pipeline
+* `@timestamp` for when an event originated.
+* `event.created` for when an event first reached an Elastic product.
+* `event.ingested` for when an event finished processing through an {{es}} Ingest Pipeline.
 
 {{kib}} [Data Views](https://www.elastic.co/docs/explore-analyze/find-and-organize/data-views) default to `@timestamp` to fit most user's default expectations. While troubleshooting ingestion lag, we recommend creating a temporary Data View based on `event.ingested`. 
 
@@ -109,7 +109,7 @@ GET _nodes/stats/ingest
 
 This reports the overall Ingest Pipelines's statistics as well as statistics for each of its processors. If a pipeline calls a sub-pipeline the parent's statistics will record the total time and not subtract time spent waiting on the other. 
 
-Storing this output into `nodes_stats.json` and then using [thid-party tool JQ](https://jqlang.github.io/jq/) to parse through this JSON, some common views reported during troubleshooting include
+Storing this output into `nodes_stats.json` and then using [third-party tool JQ](https://jqlang.github.io/jq/) to parse through this JSON, some common views reported during troubleshooting include:
 
 * Ingest Pipeline's processor has more than 10% failed events
 
@@ -117,7 +117,7 @@ Storing this output into `nodes_stats.json` and then using [thid-party tool JQ](
   $ cat nodes_stats.json | jq -c '.nodes[]|.name as $node| .ingest.pipelines|to_entries[]| .key as $pipeline| .value.processors[] | to_entries[]|.key as $process| { pipeline:$pipeline, process:$process, node:$node, total:.value.stats.count, failed:.value.stats.failed, failed_percent:(try (100*.value.stats.failed/.value.stats.count|round) catch 0)}| select(.total>0 and .failed_percent>10)'
   ```
 
-  Especially where `ignore_failure` is enabled, this might reflect an incomplete setup and/or wasted processing time.
+  Especially where `ignore_failure` is enabled, this might reflect an incomplete setup or wasted processing time.
 
 * Ingest Pipeline's time per event is above 60 milliseconds or 1 second
 
