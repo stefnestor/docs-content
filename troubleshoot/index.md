@@ -57,14 +57,44 @@ If you have an [Elastic subscription](https://www.elastic.co/pricing), you can c
   If you contact us by email, use the email address you registered with so we can help you more quickly. If your registered email is a distribution list, you can register a second email address with us. Just open a case to let us know the name and email address you want to add.
   :::
 
+  :::{warning}
+  All cases opened by email are opened at normal severity. For incidents, kindly ensure to raise via the [Elastic Support Portal](https://support.elastic.co/) at the [appropriate severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
+  :::
+
 ## Working with support [troubleshoot-work-with-support]
 
-Try these tips when opening a support case:
+When opening a support case, kindly be sure to:
 
-* Include the deployment ID that you want help with, especially if you have several deployments.
+* Describe the problem along with its [contextual severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
 
-  You can find the deployment ID on the overview page for your cluster in the {{ecloud}} Console.
+  * If an error message was encountered, include full error message and timezone-designated dates and times of when the problem occurred.
 
-* Describe the problem. Include any relevant details, including error messages you encountered, dates and times when the problem occurred, or anything else you think might be helpful.
+  * If the problem is UI-related and does not replicate via API, pull a [browser network log](https://www.elastic.co/blog/generating-browser-har-file-kibana-troubleshooting). 
 
-* Upload any pertinent files.
+* Upload the related product's diagnostics and debug logs
+
+  * If {{serverless-full}} or {{ech}}, Support can pull diagnostics on your behalf as long as you include resource ids:
+    
+    * {{serverless-full}} Project ID or {{kib}} URL
+    * {{ech}} Deployment ID or {{kib}} URL
+
+  * If hosting on {{ece}} or {{eck}}:
+
+    * {{ece}} [diagnostic](/troubleshoot/deployments/cloud-enterprise/run-ece-diagnostics-tool.md) flagging `--deployments` as applicable
+    * {{eck}} [diagnostic](/troubleshoot/deployments/cloud-on-k8s/run-eck-diagnostics.md)
+
+  * If self-hosting:
+
+    * {{es}} [diagnostic](troubleshoot/elasticsearch/diagnostic.md) and [debug logs](deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md)
+    * {{kib}} and {{fleet}} [diagnostic](troubleshoot/kibana/capturing-diagnostics.md) and [debug logs](/docs/deploy-manage/monitor/logging-configuration/kibana-log-levels.md)
+    
+    * Ingest tools
+
+      * {{ls}} [diagnostic](troubleshoot/ingest/logstash/diagnostic.md) and [debug logs](reference/logstash/logging.md)
+      * {{agent}} [diagnostic](https://www.elastic.co/docs/troubleshoot/ingest/fleet/common-problems#trb-collect-agent-diagnostics) and [debug logs](https://www.elastic.co/docs/reference/fleet/monitor-elastic-agent#change-logging-level)
+  
+
+  :::{tip}
+  {{es}}'s cluster maintains an advanced task management system, but the other products have a simpler polling mechanism. This can cause issues to only surface during their start-up debug logs as sequential logs will only note that the sub-process as stopped or that it has not changed state from earlier error.
+  :::
+
