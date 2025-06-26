@@ -69,9 +69,9 @@ When you open a support case:
 
   * If an error message was encountered, include full error message and timezone-designated dates and times of when the problem occurred.
 
-  * If the problem is UI-related and does not replicate via API, pull a [browser network log](https://www.elastic.co/blog/generating-browser-har-file-kibana-troubleshooting). 
+  * If the problem is UI-related and can't be replicated using API calls, pull a [browser network log](https://www.elastic.co/blog/generating-browser-har-file-kibana-troubleshooting). 
 
-* Upload the related product's diagnostics and debug logs
+* Upload the related product's diagnostics and debug logs:
 
   * If hosting on {{serverless-full}} or {{ech}}, Support can pull diagnostics on your behalf as long as you include resource IDs:
     
@@ -85,20 +85,20 @@ When you open a support case:
 
   * If self-hosting:
 
-    * {{es}} [diagnostic](troubleshoot/elasticsearch/diagnostic.md) and [debug logs](deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md)
-    * {{kib}} and {{fleet}} [diagnostic](troubleshoot/kibana/capturing-diagnostics.md) and [debug logs](/docs/deploy-manage/monitor/logging-configuration/kibana-log-levels.md)
+    * {{es}} [diagnostic](/troubleshoot/elasticsearch/diagnostic.md) and [debug logs](/deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md)
+    * {{kib}} and {{fleet}} [diagnostic](/troubleshoot/kibana/capturing-diagnostics.md) and [debug logs](/docs/deploy-manage/monitor/logging-configuration/kibana-log-levels.md)
     
-    * Ingest tools
+    * Ingest tools:
 
-      * {{ls}} [diagnostic](troubleshoot/ingest/logstash/diagnostic.md) and [debug logs](reference/logstash/logging.md)
+      * {{ls}} [diagnostic](/troubleshoot/ingest/logstash/diagnostic.md) and [debug logs](logstash://logging.md)
       * {{agent}} [diagnostic](https://www.elastic.co/docs/troubleshoot/ingest/fleet/common-problems#trb-collect-agent-diagnostics) and [debug logs](https://www.elastic.co/docs/reference/fleet/monitor-elastic-agent#change-logging-level)
   
 
   :::{tip}
-  The {{es}} cluster maintains an advanced task management system, while other products use a simpler polling mechanism. Because of this, some issues appear only in their start-up debug logs and later logs may only note that the subprocess has stopped or that it has not changed state from earlier error.
+  The {{es}} cluster maintains an advanced task management system, while other products use a simpler polling mechanism. Because of this, some issues appear only in their start-up debug logs and later logs may only note that the subprocess has stopped or that it has not changed state from an earlier error.
   :::
 
   :::{warning}
-  Diagnostics and logs mainly emit product metadata and settings but may expose sensitive data which needs privacy-redacted before sharing outside of your organization. See each product's diagnostic page for information on sanitizing output.
+  Diagnostics and logs mainly emit product metadata and settings but may expose sensitive data which needs to be redacted before sharing outside of your organization. See each product's diagnostic page for information on sanitizing output.
   :::
 
