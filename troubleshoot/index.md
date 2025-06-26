@@ -86,7 +86,7 @@ When you open a support case:
   * If self-hosting:
 
     * {{es}} [diagnostic](/troubleshoot/elasticsearch/diagnostic.md) and [debug logs](/deploy-manage/monitor/logging-configuration/update-elasticsearch-logging-levels.md)
-    * {{kib}} and {{fleet}} [diagnostic](/troubleshoot/kibana/capturing-diagnostics.md) and [debug logs](/docs/deploy-manage/monitor/logging-configuration/kibana-log-levels.md)
+    * {{kib}} and {{fleet}} [diagnostic](/troubleshoot/kibana/capturing-diagnostics.md) and [debug logs](/deploy-manage/monitor/logging-configuration/kibana-log-levels.md)
     
     * Ingest tools:
 
