@@ -73,7 +73,7 @@ When you open a support case:
 
 * Upload the related product's diagnostics and debug logs
 
-  * If hosting on {{serverless-full}} or {{ech}}, Support can pull diagnostics on your behalf as long as you include resource ids:
+  * If hosting on {{serverless-full}} or {{ech}}, Support can pull diagnostics on your behalf as long as you include resource IDs:
     
     * {{serverless-full}} Project ID or {{kib}} URL
     * {{ech}} Deployment ID or {{kib}} URL
