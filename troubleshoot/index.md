@@ -98,3 +98,7 @@ When you open a support case:
   The {{es}} cluster maintains an advanced task management system, while other products use a simpler polling mechanism. Because of this, some issues appear only in their start-up debug logs and later logs may only note that the subprocess has stopped or that it has not changed state from earlier error.
   :::
 
+  :::{warning}
+  Diagnostics and logs mainly emit product metadata and settings but may expose sensitive data which needs privacy-redacted before sharing outside of your organization. See each product's diagnostic page for information on sanitizing output.
+  :::
+
