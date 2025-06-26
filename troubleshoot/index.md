@@ -58,14 +58,14 @@ If you have an [Elastic subscription](https://www.elastic.co/pricing), you can c
   :::
 
   :::{warning}
-  All cases opened by email are opened at normal severity. For incidents, kindly ensure to raise via the [Elastic Support Portal](https://support.elastic.co/) at the [appropriate severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
+  All cases opened by email default to normal severity. For incidents, open a case through the [Elastic Support Portal](https://support.elastic.co/) and select the [appropriate severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
   :::
 
 ## Working with support [troubleshoot-work-with-support]
 
-When opening a support case, kindly be sure to:
+When you open a support case:
 
-* Describe the problem along with its [contextual severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
+* Describe the problem and its [contextual severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
 
   * If an error message was encountered, include full error message and timezone-designated dates and times of when the problem occurred.
 
@@ -73,7 +73,7 @@ When opening a support case, kindly be sure to:
 
 * Upload the related product's diagnostics and debug logs
 
-  * If {{serverless-full}} or {{ech}}, Support can pull diagnostics on your behalf as long as you include resource ids:
+  * If hosting on {{serverless-full}} or {{ech}}, Support can pull diagnostics on your behalf as long as you include resource ids:
     
     * {{serverless-full}} Project ID or {{kib}} URL
     * {{ech}} Deployment ID or {{kib}} URL
@@ -95,6 +95,6 @@ When opening a support case, kindly be sure to:
   
 
   :::{tip}
-  {{es}}'s cluster maintains an advanced task management system, but the other products have a simpler polling mechanism. This can cause issues to only surface during their start-up debug logs as sequential logs will only note that the sub-process as stopped or that it has not changed state from earlier error.
+  The {{es}} cluster maintains an advanced task management system, while other products use a simpler polling mechanism. Because of this, some issues appear only in their start-up debug logs and later logs may only note that the subprocess has stopped or that it has not changed state from earlier error.
   :::
 
