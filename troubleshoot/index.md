@@ -90,7 +90,7 @@ When you open a support case:
     
     * Ingest tools:
 
-      * {{ls}} [diagnostic](/troubleshoot/ingest/logstash/diagnostic.md) and [debug logs](logstash://logging.md)
+      * {{ls}} [diagnostic](/troubleshoot/ingest/logstash/diagnostic.md) and [debug logs](logstash://reference/logging.md)
       * {{agent}} [diagnostic](https://www.elastic.co/docs/troubleshoot/ingest/fleet/common-problems#trb-collect-agent-diagnostics) and [debug logs](https://www.elastic.co/docs/reference/fleet/monitor-elastic-agent#change-logging-level)
   
 
