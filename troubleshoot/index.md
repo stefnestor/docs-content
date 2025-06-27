@@ -58,16 +58,16 @@ If you have an [Elastic subscription](https://www.elastic.co/pricing), you can c
   :::
 
   :::{warning}
-  All cases opened by email default to normal severity. For incidents, open a case through the [Elastic Support Portal](https://support.elastic.co/) and select the [appropriate severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
+  All cases opened by email default to a normal severity level. For incidents, open a case through the [Elastic Support Portal](https://support.elastic.co/) and select the [appropriate severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case).
   :::
 
 ## Working with support [troubleshoot-work-with-support]
 
 When you open a support case:
 
-* Describe the problem and its [contextual severity](https://www.elastic.co/support/welcome#what-to-say-in-a-case). 
+* Describe the problem with context about the situation and its business severity, as described in [What should I say in my case?](https://www.elastic.co/support/welcome#what-to-say-in-a-case).
 
-  * If an error message was encountered, include full error message and timezone-designated dates and times of when the problem occurred.
+  * If an error message was encountered, include the full error message and the timezone-designated timestamp of when the problem occurred.
 
   * If the problem is UI-related and can't be replicated using API calls, pull a [browser network log](https://www.elastic.co/blog/generating-browser-har-file-kibana-troubleshooting). 
 
@@ -95,10 +95,10 @@ When you open a support case:
   
 
   :::{tip}
-  The {{es}} cluster maintains an advanced task management system, while other products use a simpler polling mechanism. Because of this, some issues appear only in their start-up debug logs and later logs may only note that the subprocess has stopped or that it has not changed state from an earlier error.
+  The {{es}} cluster maintains an advanced task management system, while other products use a simpler polling mechanism. Because of this, some issues appear only in their start-up debug logs. Later logs may note only that the subprocess has stopped or that it has not changed state from an earlier error.
   :::
 
   :::{warning}
-  Diagnostics and logs mainly emit product metadata and settings but may expose sensitive data which needs to be redacted before sharing outside of your organization. See each product's diagnostic page for information on sanitizing output.
+  Diagnostics and logs mainly emit product metadata and settings, but they may expose sensitive data which needs to be redacted before being shared outside of your organization. Refer to each product's diagnostics page for information on sanitizing output.
   :::
 
