@@ -21,9 +21,17 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elastic-observability-next-fixes]
 % *
 
+## 9.1.2 [elastic-observability-9.1.2-release-notes]
+
+### Fixes [elastic-observability-9.1.2-fixes]
+
+* Fixes lock manager setup bug [#230519]({{kib-pull}}230519).
+* Adds timestamp range filter to exclude frozen tier [#230375]({{kib-pull}}230375).
+* Adjusts end-to-end onboarding tests to work in serverless environment [#229969]({{kib-pull}}229969).
+
 ## 9.1.1 [elastic-observability-9.1.1-release-notes]
 
-### Fixes [elastic-observability-9.1.0-fixes]
+### Fixes [elastic-observability-9.1.1-fixes]
 
 * Fixes global parameters sync for non-default private locations [#230157]({{kib-pull}}230157).
 
