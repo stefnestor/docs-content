@@ -16,16 +16,16 @@ products:
 
 You can manage and authenticate users with the built-in `file` realm. With the `file` realm, users and roles are defined in local files on each node. 
 
-The main {{stack}} {{security-features}} rely on the `security` [feature state](/deploy-manage/tools/snapshot-and-restore) which is mostly composed of the `.security*` [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions#system-indices). The `file` realm acts as a failsafe to expand this feature's functionality from the cluster level down to each individual node. The `file` realm cannot be managed using the cluster's [security APIs](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-security) nor using {{kib}} **Management > Security** pages.
+The main {{stack}} {{security-features}} rely on the `security` [feature state](/deploy-manage/tools/snapshot-and-restore.md) which is mostly composed of the `.security*` [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices). The `file` realm acts as a failsafe to expand this feature's functionality from the cluster level down to each individual node. The `file` realm cannot be managed using the cluster's [security APIs](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-security) nor using {{kib}} **Management > Security** pages.
 
 Therefore, the `file` realm is commonly used as a fallback or recovery realm. It is helpful in cases where the
 
 * Cluster is unresponsive
 * {{stack}} {{security-features}} is unavailable to the current node
-* {{stack}} {{security-features}} is [lost and needs restored](/troubleshoot/elasticsearch/red-yellow-cluster-status#fix-cluster-status-restore) 
+* {{stack}} {{security-features}} is [lost and needs restored](/troubleshoot/elasticsearch/red-yellow-cluster-status.md#fix-cluster-status-restore) 
 * Administrative users' passwords are lost and [need reset](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-change-password)
 
-The {{stack}} {{security-features}} only apply the `file` realm to the modified local node and do not apply changes across all nodes within the cluster. Administators of self-managed deployments are responsible to ensure that either
+The {{stack}} {{security-features}} only apply the `file` realm to the modified local node and do not apply changes across all nodes within the cluster. Administrators of self-managed deployments are responsible to ensure that either
 
 * The same users and roles are defined across every node in the cluster.
   * Frequently administrators choose to apply the change on one of the {{es}} nodes and have the files distributed or copied to all other nodes in the cluster (either manually or using a configuration management system such as Puppet or Chef).
@@ -53,26 +53,26 @@ You don’t need to explicitly configure the `file` realm. The `file` and `nativ
     Because `resource.reload.interval.high` is a foundational setting for {{es}}, changing its value may effect other schedules in the system.
     :::
 
-3. In self-managed deployments, if either prior setting is modified, you will need to [rolling restart](/deploy-manage/maintenance/start-stop-services/full-cluster-restart-rolling-restart-procedures#restart-cluster-rolling) those {{es}} nodes for your changes to take effect. In {{eck}}, changes are automatically propagated.
+3. In self-managed deployments, if either prior setting is modified, you will need to [rolling restart](/deploy-manage/maintenance/start-stop-services/full-cluster-restart-rolling-restart-procedures.md#restart-cluster-rolling) those {{es}} nodes for your changes to take effect. In {{eck}}, changes are automatically propagated.
 
 ## Configure files [file-realm-files]
 
-The `file` realm reads its files upon the local node's initial startup and as periodically refreshed based on the `resource.reload.interval.high` setting. You do not need to restart nodes for changes to take effect. Its files are located under the [`ES_PATH_CONF` directory](/deploy-manage/deploy/self-managed/configure-elasticsearch#config-files-location) and contain
+The `file` realm reads its files upon the local node's initial startup and as periodically refreshed based on the `resource.reload.interval.high` setting. You do not need to restart nodes for changes to take effect. Its files are located under the [`ES_PATH_CONF` directory](/deploy-manage/deploy/self-managed/configure-elasticsearch.md#config-files-location) and contain
 
-* `roles.yml` for [defining roles](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles)
-* `role_mapping.yml` for [mapping external users and groups to roles](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles)
-* `users` for [user password-based authentication](/deploy-manage/users-roles/cluster-or-deployment-auth/user-authentication)
-* `user_roles` for [user role-based authorization](/deploy-manage/users-roles/cluster-or-deployment-auth/user-roles)
+* `roles.yml` for [defining roles](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles.md)
+* `role_mapping.yml` for [mapping external users and groups to roles](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles.md)
+* `users` for [user password-based authentication](/deploy-manage/users-roles/cluster-or-deployment-auth/user-authentication.md)
+* `user_roles` for [user role-based authorization](/deploy-manage/users-roles/cluster-or-deployment-auth/user-roles.md)
 
 ### Define roles [file-realm-roles]
 
 Before granting a `file` realm user its roles, you will want to ensure those desired roles exists. Roles can be defined from
 
-* [built-in roles](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles)
-* [custom roles](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles) defined under the {{stack}} {{security-features}}
-* `roles.yml`per [File-based Role Management](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles#roles-management-file)
+* [built-in roles](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles.md)
+* [custom roles](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles.md) defined under the {{stack}} {{security-features}}
+* `roles.yml`per [File-based role management](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles.md#roles-management-file)
 
-{{es}} recommends following the industry's [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) when granting user permissions. {{es}} follows this guidance itself by [restricting system indices](/deploy-manage/users-roles/cluster-or-deployment-auth/role-structure#roles-indices-priv) by default, even from [`superuser` role](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles#roles) administrators including the [`elastic` built-in user](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-users). While recovering {{stack}} {{security-features}}, you may need to temporarily define a role with `allow_restricted_indices` access enabled. For example, expanding the `superuser` role to include `allow_restricted_indices: true` would appear like like new role `superduperuser` definition
+{{es}} recommends following the industry's [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) when granting user permissions. {{es}} follows this guidance itself by [restricting system indices](/deploy-manage/users-roles/cluster-or-deployment-auth/role-structure.md#roles-indices-priv) by default, even from [`superuser` role](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles.md#roles) administrators including the [`elastic` built-in user](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-users.md). While recovering {{stack}} {{security-features}}, you may need to temporarily define a role with `allow_restricted_indices` access enabled. For example, expanding the `superuser` role to include `allow_restricted_indices: true` would appear like like new role `superduperuser` definition
 
 ```yaml
 superduperuser:
@@ -89,7 +89,7 @@ Restricted indices are a special category of indices that are used to store clus
 
 ### Define role mappings [file-realm-role-mappings]
 
-For clusters with high authentication volume or with extremely large [role mappings](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles), you may potentially find performance improvement by defining custom `role_mapping.yml` locally on each node in the cluster. For more information, see [using role mapping files](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles#mapping-roles-file).
+For clusters with high authentication volume or with extremely large [role mappings](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles.md), you may potentially find performance improvement by defining custom `role_mapping.yml` locally on each node in the cluster. For more information, see [using role mapping files](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles.md#mapping-roles-file).
 
 ### Add users [file-realm-users]
 
@@ -102,7 +102,7 @@ For {{eck}} deployments, these can also be passed through [{{k8s}} basic authent
 
 #### Defining user files [file-realm-user-files]
 
-For most administrators, {{es}} recommends using the [`elasticsearch-users` tool](elasticsearch://reference/elasticsearch/command-line-tools/users-command) which compiles the `users` and `users_roles` files on your behalf. 
+For most administrators, {{es}} recommends using the [`elasticsearch-users` tool](elasticsearch://reference/elasticsearch/command-line-tools/users-command.md) which compiles the `users` and `users_roles` files on your behalf. 
 
 Expanding on our earlier `superduperuser` role example as part of demonstrating creating an advanced administrative user in order to recover the {{stack}} {{security-features}}, you would run
 
