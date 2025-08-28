@@ -21,6 +21,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elastic-observability-next-fixes]
 % *
 
+## 9.1.3 [elastic-observability-9.1.3-release-notes]
+
+### Fixes [elastic-observability-9.1.3-fixes]
+
+* Fixes Synthetics monitor filters [#231562]({{kib-pull}}2301562).
+
 ## 9.1.2 [elastic-observability-9.1.2-release-notes]
 
 ### Fixes [elastic-observability-9.1.2-fixes]
