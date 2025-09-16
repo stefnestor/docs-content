@@ -8,7 +8,7 @@ products:
   - id: cloud-kubernetes
 ---
 
-# File-based recovery
+# File-based access recovery
 
 The [built-in `file` realm](/deploy-manage/users-roles/cluster-or-deployment-auth/file-based.md) is commonly used as a fallback or recovery realm. 
 
