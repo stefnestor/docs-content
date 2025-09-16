@@ -9,9 +9,9 @@ products:
   - id: elasticsearch
 ---
 
-# File-based Recovery [file-based-recovery]
+# File-based recovery [file-based-recovery]
 
-The [built-in `file` realm](docs-content://deploy-manage/users-roles/cluster-or-deployment-auth/file-based.md) is commonly used as a fallback or recovery realm. 
+The [built-in `file` realm](/deploy-manage/users-roles/cluster-or-deployment-auth/file-based.md) is commonly used as a fallback or recovery realm. 
 
 The main {{stack}} {{security-features}} rely on the `security` [feature state](/deploy-manage/tools/snapshot-and-restore.md) which is mostly composed of the `.security*` [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices). The `file` realm acts as a failsafe to expand this feature's functionality from the cluster level down to each individual node. The `file` realm cannot be managed using the cluster's [security APIs](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-security) nor using {{kib}} **Management > Security** pages.
 

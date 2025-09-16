@@ -16,7 +16,7 @@ products:
 
 You can manage and authenticate users with the built-in `file` realm. With the `file` realm, users are defined in local files on each node in the cluster.
 
-The `file` realm is useful as a fallback or recovery realm. For example in cases where the cluster is unresponsive or the security index is unavailable, or when you forget the password for your administrative users. In this type of scenario, the `file` realm is a convenient workaround: you can define a new `admin` user in the `file` realm and use it to log in and reset the credentials of all other users. For more information, see [file-based recovery](troubleshoot/elasticsearch/file-based-recovery.md).
+The `file` realm is useful as a fallback or recovery realm. For example in cases where the cluster is unresponsive or the security index is unavailable, or when you forget the password for your administrative users. In this type of scenario, the `file` realm is a convenient workaround: you can define a new `admin` user in the `file` realm and use it to log in and reset the credentials of all other users. For more information, see [file-based recovery](/troubleshoot/elasticsearch/file-based-recovery.md).
 
 Refer to [enabling a file realm user for recovery](https://www.youtube.com/watch?v=sueO7sz1buw) for a video walkthrough. 
 
