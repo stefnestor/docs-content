@@ -53,7 +53,7 @@ Before granting a `file` realm user any roles, you need to ensure that those des
 
 {{es}} recommends following the industry's [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) when granting user permissions. {{es}} follows this guidance itself by [restricting system indices](/deploy-manage/users-roles/cluster-or-deployment-auth/role-structure.md#roles-indices-priv) by default, even from [`superuser` role](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles.md#roles) administrators including the [`elastic` built-in user](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-users.md). 
 
-When recovering {{stack}} {{security-features}}, you might need to temporarily define a custom role with the [`allow_restricted_indices` setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role) enabled. 
+The main {{stack}} {{security-features}} rely on the `security` [feature state](/deploy-manage/tools/snapshot-and-restore.md) which is mostly composed of the `.security*` [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices). When recovering {{stack}} {{security-features}}, you will likely need to temporarily define a custom role with the [`allow_restricted_indices` setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role) enabled.
 
 For example, to grant all of the privileges of `superuser` role alongside `allow_restricted_indices: true` you can create a new role called `superduperuser` with the following definition:
 
@@ -215,3 +215,21 @@ You can also add `file` realm users using [{{k8s}} basic authentication secrets]
 :::
 
 ::::
+
+## Step 4: Recover {{security-features}} [file-realm-recovery-curl]
+
+At this point, the local {{es}} node will accept [Elasticsearch API requests](https://www.elastic.co/docs/reference/elasticsearch/rest-apis) with the created `file` based username and password. Assuming username `admin` was created with password `changeme` and role `superduperuser`, then you could curl the [Get cluster info API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info) from the node's local shell
+```bash
+curl -X GET -sk -u "admin:changeme" "https://localhost:9200/" 
+```
+
+:::{{tip}}
+The related API requests need to be directed to the local node(s) where `file` has been configured rather than to any cluster-level load balancer or proxy URL.
+:::
+
+You can confirm desired `superduperuser` role is applied to your `admin` username with [Authenticate a user API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-authenticate)
+```bash
+curl -X GET -sk -u "admin:changeme" "https://localhost:9200/_security/_authenticate?pretty=true" 
+```
+
+Now that you have regained recovery access to the cluster you can investigate and recover the {{stack}} {{security-features}} as needed.
