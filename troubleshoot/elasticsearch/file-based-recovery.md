@@ -49,11 +49,11 @@ The `file` realm reads its files upon the local node's initial startup and as pe
 
 Before granting a `file` realm user any roles, you need to ensure that those desired roles exist. You can use the following types of roles:
 
-* [Built-in roles](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles.md)
+* [Built-in roles](elasticsearch://reference/elasticsearch/roles.md)
 * [Custom roles](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles.md) defined under the {{stack}} {{security-features}}
 * Roles defined in [`roles.yml`](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles.md#roles-management-file)
 
-{{es}} recommends following the industry's [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) when granting user permissions. {{es}} follows this guidance itself by [restricting system indices](/deploy-manage/users-roles/cluster-or-deployment-auth/role-structure.md#roles-indices-priv) by default, even from [`superuser` role](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-roles.md#roles) administrators including the [`elastic` built-in user](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-users.md). 
+{{es}} recommends following the industry's [principle of least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) when granting user permissions. {{es}} follows this guidance itself by [restricting system indices](/deploy-manage/users-roles/cluster-or-deployment-auth/role-structure.md#roles-indices-priv) by default, even from [`superuser` role](elasticsearch://reference/elasticsearch/roles.md#available-roles) administrators including the [`elastic` built-in user](/deploy-manage/users-roles/cluster-or-deployment-auth/built-in-users.md). 
 
 The main {{stack}} {{security-features}} rely on the `security` [feature state](/deploy-manage/tools/snapshot-and-restore.md) which is mostly composed of the `.security*` [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices). When recovering {{stack}} {{security-features}}, you will likely need to temporarily define a custom role with the [`allow_restricted_indices` setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role) enabled.
 
