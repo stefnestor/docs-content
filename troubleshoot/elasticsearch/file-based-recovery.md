@@ -28,7 +28,9 @@ The {{stack}} {{security-features}} only apply the `file` realm to the modified 
   Frequently, administrators choose to apply the change on one {{es}} node and then distribute or copy the files to all other nodes in the cluster. Files can be distributed either manually or using a configuration management system such as Puppet or Chef.
 * The related API requests are directed to the local node rather than to any cluster-level load balancer or proxy URL.
 
-Refer to [enabling a file realm user for recovery](https://www.youtube.com/watch?v=sueO7sz1buw) for a video walkthrough.
+:::{tip}
+Refer to [enabling a file realm user for recovery](https://www.youtube.com/watch?v=sueO7sz1buw) for a video walkthrough of this process.
+:::
 
 ## Step 1 (Optional): Configure the realm [file-realm-recovery-configuration]
 
@@ -218,18 +220,20 @@ You can also add `file` realm users using [{{k8s}} basic authentication secrets]
 
 ## Step 4: Recover {{security-features}} [file-realm-recovery-curl]
 
-At this point, the local {{es}} node will accept [Elasticsearch API requests](https://www.elastic.co/docs/reference/elasticsearch/rest-apis) with the created `file` based username and password. Assuming username `admin` was created with password `changeme` and role `superduperuser`, then you could curl the [Get cluster info API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info) from the node's local shell
+At this point, the local {{es}} node will accept [Elasticsearch API requests](https://www.elastic.co/docs/reference/elasticsearch/rest-apis) with the created `file` based username and password. 
+
+For example, if you created a user with the username `admin`, password `changeme`, and role `superduperuser`, then you can now send a cURL request to the [Get cluster info API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info) from the node's local shell:
 ```bash
 curl -X GET -sk -u "admin:changeme" "https://localhost:9200/" 
 ```
 
 :::{{tip}}
-The related API requests need to be directed to the local node(s) where `file` has been configured rather than to any cluster-level load balancer or proxy URL.
+The related API requests need to be directed to the local nodes where `file` has been configured, rather than to any cluster-level load balancer or proxy URL.
 :::
 
-You can confirm desired `superduperuser` role is applied to your `admin` username with [Authenticate a user API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-authenticate)
+You can confirm that the desired `superduperuser` role is applied to your `admin` username using the [Authenticate a user API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-authenticate):
 ```bash
 curl -X GET -sk -u "admin:changeme" "https://localhost:9200/_security/_authenticate?pretty=true" 
 ```
 
-Now that you have regained recovery access to the cluster you can investigate and recover the {{stack}} {{security-features}} as needed.
+Now that you have regained recovery access to the cluster, you can investigate and recover the {{stack}} {{security-features}} as needed.
