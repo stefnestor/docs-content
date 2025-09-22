@@ -18,6 +18,8 @@ import re
 import sys
 import argparse
 import subprocess
+import os
+import datetime
 from pathlib import Path
 
 
@@ -25,11 +27,14 @@ def fetch_url_content(url):
     """Fetch content from a URL"""
     try:
         print(f"Attempting to fetch: {url}")
-        with urllib.request.urlopen(url) as response:
+        with urllib.request.urlopen(url, timeout=30) as response:
             content = response.read().decode('utf-8')
         return content
     except urllib.error.URLError as e:
         print(f"Failed to retrieve content: {e.reason}")
+        return None
+    except Exception as e:
+        print(f"Unexpected error fetching URL: {e}")
         return None
 
 
@@ -40,7 +45,11 @@ def get_latest_collector_version():
         
         # Run git command to get the latest semantic version tag
         cmd = ['git', 'ls-remote', '--tags', 'https://github.com/elastic/elastic-agent.git']
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=60)
+        
+        if not result.stdout.strip():
+            print("No output from git ls-remote command")
+            return None
         
         # Extract version tags and find the latest semantic version
         tags = []
@@ -67,8 +76,13 @@ def get_latest_collector_version():
         print(f"Latest collector version: {version}")
         return version
         
+    except subprocess.TimeoutExpired:
+        print("Timeout while fetching tags from elastic-agent repository")
+        return None
     except subprocess.CalledProcessError as e:
         print(f"Error fetching tags from elastic-agent repository: {e}")
+        if e.stderr:
+            print(f"Error details: {e.stderr}")
         return None
     except Exception as e:
         print(f"Error getting latest collector version: {e}")
@@ -146,10 +160,34 @@ def update_docset_kube_stack_version(version, docset_path, dry_run=False):
         return False
 
 
+def prepare_git_changes(version, dry_run=False):
+    """Prepare git changes for PR creation (used by GitHub Actions)"""
+    if dry_run:
+        print(f"[DRY RUN] Would prepare git changes for kube-stack version {version}")
+        return True
+    
+    try:
+        # Add and commit changes
+        subprocess.run(['git', 'add', 'docset.yml'], check=True)
+        subprocess.run(['git', 'commit', '-m', f'chore: update kube-stack version to {version} [skip ci]'], check=True)
+        
+        print(f"Git changes prepared for kube-stack version {version}")
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Error preparing git changes: {e}")
+        return False
+    except Exception as e:
+        print(f"Error preparing git changes: {e}")
+        return False
+
+
 def main():
     parser = argparse.ArgumentParser(description='Update kube-stack version in docset.yml')
     parser.add_argument('--dry-run', action='store_true', 
                        help='Show what would be updated without making changes')
+    parser.add_argument('--prepare-git', action='store_true', default=False,
+                       help='Prepare git changes for PR creation (used by GitHub Actions)')
     args = parser.parse_args()
     
     # Get the script directory and construct paths relative to it
@@ -178,10 +216,20 @@ def main():
     success = update_docset_kube_stack_version(kube_stack_version, docset_path, args.dry_run)
     
     if success:
-        print("Kube-stack version update completed successfully")
-        sys.exit(0)
+        if args.prepare_git:
+            # Prepare git changes for GitHub Actions PR creation
+            git_success = prepare_git_changes(kube_stack_version, args.dry_run)
+            if git_success:
+                print("Kube-stack version update and git changes prepared successfully")
+                sys.exit(0)
+            else:
+                print("Kube-stack version updated but git preparation failed")
+                sys.exit(1)
+        else:
+            print("Kube-stack version update completed successfully")
+            sys.exit(0)
     else:
-        print("No update was needed")
+        print("No update was needed - kube-stack version is already up to date")
         sys.exit(0)
 
 
