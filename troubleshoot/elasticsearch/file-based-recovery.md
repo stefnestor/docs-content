@@ -38,7 +38,7 @@ You don’t need to explicitly configure a `file` realm. The `file` and `native`
 
 To learn how to override the default `file` realm configuration, refer to [Configure a file realm](https://www.elastic.co/docs/deploy-manage/users-roles/cluster-or-deployment-auth/file-based#file-realm-configuration).
 
-The `file` realm reads its files upon the local node's initial startup and as periodically refreshed based on the `resource.reload.interval.high` setting. You do not need to restart nodes for changes to take effect. Its files are located under the [`ES_PATH_CONF` directory](/deploy-manage/deploy/self-managed/configure-elasticsearch.md#config-files-location) and contain the following information:
+{{es}} reads security-related files upon the local node's initial startup and as periodically refreshed based on the `resource.reload.interval.high` setting. You do not need to restart nodes for changes to take effect. These files are located under the [`ES_PATH_CONF` directory](/deploy-manage/deploy/self-managed/configure-elasticsearch.md#config-files-location) and contain the following information:
 
 * `roles.yml` for [defining roles](/deploy-manage/users-roles/cluster-or-deployment-auth/defining-roles.md)
 * `role_mapping.yml` for [mapping external users and groups to roles](/deploy-manage/users-roles/cluster-or-deployment-auth/mapping-users-groups-to-roles.md)
@@ -57,7 +57,7 @@ Before granting a `file` realm user any roles, you need to ensure that those des
 
 The main {{stack}} {{security-features}} rely on the `security` [feature state](/deploy-manage/tools/snapshot-and-restore.md) which is mostly composed of the `.security*` [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices). When recovering {{stack}} {{security-features}}, you will likely need to temporarily define a custom role with the [`allow_restricted_indices` setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role) enabled.
 
-For example, to grant all of the privileges of `superuser` role alongside `allow_restricted_indices: true` you can create a new role called `superduperuser` with the following definition:
+For example, to grant the administrative privileges of `superuser` role alongside `allow_restricted_indices: true` you can create a new role called `superduperuser` with the following definition:
 
 ```yaml
 superduperuser:

@@ -43,7 +43,7 @@ You don’t need to explicitly configure a `file` realm. The `file` and `native`
     Because `resource.reload.interval.high` is a common setting in {{es}}, changing its value may effect other schedules in the system.
     :::
 
-3. In self-managed deployments, if of these settings is modified, perform a [rolling restart](/deploy-manage/maintenance/start-stop-services/full-cluster-restart-rolling-restart-procedures.md#restart-cluster-rolling) of the {{es}} nodes for your changes to take effect. 
+3. In self-managed deployments, if either of these settings is modified, perform a [rolling restart](/deploy-manage/maintenance/start-stop-services/full-cluster-restart-rolling-restart-procedures.md#restart-cluster-rolling) of the {{es}} nodes for your changes to take effect. 
 
     In {{eck}}, changes are automatically propagated.
 
