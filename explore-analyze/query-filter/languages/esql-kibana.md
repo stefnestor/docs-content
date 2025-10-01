@@ -83,18 +83,18 @@ FROM kibana_sample_data_logs | LIMIT 10
 
 ### Make your query readable [_make_your_query_readable]
 
-For readability, you can put each processing command on a new line. The following query is identical to the previous one:
+For readability, you can put each processing command on a new line and add indentation. The following query is identical to the previous one:
 
 ```esql
 FROM kibana_sample_data_logs
-| LIMIT 10
+  | LIMIT 10
 ```
 
-You can do that using the **Add line breaks on pipes** button from the query editor’s footer.
+You can do that automatically using the {icon}`pipeBreaks` **Prettify query** button from the query editor’s footer.
 
 :::{image} /explore-analyze/images/esql-line-breakdown.gif
-:alt: Automatic line breaks for ES|QL queries
-:width: 50%
+:alt: Automatic line breaks and indentation for ES|QL queries
+:width: 75%
 :::
 
 You can adjust the editor’s height by dragging its bottom border to your liking.
