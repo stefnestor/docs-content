@@ -21,6 +21,20 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elastic-observability-next-fixes]
 % *
 
+## 9.1.5 [elastic-observability-9.1.5-release-notes]
+
+### Features and enhancements[elastic-observability-9.1.5-features]
+
+* Allows implementation of a default LLM connector from settings [#236103]({{kib-pull}}236103).
+
+### Fixes [elastic-observability-9.1.5-fixes]
+
+* Removes span documents from `getServiceAgent` function [#236732]({{kib-pull}}236732).
+* Removes incorrect `fleet.ssl` configuration [#236788]({{kib-pull}}236788).
+* Fixes malformed synthetics package policies [#236176]({{kib-pull}}236176).
+* Reverts filter policy inputs [#236104]({{kib-pull}}236104).
+* Removes extra synthetics package policies [#235200]({{kib-pull}}235200).
+
 ## 9.1.4 [elastic-observability-9.1.4-release-notes]
 
 ### Enhancements [elastic-observability-9.1.4-enhancements]
