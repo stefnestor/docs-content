@@ -24,7 +24,11 @@ The assistant identifies deprecated settings in your configuration, and if any o
 
 ## Required permissions [_required_permissions_11] 
 
-To access the Upgrade Assistant, you need the `manage` cluster privilege. You may also need additional privileges to perform specific actions.
+To access the Upgrade Assistant, you need the `manage` cluster privilege. 
+
+Reindexing indices requires "all" access for both the existing and target index. In versions 8.18.0 through 8.18.8 and 8.19.0 through 8.19.5, the `superuser` role is required.
+
+You may also need additional privileges to perform specific actions.
 
 
 ## Feature set [_feature_set] 
