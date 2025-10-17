@@ -174,7 +174,7 @@ The response includes an aggregation based on the `day_of_week` runtime field. U
 
 Search requests do not time out by default. The request waits for complete results from every shard before returning a response as outlined in the [basic read model](https://www.elastic.co/docs/deploy-manage/distributed-architecture/reading-and-writing-documents#_basic_read_model).
 
-You can override the search request to best-effort time out through its [`timeout` setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search), provided either as query parameter or within request body. If the search timeout is surpassed before the search request finishes, the request is cancelled using [task cancellation API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-cancel). The `timeout` setting
+You can override the search request to best-effort time out through its [`timeout` setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search), provided either as query parameter or within request body. If the search timeout is surpassed before the search request finishes for the given shard it stops where it is and returns partial results. The `timeout` setting
 
 * Checks for duration expiration on a per shard basis. 
 * Performs cancellations along a shard's segment boundaries; therefore, large segments may delay cancellation.
@@ -184,7 +184,7 @@ You can override the search request to best-effort time out through its [`timeou
     * [thread pool queue](https://www.elastic.co/docs/troubleshoot/elasticsearch/task-queue-backlog#diagnose-task-queue-thread-pool)
     * [`fetch` phase](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/search-profile#profiling-fetch)
 
-You can set a cluster-wide default  `timeout` for all search requests. This is configured by the `search.default_search_timeout` cluster setting. This setting defaults to `-1` indicating disabled or no timeout. This cluster-wide time-out is used as fallback if no `timeout` argument is designated by a search request. You can override this to a desired [time unit](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/api-conventions#time-units) value using the [update cluster settings API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-settings). For example
+You can set a cluster-wide default  `timeout` for all search requests. This is configured by the `search.default_search_timeout` cluster setting. This setting defaults to `-1` indicating disabled or no timeout. This cluster-wide time-out is used as fallback if no `timeout` argument is designated by a search request. You can override this to a desired [time unit](https://www.elastic.co/docs/reference/elasticsearch/rest-apis/api-conventions#time-units) value using the [update cluster settings API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-settings). In this case, the request will be cancelled using the [task cancellation API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-cancel). For example
 
 ```console
 PUT /_cluster/settings
