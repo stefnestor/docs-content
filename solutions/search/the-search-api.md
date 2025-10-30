@@ -195,7 +195,7 @@ PUT /_cluster/settings
 The `search.default_search_timeout` setting's resolution sensitivity is based from expert setting `thread_pool.estimated_time_interval` which defaults to `200ms`. This means the minimum meaningful impact threshold for `search.default_search_timeout` would also be `200ms`. Elastic recommends against overriding this expert setting as it has far reaching impact.
 :::
 
-The `search.default_search_timeout` cluster setting only applies to the current cluster and does not cascade during [Cross Cluster Search (CSS)](/solutions/search/cross-cluster-search). Remote clusters should be individually configured as makes sense for your use case.
+The `search.default_search_timeout` cluster setting only applies to the current cluster and does not cascade during [Cross Cluster Search (CSS)](/solutions/search/cross-cluster-search.md). Remote clusters should be individually configured as makes sense for your use case.
 
 ### Example [search-timeout-example]
 
