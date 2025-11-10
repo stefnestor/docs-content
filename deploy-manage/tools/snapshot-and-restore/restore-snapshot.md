@@ -165,13 +165,13 @@ You can restore a [feature state](../../../deploy-manage/tools/snapshot-and-rest
 
 If you restore a snapshot’s cluster state, the operation restores all feature states in the snapshot by default. Similarly, if you don’t restore a snapshot’s cluster state, the operation doesn’t restore any feature states by default. You can also choose to restore only specific feature states from a snapshot, regardless of the cluster state.
 
-Feature backing indices are version dependent. To see which indices are included within a snapshot's feature state, [list an applicable snapshot](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get). For example on {{ech}} you might poll its latest snapshot on its built-in SLM policy `cloud-snapshot-policy`.
+Feature backing indices are version dependent. To see which indices are included within a snapshot's feature state, [list an applicable snapshot](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get). For example, on {{ech}} you might poll its latest snapshot on its built-in  `cloud-snapshot-policy` SLM policy:
 
 ```console
 GET /_snapshot/_all/_all?filter_path=snapshots.feature_states&index_names=false&sort=start_time&size=1&order=desc&slm_policy_filter=cloud-snapshot-policy
 ```
 
-The response’s `feature_states` property contains a list of features in the snapshot as well as each feature’s indices. For an example cluster, its output might appear:
+The response’s `feature_states` property contains a list of features in the snapshot as well as each feature’s indices. The following is an example of the output that might display for a cluster:
 
 ```json
 {
@@ -227,13 +227,13 @@ The response’s `feature_states` property contains a list of features in the sn
 
 To restore a specific feature state from the snapshot, specify the `feature_name` from the response in the [restore snapshot API’s](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-restore) `feature_states` parameter.
 
-Feature state names may line-up to {{kib}} UI sections while not being encompassing to completely reset that UI. For example, the {{fleet}} UI backs against the `fleet` feature state as well as `kibana` and `security`. It is important to ensure you line up desired reset behavior with which backing feature states to include in the `feature_states` parameter when restoring.
+Note that feature state names may match {{kib}} UI sections, but restoring a single feature state may not fully reset that UI. For example, the {{fleet}} UI depends on the `fleet` feature state as well as `kibana` and `security`. When restoring, it's important to include all required feature states in the `feature_states` parameter to achieve the desired reset behavior.
 
 ::::{warning}
 Restoring the `security` feature state overwrites system indices used for authentication. If you use {{ech}} or {{ece}}, ensure you have access to the [{{es}} API console](cloud://reference/cloud-hosted/ec-api-console.md) before restoring the `security` feature state. If you run {{es}} on your own hardware or in {{eck}}, [create a temporary user with elevated permissions to edit restricted indices in the file realm](/troubleshoot/elasticsearch/file-based-recovery.md) to ensure you’ll still be able to access your cluster.
 ::::
 
-When you restore a feature state, {{es}} closes and overwrites the feature’s existing indices and data streams. Therefore to [snapshot restore](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-restore) the `geoip` feature state for example will appear like:
+When you restore a feature state, {{es}} closes and overwrites the feature’s existing indices and data streams. For example, to [snapshot restore](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-restore) the `geoip` feature state, you might use:
 
 ```console
 POST _snapshot/my_repository/my_snapshot_2099.05.06/_restore
