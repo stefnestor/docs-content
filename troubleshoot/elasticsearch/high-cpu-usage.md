@@ -145,6 +145,8 @@ To track CPU usage over time, we recommend enabling monitoring:
 
 :::::::
 
+You may also consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review as part of [task backlog](task-queue-backlog.md).
+
 
 ## Reduce CPU usage [reduce]
 
