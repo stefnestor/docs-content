@@ -12,15 +12,15 @@ products:
 
 {{es}} uses [thread pools](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md) to manage node CPU and JVM resources for concurrent operations. The thread pools are portioned different amounts of threads, frequently based off of the total processors allocated to the node. This helps the node remain responsive while experiencing either [expensive tasks or task queue backlog](task-queue-backlog.md). {{es}} will [reject requests](rejected-requests.md) related to a thread pool while its queue is saturated.
 
-An individual task may spawn work on multiple node threads, frequently within these designated thread pools. It is normal for an [individual thread](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to saturate its CPU usage. A thread reporting CPU saturation could reflect either the thread spending its time processing an ask from an individual expensive task or the thread staying busy due to processing asks from multiple tasks. Hot threads report a snapshot of Java threads across a time interval. Therefore, hot threads cannot be directly lined up to any given [node task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
+An individual task can spawn work on multiple node threads, frequently within these designated thread pools. It is normal for an [individual thread](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to saturate its CPU usage. A thread reporting CPU saturation could reflect either the thread spending its time processing an ask from an individual expensive task or the thread staying busy due to processing asks from multiple tasks. Hot threads report a snapshot of Java threads across a time interval. Therefore, hot threads cannot be directly lined up to any given [node task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
 
-A node may temporarily saturate all CPU threads allocated to it. It is unusual for this to be ongoing for an extended interval. This might suggest that the node is
+A node can temporarily saturate all CPU threads allocated to it. It is unusual for this to be ongoing for an extended interval. This might suggest that the node is
 
 * sized disproportionate to its [data tier](/manage-data/lifecycle/data-tiers.md) peers
-* experiencing a volume of requests above its workload ability; for example, is sized below [minimum recommendations](/deploy-manage/deploy/elastic-cloud/elastic-cloud-hosted-planning.md#ec-minimum-recommendations.md)
+* experiencing a volume of requests above its workload ability; for example, is sized below [minimum recommendations](/deploy-manage/deploy/elastic-cloud/elastic-cloud-hosted-planning.md#ec-minimum-recommendations)
 * experiencing an [expensive task](task-queue-backlog.md)
 
-To mitigate performance outages, we default recommend pulling an [{{es}} diagnostic](elasticsearch://reference/current/diagnostic.md) for post-mortem but trying to resolve via [scaling](/deploy-manage/production-guidance/scaling-considerations.md).
+To mitigate performance outages, we default recommend pulling an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) for post-mortem but trying to resolve using [scaling](/deploy-manage/production-guidance/scaling-considerations.md).
 
 Refer to the below guide for troubleshooting degraded CPU performance.
 
@@ -43,9 +43,9 @@ As the API's backing [Node Stats](https://www.elastic.co/docs/api/doc/elasticsea
 These metrics' thresholds to alert depend on your team's workload-vs-duration needs; however, as a general start point baseline, you might consider investigating if:
 
 * (recommended) CPU usage remains elevated above 95% for an extended interval.
-* Load average divided by the node's allocated processors is elevated. This metrics is insufficient on its own and should be considered along side elevated response times, otherwise may just reflect normal background I/O.
+* Load average divided by the node's allocated processors is elevated. This metrics is insufficient on its own and should be considered along side elevated response times, otherwise might reflect normal background I/O.
 
-If CPU usage is deemed concerning, we recommend checking this output for traffic patterns either segmented by or [hot spotted](elasticsearch://reference/current/hotspotting.md) within columns `role` and `master`. CPU issues spanning an entire data tier suggest a configuration issue or it being undersized. CPU issues spanning a subset of nodes within one/more data tiers suggest [hot spotting](elasticsearch://reference/current/hotspotting.md) tasks.
+If CPU usage is deemed concerning, we recommend checking this output for traffic patterns either segmented by or [hot spotted](/troubleshoot/elasticsearch/hotspotting.md) within columns `role` and `master`. CPU issues spanning an entire data tier suggest a configuration issue or it being undersized. CPU issues spanning a subset of nodes within one/more data tiers suggest [hot spotting](/troubleshoot/elasticsearch/hotspotting.md) tasks.
 
 
 ### Check hot threads [check-hot-threads]
@@ -91,25 +91,25 @@ The three variations of CPU times reported in this output are:
 
 * `TOTAL_CPU`: total CPU used by the CPU thread (either by {{es}} or operating system)
 * `ELASTIC_CPU`: CPU available to {{es}} and used by it
-* `OTHER_CPU`: miscellaneous bucket for disk/network IO and/or JVM Garbage Collection (GC)
+* `OTHER_CPU`: miscellaneous bucket for disk/network IO or Garbage Collection (GC)
 
 Where `ELASTIC_CPU` is the main driver of elevated `TOTAL_CPU`, investigate the `STACKTRACE_SAMPLE`. These lines frequently emit {{es}} [loggers](/deploy-manage/monitor/logging-configuration.md) but might also surface non-{{es}} processes. As common performance logger examples:
 
-* `org.elasticsearch.action.search` or `org.elasticsearch.search` is a [running search](/explore-analyze.md)
-* `org.elasticsearch.cluster.metadata.Metadata.findAliases` is an [alias](/manage-data/data-store/aliases) look-up/resolver 
+* `org.elasticsearch.action.search` or `org.elasticsearch.search` is a [running search](/explore-analyze/index.md)
+* `org.elasticsearch.cluster.metadata.Metadata.findAliases` is an [alias](/manage-data/data-store/aliases.md) look-up/resolver 
 * `org.elasticsearch.common.regex` is [custom Regex code](/explore-analyze/scripting/modules-scripting-regular-expressions-tutorial.md)
 * `org.elasticsearch.grok` is [custom Grok code](/explore-analyze/scripting/grok.md)
 * `org.elasticsearch.index.fielddata.ordinals.GlobalOrdinalsBuilder.build` is [building global ordinals](elasticsearch:///reference/elasticsearch/mapping-reference/eager-global-ordinals.md)
 * `org.elasticsearch.ingest.Pipeline` or `org.elasticsearch.ingest.CompoundProcessor` is an [ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md)
 * `org.elasticsearch.xpack.core.esql` or `org.elasticsearch.xpack.esql` is a [running ES|QL](/explore-analyze/query-filter/languages/esql-kibana.md)
 
-If your team would like assistance correlating hot threads and node tasks, please ensure to pull an [{{es}} diagnostic](elasticsearch://reference/current/diagnostic.md) as part of [contacting us](/troubleshoot.md#contact-us).
+If your team would like assistance correlating hot threads and node tasks, ensure to pull an [{{es}} diagnostic](elasticsearch://reference/current/diagnostic.md) as part of [contacting us](/troubleshoot.md#contact-us).
 
-### Check JVM garbage collection [check-jvm-garbage-collection]
+### Check garbage collection [check-garbage-collection]
 
 High CPU usage is often caused by excessive JVM garbage collection (GC) activity. This excessive GC typically arises from configuration problems or inefficient queries causing increased heap memory usage. 
 
-For troubleshooting information, see [high JVM Memory Pressure](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md).
+For troubleshooting information, refer to [high JVM Memory Pressure](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md).
 
 
 ## Monitor CPU usage [monitor]
@@ -145,7 +145,7 @@ To track CPU usage over time, we recommend enabling monitoring:
 
 :::::::
 
-You may also consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review as part of [task backlog](task-queue-backlog.md).
+You might also consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review as part of [task backlog](task-queue-backlog.md).
 
 
 ## Reduce CPU usage [reduce]

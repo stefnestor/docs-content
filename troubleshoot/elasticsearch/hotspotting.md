@@ -55,7 +55,7 @@ Historically, clusters experience hot spotting mainly as an effect of hardware, 
 
 ## Hardware [causes-hardware]
 
-Here are some common improper hardware setups which may contribute to hot spotting:
+Here are some common improper hardware setups which might contribute to hot spotting:
 
 * Resources are allocated non-uniformly. For example, if one hot node is given half the CPU of its peers. {{es}} expects all nodes on a [data tier](../../manage-data/lifecycle/data-tiers.md) to share the same hardware profiles or specifications. To check this, use the [cat nodes API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes)
   ```console

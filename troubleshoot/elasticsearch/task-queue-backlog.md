@@ -94,11 +94,11 @@ GET /_cluster/pending_tasks
 
 Tasks with a high `timeInQueue` value are likely contributing to the backlog and might need to be [canceled](#resolve-task-queue-backlog-stuck-tasks).
 
-### Monitor Slow Logs
+### Monitor Slow Logs [diagnose-task-slow-logs]
 
 If you're not present during incident to investigate backlogged tasks, you might consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review later.
 
-For example, slow search logs can be reviewed later to optimize under the [Search Profiler](elasticsearch://reference/elasticsearch/rest-apis/search-profile).
+For example, slow search logs can be reviewed later to optimize under the [Search Profiler](elasticsearch://reference/elasticsearch/rest-apis/search-profile.md).
 
 ## Recommendations [resolve-task-queue-backlog] 
 

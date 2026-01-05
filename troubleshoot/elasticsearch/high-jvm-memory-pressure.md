@@ -73,7 +73,7 @@ To determine the exact reason for the high JVM memory pressure, capture and revi
 Users with an [Elastic subscription](https://www.elastic.co/pricing) can [request Elastic's assistance]](/troubleshoot.md#contact-us) reviewing this output. When doing so, kindly ensure:
 
 * Grant written permission for Elastic to review your uploaded heap dumps within the support case.
-* Share only after receiving any necessary business approvals as this file may contain private information. Files are handled according to [Elastic's privacy statement](https://www.elastic.co/legal/privacy-statement).
+* Share only after receiving any necessary business approvals as this file might contain private information. Files are handled according to [Elastic's privacy statement](https://www.elastic.co/legal/privacy-statement).
 * Share heap dumps via our secure [Support Portal](https://support.elastic.co/). If files are too large to upload, request a secure url to upload the file to within the support case.
 * Share the [garbage collector logs](elasticsearch://reference/elasticsearch/jvm-settings.md#gc-logging) covering the same time period.
 
