@@ -12,6 +12,10 @@ applies_to:
 
 ## Limitations
 
+:::{important}
+{{agent-builder}} requires an **Enterprise** [license](/deploy-manage/license.md).
+:::
+
 ### Feature availability
 
 #### Non-serverless deployments
@@ -29,6 +33,10 @@ In the first release of {{agent-builder}} on serverless, the feature is **only a
 The [A2A server](a2a-server.md) does not currently support streaming operations. All agent interactions use the synchronous `message/send` method, which returns a complete response only after task execution completes.
 
 ## Known issues
+
+### API key authentication returns 403 Forbidden
+
+{{agent-builder}} requires an **Enterprise** [license](/deploy-manage/license.md).
 
 ### Incompatible LLMs
 
