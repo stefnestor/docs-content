@@ -148,7 +148,7 @@ To track CPU usage over time, we recommend enabling monitoring:
 You might also consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review as part of [task backlog](task-queue-backlog.md).
 
 
-## Reduce CPU usage [reduce]
+## Reduce CPU usage [reduce-cpu-usage]
 
 High CPU usage usually correlates to live [expensive tasks or back-logged tasks](task-queue-backlog.md) running against the node. The following tips outline common causes and solutions for CPU usage to float high even during low or no traffic.
 
