@@ -10,19 +10,19 @@ products:
 
 # Symptom: High CPU usage [high-cpu-usage]
 
-{{es}} uses [thread pools](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md) to manage node CPU and JVM resources for concurrent operations. The thread pools are portioned different amounts of threads, frequently based off of the total processors allocated to the node. This helps the node remain responsive while experiencing either [expensive tasks or task queue backlog](task-queue-backlog.md). {{es}} will [reject requests](rejected-requests.md) related to a thread pool while its queue is saturated.
+{{es}} uses [thread pools](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md) to manage node CPU and JVM resources for concurrent operations. The thread pools are portioned different numbers of threads, frequently based off of the total processors allocated to the node. This helps the node remain responsive while processing either [expensive tasks or a task queue backlog](task-queue-backlog.md). {{es}} [rejects requests](rejected-requests.md) related to a thread pool while its queue is saturated.
 
-An individual task can spawn work on multiple node threads, frequently within these designated thread pools. It is normal for an [individual thread](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to saturate its CPU usage. A thread reporting CPU saturation could reflect either the thread spending its time processing an ask from an individual expensive task or the thread staying busy due to processing asks from multiple tasks. Hot threads report a snapshot of Java threads across a time interval. Therefore, hot threads cannot be directly lined up to any given [node task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
+An individual task can spawn work on multiple node threads, frequently within these designated thread pools. It is normal for an [individual thread](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to saturate its CPU usage. A thread reporting CPU saturation could reflect either the thread spending its time processing an ask from an individual expensive task or the thread staying busy due to processing asks from multiple tasks. The hot threads report shows a snapshot of Java threads across a time interval. Therefore, the hot threads cannot be directly mapped to any given [node task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks).
 
-A node can temporarily saturate all CPU threads allocated to it. It is unusual for this to be ongoing for an extended interval. This might suggest that the node is
+A node can temporarily saturate all of the CPU threads allocated to it. It's unusual for this state to be ongoing for an extended period. It might suggest that the node is:
 
-* sized disproportionate to its [data tier](/manage-data/lifecycle/data-tiers.md) peers
-* experiencing a volume of requests above its workload ability; for example, is sized below [minimum recommendations](/deploy-manage/deploy/elastic-cloud/elastic-cloud-hosted-planning.md#ec-minimum-recommendations)
-* experiencing an [expensive task](task-queue-backlog.md)
+* sized disproportionately to its [data tier](/manage-data/lifecycle/data-tiers.md) peers.
+* receiving a volume of requests above its workload capability, for example if the node is sized below the [minimum recommendations](/deploy-manage/deploy/elastic-cloud/elastic-cloud-hosted-planning.md#ec-minimum-recommendations).
+* processing an [expensive task](task-queue-backlog.md).
 
 To mitigate performance outages, we default recommend pulling an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) for post-mortem but trying to resolve using [scaling](/deploy-manage/production-guidance/scaling-considerations.md).
 
-Refer to the below guide for troubleshooting degraded CPU performance.
+Refer to the sections below to troubleshoot degraded CPU performance.
 
 ## Diagnose high CPU usage [diagnose]
 
@@ -34,29 +34,31 @@ To check the CPU usage per node, use the [cat nodes API](https://www.elastic.co/
 GET _cat/nodes?v=true&s=cpu:desc&h=name,role,master,cpu,load*,allocated_processors
 ```
 
-As the API's backing [Node Stats](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats) explains, the reported metrics are:
+The reported metrics are:
 
 * `cpu`: the instantaneous percentage of system CPU usage
 * `load_1m`, `load_5m`, and `load_15m`: the average amount of processes waiting for the designated time interval
-* `allocated_processors`: number of processors allocated to the node
+* `allocated_processors`: number of processors allocated to the node {applies_to}`stack: ga 9.3`
 
-These metrics' thresholds to alert depend on your team's workload-vs-duration needs; however, as a general start point baseline, you might consider investigating if:
+For more detail, refer to the [node statistics](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats) API documentation.
 
-* (recommended) CPU usage remains elevated above 95% for an extended interval.
-* Load average divided by the node's allocated processors is elevated. This metrics is insufficient on its own and should be considered along side elevated response times, otherwise might reflect normal background I/O.
+These alerting thresholds for these metrics depend on your team's workload-vs-duration needs. However, as a general start point baseline, you might consider investigating if:
 
-If CPU usage is deemed concerning, we recommend checking this output for traffic patterns either segmented by or [hot spotted](/troubleshoot/elasticsearch/hotspotting.md) within columns `role` and `master`. CPU issues spanning an entire data tier suggest a configuration issue or it being undersized. CPU issues spanning a subset of nodes within one/more data tiers suggest [hot spotting](/troubleshoot/elasticsearch/hotspotting.md) tasks.
+* (Recommended) CPU usage remains elevated above 95% for an extended interval.
+* Load average divided by the node's allocated processors is elevated. This metric by itself is insufficient as a gauge  and should be considered alongside elevated response times, as it otherwise might reflect normal background I/O.
+
+If CPU usage is deemed concerning, we recommend checking this output for traffic patterns either segmented by or [hot spotted](/troubleshoot/elasticsearch/hotspotting.md) in the columns `role` and `master`. CPU issues spanning an entire data tier suggest a configuration issue or the tier being undersized. CPU issues spanning a subset of nodes within one or more data tiers suggest [hot spotting](/troubleshoot/elasticsearch/hotspotting.md) tasks.
 
 
 ### Check hot threads [check-hot-threads]
 
-High CPU usage frequently correlates to [a long-running task, or a backlog of tasks](task-queue-backlog.md). When a node is reporting elevated CPU usage, to correlate the thread to a task use the [nodes hot threads API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to check for resource-intensive threads running on it.
+High CPU usage frequently correlates to [a long-running task or a backlog of tasks](task-queue-backlog.md). When a node is reporting elevated CPU usage, to correlate the thread to a task use the [nodes hot threads API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to check for resource-intensive threads running on it.
 
 ```console
 GET _nodes/hot_threads
 ```
 
-This API returns a snapshot of hot Java threads. To demonstrate, a simplified example, the response output might appear like:
+This API returns a snapshot of hot Java threads. As a simplified example, the response output might appear like the following:
 
 ```text
 ::: {instance-0000000001}{9fVI1XoXQJCgHwsOPlVEig}{RrJGwEaESRmNs75Gjs1SOg}{instance-0000000001}{10.42.9.84}{10.42.9.84:19058}{himrst}{9.3.0}{7000099-8525000}{region=unknown-region, server_name=instance-0000000001.b84ab96b481f43d791a1a73477a10d40, xpack.installed=true, transform.config_version=10.0.0, ml.config_version=12.0.0, data=hot, logical_availability_zone=zone-1, availability_zone=us-central1-a, instance_configuration=gcp.es.datahot.n2.68x10x45}
@@ -72,7 +74,7 @@ This API returns a snapshot of hot Java threads. To demonstrate, a simplified ex
        # ...
 ```
 
-This response output template formatted like:
+The response output is formatted as follows:
 
 ```text
 ::: {NAME}{ID}{...}{HOST_NAME}{ADDRESS}{...}{ROLES}{VERSION}{...}{ATTRIBUTES}
@@ -87,13 +89,13 @@ This response output template formatted like:
        # ...
 ```
 
-The three variations of CPU times reported in this output are:
+Three measures of CPU time are reported in the API output:
 
-* `TOTAL_CPU`: total CPU used by the CPU thread (either by {{es}} or operating system)
-* `ELASTIC_CPU`: CPU available to {{es}} and used by it
-* `OTHER_CPU`: miscellaneous bucket for disk/network IO or Garbage Collection (GC)
+* `TOTAL_CPU`: the total CPU used by the CPU thread (either by {{es}} or the operating system)
+* `ELASTIC_CPU`: the CPU available to {{es}} and used by {{es}}
+* `OTHER_CPU`: a miscellaneous bucket for disk/network IO or garbage collection (GC)
 
-Where `ELASTIC_CPU` is the main driver of elevated `TOTAL_CPU`, investigate the `STACKTRACE_SAMPLE`. These lines frequently emit {{es}} [loggers](/deploy-manage/monitor/logging-configuration.md) but might also surface non-{{es}} processes. As common performance logger examples:
+Although `ELASTIC_CPU` is the main driver of elevated `TOTAL_CPU`, you should also investigate the `STACKTRACE_SAMPLE`. These lines frequently emit {{es}} [loggers](/deploy-manage/monitor/logging-configuration.md) but might also surface non-{{es}} processes. Common examples of performance log entries include:
 
 * `org.elasticsearch.action.search` or `org.elasticsearch.search` is a [running search](/explore-analyze/index.md)
 * `org.elasticsearch.cluster.metadata.Metadata.findAliases` is an [alias](/manage-data/data-store/aliases.md) look-up/resolver 
@@ -101,15 +103,15 @@ Where `ELASTIC_CPU` is the main driver of elevated `TOTAL_CPU`, investigate the 
 * `org.elasticsearch.grok` is [custom Grok code](/explore-analyze/scripting/grok.md)
 * `org.elasticsearch.index.fielddata.ordinals.GlobalOrdinalsBuilder.build` is [building global ordinals](elasticsearch:///reference/elasticsearch/mapping-reference/eager-global-ordinals.md)
 * `org.elasticsearch.ingest.Pipeline` or `org.elasticsearch.ingest.CompoundProcessor` is an [ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md)
-* `org.elasticsearch.xpack.core.esql` or `org.elasticsearch.xpack.esql` is a [running ES|QL](/explore-analyze/query-filter/languages/esql-kibana.md)
+* `org.elasticsearch.xpack.core.esql` or `org.elasticsearch.xpack.esql` is a [running ES|QL](/explore-analyze/query-filter/languages/esql-kibana.md) query
 
-If your team would like assistance correlating hot threads and node tasks, ensure to pull an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) as part of [contacting us](/troubleshoot/index.md#contact-us).
+If your team would like assistance correlating hot threads and node tasks, kindly [{capture your {es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) when you [contact us](/troubleshoot/index.md#contact-us).
 
 ### Check garbage collection [check-garbage-collection]
 
 High CPU usage is often caused by excessive JVM garbage collection (GC) activity. This excessive GC typically arises from configuration problems or inefficient queries causing increased heap memory usage. 
 
-For troubleshooting information, refer to [high JVM Memory Pressure](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md).
+For troubleshooting information, refer to [high JVM memory pressure](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md).
 
 
 ## Monitor CPU usage [monitor]
@@ -145,19 +147,19 @@ To track CPU usage over time, we recommend enabling monitoring:
 
 :::::::
 
-You might also consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review as part of [task backlog](task-queue-backlog.md).
+You might also consider enabling [slow logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review as part of the [task backlog](task-queue-backlog.md).
 
 
 ## Reduce CPU usage [reduce-cpu-usage]
 
-High CPU usage usually correlates to live [expensive tasks or back-logged tasks](task-queue-backlog.md) running against the node. The following tips outline common causes and solutions for CPU usage to float high even during low or no traffic.
+High CPU usage usually correlates to live [expensive tasks or back-logged tasks](task-queue-backlog.md) running against the node. The following tips outline common causes and solutions for heightened CPU usage occurring even during periods of low or no traffic.
 
 ### Oversharding [high-cpu-usage-oversharding]
 
-Oversharding occurs when a cluster has too many shards, often times caused by shards being smaller than optimal. {{es}} recommends
+Oversharding occurs when a cluster has too many shards, often times caused by shards being smaller than optimal. We recommend the following best practices:
 
-* [aim for shards of up to 200M documents, or with sizes between 10GB and 50GB](/deploy-manage/production-guidance/optimize-performance/size-shards.md#shard-size-recommendation)
-* [master-eligible nodes should have at least 1GB of heap per 3000 indices](/deploy-manage/production-guidance/optimize-performance/size-shards.md#shard-count-recommendation)
+* [Aim for shards of up to 200M documents, or with sizes between 10GB and 50GB](/deploy-manage/production-guidance/optimize-performance/size-shards.md#shard-size-recommendation).
+* [Master-eligible nodes should have at least 1GB of heap per 3000 indices](/deploy-manage/production-guidance/optimize-performance/size-shards.md#shard-count-recommendation).
 
 While {{es}} doesn’t have a strict minimum shard size, an excessive number of small shards can negatively impact performance. Each shard consumes cluster resources because {{es}} must maintain metadata and manage shard states across all nodes.
 
@@ -171,6 +173,6 @@ If your shards are sized correctly but you are still experiencing oversharding, 
 
 ### Overrode allocated processors [high-cpu-usage-allocated]
 
-By default, {{es}} allocates processors equal to the number reported available by the operating system. This can be overrode with [`node.processors`](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md#node.processors), but this advanced setting should only be done after load testing.
+By default, {{es}} allocates processors equal to the number reported available by the operating system. You can override this behaviour by adjusting the value of [`node.processors`](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md#node.processors), but this advanced setting should be configured only after you've performed load testing.
 
-{{ech}} supports [vCPU boosting](/deploy-manage/deploy/elastic-cloud/ec-vcpu-boost-instance.md) which should only be relied on for short bursting traffic and not normal workload traffic.
+{{ech}} supports [vCPU boosting](/deploy-manage/deploy/elastic-cloud/ec-vcpu-boost-instance.md) which should be relied on only for short bursting traffic and not for normal workload traffic.

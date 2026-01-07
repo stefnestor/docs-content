@@ -58,7 +58,7 @@ As memory usage increases, garbage collection becomes more frequent and takes lo
 [timestamp_short_interval_from_last][INFO ][o.e.m.j.JvmGcMonitorService] [node_id] [gc][number] overhead, spent [21s] collecting in the last [40s]
 ```
 
-For optimal JVM performance, garbage collection should meet these criteria:
+For optimal JVM performance, garbage collection (GC) should meet these criteria:
 
 | GC type | Completion time | Frequency |
 |---------|----------------|---------------------|
@@ -70,11 +70,11 @@ For optimal JVM performance, garbage collection should meet these criteria:
 
 To determine the exact reason for the high JVM memory pressure, capture and review a heap dump of the JVM while its memory usage is high. 
 
-Users with an [Elastic subscription](https://www.elastic.co/pricing) can [request Elastic's assistance]](/troubleshoot.md#contact-us) reviewing this output. When doing so, kindly ensure:
+If you have an [Elastic subscription](https://www.elastic.co/pricing), you can [request Elastic's assistance]](/troubleshoot.md#contact-us) reviewing this output. When doing so, kindly:
 
 * Grant written permission for Elastic to review your uploaded heap dumps within the support case.
-* Share only after receiving any necessary business approvals as this file might contain private information. Files are handled according to [Elastic's privacy statement](https://www.elastic.co/legal/privacy-statement).
-* Share heap dumps via our secure [Support Portal](https://support.elastic.co/). If files are too large to upload, request a secure url to upload the file to within the support case.
+* Share this file only after receiving any necessary business approvals as it might contain private information. Files are handled according to [Elastic's privacy statement](https://www.elastic.co/legal/privacy-statement).
+* Share heap dumps through our secure [Support Portal](https://support.elastic.co/). If your files are too large to upload, you can request a secure URL in the support case.
 * Share the [garbage collector logs](elasticsearch://reference/elasticsearch/jvm-settings.md#gc-logging) covering the same time period.
 
 ## Reduce JVM memory pressure [reduce-jvm-memory-pressure]

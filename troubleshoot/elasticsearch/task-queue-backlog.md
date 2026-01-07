@@ -23,7 +23,7 @@ To identify the cause of the backlog, try these diagnostic actions.
 * [Inspect hot threads on each node](#diagnose-task-queue-hot-thread)
 * [Identify long-running node tasks](#diagnose-task-queue-long-running-node-tasks)
 * [Look for long-running cluster tasks](#diagnose-task-queue-long-running-cluster-tasks)
-* [Monitor Slow Logs](#diagnose-task-slow-logs)
+* [Monitor slow logs](#diagnose-task-slow-logs)
 
 
 ### Check the thread pool status [diagnose-task-queue-thread-pool] 
@@ -89,11 +89,11 @@ GET /_cluster/pending_tasks
 
 Tasks with a high `timeInQueue` value are likely contributing to the backlog and might need to be [canceled](#resolve-task-queue-backlog-stuck-tasks).
 
-### Monitor Slow Logs [diagnose-task-slow-logs]
+### Monitor slow logs [diagnose-task-slow-logs]
 
-If you're not present during incident to investigate backlogged tasks, you might consider enabling [Slow Logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review later.
+If you're not present during an incident to investigate backlogged tasks, you might consider enabling [slow logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review later.
 
-For example, slow search logs can be reviewed later to optimize under the [Search Profiler](elasticsearch://reference/elasticsearch/rest-apis/search-profile.md).
+For example, you can review slow search logs later using the [search profiler](elasticsearch://reference/elasticsearch/rest-apis/search-profile.md), so that time consuming requests can be optimized.
 
 ## Recommendations [resolve-task-queue-backlog] 
 
@@ -111,13 +111,13 @@ In some cases, you might need to increase the thread pool size. For example, the
 
 If an active task’s [hot thread](#diagnose-task-queue-hot-thread) shows no progress, consider [canceling the task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks#task-cancellation).
 
-For example, using the [task management API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-list) to identify and cancel searches that consume excessive CPU time.
+For example, you can use the [task management API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-list) to identify and cancel searches that consume excessive CPU time.
 
 ```console
 GET _tasks?actions=*search&detailed
 ```
 
-The response’s `description` contains the search request and its queries. `running_time_in_nanos` shows how long the search has been running.
+The response `description` contains the search request and its queries. The `running_time_in_nanos` parameter shows how long the search has been running.
 
 ```console-result
 {
