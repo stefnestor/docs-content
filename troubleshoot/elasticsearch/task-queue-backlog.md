@@ -12,7 +12,7 @@ products:
 % **Product:** Elasticsearch<br> **Deployment type:** Elastic Cloud % Enterprise, Elastic Cloud Hosted, Elastic Cloud on Kubernetes, Elastic
 % Self-Managed <br> **Versions:** All
 
-A backlogged task queue can lead to [rejected requests](/troubleshoot/elasticsearch/rejected-requests.md) or an [unhealthy cluster state](/troubleshoot/elasticsearch/red-yellow-cluster-status.md). Contributing factors include [uneven or resource constrained hardware](/troubleshoot/elasticsearch/hotspotting.md#causes-hardware), a large number of tasks triggered at once, expensive tasks using [high CPU](/troubleshoot/elasticsearch/high-cpu-usage.md) or inducing [high JVM](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md), and long-running tasks.
+A backlogged task queue can lead to [rejected requests](/troubleshoot/elasticsearch/rejected-requests.md) or an [unhealthy cluster state](/troubleshoot/elasticsearch/red-yellow-cluster-status.md). Contributing factors can include [uneven or resource constrained hardware](/troubleshoot/elasticsearch/hotspotting.md#causes-hardware), a large number of tasks triggered at the same time, expensive tasks that are using [high CPU](/troubleshoot/elasticsearch/high-cpu-usage.md) or are inducing [high JVM](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md), and long-running tasks.
 
 
 ## Diagnose a backlogged task queue [diagnose-task-queue-backlog] 
@@ -33,7 +33,7 @@ Use the [cat thread pool API](https://www.elastic.co/docs/api/doc/elasticsearch/
 GET /_cat/thread_pool?v&s=t,n&h=type,name,node_name,active,queue,rejected,completed
 ```
 
-You will be checking for bottlenecks such as:
+There are a number of things that you can check as potential causes for the queue backlog:
 
 * Look for continually high `queue` metrics, which indicate long-running tasks or [CPU-expensive tasks](high-cpu-usage.md).
 * Look for bursts of elevated `queue` metrics, which indicate opportunities to spread traffic volume.
@@ -77,9 +77,9 @@ You can filter on a specific `action`, such as [bulk indexing](https://www.elast
 
 Long-running tasks might need to be [canceled](#resolve-task-queue-backlog-stuck-tasks).
 
-See this [this video](https://www.youtube.com/watch?v=lzw6Wla92NY) for a walkthrough of troubleshooting the [task management API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks) output. 
+Refer to [this video](https://www.youtube.com/watch?v=lzw6Wla92NY) for a walkthrough of how to troubleshoot the [task management API](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks) output. 
 
-Refer also to tuning for [searching speed](/deploy-manage/production-guidance/optimize-performance/search-speed.md) and [indexing speed](/deploy-manage/production-guidance/optimize-performance/indexing-speed.md) for more information.
+You can also check the [Tune for search speed](/deploy-manage/production-guidance/optimize-performance/search-speed.md) and [Tune for indexing speed](/deploy-manage/production-guidance/optimize-performance/indexing-speed.md) pages for more information.
 
 ### Look for long-running cluster tasks [diagnose-task-queue-long-running-cluster-tasks] 
 
@@ -89,29 +89,29 @@ Use the [cat pending tasks API](https://www.elastic.co/docs/api/doc/elasticsearc
 GET /_cat/pending_tasks?v=true
 ```
 
-This can expect to fall behind during an [unstable cluster](/troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md), but otherwise usually indicates an unworkable [cluster setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-get-settings) override or traffic pattern.
+Cluster state synchronization can be expected to fall behind when a [cluster is unstable](/troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md), but otherwise this state usually indicates an unworkable [cluster setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-get-settings) override or traffic pattern.
 
-Some common `source` to look out for:
+There are a few common `source` issues to check for:
 
-* `ilm-`: [ILM](/manage-data/lifecycle/index-lifecycle-management.md) polls every `10m` by default from setting [`indices.lifecycle.poll_interval`](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md). It kicks off asynchronous tasks executed by the node tasks. If ILM continually reports as a cluster pending task this setting was likely overrode else the cluster likely has misconfigured [indices count to master heap](/deploy-manage/production-guidance/optimize-performance/size-shards.md#shard-count-recommendation).
-* `put-mapping`: {{es}} enables [dynamic mapping](/manage-data/data-store/mapping/dynamic-mapping.md) by default. This or the [update mapping API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping) triggers a mapping update. Correlating cluster log will contain `update_mapping` along with the effected index name.
-* `shard-started`: Indicates [active shard recoveries](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery). Overriding [`cluster.routing.allocation.*` settings](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-shard-allocation-settings) can cause this to back up.
+* `ilm-`: [{{ilm}} ({{ilm-init}})](/manage-data/lifecycle/index-lifecycle-management.md) polls every `10m` by default, as determined by the [`indices.lifecycle.poll_interval`](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md) setting. This starts asynchronous tasks executed by the node tasks. If {{ilm-init}} continually reports as a cluster pending task, this setting likely is being overridden. Otherwise, the cluster likely has misconfigured [indices count relative to master heap size](/deploy-manage/production-guidance/optimize-performance/size-shards.md#shard-count-recommendation).
+* `put-mapping`: {{es}} enables [dynamic mapping](/manage-data/data-store/mapping/dynamic-mapping.md) by default. This, or the [update mapping API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping), triggers a mapping update. In this case, the corresponding cluster log will contain an `update_mapping` entry with the name of the affected index.
+* `shard-started`: Indicates [active shard recoveries](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery). Overriding [`cluster.routing.allocation.*` settings](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-shard-allocation-settings) can cause pending tasks and recoveries to back up.
 
 
 ## Recommendations [resolve-task-queue-backlog] 
 
 After identifying problematic threads and tasks, resolve the issue by increasing resources or canceling tasks.
 
-### Address cpu-intensive tasks [resolve-task-queue-backlog-cpu]
+### Address CPU-intensive tasks [resolve-task-queue-backlog-cpu]
 
-If an individual task is causing a [thread pool `queue`]](#diagnose-task-queue-thread-pool) due to [high CPU usage](high-cpu-usage.md), try [cancelling it](#resolve-task-queue-backlog-stuck-tasks) to then optimize it before retrying.
+If an individual task is causing a [thread pool `queue`](#diagnose-task-queue-thread-pool) due to [high CPU usage](high-cpu-usage.md), try [cancelling the task](#resolve-task-queue-backlog-stuck-tasks) and then optimizing it before retrying.
 
-Frequently when this surfaces it's due to:
+This problem can surface due to a number of possible causes:
 
-* creating new or modifying scheduled tasks which run frequently or are wide affecting, such as [ILM](/manage-data/lifecycle/index-lifecycle-management.md) policies or [Rules](/explore-analyze/alerts-cases.md)
-* performing traffic load testing
-* doing extended look backs, especially across [data tiers](/manage-data/lifecycle/data-tiers.md)
-* [searching](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-search) or [bulk](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) updating a high number of indices within a request
+* Creating new  tasks or modifying scheduled tasks which either run frequently or are broad in their effect, such as [{{ilm}}](/manage-data/lifecycle/index-lifecycle-management.md) policies or [rules](/explore-analyze/alerts-cases.md)
+* Performing traffic load testing
+* Doing extended look-backs, especially across [data tiers](/manage-data/lifecycle/data-tiers.md)
+* [Searching](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-search) or performing [bulk updates](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) to a high number of indices in a single request
 
 
 ### Cancel stuck tasks [resolve-task-queue-backlog-stuck-tasks] 
@@ -121,13 +121,13 @@ If an active task’s [hot thread](#diagnose-task-queue-hot-thread) shows no pro
 
 ### Address hot spotting [resolve-task-queue-backlog-hotspotting] 
 
-If a specific node’s thread pool is depleting faster than its [data tier](/manage-data/lifecycle/data-tiers.md) peers, try addressing uneven node resource utilization, also known as hot spotting. For details on actions you can take, such as rebalancing shards, see [hot spotting](hotspotting.md).
+If a specific node’s thread pool is depleting faster than its [data tier](/manage-data/lifecycle/data-tiers.md) peers, try addressing uneven node resource utilization, also known as "hot spotting". For details about reparative actions you can take, such as rebalancing shards, refer to the [Hot spotting](hotspotting.md) troubleshooting documentation.
 
 ### Increase available resources [resolve-task-queue-backlog-resources] 
 
 By default, {{es}} allocates processors equal to the number reported available by the operating system. You can override this behaviour by adjusting the value of [`node.processors`](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md#node.processors), but this advanced setting should be configured only after you've performed load testing.
 
-In some cases, you might need to increase the problematic thread pool `size`. For example, it might help to increase a stuck [`force_merge` thread pool](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md). If automatically calculated to `1` based on available CPU processors, then increasing to `2` would appear in `elasticsearch.yml` like:
+In some cases, you might need to increase the problematic thread pool `size`. For example, it might help to increase a stuck [`force_merge` thread pool](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md). If the setting is automatically calculated to `1` based on available CPU processors, then increasing the value to `2` is indicated in `elasticsearch.yml`, for example:
 
 ```yaml
 thread_pool.force_merge.size: 2

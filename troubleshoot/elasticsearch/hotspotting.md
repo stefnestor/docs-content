@@ -23,6 +23,8 @@ Watch [this video](https://www.youtube.com/watch?v=Q5ODJ5nIKAM) for a walkthroug
 
 ## Detect hot spotting [detect]
 
+To check for hot spotting you can investigate both active utilization levels and historical node statistics.
+
 ### Active [detect-active]
 
 Hot spotting most commonly surfaces as significantly elevated resource utilization (of `disk.percent`, `heap.percent`, or `cpu`) among a subset of nodes as reported via [cat nodes](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes). Individual spikes aren’t necessarily problematic, but if utilization repeatedly spikes or consistently remains high over time (for example longer than 30 seconds), the resource may be experiencing problematic hot spotting.
@@ -52,24 +54,24 @@ A secondary method to notice hot spotting build up is to poll the [node statisti
 GET _nodes/stats?pretty=true&filter_path=nodes.*.name,nodes.*.roles,nodes.*.indices
 ```
 
-This outputs node operational metrics like `query`, `refresh`, and `index`. It allows you to gauge the
+This request returns node operational metrics such as `query`, `refresh`, and `index`. It allows you to gauge:
 
-* total events attempted per node 
-* node's average processing time per event type
+* the total events attempted per node 
+* the node's average processing time per event type
 
-These metrics accumulate from individual node uptime. As example to view some of this output, you can parse this response using [third-party tool JQ](https://jqlang.github.io/jq/):
+These metrics accumulate during the uptime for each individual node. To help view the output, you can parse the response using a third-party tool such as [JQ](https://jqlang.github.io/jq/):
 
 ```bash
 cat nodes_stats.json | jq -rc '.nodes[]|.name as $n|.roles as $r|.indices|to_entries[]|.key as $m|.value|select(.total and .total_time_in_millis)|select(.total>0)|{node:$n, roles:$r, metric:$m, total:.total, avg_millis:(.total_time_in_millis?/.total|round)}'
 ```
 
-Multiple major operations being nonperformant across nodes likely suggest under provisioned cluster. If a particular operation type or node stands out, it likely indicates [shard distribution issues](#causes-shards) which you might compare against [indices stats](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-stats).
+The results indicate that multiple major operations are non-performant across nodes, suggesting that the cluster is likely under-provisioned. If a particular operation type or node stands out, it likely indicates [shard distribution issues](#causes-shards) which you might compare against [indices stats](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-stats).
 
 ```console
 GET /_stats?level=shards&human&expand_wildcards=all&ignore_unavailable=true
 ```
 
-These metrics accumulate from individual shard history. As an example using this output par to before, you can parse this response with JQ:
+These metrics accumulate from the history for each individual shard. You can parse this response with a tool like JQ to compare with earlier performance:
 
 ```bash
 cat indices_stats.json | jq -rc '.indices|to_entries[]|.key as $i|.value.shards[]|to_entries[]|.key as $sh|.value|.routing.primary as $p|.routing.node[:4] as $n|to_entries[]|.key as $m|.value|select(.total and .total_time_in_millis)|select(.total>0)|{index:$i, shard:$sh, primary:$p, node:$n, metric:$m, total:.total, avg_millis:(.total_time_in_millis/.total|round)}'
@@ -180,4 +182,4 @@ cat shard_stats.json | jq -rc 'sort_by(-.avg_indexing)[]' | head
 
 ### Task loads [causes-tasks]
 
-Shard distribution problems will most-likely surface as task load as seen above in the [cat thread pool](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-thread-pool) example. It is also possible for tasks to hot spot a node either due to individual qualitative expensiveness or overall quantitative traffic loads, which will surface in [backlogged tasks](/troubleshoot/elasticsearch/task-queue-backlog.md).
+Shard distribution problems will most-likely surface as task load, as seen above in the [cat thread pool](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-thread-pool) example. It is also possible for tasks to hot spot a node due either to individual qualitative expensiveness or to overall quantitative traffic loads, which will surface in [backlogged tasks](/troubleshoot/elasticsearch/task-queue-backlog.md).
