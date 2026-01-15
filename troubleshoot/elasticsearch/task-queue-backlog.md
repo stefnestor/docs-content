@@ -23,7 +23,6 @@ To identify the cause of the backlog, try these diagnostic actions.
 * [Inspect node hot threads](#diagnose-task-queue-hot-thread)
 * [Identify long-running node tasks](#diagnose-task-queue-long-running-node-tasks)
 * [Look for long-running cluster tasks](#diagnose-task-queue-long-running-cluster-tasks)
-* [Review node operational performance](#diagnose-task-queue-long-running-operations)
 
 
 ### Check thread pool status [diagnose-task-queue-thread-pool] 
