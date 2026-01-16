@@ -23,6 +23,7 @@ To identify the cause of the backlog, try these diagnostic actions.
 * [Inspect node hot threads](#diagnose-task-queue-hot-thread)
 * [Identify long-running node tasks](#diagnose-task-queue-long-running-node-tasks)
 * [Look for long-running cluster tasks](#diagnose-task-queue-long-running-cluster-tasks)
+* [Monitor slow logs](#diagnose-task-slow-logs)
 
 
 ### Check thread pool status [diagnose-task-queue-thread-pool] 
@@ -117,6 +118,11 @@ There are a few common `source` issues to check for:
 * `put-mapping`: {{es}} enables [dynamic mapping](/manage-data/data-store/mapping/dynamic-mapping.md) by default. This, or the [update mapping API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-mapping), triggers a mapping update. In this case, the corresponding cluster log will contain an `update_mapping` entry with the name of the affected index.
 * `shard-started`: Indicates [active shard recoveries](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery). Overriding [`cluster.routing.allocation.*` settings](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-shard-allocation-settings) can cause pending tasks and recoveries to back up.
 
+### Monitor slow logs [diagnose-task-slow-logs]
+
+If you're not present during an incident to investigate backlogged tasks, you might consider enabling [slow logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) to review later.
+
+For example, you can review slow search logs later using the [search profiler](elasticsearch://reference/elasticsearch/rest-apis/search-profile.md), so that time consuming requests can be optimized.
 
 ## Recommendations [resolve-task-queue-backlog] 
 
@@ -149,6 +155,47 @@ If you consistently encounter `cancellable` tasks running longer than expected, 
 
 * setting a [`search.default_search_timeout`](/solutions/search/the-search-api.md#search-timeout)
 * ensuring [scroll requests are cleared](elasticsearch://reference/elasticsearch/rest-apis/paginate-search-results.md#clear-scroll) in a timely manner
+
+For example, you can use the [task management API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-list) to identify and cancel searches that consume excessive CPU time.
+
+```console
+GET _tasks?actions=*search&detailed
+```
+
+The response `description` contains the search request and its queries. The `running_time_in_nanos` parameter shows how long the search has been running.
+
+```console-result
+{
+  "nodes" : {
+    "oTUltX4IQMOUUVeiohTt8A" : {
+      "name" : "my-node",
+      "transport_address" : "127.0.0.1:9300",
+      "host" : "127.0.0.1",
+      "ip" : "127.0.0.1:9300",
+      "tasks" : {
+        "oTUltX4IQMOUUVeiohTt8A:464" : {
+          "node" : "oTUltX4IQMOUUVeiohTt8A",
+          "id" : 464,
+          "type" : "transport",
+          "action" : "indices:data/read/search",
+          "description" : "indices[my-index], search_type[QUERY_THEN_FETCH], source[{\"query\":...}]",
+          "start_time_in_millis" : 4081771730000,
+          "running_time_in_nanos" : 13991383,
+          "cancellable" : true
+        }
+      }
+    }
+  }
+}
+```
+
+To cancel this example search to free up resources, you would run:
+
+```console
+POST _tasks/oTUltX4IQMOUUVeiohTt8A:464/_cancel
+```
+
+For additional tips on how to track and avoid resource-intensive searches, see [Avoid expensive searches](high-jvm-memory-pressure.md#avoid-expensive-searches).
 
 
 ### Address hot spotting [resolve-task-queue-backlog-hotspotting] 
