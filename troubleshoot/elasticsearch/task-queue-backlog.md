@@ -30,8 +30,14 @@ To identify the cause of the backlog, try these diagnostic actions.
 Use the [cat thread pool API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-thread-pool) to monitor active threads, queued tasks, rejections, and completed tasks:
 
 ```console
-GET /_cat/thread_pool?v&s=t,n&h=type,name,node_name,active,queue,rejected,completed
+GET /_cat/thread_pool?v&s=t,n&h=type,name,node_name,pool_size,active,queue_size,queue,rejected,completed
 ```
+
+By way of explanation on these [thread pool](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md) metrics:
+
+* the `active` and `queue` statistics are point-in-time
+* the `rejected` and `completed` statistics are cumulative from node start-up
+* the thread pool will fill `active` until it reaches the `pool_size` at which point it will fill `queue` until it reaches the `queue_size` after which it will [rejected requests](/troubleshoot/elasticsearch/rejected-requests.md)
 
 There are a number of things that you can check as potential causes for the queue backlog:
 
@@ -43,13 +49,23 @@ There are a number of things that you can check as potential causes for the queu
 
 ### Inspect node hot threads [diagnose-task-queue-hot-thread] 
 
-If a particular thread pool queue is backed up, periodically poll the [nodes hot threads API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads) to gauge the thread’s progression and ensure it has sufficient resources:
+If a particular thread pool queue is backed up, periodically poll the CPU-related API's to gauge task progression vs resource constraints:
 
-```console
-GET /_nodes/hot_threads
-```
+* the [nodes hot threads API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads)
 
-Although the hot threads API response does not list the specific tasks running on a thread, it provides a summary of the thread’s activities. You can correlate a hot threads response with a [task management API response](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks) to identify any overlap with specific tasks. For example, if the hot threads response indicates the thread is `performing a search query`, you can [check for long-running search tasks](#diagnose-task-queue-long-running-node-tasks) using the task management API.
+  ```console
+  GET /_nodes/hot_threads
+  ```
+
+* the [cat nodes API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes)
+
+  ```console
+  GET _cat/nodes?v=true&s=cpu:desc
+  ```
+
+If `cpu` is consistently elevated or a hot thread's stack trace does not rotate over an extended period, investigate [high CPU usage](high-cpu-usage.md#check-hot-threads). 
+
+Although the hot threads API response does not list the specific tasks running on a thread, it provides a summary of the thread’s activities. You can correlate a hot threads response with a [task management API response](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks) to identify any overlap with specific tasks. For example, if hot threads suggest the node is spending time in `search`, filter the [Task Management API for search tasks](#diagnose-task-queue-long-running-node-tasks).
 
 
 ### Identify long-running node tasks [diagnose-task-queue-long-running-node-tasks] 
@@ -60,18 +76,22 @@ Long-running tasks can also cause a backlog. Use the [task management API](https
 GET /_tasks?pretty=true&human=true&detailed=true
 ```
 
-You can filter on a specific `action`, such as [bulk indexing](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) or search-related tasks. These tend to be long-running.
+You can filter on a specific `action`, such as [bulk indexing](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) or search-related tasks. If investigating particular nodes, this API can be filtered to specific `nodes`.
 
 * Filter on [bulk index](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk) actions:
 
     ```console
     GET /_tasks?human&detailed&actions=indices:*write*
+
+    GET /_tasks?human&detailed&actions=indices:*write*&nodes=<YOUR_NODE_ID_OR_NAME_HERE>
     ```
 
 * Filter on search actions:
 
     ```console
     GET /_tasks?human&detailed&actions=indices:*search*
+
+    GET /_tasks?human&detailed&actions=indices:*search*&nodes=<YOUR_NODE_ID_OR_NAME_HERE>
     ```
 
 
@@ -100,7 +120,14 @@ There are a few common `source` issues to check for:
 
 ## Recommendations [resolve-task-queue-backlog] 
 
-After identifying problematic threads and tasks, resolve the issue by increasing resources or canceling tasks.
+Per before, when task backlogs occur it is frequently due to 
+
+* a traffic volume spike
+* [expensive tasks](#diagnose-task-queue-hot-thread) that are causing [high CPU](/troubleshoot/elasticsearch/high-cpu-usage.md)
+* [long-running tasks](#diagnose-task-queue-long-running-node-tasks)
+* [hot spotting](hotspotting.md), particularly from [uneven or resource constrained hardware](/troubleshoot/elasticsearch/hotspotting.md#causes-hardware)
+
+Many of these can be investigated in isolation as unintended traffic pattern or configuration changes. Refer to the following recommendations to address repeat or long standing symptoms.
 
 ### Address CPU-intensive tasks [resolve-task-queue-backlog-cpu]
 
@@ -117,6 +144,11 @@ This problem can surface due to a number of possible causes:
 ### Cancel stuck tasks [resolve-task-queue-backlog-stuck-tasks] 
 
 If an active task’s [hot thread](#diagnose-task-queue-hot-thread) shows no progress, consider [canceling the task](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-tasks#task-cancellation) if it's flagged as `cancellable`.
+
+If you consistently encounter `cancellable` tasks running longer than expected, you might consider reviewing:
+
+* setting a [`search.default_search_timeout`](/solutions/search/the-search-api.md#search-timeout)
+* ensuring [scroll requests are cleared](elasticsearch://reference/elasticsearch/rest-apis/paginate-search-results.md#clear-scroll) in a timely manner
 
 
 ### Address hot spotting [resolve-task-queue-backlog-hotspotting] 
