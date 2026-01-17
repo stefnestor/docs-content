@@ -190,7 +190,7 @@ PUT _cluster/settings
 
 Defining too many fields or nesting fields too deeply can lead to [mapping explosions](/troubleshoot/elasticsearch/mapping-explosion.md) that use large amounts of memory. To prevent mapping explosions, use the [mapping limit settings](elasticsearch://reference/elasticsearch/index-settings/mapping-limit.md) to limit the number of field mappings.
 
-
+You might also consider setting {{kib}} [Advacned Settings](kibana://reference/advanced-settings.md) `data_views:fields_excluded_data_tiers` for faster performance. For example, to avoid searchable snapshots on cold and frozen [data tiers](/manage-data/lifecycle/data-tiers.md), you would set this to `data_cold,data_frozen`. This can help Discover fields to load faster as depicted in [Troubleshooting guide: Solving 6 common issues in Kibana Discover load](https://www.elastic.co/blog/troubleshooting-guide-common-issues-kibana-discover-load#2.-load-fields).
 
 #### Spread out bulk requests [reduce-jvm-memory-pressure-setup-bulks]
 
