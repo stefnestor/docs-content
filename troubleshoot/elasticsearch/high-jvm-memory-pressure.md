@@ -15,7 +15,7 @@ High JVM memory usage can degrade cluster performance and trigger [circuit break
 
 ### Check JVM memory pressure [diagnose-check-pressure] 
 
-{{es}}'s JVM [uses a G1GC garbage collector](/deploy-manage/deploy/self-managed/bootstrap-checks.md#use-serial-collector-check). Over time this causes the JVM heap usage metric to reflect a sawtooth pattern as shown in [Understanding JVM heap memory](https://www.elastic.co/blog/jvm-essentials-for-elasticsearch). Due to this, we recommend focusing monitoring on the JVM memory pressure which gives a rolling average of old garbage collection and better represents the node's ongoing JVM responsiveness.
+{{es}}'s JVM [uses a G1GC garbage collector](/deploy-manage/deploy/self-managed/bootstrap-checks.md). Over time this causes the JVM heap usage metric to reflect a sawtooth pattern as shown in [Understanding JVM heap memory](https://www.elastic.co/blog/jvm-essentials-for-elasticsearch). Due to this, we recommend focusing monitoring on the JVM memory pressure which gives a rolling average of old garbage collection and better represents the node's ongoing JVM responsiveness.
 
 You can also use the [nodes stats API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats) to calculate the current JVM memory pressure for each node.
 
@@ -55,7 +55,7 @@ For optimal JVM performance, garbage collection (GC) should meet these criteria:
 
 To determine the exact reason for the high JVM memory pressure, capture and review a heap dump of the JVM while its memory usage is high. 
 
-If you have an [Elastic subscription](https://www.elastic.co/pricing), you can [request Elastic's assistance](/troubleshoot.md#contact-us) reviewing this output. When doing so, kindly:
+If you have an [Elastic subscription](https://www.elastic.co/pricing), you can [request Elastic's assistance](/troubleshoot/index.md#contact-us) reviewing this output. When doing so, kindly:
 
 * Grant written permission for Elastic to review your uploaded heap dumps within the support case.
 * Share this file only after receiving any necessary business approvals as it might contain private information. Files are handled according to [Elastic's privacy statement](https://www.elastic.co/legal/privacy-statement).
@@ -120,7 +120,7 @@ For example, you can store this output into `nodes_stats.json` and then using [t
 cat nodes_stats.json | jq -rc '.nodes[]|{name:.name, swap_used:.os.swap.used_in_bytes}' | sort
 ```
 
-If nodes are found to be swapping after attempting to disable on the {{es}} level, you will need to escalate to [disabling swap operating system level](/deploy-manage/deploy/self-managed/setup-configuration-memory.md#disable-swap-files) to avoid performance impact.
+If nodes are found to be swapping after attempting to disable on the {{es}} level, you need to escalate to [disabling swap on the operating system level](/deploy-manage/deploy/self-managed/setup-configuration-memory.md#disable-swap-files) to avoid performance impact.
 
 #### Enable compressed OOPs [reduce-jvm-memory-pressure-setup-oops]
 
@@ -154,7 +154,7 @@ cat nodes.json | jq -rc '.nodes[]|.name as $n|.jvm.mem|{name:$n, heap_min:.heap_
 
 #### Reduce your shard count [reduce-jvm-memory-pressure-setup-shards]
 
-Every shard uses memory. In most cases, a small set of large shards uses fewer resources than many small shards. For tips on reducing your shard count, see [Size your shards](../../deploy-manage/production-guidance/optimize-performance/size-shards.md).
+Every shard uses memory. Usually a small set of large shards uses fewer resources than many small shards. For tips on reducing your shard count, refer to [Size your shards](../../deploy-manage/production-guidance/optimize-performance/size-shards.md).
 
 ### Common traffic issues [reduce-jvm-memory-pressure-traffic]
 
