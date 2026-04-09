@@ -8,38 +8,81 @@ products:
 
 # Upgrade {{es}} [upgrading-elasticsearch]
 
-This document provides the detailed steps for performing a rolling upgrade of a self-managed {{es}} cluster. A rolling upgrade allows you to upgrade your cluster one node at a time without interrupting service. Running multiple versions of {{es}} in the same cluster beyond the duration of an upgrade is not supported, as shards cannot be replicated from upgraded nodes to nodes running the older version.
+This runbook outlines the detailed steps for performing an upgrade of a self-managed {{es}} cluster from an old-version to a higher new-version.
 
-:::{note}
-Upgrading from a release candidate build, such as 9.0.0-rc1, is unsupported. Use pre-releases only for testing in a temporary environment.
+Consider deploying your {{es}} cluster from within one of our [cloud deployment methods](/deploy-manage/deploy.md#choosing-your-deployment-type) to automate this process. Refer to [migrating your data](/manage-data/migrate.md) to port existing self-mananaged clusters to Elastic-managed.
+
+Before you start the rolling upgrade procedure, [plan your upgrade](/deploy-manage/upgrade/plan-upgrade.md) and [take the upgrade preparation steps](/deploy-manage/upgrade/prepare-to-upgrade.md). 
+
+{{es}} does not support upgrading release candidate builds, such as 9.0.0-rc1. Use pre-releases only for testing in a temporary environment.
+
+{{es}} does not support version downgrades. It is important to prepare carefully before starting an upgrade. Once you have started to upgrade your cluster to the higher version you must complete the upgrade. As soon as the cluster contains nodes of the higher version it may make changes to its internal state that cannot be reverted. If you cannot complete the upgrade then you should discard the partially-upgraded cluster, deploy an empty cluster of the version before the upgrade, and [restore its contents from a snapshot](/deploy-manage/upgrade/prepare-to-upgrade.md#create-a-snapshot-for-backup).
+
+Cluster upgrades can be performed as
+
+* (Recommended) A rolling restart
+
+    This allows you to upgrade your cluster one node at a time without interrupting service. Running multiple versions of {{es}} in the same cluster beyond the duration of an upgrade is not supported, as shards cannot be replicated from upgraded nodes to nodes running the old-version. Running more than two versions of {{es}} in the same cluster is not supported.
+
+* A full restart
+
+    This requires that for all nodes in your cluster, you simultaneously stop, upgrade, and then start them. The cluster will be unavailable during the upgrade process. This lack of [high availability](/deploy-manage/production-guidance/availability-and-resilience.md) introduces a window for potential data loss if upgrade is insufficiently managed.
+
+The following guide will be phrased towards rolling restarts as this is the expected method for production environments. Full restarts follow the same below process with the difference of modifying all nodes simultaneoulsy.
+
+## Nodes upgrade order [upgrade-order]
+
+When performing a rolling upgrade, you should proceed one node at a time based off the following [node role](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md) groupings. If a node is assigned multiple node roles, organize it into its ordered grouping based off its first flagged node role in the list. This ensures that:
+
+* Built-in plugins, such as {{ilm-init}} and transforms, can continue to process data without errors.
+* All nodes can join the cluster during the upgrade. Upgraded nodes can join a cluster with an older version master, but older version nodes cannot always join a cluster with an upgraded master.
+
+The {{es}} nodes upgrade order is:
+
+1. Upgrade the [`data` nodes](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#data-node-role). First, by lowest-to-highest temperature [data tiers](/manage-data/lifecycle/data-tiers.md), and then any remaining `data` nodes. Therefore proceed sequentially:
+
+    1. The [`data_frozen` tier](/manage-data/lifecycle/data-tiers.md#frozen-tier).
+    2. The [`data_cold` tier](/manage-data/lifecycle/data-tiers.md#cold-tier).
+    3. The [`data_warm` tier](/manage-data/lifecycle/data-tiers.md#warm-tier).
+    4. The [`data_hot` tier](/manage-data/lifecycle/data-tiers.md#hot-tier).
+    5. Any other `data` nodes, such as [`data_content` tier](/manage-data/lifecycle/data-tiers.md#content-tier), which are not in a data tier.
+
+2. Upgrade all remaining nodes that are neither master-eligible nor data nodes. The order within this grouping does not matter. This includes nodes with roles for:
+
+    * The [`ml` machine learning role](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#ml-node-role).
+    * The [`ingest` role](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#node-ingest-node).
+    * Any [dedicated coordinating nodes](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#coordinating-only-node-role).
+    * The [`transform` role](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#transform-node-role).
+    * The [`remote_cluster_client` role](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#remote-node).
+
+3. Upgrade the [`master` and `voting_only` master-eligible nodes](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#master-node-role) last.
+
+
+You can get the list of nodes in a specific node role with a [Get Node Information API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes) request, for example using `data_frozen`:
+
+```console
+GET /_nodes/data_frozen:true/_none
+```
+
+:::{tip}
+If you accidentally upgrade a node before its designated grouping order, you might encounter various errors which you can expect to continue until rolling upgrade is completed for all nodes. 
+
+Within `data` node sub-groupings, you might encounter various [shard allocation errors](/troubleshoot/elasticsearch/cluster-allocation-api-examples.md) which you can expect to continue until more nodes within the sub-grouping are upgraded. These can appear like:
+
+```
+cannot allocate replica shard to a node with version [x.x.x] since this is older than the primary version [y.y.y]
+```
 :::
 
-Before you start the rolling upgrade procedure, [plan your upgrade](/deploy-manage/upgrade/plan-upgrade.md) and [take the upgrade preparation steps](/deploy-manage/upgrade/prepare-to-upgrade.md). {{es}} does not support downgrades. Ensure you have a pre-upgrade [snapshot to restore](/deploy-manage/tools/snapshot-and-restore.md) to if you find you need to reset upgrade proceedure.
 
-## {{es}} nodes upgrade order
 
-When performing a [rolling upgrade](#rolling-upgrades):
+## Upgrade process [upgrade-process]
 
-1. Upgrade the data nodes first, [tier-by-tier](/manage-data/lifecycle/data-tiers.md), in the following order: 
-    1. The frozen tier
-    2. The cold tier
-    3. The warm tier
-    4. The hot tier
-    5. Any other data nodes which are not in a tier.
-    
-    Complete the upgrade for all nodes in each data tier before moving to the next. This ensures {{ilm-init}} can continue to move data through the tiers during the upgrade. You can get the list of nodes in a specific tier with a `GET /_nodes` request, for example: `GET /_nodes/data_frozen:true/_none`.
-2. Upgrade all remaining nodes that are neither master-eligible nor data nodes. This includes dedicated ML nodes, dedicated ingest nodes, and dedicated coordinating nodes.
-3. Upgrade the master-eligible nodes last. You can retrieve a list of these nodes with `GET /_nodes/master:true/_none`.
-
-This order ensures that all nodes can join the cluster during the upgrade. Upgraded nodes can join a cluster with an older master, but older nodes cannot always join a cluster with a upgraded master.
-
-## Upgrade process
-
-To upgrade a cluster:
+To upgrade a cluster, repeating per node:
 
 :::::{stepper}
 
-::::{step} Disable shard allocation
+::::{step} (Optional) Disable shard allocation
 When you shut down a data node, the allocation process waits for `index.unassigned.node_left.delayed_timeout` (by default, one minute) before starting to replicate the shards on that node to other nodes in the cluster, which can involve a lot of I/O. Since the node is shortly going to be restarted, this I/O is unnecessary. You can avoid racing the clock by [disabling allocation](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-routing-allocation-enable) of replicas before shutting down [data nodes](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#data-node):
 
 ```console
@@ -61,9 +104,9 @@ POST /_flush
 ::::{step} (Optional) Temporarily stop the tasks associated with active {{ml}} jobs and {{dfeeds}}
 It is possible to leave your {{ml}} jobs running during the upgrade, but it puts increased load on the cluster. When you shut down a {{ml}} node, its jobs automatically move to another node and restore the model states.
 
-::::{note}
-Any {{ml}} indices created before 8.x must be reindexed before upgrading, which you can initiate from the **Upgrade Assistant** in 8.19. For more information, refer to [Anomaly detection results migration]
-::::
+:::{note}
+Any {{ml}} indices created before 8.x must be reindexed before upgrading, which you can initiate from the **Upgrade Assistant** in 8.19.
+:::
 
 * Temporarily halt the tasks associated with your {{ml}} jobs and {{dfeeds}} and prevent new jobs from opening by using the [set upgrade mode API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-set-upgrade-mode):
 
@@ -75,7 +118,7 @@ Any {{ml}} indices created before 8.x must be reindexed before upgrading, which 
 
 * [Stop all {{dfeeds}} and close all jobs](../../../explore-analyze/machine-learning/anomaly-detection/ml-ad-run-jobs.md#ml-ad-close-job). This option saves the model state at the time of closure. When you reopen the jobs after the upgrade, they use the exact same model. However, saving the latest model state takes longer than using upgrade mode, especially if you have a lot of jobs or jobs with large model states.
 
-::::{step} $$$upgrade-node$$$ Shut down a single node
+::::{step} Shut down a single node
 To shut down a single node depends on what is currently used to run {{es}}. For example, if using `systemd` or SysV `init` run the commands below.
 
 * If you are running {{es}} with `systemd`:
@@ -90,7 +133,7 @@ To shut down a single node depends on what is currently used to run {{es}}. For 
     sudo -i service elasticsearch stop
     ```
 
-::::{step} Upgrade the node you shut down
+::::{step} Upgrade the shutdown node's version
 To upgrade using a [Debian](../../../deploy-manage/deploy/self-managed/install-elasticsearch-with-debian-package.md) or [RPM](../../../deploy-manage/deploy/self-managed/install-elasticsearch-with-rpm.md) package:
 
 * Use `rpm` or `dpkg` to install the new package. All files are installed in the appropriate location for the operating system and {{es}} config files are not overwritten.
@@ -101,9 +144,9 @@ To upgrade using a zip or compressed tarball:
 2. Set the `ES_PATH_CONF` environment variable to specify the location of your external `config` directory and `jvm.options` file. If you are not using an external `config` directory, copy your old configuration over to the new installation.
 3. Set `path.data` in `config/elasticsearch.yml` to point to your external data directory. If you are not using an external `data` directory, copy your old data directory over to the new installation.<br>
 
-    ::::{important}
+    :::{important}
     If you use {{monitor-features}}, re-use the data directory when you upgrade {{es}}. Monitoring identifies unique {{es}} nodes by using the persistent UUID, which is stored in the data directory.
-    ::::
+    :::
 
 4. Set `path.logs` in `config/elasticsearch.yml` to point to the location where you want to store your logs. If you do not specify this setting, logs are stored in the directory you extracted the archive to.
 
@@ -115,11 +158,15 @@ We recommend moving these directories out of the {{es}} directory so that there 
 The Debian and RPM packages place these directories in the appropriate place for each operating system. In production, we recommend using the deb or rpm package.
 :::
 
+::::{step} Merge the shutdown node's config overrides
+Ensure to align any [{{es}} configuration changes](/deploy-manage/deploy/self-managed/configure-elasticsearch.md). The most common requiring review include
 
-$$$rolling-upgrades-bootstrapping$$$
-Leave `cluster.initial_master_nodes` unset when performing a rolling upgrade. Each upgraded node is joining an existing cluster so there is no need for [cluster bootstrapping](../../../deploy-manage/distributed-architecture/discovery-cluster-formation/modules-discovery-bootstrap-cluster.md). You must configure [either `discovery.seed_hosts` or `discovery.seed_providers`](../../../deploy-manage/deploy/self-managed/important-settings-configuration.md#discovery-settings) on every node.
+* Leave `cluster.initial_master_nodes` unset inside your `elasticsearch.yml` when performing a rolling upgrade. Each upgraded node is joining an existing cluster so there is no need for [cluster bootstrapping](../../../deploy-manage/distributed-architecture/discovery-cluster-formation/modules-discovery-bootstrap-cluster.md). You must configure [either `discovery.seed_hosts` or `discovery.seed_providers`](../../../deploy-manage/deploy/self-managed/important-settings-configuration.md#discovery-settings) on every node.
+* {{es}} ships its recommended [JVM Settings](elasticsearch://reference/elasticsearch/jvm-settings.md) inside `jvm.options` which can change across versions. Ensure any overrides are copied into the updated version's `jvm.options.d` files to avoid drift.
+* {{es}} ships its recommended [Logging Settings](/deploy-manage/monitor/logging-configuration/elasticsearch-log4j-configuration-self-managed.md) inside `log4j2.properties` which can change across versions. Ensure any overrides are copied into the updated version's files to avoid drift. 
+* Depending on how you choose to upgrade nodes, you might need to ensure no [OS-level system settings](/deploy-manage/deploy/self-managed/important-system-configuration.md) drift. The most common are discussed under [System settings configuration methods](/deploy-manage/deploy/self-managed/setting-system-settings.md).
 
-::::{step} Upgrade any plugins
+::::{step} Upgrade any shutdown node's plugins
 Use the `elasticsearch-plugin` script to install the upgraded version of each installed {{es}} plugin. All plugins must be upgraded when you upgrade a node.
 
 ::::{step} Start the upgraded node
@@ -143,49 +190,21 @@ PUT _cluster/settings
 
 ::::{step} Wait for the node to recover
 
-Before upgrading the next node, wait for the cluster to finish shard allocation. You can check progress by submitting a `_cat/health` request:
+Before upgrading the next node, wait for the cluster to finish shard allocations by reporting `status: green`. You can check progress by submitting a [Cluster health status API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health):
 
 ```console
-GET _cat/health?v=true
+GET _cluster/health
 ```
 
-Wait for the `status` column to switch to `green`. Once the node is `green`, all primary and replica shards have been allocated.
-
-::::{important}
-During a rolling upgrade, primary shards assigned to a node running the new version cannot have their replicas assigned to a node with the old version. The new version might have a different data format that is not understood by the old version.
-
-If it is not possible to assign the replica shards to another node (there is only one upgraded node in the cluster), the replica shards remain unassigned and status stays `yellow`.
-
-In this case, you can proceed once there are no initializing or relocating shards (check the `init` and `relo` columns).
-
-As soon as another node is upgraded, the replicas can be assigned and the status will change to `green`.
-
-::::
-
-
-Shards that were not flushed might take longer to recover. You can monitor the recovery status of individual shards by submitting a `_cat/recovery` request:
+Shards that were not flushed might take longer to recover. You can monitor the recovery status of individual shards by submitting a [CAT recovery API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery):
 
 ```console
-GET _cat/recovery
+GET _cat/recovery?v=true&expand_wildcards=all&active_only=true
 ```
 
 If you stopped indexing, it is safe to resume indexing as soon as recovery completes.
 
-::::{step} Repeat
-When the node has recovered and the cluster is stable, repeat these steps for each node that needs to be updated. You can monitor the health of the cluster with a `_cat/health` request:
-
-```console
-GET /_cat/health?v=true
-```
-
-And check which nodes have been upgraded with a `_cat/nodes` request:
-
-```console
-GET /_cat/nodes?h=ip,name,version&v=true
-```
-
 ::::{step} Restart machine learning jobs
-
 If you temporarily halted the tasks associated with your {{ml}} jobs, use the set upgrade mode API to return them to active states:
 
 ```console
@@ -196,16 +215,24 @@ If you closed all {{ml}} jobs before the upgrade, open the jobs and start the da
 
 :::::
 
+If you plan to upgrade nodes in quick succession, you might choose to leave indexing stopped and machine learning jobs and feeds paused throughout the entire upgrade process. You will still want to re-enable shard allocation after each node's restart.
 
-## Rolling upgrades considerations [rolling-upgrades]
+To monitor which nodes have been upgraded, use the [CAT nodes API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes):
+
+```console
+GET _cat/nodes?v=true&h=name,ip,version,uptime
+```
+
+
+## Common issues [upgrade-issues]
 
 During a rolling upgrade, the cluster continues to operate normally. New functionality is either inactive or operates in a backward-compatible mode until the last old-version node leaves the cluster. New functionality becomes operational when all nodes in the cluster are running the new version.
 
-Usually, the old-version nodes only leave the cluster when you shut them down to upgrade them. In this case, the last old-version node leaves the cluster when there are no more nodes to upgrade. However, it is possible that an old-version node might leave the cluster before you shut it down. For example, a node might leave the cluster if it loses its network connection with the elected master node, or if it fails to respond to health checks.
+Usually, the old-version nodes only leave the cluster when you shut them down to upgrade them. In this case, the last old-version node leaves the cluster when there are no more nodes to upgrade. However, it is possible that an old-version node might temporarily or permanently (until intervened) leave the cluster before you purposely shut it down due to [cluster fault detection](/deploy-manage/distributed-architecture/discovery-cluster-formation/cluster-fault-detection.md).
 
 If all the remaining old-version nodes unexpectedly leave the cluster during an upgrade, the cluster will consider itself to be fully-upgraded, automatically activate new functionality, and leave its backward-compatible mode. Once that has happened, there is no way to return the cluster to a state that is compatible with the old-version nodes. Nodes running the earlier version will not be able to join this fully-upgraded cluster. To bring these nodes back into the cluster, upgrade them. {{es}} maintains the data in the data paths of the older nodes and will recover the cluster to health using this data after the nodes are fully upgraded.
 
-If you stop half or more of the master-eligible nodes all at once during the upgrade, the cluster will become unavailable. You must restart all the stopped master-eligible nodes to allow the cluster to re-form. If the re-formed cluster comprises only upgraded nodes, then the cluster will consider itself to be fully-upgraded, automatically activate new functionality, and leave its backward-compatible mode. In this case, upgrade all other nodes running the old version to enable them to join the re-formed cluster. Upgrade the master-eligible nodes last to make it less likely that this occurs.
+If you stop half or more of the master-eligible nodes all at once during the upgrade, the cluster will become unavailable due to insufficient [voting configurations](/deploy-manage/distributed-architecture/discovery-cluster-formation/modules-discovery-voting.md). You must restart all the stopped master-eligible nodes to allow the cluster to re-form. If the re-formed cluster comprises only upgraded nodes, then the cluster will consider itself to be fully-upgraded, automatically activate new functionality, and leave its backward-compatible mode. In this case, upgrade all other nodes running the old version to enable them to join the re-formed cluster. Upgrade the master-eligible nodes last to make it less likely that this occurs.
 
 In a testing or development environment with only one or two master-eligible nodes, you cannot avoid stopping half or more of the master-eligible nodes, so the cluster will always become unavailable at some point during the upgrade. When you restart the master-eligible nodes after this unavailability, the cluster will re-form with a single upgraded node, which is therefore fully-upgraded and will reject older nodes' attempts to re-join the cluster. Upgrade the master-eligible nodes last to avoid these rejections.
 
