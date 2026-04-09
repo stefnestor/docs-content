@@ -16,7 +16,7 @@ Before you start the rolling upgrade procedure, [plan your upgrade](/deploy-mana
 
 {{es}} does not support upgrading release candidate builds, such as 9.0.0-rc1. Use pre-releases only for testing in a temporary environment.
 
-{{es}} does not support version downgrades. It is important to prepare carefully before starting an upgrade. Once you have started to upgrade your cluster to the higher version you must complete the upgrade. As soon as the cluster contains nodes of the higher version it may make changes to its internal state that cannot be reverted. If you cannot complete the upgrade then you should discard the partially-upgraded cluster, deploy an empty cluster of the version before the upgrade, and [restore its contents from a snapshot](/deploy-manage/upgrade/prepare-to-upgrade.md#create-a-snapshot-for-backup).
+{{es}} does not support version downgrades. It is important to prepare carefully before starting an upgrade. Once you have started to upgrade your cluster to the later version you must complete the upgrade. As soon as the cluster contains nodes of the later version it can make changes to its internal state that cannot be reverted. If you cannot complete the upgrade then you should discard the partially-upgraded cluster, deploy an empty cluster of the version before the upgrade, and [restore its contents from a snapshot](/deploy-manage/upgrade/prepare-to-upgrade.md#create-a-snapshot-for-backup).
 
 Cluster upgrades can be performed as
 
@@ -28,14 +28,14 @@ Cluster upgrades can be performed as
 
     This requires that for all nodes in your cluster, you simultaneously stop, upgrade, and then start them. The cluster will be unavailable during the upgrade process. This lack of [high availability](/deploy-manage/production-guidance/availability-and-resilience.md) introduces a window for potential data loss if upgrade is insufficiently managed.
 
-The following guide will be phrased towards rolling restarts as this is the expected method for production environments. Full restarts follow the same below process with the difference of modifying all nodes simultaneoulsy.
+The following guide will be phrased toward rolling restarts as this is the expected method for production environments. Full restarts follow the same below process with the difference of modifying all nodes simultaneoulsy.
 
 ## Nodes upgrade order [upgrade-order]
 
 When performing a rolling upgrade, you should proceed one node at a time based off the following [node role](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md) groupings. If a node is assigned multiple node roles, organize it into its ordered grouping based off its first flagged node role in the list. This ensures that:
 
 * Built-in plugins, such as {{ilm-init}} and transforms, can continue to process data without errors.
-* All nodes can join the cluster during the upgrade. Upgraded nodes can join a cluster with an older version master, but older version nodes cannot always join a cluster with an upgraded master.
+* All nodes can join the cluster during the upgrade. Upgraded nodes can join a cluster with an earlier version master, but earlier version nodes cannot always join a cluster with an upgraded master.
 
 The {{es}} nodes upgrade order is:
 
@@ -83,7 +83,7 @@ To upgrade a cluster, repeating per node:
 :::::{stepper}
 
 ::::{step} (Optional) Disable shard allocation
-When you shut down a data node, the allocation process waits for `index.unassigned.node_left.delayed_timeout` (by default, one minute) before starting to replicate the shards on that node to other nodes in the cluster, which can involve a lot of I/O. Since the node is shortly going to be restarted, this I/O is unnecessary. You can avoid racing the clock by [disabling allocation](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-routing-allocation-enable) of replicas before shutting down [data nodes](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#data-node):
+When you shut down a data node, the allocation process waits for `index.unassigned.node_left.delayed_timeout` (by default, one minute) before starting to replicate the shards on that node to other nodes in the cluster, which can involve a lot of I/O. Becausee the node is shortly going to be restarted, this I/O is unnecessary. You can avoid racing the clock by [disabling allocation](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-routing-allocation-enable) of replicas before shutting down [data nodes](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#data-node):
 
 ```console
 PUT _cluster/settings
@@ -176,7 +176,7 @@ Start the newly-upgraded node and confirm that it joins the cluster by checking 
 GET _cat/nodes
 ```
 
-::::{step} Reenable shard allocation
+::::{step} Re-enable shard allocation
 For data nodes, once the node has joined the cluster, remove the `cluster.routing.allocation.enable` setting to enable shard allocation and start using the node:
 
 ```console
