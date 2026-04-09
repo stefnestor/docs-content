@@ -8,7 +8,7 @@ products:
 
 # Upgrade {{es}} [upgrading-elasticsearch]
 
-This runbook outlines the detailed steps for performing an upgrade of a self-managed {{es}} cluster from an old-version to a higher new-version.
+This runbook outlines the detailed steps for performing an upgrade of a self-managed {{es}} cluster from an earlier version to a upgraded, later version.
 
 Consider deploying your {{es}} cluster from within one of our [cloud deployment methods](/deploy-manage/deploy.md#choosing-your-deployment-type) to automate this process. Refer to [migrating your data](/manage-data/migrate.md) to port existing self-mananaged clusters to Elastic-managed.
 
@@ -101,6 +101,8 @@ While you can continue indexing during the upgrade, shard recovery is much faste
 POST /_flush
 ```
 
+::::
+
 ::::{step} (Optional) Temporarily stop the tasks associated with active {{ml}} jobs and {{dfeeds}}
 It is possible to leave your {{ml}} jobs running during the upgrade, but it puts increased load on the cluster. When you shut down a {{ml}} node, its jobs automatically move to another node and restore the model states.
 
@@ -118,6 +120,8 @@ Any {{ml}} indices created before 8.x must be reindexed before upgrading, which 
 
 * [Stop all {{dfeeds}} and close all jobs](../../../explore-analyze/machine-learning/anomaly-detection/ml-ad-run-jobs.md#ml-ad-close-job). This option saves the model state at the time of closure. When you reopen the jobs after the upgrade, they use the exact same model. However, saving the latest model state takes longer than using upgrade mode, especially if you have a lot of jobs or jobs with large model states.
 
+::::
+
 ::::{step} Shut down a single node
 To shut down a single node depends on what is currently used to run {{es}}. For example, if using `systemd` or SysV `init` run the commands below.
 
@@ -132,6 +136,8 @@ To shut down a single node depends on what is currently used to run {{es}}. For 
     ```sh
     sudo -i service elasticsearch stop
     ```
+
+::::
 
 ::::{step} Upgrade the shutdown node's version
 To upgrade using a [Debian](../../../deploy-manage/deploy/self-managed/install-elasticsearch-with-debian-package.md) or [RPM](../../../deploy-manage/deploy/self-managed/install-elasticsearch-with-rpm.md) package:
@@ -158,6 +164,8 @@ We recommend moving these directories out of the {{es}} directory so that there 
 The Debian and RPM packages place these directories in the appropriate place for each operating system. In production, we recommend using the deb or rpm package.
 :::
 
+::::
+
 ::::{step} Merge the shutdown node's config overrides
 Ensure to align any [{{es}} configuration changes](/deploy-manage/deploy/self-managed/configure-elasticsearch.md). The most common requiring review include
 
@@ -166,8 +174,12 @@ Ensure to align any [{{es}} configuration changes](/deploy-manage/deploy/self-ma
 * {{es}} ships its recommended [Logging Settings](/deploy-manage/monitor/logging-configuration/elasticsearch-log4j-configuration-self-managed.md) inside `log4j2.properties` which can change across versions. Ensure any overrides are copied into the updated version's files to avoid drift. 
 * Depending on how you choose to upgrade nodes, you might need to ensure no [OS-level system settings](/deploy-manage/deploy/self-managed/important-system-configuration.md) drift. The most common are discussed under [System settings configuration methods](/deploy-manage/deploy/self-managed/setting-system-settings.md).
 
+::::
+
 ::::{step} Upgrade any shutdown node's plugins
 Use the `elasticsearch-plugin` script to install the upgraded version of each installed {{es}} plugin. All plugins must be upgraded when you upgrade a node.
+
+::::
 
 ::::{step} Start the upgraded node
 Start the newly-upgraded node and confirm that it joins the cluster by checking the log file or by submitting a `_cat/nodes` request:
@@ -175,6 +187,8 @@ Start the newly-upgraded node and confirm that it joins the cluster by checking 
 ```console
 GET _cat/nodes
 ```
+
+::::
 
 ::::{step} Re-enable shard allocation
 For data nodes, once the node has joined the cluster, remove the `cluster.routing.allocation.enable` setting to enable shard allocation and start using the node:
@@ -187,6 +201,8 @@ PUT _cluster/settings
   }
 }
 ```
+
+::::
 
 ::::{step} Wait for the node to recover
 
@@ -203,6 +219,8 @@ GET _cat/recovery?v=true&expand_wildcards=all&active_only=true
 ```
 
 If you stopped indexing, it is safe to resume indexing as soon as recovery completes.
+
+::::
 
 ::::{step} Restart machine learning jobs
 If you temporarily halted the tasks associated with your {{ml}} jobs, use the set upgrade mode API to return them to active states:
@@ -222,7 +240,6 @@ To monitor which nodes have been upgraded, use the [CAT nodes API](https://www.e
 ```console
 GET _cat/nodes?v=true&h=name,ip,version,uptime
 ```
-
 
 ## Common issues [upgrade-issues]
 
