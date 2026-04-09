@@ -8,12 +8,35 @@ products:
   - id: elasticsearch
 ---
 
-% TODO restructure ILM and SLM topics
-% TODO dropdowns or break it up
+# Fix {{ilm}} errors [index-lifecycle-error-handling]
 
-# Fix index lifecycle management errors [index-lifecycle-error-handling]
+[{{ilm}}](../../manage-data/lifecycle/index-lifecycle-management.md) executes actions asynchronously against your cluster's indices based off of conditional-based and time-based logic. These [phase, action, and step executions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md) run sequentially on behalf of the user which last edited the {{ilm-init}} policy.
 
-When [{{ilm-init}}](../../manage-data/lifecycle/index-lifecycle-management.md) executes a lifecycle policy, it’s possible for errors to occur while performing the necessary index operations for a step. When this happens, {{ilm-init}} moves the index to an `ERROR` step. If {{ilm-init}} cannot resolve the error automatically, execution is halted until you resolve the underlying issues with the policy, index, or cluster.
+{{ilm-init}} may thereby surface:
+
+* Direct errors which would emit when the corresponding {{es}} API was manually executed. The most common examples are [{{ilm-init}} Rollover](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md) errors below.
+* Indirect issues which would surface after the corresponding {{es}} API was successfully executed but full intention didn't take effect. The most common examples are [{{ilm-init}} Migrate](/reference/elasticsearch/index-lifecycle-actions/ilm-migrate.md) messages below.
+
+In the below guide, we will outline the most common {{ilm-init}} setup misunderstandings and issues.
+
+## Check for {{ilm-init}} issues [check-ilm-for-issues]
+
+{{ilm-init}} runs against each index. It purposely holds an index on a couple of steps for its condition-based and time-based logic. These are mainly `phase/action/step`:
+
+* `hot/rollover/check-rollover-ready` until [{{ilm-init}} Rollover requirements](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md#ilm-rollover-options) are met.
+* `*/complete/complete` until the index `age` qualifies for the next phase's `min_age`. Refer to [how `min_age` is calculated](#min-age-calculation) below for more information.
+* `delete/wait_for_snapshot/wait-for-snapshot` until the [{{ilm-init}} Delete](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-delete.md)'s [SLM policy](/deploy-manage/tools/snapshot-and-restore/create-snapshots.md) is successfully completed for this index.
+
+We will colloquially refer to steps other than these as _transient_ steps where {{ilm-init}} should be applying some operation against the index. Any step may error, but {{es}}'s [Cluster health API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-health-report) will also report `stagnating_indices` for indices which have been in transient steps longer than expected.
+
+When errors occur, {{ilm-init}} updates the [ILM explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) to report:
+* the index's active `step` under field `failed_step` and marks `step` as `ERROR`
+* flags `is_auto_retryable_error` as `true`
+* increments `failed_step_retry_count`
+
+Upon the next {{ilm-init}} index polling
+
+When {{ilm-init}} executes a lifecycle policy, it’s possible for errors to occur while performing the necessary index operations for a step. When this happens, {{ilm-init}} moves the index to an `ERROR` step. If {{ilm-init}} cannot resolve the error automatically, execution is halted until you resolve the underlying issues with the policy, index, or cluster.
 
 See [this video](https://www.youtube.com/watch?v=VCIqkji3IwY) for a walkthrough of troubleshooting current {{ilm-init}} health issues, and [this video](https://www.youtube.com/watch?v=onrnnwjYWSQ) for a walkthrough of troubleshooting historical {{ilm-init}} issues.
 
@@ -157,81 +180,102 @@ You can override how `min_age` is calculated using the `index.lifecycle.originat
 
 Here’s how to resolve the most common errors reported in the `ERROR` step.
 
+### Rollover errors [_common_ilm_init_errors_rollover]
+
+[{{ilm-init}} Rollover](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md)
+
 ::::{tip}
 Problems with rollover aliases are a common cause of errors. Consider using [data streams](/manage-data/data-store/data-streams.md) instead of managing rollover with aliases.
 ::::
 
 
-
-### Rollover alias [x] can point to multiple indices, found duplicated alias [x] in index template [z] [_rollover_alias_x_can_point_to_multiple_indices_found_duplicated_alias_x_in_index_template_z]
+$$$_rollover_alias_x_can_point_to_multiple_indices_found_duplicated_alias_x_in_index_template_z$$$
+:::{dropdown} `Rollover alias [x] can point to multiple indices, found duplicated alias [x] in index template [z]` 
 
 The target rollover alias is specified in an index template’s `index.lifecycle.rollover_alias` setting. You need to explicitly configure this alias *one time* when you [bootstrap the initial index](/manage-data/lifecycle/index-lifecycle-management/tutorial-time-series-without-data-streams.md#ilm-gs-alias-bootstrap). The rollover action then manages setting and updating the alias to [roll over](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-rollover#rollover-index-api-desc) to each subsequent index.
 
 Do not explicitly configure this same alias in the aliases section of an index template.
 
 See this [resolving `duplicate alias` video](https://www.youtube.com/watch?v=Ww5POq4zZtY) for an example troubleshooting walkthrough.
+:::
 
-
-### index.lifecycle.rollover_alias [x] does not point to index [y] [_index_lifecycle_rollover_alias_x_does_not_point_to_index_y]
+$$$_index_lifecycle_rollover_alias_x_does_not_point_to_index_y$$$
+:::{dropdown} `index.lifecycle.rollover_alias [x] does not point to index [y]`
 
 Either the index is using the wrong alias or the alias does not exist.
 
 Check the `index.lifecycle.rollover_alias` [index setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-settings). To see what aliases are configured, use [_cat/aliases](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases).
 
 See this [resolving `not point to index` video](https://www.youtube.com/watch?v=NKSe67x7aw8) for an example troubleshooting walkthrough.
+:::
 
-
-### Setting [index.lifecycle.rollover_alias] for index [y] is empty or not defined [_setting_index_lifecycle_rollover_alias_for_index_y_is_empty_or_not_defined]
-
+$$$_setting_index_lifecycle_rollover_alias_for_index_y_is_empty_or_not_defined$$$
+:::{dropdown} `setting [index.lifecycle.rollover_alias] for index [y] is empty or not defined`
 The `index.lifecycle.rollover_alias` setting must be configured for the rollover action to work.
 
 Update the index settings to set `index.lifecycle.rollover_alias`.
 
 See this [resolving `empty or not defined` video](https://www.youtube.com/watch?v=LRpMC2GS_FQ) for an example troubleshooting walkthrough.
+:::
 
-
-### Alias [x] has more than one write index [y,z] [_alias_x_has_more_than_one_write_index_yz]
+$$$_alias_x_has_more_than_one_write_index_yz$$$
+:::{dropdown} `alias [x] has more than one write index [y,z]`
 
 Only one index can be designated as the write index for a particular alias.
 
 Use the [aliases](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-update-aliases) API to set `is_write_index:false` for all but one index.
 
 See this [resolving `more than one write index` video](https://www.youtube.com/watch?v=jCUvZCT5Hm4) for an example troubleshooting walkthrough.
+:::
 
-
-### index name [x] does not match pattern ^.*-\d+ [_index_name_x_does_not_match_pattern_d]
+$$$_index_name_x_does_not_match_pattern_d$$$
+:::{dropdown} `index name [x] does not match pattern ^.*-\d+` 
 
 The index name must match the regex pattern `^.*-\d+` for the rollover action to work. The most common problem is that the index name does not contain trailing digits. For example, `my-index` does not match the pattern requirement.
 
 Append a numeric value to the index name, for example `my-index-000001`.
 
 See this [resolving `does not match pattern` video](https://www.youtube.com/watch?v=9sp1zF6iL00) for an example troubleshooting walkthrough.
+:::
 
 
-### CircuitBreakingException: [x] data too large, data for [y] [_circuitbreakingexception_x_data_too_large_data_for_y]
+### {{ilm-init}} Migrate errors [_common_ilm_init_errors_migrate]
+
+[{{ilm-init}} Migrate](/reference/elasticsearch/index-lifecycle-actions/ilm-migrate.md)
+
+
+$$$ _index_has_a_preference_for_tiers$$$
+:::{dropdown} `index has a preference for tiers [xxx] and node does not meet the required [xxx] tier`
+
+If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) returns this error, it indicates that shards cannot be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).  
+:::
+
+
+### General {{ilm-init}} errors [_common_ilm_init_errors_general]
+
+$$$_circuitbreakingexception_x_data_too_large_data_for_y$$$
+:::{dropdown} `CircuitBreakingException: [x] data too large, data for [y]`
 
 This indicates that the cluster is hitting resource limits.
 
 Before continuing to set up {{ilm-init}}, you’ll need to take steps to alleviate the resource issues. For more information, see [Circuit breaker errors](circuit-breaker-errors.md).
+:::
 
-
-### High disk watermark [x] exceeded on [y] [_high_disk_watermark_x_exceeded_on_y]
+$$$_high_disk_watermark_x_exceeded_on_y$$$
+:::{dropdown} `high disk watermark [x] exceeded on [y]`
 
 This indicates that the cluster is running out of disk space. This can happen when you don’t have {{ilm}} set up to roll over from hot to warm nodes. For more information, see [Fix watermark errors](fix-watermark-errors.md).
+:::
 
-
-### security_exception: action [<action-name>] is unauthorized for user [<user-name>] with roles [<role-name>], this action is granted by the index privileges [manage_follow_index,manage,all] [_security_exception_action_action_name_is_unauthorized_for_user_user_name_with_roles_role_name_this_action_is_granted_by_the_index_privileges_manage_follow_indexmanageall]
+$$$_security_exception_action_action_name_is_unauthorized_for_user_user_name_with_roles_role_name_this_action_is_granted_by_the_index_privileges_manage_follow_indexmanageall$$$
+:::{dropdown} `security_exception: action [<action-name>] is unauthorized for user [<user-name>] with roles [<role-name>], this action is granted by the index privileges [manage_follow_index,manage,all]`
 
 This indicates the ILM action cannot be executed because the user that ILM uses to perform the action doesn’t have the correct privileges. ILM actions are run as though they are performed by the last user who modified the policy with the privileges that user had at that time. The account used to create or modify the policy must have permissions to perform all operations that are part of that policy. If this error surfaces on system indices, see permissions described in [File-based access recovery](https://www.elastic.co/docs/troubleshoot/elasticsearch/file-based-recovery) to recover.
+:::
 
-
-### Policy [<policy-name>] does not exist
+$$$_policy_policy_name_does_not_exist$$$
+:::{dropdown} `policy [<policy-name>] does not exist`
 
 The error occurs because the index is assigned to an ILM policy that does not exist in the cluster. To fix this, you can either [create the missing policy](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-put-lifecycle) with the required settings or [link the index to an existing ILM policy](https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/index-lifecycle-management-settings#index-lifecycle-name).
-
-
-### Index has a preference for tiers [xxx] and node does not meet the required [xxx] tier
-
-If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) returns this error, it indicates that shards cannot be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).  
-
+:::
 
