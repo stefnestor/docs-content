@@ -8,9 +8,9 @@ products:
 
 # Upgrade {{es}} [upgrading-elasticsearch]
 
-This runbook outlines the detailed steps for performing an upgrade of a self-managed {{es}} cluster from an earlier version to a upgraded, later version.
+This runbook outlines the detailed steps for performing an upgrade of a self-managed {{es}} cluster from an earlier version to an upgraded later version.
 
-Consider deploying your {{es}} cluster from within one of our [cloud deployment methods](/deploy-manage/deploy.md#choosing-your-deployment-type) to automate this process. Refer to [migrating your data](/manage-data/migrate.md) to port existing self-mananaged clusters to Elastic-managed.
+Consider deploying your {{es}} cluster from within one of our [cloud deployment methods](/deploy-manage/deploy.md#choosing-your-deployment-type) to automate this process. Refer to [migrating your data](/manage-data/migrate.md) to port existing self-managed clusters to Elastic-managed.
 
 Before you start the rolling upgrade procedure, [plan your upgrade](/deploy-manage/upgrade/plan-upgrade.md) and [take the upgrade preparation steps](/deploy-manage/upgrade/prepare-to-upgrade.md). 
 
@@ -28,7 +28,7 @@ Cluster upgrades can be performed as
 
     This requires that for all nodes in your cluster, you simultaneously stop, upgrade, and then start them. The cluster will be unavailable during the upgrade process. This lack of [high availability](/deploy-manage/production-guidance/availability-and-resilience.md) introduces a window for potential data loss if upgrade is insufficiently managed.
 
-The following guide will be phrased toward rolling restarts as this is the expected method for production environments. Full restarts follow the same below process with the difference of modifying all nodes simultaneoulsy.
+The following guide will be phrased toward rolling restarts as this is the expected method for production environments. Full restarts follow the same below process with the difference of modifying all nodes simultaneously.
 
 ## Nodes upgrade order [upgrade-order]
 
@@ -58,7 +58,7 @@ The {{es}} nodes upgrade order is:
 3. Upgrade the [`master` and `voting_only` master-eligible nodes](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#master-node-role) last.
 
 
-You can get the list of nodes in a specific node role with a [Get Node Information API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes) request, for example using `data_frozen`:
+You can get the list of nodes in a specific node role with a [Get Node Information API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-info) request, for example using `data_frozen`:
 
 ```console
 GET /_nodes/data_frozen:true/_none
@@ -83,7 +83,7 @@ To upgrade a cluster, repeating per node:
 :::::{stepper}
 
 ::::{step} (Optional) Disable shard allocation
-When you shut down a data node, the allocation process waits for `index.unassigned.node_left.delayed_timeout` (by default, one minute) before starting to replicate the shards on that node to other nodes in the cluster, which can involve a lot of I/O. Becausee the node is shortly going to be restarted, this I/O is unnecessary. You can avoid racing the clock by [disabling allocation](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-routing-allocation-enable) of replicas before shutting down [data nodes](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#data-node):
+When you shut down a data node, the allocation process waits for `index.unassigned.node_left.delayed_timeout` (by default, one minute) before starting to replicate the shards on that node to other nodes in the cluster, which can involve a lot of I/O. Because the node is shortly going to be restarted, this I/O is unnecessary. You can avoid racing the clock by [disabling allocation](elasticsearch://reference/elasticsearch/configuration-reference/cluster-level-shard-allocation-routing-settings.md#cluster-routing-allocation-enable) of replicas before shutting down [data nodes](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#data-node):
 
 ```console
 PUT _cluster/settings
@@ -167,7 +167,7 @@ The Debian and RPM packages place these directories in the appropriate place for
 ::::
 
 ::::{step} Merge the shutdown node's config overrides
-Ensure to align any [{{es}} configuration changes](/deploy-manage/deploy/self-managed/configure-elasticsearch.md). The most common requiring review include
+Ensure to align any [{{es}} configuration changes](/deploy-manage/deploy/self-managed/configure-elasticsearch.md). The most common settings to review include:
 
 * Leave `cluster.initial_master_nodes` unset inside your `elasticsearch.yml` when performing a rolling upgrade. Each upgraded node is joining an existing cluster so there is no need for [cluster bootstrapping](../../../deploy-manage/distributed-architecture/discovery-cluster-formation/modules-discovery-bootstrap-cluster.md). You must configure [either `discovery.seed_hosts` or `discovery.seed_providers`](../../../deploy-manage/deploy/self-managed/important-settings-configuration.md#discovery-settings) on every node.
 * {{es}} ships its recommended [JVM Settings](elasticsearch://reference/elasticsearch/jvm-settings.md) inside `jvm.options` which can change across versions. Ensure any overrides are copied into the updated version's `jvm.options.d` files to avoid drift.
