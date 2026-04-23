@@ -94,6 +94,7 @@ PUT _cluster/settings
 }
 ```
 
+::::
 ::::{step} (Optional) Stop non-essential indexing and perform a flush
 While you can continue indexing during the upgrade, shard recovery is much faster if you temporarily stop non-essential indexing and perform a [flush](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-flush).
 
