@@ -21,7 +21,7 @@ In the below guide, we will outline how check {{ilm-init}} overall health, inves
 
 ## Check for {{ilm-init}} issues [ilm-check-issues]
 
-We will first outline the symptoms of stuck tasks, then erring tasks, before finally showing the common investiative API commands.
+We will first outline the symptoms of stuck tasks, then erring tasks, before finally showing the common investigative API commands.
 
 ### {{ilm-init}} transient steps [ilm-steps-transient]
 
@@ -40,7 +40,7 @@ Therefore, an index proceeds through its {{ilm-init}} steps as fast as the direc
 * `*/*/forcemerge` waits for the index's [force merge](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-forcemerge.md), noting the guide's performance considerations.
 * `delete/wait_for_snapshot/wait-for-snapshot` delays until the [{{ilm-init}} Delete](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-delete.md)'s [SLM policy](/deploy-manage/tools/snapshot-and-restore/create-snapshots.md) is successfully completed for the index.
 
-It is not concerning for these transient steps to report in [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle)'s output. However, we suggest investigating if an index does not progress from a particular step for an extended duration. This still may not indicate an issue in your cluster, versus expected behavior based off the nuances of your particular setup and use case.
+It is not concerning for these transient steps to report in [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle)'s output. However, we suggest investigating if an index does not progress from a particular step for an extended duration. This still might not indicate an issue in your cluster, versus expected behavior based off the nuances of your particular setup and use case.
 
 ### {{ilm-init}} erring steps [ilm-steps-errors]
 
@@ -211,7 +211,7 @@ PUT _ilm/policy/shrink-index
 }
 ```
 
-Once we fix the problem, we can wait for {{ilm-init}}'s poll interval to automatically retry the index's `ERROR` step or can execute the [Retry policy API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-retry) to run it on demand:
+Once we fix the problem, we can wait for {{ilm-init}}'s poll interval to automatically retry the index's `ERROR` step or can apply the [Retry policy API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-retry) to run it on demand:
 
 ```console
 POST /my-index-000001/_ilm/retry
@@ -221,7 +221,7 @@ POST /my-index-000001/_ilm/retry
 
 ## Frequently Asked Questions [ilm-faq]
 
-We have collected the most frequently asked questions here. If your question isn’t answered here or in [our {{ilm-init}} guide](/main/manage-data/lifecycle/index-lifecycle-management.md), then [contact us](/troubleshoot/index.md#contact-us).
+We have collected the most frequently asked questions here. If your question isn’t answered here or in [our {{ilm-init}} guide](/manage-data/lifecycle/index-lifecycle-management.md), then [contact us](/troubleshoot/index.md#contact-us).
 
 ### How `min_age` is calculated [min-age-calculation]
 
@@ -264,7 +264,7 @@ The target rollover alias is specified in an index template’s `index.lifecycle
 
 Do not explicitly configure this same alias in the aliases section of an index template.
 
-See this [resolving `duplicate alias` video](https://www.youtube.com/watch?v=Ww5POq4zZtY) for an example troubleshooting walkthrough.
+Refer to [resolving `duplicate alias` video](https://www.youtube.com/watch?v=Ww5POq4zZtY) for an example troubleshooting walkthrough.
 :::
 
 :::{dropdown} `index.lifecycle.rollover_alias [x] does not point to index [y]`
@@ -274,7 +274,7 @@ Either the index is using the wrong alias or the alias does not exist.
 
 Check the `index.lifecycle.rollover_alias` [index setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-settings). To see what aliases are configured, use [_cat/aliases](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases).
 
-See this [resolving `not point to index` video](https://www.youtube.com/watch?v=NKSe67x7aw8) for an example troubleshooting walkthrough.
+Refer to [resolving `not point to index` video](https://www.youtube.com/watch?v=NKSe67x7aw8) for an example troubleshooting walkthrough.
 :::
 
 :::{dropdown} `setting [index.lifecycle.rollover_alias] for index [y] is empty or not defined`
@@ -284,7 +284,7 @@ The `index.lifecycle.rollover_alias` setting must be configured for the rollover
 
 Update the index settings to set `index.lifecycle.rollover_alias`.
 
-See this [resolving `empty or not defined` video](https://www.youtube.com/watch?v=LRpMC2GS_FQ) for an example troubleshooting walkthrough.
+Refer to [resolving `empty or not defined` video](https://www.youtube.com/watch?v=LRpMC2GS_FQ) for an example troubleshooting walkthrough.
 :::
 
 :::{dropdown} `alias [x] has more than one write index [y,z]`
@@ -294,7 +294,7 @@ Only one index can be designated as the write index for a particular alias.
 
 Use the [aliases](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-update-aliases) API to set `is_write_index:false` for all but one index.
 
-See this [resolving `more than one write index` video](https://www.youtube.com/watch?v=jCUvZCT5Hm4) for an example troubleshooting walkthrough.
+Refer to [resolving `more than one write index` video](https://www.youtube.com/watch?v=jCUvZCT5Hm4) for an example troubleshooting walkthrough.
 :::
 
 :::{dropdown} `index name [x] does not match pattern ^.*-\d+` 
@@ -304,7 +304,7 @@ The index name must match the regex pattern `^.*-\d+` for the rollover action to
 
 Append a numeric value to the index name, for example `my-index-000001`.
 
-See this [resolving `does not match pattern` video](https://www.youtube.com/watch?v=9sp1zF6iL00) for an example troubleshooting walkthrough.
+Refer to [resolving `does not match pattern` video](https://www.youtube.com/watch?v=9sp1zF6iL00) for an example troubleshooting walkthrough.
 :::
 
 
@@ -316,7 +316,7 @@ The following errors usually surface during shard recovery. This primarily occur
 :::{dropdown} `index has a preference for tiers [xxx] and node does not meet the required [xxx] tier`
 name: _index_has_a_preference_for_tiers
 
-If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) returns this error, it indicates that shards cannot be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).  
+If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) returns this error, it indicates that shards are unable to be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).  
 :::
 
 ### General {{ilm-init}} errors [ilm-errors-general]
