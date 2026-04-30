@@ -17,7 +17,7 @@ products:
 * Direct errors which would also emit if the corresponding {{es}} API was manually executed by that user.
 * Indirect configuration issues which would surface after the corresponding {{es}} API successfully executed but the user's intention didn't fully take effect.
 
-In the below guide, we will outline how check {{ilm-init}} overall health, investigate individual indices' status, and list the most common setup questions and issues.
+This guide covers how to check {{ilm-init}} overall health, investigate individual indices' status, and lists the most common setup questions and issues.
 
 ## Check for {{ilm-init}} issues [ilm-check-issues]
 
@@ -25,7 +25,7 @@ We will first outline the symptoms of stuck tasks, then erring tasks, before fin
 
 ### {{ilm-init}} transient steps [ilm-steps-transient]
 
-{{ilm-init}} purposely holds an index on a couple of steps for its logic-based and time-based conditions. The following [{{{ilm-init}} explain API's](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) `phase/action/step` combinations wait:
+{{ilm-init}} purposely holds an index on a couple of steps for its logic-based and time-based conditions. The following [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) `phase/action/step` combinations wait:
 
 * `hot/rollover/check-rollover-ready` until [{{ilm-init}} Rollover requirements](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md#ilm-rollover-options) are met.
 * `*/complete/complete` until the index's `age` qualifies for the next phase's `min_age`. Refer to [how `min_age` is calculated](#min-age-calculation) for more information.
@@ -34,13 +34,13 @@ We will colloquially refer to steps other than these as _transient_ steps where 
 
 {{ilm-init}} [polls for work on an interval basis](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md) (default `10m`). For more information, refer to [{{ilm-init}} phase transitions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-execution). 
 
-Therefore, an index proceeds through its {{ilm-init}} steps as fast as the direct operation's duration in combination with {{ilm-init}}'s poll interval. For example, transient steps who's duration proportions to its underlying asynchronous operation's duration and can thereby be affected by its [task backlog](/troubleshoot/elasticsearch/task-queue-backlog.md) commonly include:
+Therefore, an index proceeds through its {{ilm-init}} steps as fast as the direct operation's duration in combination with {{ilm-init}}'s poll interval. For example, transient steps whose duration is proportional to their underlying asynchronous operation's duration and can thereby be affected by their [task backlog](/troubleshoot/elasticsearch/task-queue-backlog.md) commonly include:
 
 * `*/migrate/check-migration` monitors the index's [shards' allocation and recoveries](/deploy-manage/distributed-architecture/shard-allocation-relocation-recovery.md).
 * `*/*/forcemerge` waits for the index's [force merge](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-forcemerge.md), noting the guide's performance considerations.
 * `delete/wait_for_snapshot/wait-for-snapshot` delays until the [{{ilm-init}} Delete](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-delete.md)'s [SLM policy](/deploy-manage/tools/snapshot-and-restore/create-snapshots.md) is successfully completed for the index.
 
-It is not concerning for these transient steps to report in [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle)'s output. However, we suggest investigating if an index does not progress from a particular step for an extended duration. This still might not indicate an issue in your cluster, versus expected behavior based off the nuances of your particular setup and use case.
+It is not concerning for these transient steps to appear in [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle)'s output. However, investigate investigating if an index does not progress from a particular step for an extended duration. This still might indicate expected behavior based off the nuances of your particular setup and use case, rather than a cluster issue.
 
 ### {{ilm-init}} erring steps [ilm-steps-errors]
 
@@ -231,9 +231,9 @@ If you use [{{ilm-init}} rollover](elasticsearch://reference/elasticsearch/index
 
 You can override how `min_age` is calculated using the `index.lifecycle.origination_date` and `index.lifecycle.parse_origination_date` [{{ilm-init}} settings](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md).
 
-### Steps proceed sequential [ilm-sequential-steps]
+### Steps proceed sequentially [ilm-sequential-steps]
 
-{{ilm-init}} does not skip steps due to logic-based nor time-based conditions. It will proceed through all steps [in the enabled action's order](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#phases-availability). For example, this means it's possible for an index stagnated at `phase/action/step` of `warm/migrate/check-migration` to surpass its expected deletion time. This is an example on why it's important to review and resolve {{ilm-init}} errors to maintain a healthy cluster. For more information, refer to [{{ilm-init}} phase transitions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-transitions)
+{{ilm-init}} does not skip steps due to logic-based nor time-based conditions. It will proceed through all steps [in the enabled action's order](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#phases-availability). For example, this means it's possible for an index stagnated at `phase/action/step` of `warm/migrate/check-migration` to surpass its expected deletion time. This is an example of why it's important to review and resolve {{ilm-init}} errors to maintain a healthy cluster. For more information, refer to [{{ilm-init}} phase transitions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-transitions).
 
 ### Policy changes apply forward [ilm-policy-changes]
 
@@ -268,7 +268,7 @@ Refer to [resolving `duplicate alias` video](https://www.youtube.com/watch?v=Ww5
 :::
 
 :::{dropdown} `index.lifecycle.rollover_alias [x] does not point to index [y]`
-name: _index_lifecycle_rollover_alias_x_does_not_point_to_index_y
+:name: _index_lifecycle_rollover_alias_x_does_not_point_to_index_y
 
 Either the index is using the wrong alias or the alias does not exist.
 
@@ -278,7 +278,7 @@ Refer to [resolving `not point to index` video](https://www.youtube.com/watch?v=
 :::
 
 :::{dropdown} `setting [index.lifecycle.rollover_alias] for index [y] is empty or not defined`
-name: _setting_index_lifecycle_rollover_alias_for_index_y_is_empty_or_not_defined
+:name: _setting_index_lifecycle_rollover_alias_for_index_y_is_empty_or_not_defined
 
 The `index.lifecycle.rollover_alias` setting must be configured for the rollover action to work.
 
@@ -288,7 +288,7 @@ Refer to [resolving `empty or not defined` video](https://www.youtube.com/watch?
 :::
 
 :::{dropdown} `alias [x] has more than one write index [y,z]`
-name: _alias_x_has_more_than_one_write_index_yz
+:name: _alias_x_has_more_than_one_write_index_yz
 
 Only one index can be designated as the write index for a particular alias.
 
@@ -298,7 +298,7 @@ Refer to [resolving `more than one write index` video](https://www.youtube.com/w
 :::
 
 :::{dropdown} `index name [x] does not match pattern ^.*-\d+` 
-name: _index_name_x_does_not_match_pattern_d
+:name: _index_name_x_does_not_match_pattern_d
 
 The index name must match the regex pattern `^.*-\d+` for the rollover action to work. The most common problem is that the index name does not contain trailing digits. For example, `my-index` does not match the pattern requirement.
 
@@ -314,9 +314,9 @@ The following errors usually surface during shard recovery. This primarily occur
 
 
 :::{dropdown} `index has a preference for tiers [xxx] and node does not meet the required [xxx] tier`
-name: _index_has_a_preference_for_tiers
+:name: _index_has_a_preference_for_tiers
 
-If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) returns this error, it indicates that shards are unable to be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).  
+If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) returns this error, it indicates that shards cannot be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).  
 :::
 
 ### General {{ilm-init}} errors [ilm-errors-general]
@@ -324,7 +324,7 @@ If the [allocation explain API](https://www.elastic.co/docs/api/doc/elasticsearc
 The following errors can surface on any {{ilm-init}} step.
 
 :::{dropdown} `CircuitBreakingException: [x] data too large, data for [y]`
-name: _circuitbreakingexception_x_data_too_large_data_for_y
+:name: _circuitbreakingexception_x_data_too_large_data_for_y
 
 This indicates that the cluster is hitting resource limits.
 
@@ -332,13 +332,13 @@ Before continuing to set up {{ilm-init}}, you’ll need to take steps to allevia
 :::
 
 :::{dropdown} `high disk watermark [x] exceeded on [y]`
-name: _high_disk_watermark_x_exceeded_on_y
+:name: _high_disk_watermark_x_exceeded_on_y
 
 This indicates that the cluster is running out of disk space. This can happen when you don’t have {{ilm}} set up to roll over from hot to warm nodes. For more information, see [Fix watermark errors](fix-watermark-errors.md).
 :::
 
 :::{dropdown} `security_exception: action [<action-name>] is unauthorized for user [<user-name>] with roles [<role-name>], this action is granted by the index privileges [manage_follow_index,manage,all]`
-name: _security_exception
+:name: _security_exception
 
 This indicates the {{ilm-init}} action cannot be executed because the user that {{ilm-init}} uses to perform the action doesn’t have the correct privileges. {{ilm-init}} actions are run as though they are performed by the last user who modified the policy with the privileges that user had at that time. The account used to create or modify the policy must have permissions to perform all operations that are part of that policy. If this error surfaces on system indices, see permissions described in [File-based access recovery](https://www.elastic.co/docs/troubleshoot/elasticsearch/file-based-recovery) to recover.
 :::
