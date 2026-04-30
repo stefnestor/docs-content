@@ -217,7 +217,7 @@ Once we fix the problem, we can wait for {{ilm-init}}'s poll interval to automat
 POST /my-index-000001/_ilm/retry
 ```
 
-{{ilm-init}} subsequently attempts to re-run the step that failed. You can use the [{{ilm-init}} Explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) to monitor the progress.
+{{ilm-init}} subsequently attempts to re-run the step that failed. You can use the [{{ilm-init}} Explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) to monitor the progress.
 
 ## Frequently Asked Questions [ilm-faq]
 
@@ -227,7 +227,7 @@ We have collected the most frequently asked questions here. If your question isn
 
 When setting up an [{{ilm-init}} policy](../../manage-data/lifecycle/index-lifecycle-management/configure-lifecycle-policy.md) or [automating rollover with {{ilm-init}}](../../manage-data/lifecycle/index-lifecycle-management/rollover.md), be aware that `min_age` can be relative to either the rollover time or the index creation time.
 
-If you use [{{ilm-init}} rollover](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md), `min_age` is calculated relative to the time the index was rolled over. This is because the [rollover API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-rollover) generates a new index and updates the `age` of the previous index to reflect the rollover time. If the index hasn’t been rolled over, then the `age` is the same as the `creation_date` for the index.
+If you use [{{ilm-init}} rollover](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md), `min_age` is calculated relative to the time the index was rolled over. This is because the [rollover API]({{es-apis}}operation/operation-indices-rollover) generates a new index and updates the `age` of the previous index to reflect the rollover time. If the index hasn’t been rolled over, then the `age` is the same as the `creation_date` for the index.
 
 You can override how `min_age` is calculated using the `index.lifecycle.origination_date` and `index.lifecycle.parse_origination_date` [{{ilm-init}} settings](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md).
 
@@ -260,7 +260,7 @@ Here's how to resolve the most common [{{ilm-init}} Rollover](elasticsearch://re
 :::{dropdown} `Rollover alias [x] can point to multiple indices, found duplicated alias [x] in index template [z]`
 :name: _rollover_alias_x_can_point_to_multiple_indices_found_duplicated_alias_x_in_index_template_z
 
-The target rollover alias is specified in an index template’s `index.lifecycle.rollover_alias` setting. You need to explicitly configure this alias *one time* when you [bootstrap the initial index](/manage-data/lifecycle/index-lifecycle-management/tutorial-time-series-without-data-streams.md#ilm-gs-alias-bootstrap). The rollover action then manages setting and updating the alias to [roll over](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-rollover#rollover-index-api-desc) to each subsequent index.
+The target rollover alias is specified in an index template’s `index.lifecycle.rollover_alias` setting. You need to explicitly configure this alias *one time* when you [bootstrap the initial index](/manage-data/lifecycle/index-lifecycle-management/tutorial-time-series-without-data-streams.md#ilm-gs-alias-bootstrap). The rollover action then manages setting and updating the alias to [roll over]({{es-apis}}operation/operation-indices-rollover#rollover-index-api-desc) to each subsequent index.
 
 Do not explicitly configure this same alias in the aliases section of an index template.
 
@@ -272,7 +272,7 @@ Refer to [resolving `duplicate alias` video](https://www.youtube.com/watch?v=Ww5
 
 Either the index is using the wrong alias or the alias does not exist.
 
-Check the `index.lifecycle.rollover_alias` [index setting](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-settings). To see what aliases are configured, use [_cat/aliases](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases).
+Check the `index.lifecycle.rollover_alias` [index setting]({{es-apis}}operation/operation-indices-get-settings). To see what aliases are configured, use [_cat/aliases]({{es-apis}}operation/operation-cat-aliases).
 
 Refer to [resolving `not point to index` video](https://www.youtube.com/watch?v=NKSe67x7aw8) for an example troubleshooting walkthrough.
 :::
@@ -292,7 +292,7 @@ Refer to [resolving `empty or not defined` video](https://www.youtube.com/watch?
 
 Only one index can be designated as the write index for a particular alias.
 
-Use the [aliases](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-update-aliases) API to set `is_write_index:false` for all but one index.
+Use the [aliases]({{es-apis}}operation/operation-indices-update-aliases) API to set `is_write_index:false` for all but one index.
 
 Refer to [resolving `more than one write index` video](https://www.youtube.com/watch?v=jCUvZCT5Hm4) for an example troubleshooting walkthrough.
 :::
@@ -335,7 +335,6 @@ Before continuing to set up {{ilm-init}}, you’ll need to take steps to allevia
 :name: _high_disk_watermark_x_exceeded_on_y
 
 This indicates that the cluster is running out of disk space. This can happen when you don’t have {{ilm}} set up to roll over from hot to warm nodes. For more information, see [Fix watermark errors](fix-watermark-errors.md).
-:::
 
 :::{dropdown} `security_exception: action [<action-name>] is unauthorized for user [<user-name>] with roles [<role-name>], this action is granted by the index privileges [manage_follow_index,manage,all]`
 :name: _security_exception
@@ -344,8 +343,7 @@ This indicates the {{ilm-init}} action cannot be executed because the user that 
 :::
 
 :::{dropdown} `policy [<policy-name>] does not exist`
-name: _policy_policy_name_does_not_exist
+:name: _policy_policy_name_does_not_exist
 
 The error occurs because the index is assigned to an {{ilm-init}} policy that does not exist in the cluster. To fix this, you can either [create the missing policy](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-put-lifecycle) with the required settings or [link the index to an existing {{ilm-init}} policy](https://www.elastic.co/docs/reference/elasticsearch/configuration-reference/index-lifecycle-management-settings#index-lifecycle-name).
 :::
-
