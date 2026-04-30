@@ -10,7 +10,11 @@ products:
 
 This guide outlines the detailed steps for performing an upgrade of a self-managed {{es}} cluster from an earlier to a later version.
 
-Consider deploying your {{es}} cluster from within one of our [cloud deployment methods](/deploy-manage/deploy.md#choosing-your-deployment-type) to automate this process. Refer to [migrating your data](/manage-data/migrate.md) to port existing self-managed clusters to Elastic-managed.
+:::{tip}
+The Elastic Cloud platform handles cluster management and upgrades automatically, so you don't need to follow the steps in this guide on cloud deployments such as {{ECK}}, {{ECH}}, {{ECE}}, or {{serverless-full}}.
+
+If you want to use these automated platform features, consider deploying your {{es}} cluster using one of the available [cloud deployment methods](/deploy-manage/deploy.md#choosing-your-deployment-type). Refer to [migrating your data](/manage-data/migrate.md) to port existing self-managed clusters to Elastic-managed.
+:::
 
 Before you start the rolling upgrade procedure, [plan your upgrade](/deploy-manage/upgrade/plan-upgrade.md) and [take the upgrade preparation steps](/deploy-manage/upgrade/prepare-to-upgrade.md). 
 
@@ -180,7 +184,7 @@ Apply any required [{{es}} configuration changes](/deploy-manage/deploy/self-man
 
 ::::
 
-::::{step} Upgrade any shutdown node's plugins
+::::{step} Upgrade any plugins on the shut down node
 Use the `elasticsearch-plugin` script to install the upgraded version of each installed {{es}} plugin. All plugins must be upgraded when you upgrade a node.
 
 ::::
