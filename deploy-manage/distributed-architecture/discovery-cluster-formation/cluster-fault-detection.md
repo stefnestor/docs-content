@@ -21,4 +21,4 @@ Additionally, each node periodically verifies that its data path is healthy by w
 $$$cluster-fault-detection-cluster-state-publishing$$$
 The elected master node will also remove nodes from the cluster if nodes are unable to apply an updated cluster state within a reasonable time. The timeout defaults to 2 minutes starting from the beginning of the cluster state update. Refer to [Publishing the cluster state](cluster-state-overview.md#cluster-state-publishing) for a more detailed description.
 
-For more information, refer to [Troubleshooting an unstable cluster](/troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md).
+For more information, refer to [Troubleshooting an unstable cluster](../../../troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md).
