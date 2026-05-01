@@ -347,5 +347,5 @@ This indicates the {{ilm-init}} action cannot be executed because the user that 
 :::{dropdown} `policy [<policy-name>] does not exist`
 :name: _policy_policy_name_does_not_exist
 
-The error occurs because the index is assigned to an {{ilm-init}} policy that does not exist in the cluster. To fix this, you can either [create the missing policy]({{es-apis}}operation/operation-ilm-put-lifecycle) with the required settings or [link the index to an existing {{ilm-init}} policy](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings#index-lifecycle-name).
+The error occurs because the index is assigned to an {{ilm-init}} policy that does not exist in the cluster. To fix this, you can either [create the missing policy]({{es-apis}}operation/operation-ilm-put-lifecycle) with the required settings or [link the index to an existing {{ilm-init}} policy](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md#index-lifecycle-name).
 :::
