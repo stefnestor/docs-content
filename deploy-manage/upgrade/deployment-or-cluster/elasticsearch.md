@@ -44,7 +44,7 @@ When performing a rolling upgrade, upgrade one node at a time in the order of th
 * Built-in plugins, such as {{ilm-init}} and transforms, can continue to process data without errors.
 * All nodes can join the cluster during the upgrade. Upgraded nodes can join a cluster with an earlier version master, but earlier version nodes cannot always join a cluster with an upgraded master.
 
-The {{es}} nodes upgrade order is:
+The recommended upgrade order for {{es}} nodes is the following:
 
 1. Upgrade the [`data` nodes](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#data-node-role) first, tier-by-tier, in the following order:
 
@@ -85,7 +85,7 @@ cannot allocate replica shard to a node with version [x.x.x] since this is older
 
 ## Upgrade process [upgrade-process]
 
-To upgrade a cluster, repeating per node:
+To upgrade a cluster, complete these steps for every node:
 
 :::::{stepper}
 
