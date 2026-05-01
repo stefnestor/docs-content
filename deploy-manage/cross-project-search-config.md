@@ -52,8 +52,7 @@ Before you configure {{cps}}, review these prerequisites and best practices:
 
 ::::{important} - Origin project limitations
 
-* During technical preview, only newly created projects can be origin projects for {{cps}}. Existing projects can be linked from an origin project, but they can't serve as origin projects themselves. To get started, create a new {{serverless-short}} project and link it to your existing projects.
-* At this time, you should not use an {{elastic-sec}} project as an origin project for {{cps}} in production. Some {{elastic-sec}} features are not fully functional when {{cps-init}} is enabled on an {{elastic-sec}} origin project. You can still link {{elastic-sec}} projects _to_ an origin project of another type.
+During technical preview, only newly created projects can be origin projects for {{cps}}. Existing projects can be linked from an origin project, but they can't serve as origin projects themselves. To get started, create a new {{serverless-short}} project and link it to your existing projects.
 ::::
 
 To be available for linking, projects must meet the following requirements:
@@ -129,10 +128,6 @@ When you link projects for {{cps}}, the expanded dataset can affect existing fea
 
 ### {{elastic-sec}} apps
 
-::::{warning}
-:::{include} /explore-analyze/cross-project-search/_snippets/cps-security-recommendation.md
-:::
-::::
 
 :::{include} /explore-analyze/cross-project-search/_snippets/cps-availability-security-apps.md
 :::
