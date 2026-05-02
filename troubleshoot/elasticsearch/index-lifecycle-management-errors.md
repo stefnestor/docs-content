@@ -343,7 +343,7 @@ This indicates that the cluster is running out of disk space. This can happen wh
 
 {{ilm-init}} runs each action as the user who last modified the policy, with the privileges they held at that time. This error means the action requires privileges that user doesn't have.
 
-To fix it, make sure the account that creates or modifies the policy has the necessary permission for every operation it includes. If this error surfaces on system indices, refer to [File-based access recovery](/troubleshoot/elasticsearch/file-based-recovery).
+To fix it, make sure the account that creates or modifies the policy has the necessary permission for every operation it includes. If this error surfaces on system indices, refer to [File-based access recovery](/troubleshoot/elasticsearch/file-based-recovery.md).
 :::
 
 :::{dropdown} `policy [<policy-name>] does not exist`
