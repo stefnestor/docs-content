@@ -40,15 +40,16 @@ Therefore, an index proceeds through its {{ilm-init}} steps as fast as the direc
 * `*/*/forcemerge` waits for the index's [force merge](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-forcemerge.md), noting the guide's performance considerations.
 * `delete/wait_for_snapshot/wait-for-snapshot` delays until the [{{ilm-init}} Delete](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-delete.md)'s [{{slm-cap}} ({{slm-init}}) policy](/deploy-manage/tools/snapshot-and-restore/create-snapshots.md) is successfully completed for the index.
 
-It is not concerning for these transient steps to appear in [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle)'s output. However, investigate investigating if an index does not progress from a particular step for an extended duration. This still might indicate expected behavior based off the nuances of your particular setup and use case, rather than a cluster issue.
+It's fine if these transient steps appear in the [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) output. But if an index doesn't progress past a step for an extended period, investigate. The cause is often specific to your setup or use case, rather than a cluster problem.
 
 ### {{ilm-init}} erring steps [ilm-steps-errors]
 
-When errors occur, {{ilm-init}} updates the [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) to report:
+When errors occur, the [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) response includes the following:
 
-* The index's active `step` under temporary field `failed_step` and marks `step` as `ERROR`.
-* Flags the boolean `is_auto_retryable_error`.
-* Increments the integer `failed_step_retry_count`.
+* `failed_step`, set to the active step name
+* `step`, set to `ERROR`
+* `is_auto_retryable_error` flag, set
+* `failed_step_retry_count`, incremented
 
 All erring indices automatically run the [Retry policy API]({{es-apis}}operation/operation-ilm-retry) on each {{ilm-init}} polling interval. During automatic or manual retry:
 
@@ -68,7 +69,7 @@ If {{ilm-init}} cannot automatically resolve the error for this index, execution
 
 ### {{ilm-init}} health [ilm-health-overall]
 
-If you've identified transient and erring {{ilm-init}} steps, you can use the following APIs to check {{ilm-init}} health across all indices.
+Use the following APIs to check {{ilm-init}} health across all indices.
 
 {{es}}'s [Cluster health API]({{es-apis}}operation/operation-health-report) reports `stagnating_indices` for indices that have been attempting a step longer than expected:
 
@@ -84,7 +85,7 @@ This report's thresholds are controlled by [Read cluster settings API]({{es-apis
 
 This report consolidates actionable interventions to consider for your {{ilm-init}} and cluster health.
 
-It is sometimes beneficial to see a high-level summary of all indices' statuses agnostic to if they are stagnated requiring intervention. For example, you can use third-party tool [JQ](https://jqlang.github.io/jq/) against the output of [{{ilm-init}} Explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) saved as `ilm_explain.json` to see an overview of all indices `phase/action/step` statuses:
+For a high-level summary of all index statuses (not just those needing intervention), use the [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle). To save an overview of all `phase/action/step` index statuses to `ilm_explain.json`, processed with [jq](https://jqlang.github.io/jq/):
 
 ```bash
 $ cat ilm_explain.json | jq -c '.indices[]|select(.managed==true)|.phase+"/"+.action+"/"+.step' | sort | uniq -c | sort -r
@@ -219,10 +220,9 @@ POST /my-index-000001/_ilm/retry
 
 {{ilm-init}} subsequently attempts to re-run the step that failed. You can use the [{{ilm-init}} Explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) to monitor the progress.
 
-## Frequently Asked Questions [ilm-faq]
+## Key {{ilm-init}} concepts [ilm-faq]
 
-We have collected the most frequently asked questions here. If your question isn’t answered here or in [our {{ilm-init}} guide](/manage-data/lifecycle/index-lifecycle-management.md), then [contact us](/troubleshoot/index.md#contact-us).
-
+The following behaviors come up often when troubleshooting {{ilm-init}}. For more details, refer to the [{{ilm-init}} guide](/manage-data/lifecycle/index-lifecycle-management.md) or [contact us](/troubleshoot/index.md#contact-us).
 ### How `min_age` is calculated [min-age-calculation]
 
 When setting up an [{{ilm-init}} policy](../../manage-data/lifecycle/index-lifecycle-management/configure-lifecycle-policy.md) or [automating rollover with {{ilm-init}}](../../manage-data/lifecycle/index-lifecycle-management/rollover.md), be aware that `min_age` can be relative to either the rollover time or the index creation time.
@@ -237,17 +237,17 @@ You can override how `min_age` is calculated using the `index.lifecycle.originat
 
 ### Policy changes apply forward [ilm-policy-changes]
 
-Upon entering a phase, an index caches the {{ilm-init}} policy's current definition of it. For more information, refer to [phase execution](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-execution). This enables {{ilm-init}} to protect the index from policy changes which might cause data corruption. 
+When an index enters a phase, it caches the {{ilm-init}} policy's current definition. For more information, refer to [phase execution](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-execution). This enables {{ilm-init}} to protect the index from policy changes which might cause data corruption. 
 
-As outlined in [how changes are applied](/manage-data/lifecycle/index-lifecycle-management/policy-updates.md#ilm-apply-changes), {{ilm-init}} will update an index's `phase_execution` with safe policy updates, but updates deemed unsafe to apply backwards will only apply forwards to indices as they enter the phase. 
+As described in [how changes are applied](/manage-data/lifecycle/index-lifecycle-management/policy-updates.md#ilm-apply-changes), {{ilm-init}} applies safe updates to an index's `phase_execution` immediately. Updates that aren't safe to apply retroactively are forward-applied, taking effect only as indices enter the phase after the update.
 
-You might encounter a situation where policy changes need to be backwards applied to stagnant indices anyway. There is no mechanism to one-off run an {{ilm-init}} step as this might expose indices to corruption. Instead, you should manually apply the delta of changes to indices as needed.
+You might need to apply a policy change to indices that are already stagnant. It's not possible to run a single {{ilm-init}} step on demand, because doing so might corrupt the index. Instead, apply the relevant changes to those indices manually.
 
-In rare circumstances, policy changes might induce stagnant indices requiring the [Move to an {{ilm-init}} step API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-move-to-step) to resolve. This is considered an advanced API and we recommend [contacting us](/troubleshoot/index.md#contact-us) with an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) before intervening.
+In rare cases, a policy change can leave indices stagnant. The only fix is the [move to an {{ilm-init}} step API]({{es-apis}}operation/operation-ilm-move-to-step). This is an advanced API, so we recommend [contacting us](/troubleshoot/index.md#contact-us) with an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) before using it.
 
 ## Common {{ilm-init}} errors [ilm-errors]
 
-Here’s how to resolve the most common errors reported in the `ERROR` step.
+Each entry below shows the message you'll see in the `ERROR` step, the cause, and the recommended fix. Errors are grouped by the {{ilm-init}} action where they typically occur.
 
 ### Rollover errors [ilm-errors-rollover]
 
@@ -255,7 +255,7 @@ Here’s how to resolve the most common errors reported in the `ERROR` step.
 Problems with rollover aliases are a common cause of errors. You should consider using [data streams](/manage-data/data-store/data-streams.md) instead of managing rollover with aliases.
 ::::
 
-Here's how to resolve the most common [{{ilm-init}} Rollover](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md) errors:
+These errors can occur when the [{{ilm-init}} rollover](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md) action runs:
 
 :::{dropdown} Rollover alias [x] can point to multiple indices, found duplicated alias [x] in index template [z]
 :name: _rollover_alias_x_can_point_to_multiple_indices_found_duplicated_alias_x_in_index_template_z
@@ -310,7 +310,7 @@ For an example, refer to this [resolving does not match pattern video](https://w
 
 ### {{ilm-init}} migrate errors [ilm-errors-migrate]
 
-The following errors usually surface during shard recovery. This primarily occurs during [{{ilm-init}} Migrate](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-migrate.md), but can also surface for example during [{{ilm-init}} Searchable Snapshots](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-searchable-snapshot.md). As an asynchronous operation, the {{ilm-init}}-level message will frequently only report a symptomatic error. Refer to [Troubleshooting Allocation](/troubleshoot/elasticsearch/cluster-allocation-api-examples.md) for Allocation-level causal error examples.
+The following errors usually surface during shard recovery, which can occur when you use [{{ilm-init}} migrate](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-migrate.md) operations or [{{ilm-init}} searchable snapshots](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-searchable-snapshot.md). Because these operations run asynchronously, the error reported by {{ilm-init}} often shows only a symptom of the real problem. To troubleshoot the underlying cause, refer to [cluster allocation API examples](/troubleshoot/elasticsearch/cluster-allocation-api-examples.md).
 
 
 :::{dropdown} `index has a preference for tiers [xxx] and node does not meet the required [xxx] tier`
@@ -341,7 +341,9 @@ This indicates that the cluster is running out of disk space. This can happen wh
 :::{dropdown} security_exception: action [<action-name>] is unauthorized for user [<user-name>] with roles [<role-name>], this action is granted by the index privileges [manage_follow_index,manage,all]
 :name: _security_exception
 
-This indicates the {{ilm-init}} action cannot be executed because the user that {{ilm-init}} uses to perform the action doesn’t have the correct privileges. {{ilm-init}} actions are run as though they are performed by the last user who modified the policy with the privileges that user had at that time. The account used to create or modify the policy must have permissions to perform all operations that are part of that policy. If this error surfaces on system indices, see permissions described in [File-based access recovery](https://www.elastic.co/docs/troubleshoot/elasticsearch/file-based-recovery) to recover.
+{{ilm-init}} runs each action as the user who last modified the policy, with the privileges they held at that time. This error means the action requires privileges that user doesn't have.
+
+To fix it, make sure the account that creates or modifies the policy has the necessary permission for every operation it includes. If this error surfaces on system indices, refer to [File-based access recovery](/troubleshoot/elasticsearch/file-based-recovery).
 :::
 
 :::{dropdown} `policy [<policy-name>] does not exist`
