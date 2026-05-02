@@ -12,10 +12,7 @@ products:
   - id: kibana
 ---
 
-
-
 # Capture {{kib}} diagnostics [kibana-diagnostic]
-
 
 The {{kib}} [Support Diagnostic](https://github.com/elastic/support-diagnostics) tool captures a point-in-time snapshot of {{kib}} and its Task Manager health. It works on {{kib}} versions 7.11.0 and above.
 
@@ -24,6 +21,10 @@ You can use the information captured by the tool to troubleshoot problems with {
 You can generate diagnostic information using this tool before you contact [Elastic Support](https://support.elastic.co) or [Elastic Discuss](https://discuss.elastic.co) to help get a timely answer.
 
 See this [this video](https://www.youtube.com/watch?v=t0J32qBKlIU) for a walkthrough of capturing a {{kib}} diagnostic.
+
+::::{note}
+This archive file is privacy-redacted as much as possible, but may still contain host identifying metadata (such as IP/domain info). We therefore recommend against uploading this output to public forums. Any uploads to the [Elastic Support Portal](https://support.elastic.co) are treated according to the [Elastic Privacy Statement](https://www.elastic.co/legal/privacy-statement).
+::::
 
 ## Requirements [kibana-diagnostic-tool-requirements]
 

@@ -11,11 +11,11 @@ products:
 
 # Run eck-diagnostics [k8s-take-eck-dump]
 
-:::{include} /deploy-manage/_snippets/autoops-callout-with-ech.md
-:::
+ECK diagnostics is a stand-alone command line tool that you can run on hosts where the ECK operator is installed. It collects logs and metrics, and stores everything into an archive file that can be provided to [Elastic support](/troubleshoot/index.md#troubleshoot-work-with-support) for troubleshooting and investigation purposes.
 
-`eck-diagnostics` is a stand-alone command line tool to create a diagnostic archive to help troubleshoot issues with ECK.
-
+::::{note}
+This archive file is privacy-redacted as much as possible, but may still contain host identifying metadata (such as IP/domain info). We therefore recommend against uploading this output to public forums. Any uploads to the [Elastic Support Portal](https://support.elastic.co) are treated according to the [Elastic Privacy Statement](https://www.elastic.co/legal/privacy-statement).
+::::
 
 ## Prepare [k8s_prepare] 
 
@@ -24,7 +24,7 @@ The tool is available at [https://github.com/elastic/eck-diagnostics/](https://g
 
 ## Run [k8s_run] 
 
-The eck-diagnostics tool supports various command line flags. Run it with `-h` or `--help` to print all available options. The only required flag is `-r` or `--resources-namespace` which indicates the namespaces where your Elastic stack resources are deployed. There is also `-o` or `--operator-namespaces` that indicate where the ECK operator is deployed. If you don’t specify this flag the tool assumes the operator to be deployed in the `elastic-system` namespace.
+The `eck-diagnostics` tool supports various command line flags. Run it with `-h` or `--help` to print all available options. The only required flag is `-r` or `--resources-namespace` which indicates the namespaces where your Elastic stack resources are deployed. There is also `-o` or `--operator-namespaces` that indicate where the ECK operator is deployed. If you don’t specify this flag the tool assumes the operator to be deployed in the `elastic-system` namespace.
 
 ```bash
 eck-diagnostics -o <operator-namespaces> -r <resources-namespaces>
