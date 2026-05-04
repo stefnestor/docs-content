@@ -11,6 +11,9 @@ products:
 
 # Run eck-diagnostics [k8s-take-eck-dump]
 
+:::{include} /deploy-manage/_snippets/autoops-callout-with-ech.md
+:::
+
 ECK diagnostics is a stand-alone command line tool that you can run on hosts where the ECK operator is installed. It collects logs and metrics, and stores everything into an archive file that can be provided to [Elastic support](/troubleshoot/index.md#troubleshoot-work-with-support) for troubleshooting and investigation purposes.
 
 ::::{note}
