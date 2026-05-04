@@ -14,7 +14,8 @@ products:
 ECE diagnostics is a command line tool that you can run on hosts where the ECE instance is installed. It collects logs and metrics, and stores everything into an archive file that can be provided to [Elastic support](/troubleshoot/index.md#troubleshoot-work-with-support) for troubleshooting and investigation purposes.
 
 ::::{note}
-This archive file is privacy-redacted as much as possible, but may still contain host identifying metadata (such as IP/domain info). We therefore recommend against uploading this output to public forums. Any uploads to the [Elastic Support Portal](https://support.elastic.co) are treated according to the [Elastic Privacy Statement](https://www.elastic.co/legal/privacy-statement).
+:::{include} /troubleshoot/_snippets/diagnostics-privacy.md
+:::
 ::::
 
 ## Prepare [ece_prepare] 

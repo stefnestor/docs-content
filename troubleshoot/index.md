@@ -104,6 +104,6 @@ When you open a support case:
   :::
 
   :::{warning}
-  Diagnostics and logs mainly emit product metadata and settings. They are privacy-redacted as much as possible, but may still contain sensitive data which needs to be redacted before being shared outside of your organization. We therefore recommend against uploading these outputs to public forums.  Any uploads to the [Elastic Support Portal](https://support.elastic.co) are treated according to the [Elastic Privacy Statement](https://www.elastic.co/legal/privacy-statement). Refer to each product's diagnostics page for information on sanitizing output.
+  Diagnostics and logs mainly emit product metadata and settings. They are redacted for privacy as much as possible, but might still contain sensitive data that you should redact before you share it outside your organization. You should not upload these outputs to public forums. Uploads to the [Elastic Support Portal](https://support.elastic.co) are handled in accordance with the [Elastic Privacy Statement](https://www.elastic.co/legal/privacy-statement). Refer to each product's diagnostics page for information on sanitizing output.
   :::
 
