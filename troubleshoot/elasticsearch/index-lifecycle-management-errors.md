@@ -243,7 +243,7 @@ As described in [how changes are applied](/manage-data/lifecycle/index-lifecycle
 
 You might need to apply a policy change to indices that are already stagnant. It's not possible to run a single {{ilm-init}} step on demand, because doing so might corrupt the index. Instead, apply the relevant changes to those indices manually.
 
-In rare cases, a policy change can leave indices stagnant. The only fix is the [move to an {{ilm-init}} step API]({{es-apis}}operation/operation-ilm-move-to-step). This is an advanced API, so we recommend [contacting us](/troubleshoot/index.md#contact-us) with an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) before using it.
+In rare cases, a policy change can leave indices stagnant. The only fix is the [move to an {{ilm-init}} step API]({{es-apis}}operation/operation-ilm-move-to-step). This is an advanced API -- [contact us](/troubleshoot/index.md#contact-us) with an [{{es}} diagnostic](/troubleshoot/elasticsearch/diagnostic.md) before using it.
 
 ## Common {{ilm-init}} errors [ilm-errors]
 
