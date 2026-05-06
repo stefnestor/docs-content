@@ -25,7 +25,7 @@ This section covers the symptoms of stuck tasks and erring tasks, then shows  co
 
 ### {{ilm-init}} transient steps [ilm-steps-transient]
 
-{{ilm-init}} purposely holds an index on a couple of steps for its logic-based and time-based conditions. The following [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) `phase/action/step` combinations wait:
+{{ilm-init}} purposely holds an index on a couple of steps for its logic-based and time-based conditions. The following [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) `phase/action/step` combinations wait:
 
 * `hot/rollover/check-rollover-ready` until [{{ilm-init}} rollover requirements](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md#ilm-rollover-options) are met.
 * `*/complete/complete` until the index's `age` qualifies for the next phase's `min_age`. Refer to [how `min_age` is calculated](#min-age-calculation) for more information.
