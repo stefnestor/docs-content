@@ -134,7 +134,7 @@ PUT /my-index-000001
 
 After five days, {{ilm-init}} attempts to run the [shrink index API]({{es-apis}}operation/operation-indices-shrink) against index `my-index-000001` from two shards to four shards. Because the shrink action cannot *increase* the number of shards, this operation fails and {{ilm-init}} moves `my-index-000001` to the `step` of `ERROR`.
 
-Use the [{{ilm-init}} explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle) to get information about what went wrong:
+Use the [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) to get information about what went wrong:
 
 ```console
 GET /my-index-000001/_ilm/explain
