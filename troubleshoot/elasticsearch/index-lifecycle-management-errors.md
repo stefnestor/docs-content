@@ -187,7 +187,7 @@ Which returns the following information:
 3. The phase the index is currently in: `warm`
 4. The current action: `shrink`
 5. The step the index is currently in: `ERROR`
-6. The step that failed to execute: `shrink`
+6. The step that failed to run: `shrink`
 7. The type of error and a description of that error.
 8. The definition of the current phase from the `shrink-index` policy
 
