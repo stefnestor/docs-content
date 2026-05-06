@@ -57,7 +57,7 @@ All erring indices automatically run the [Retry policy API]({{es-apis}}operation
 * The `is_auto_retryable_error` persists.
 * The `failed_step_retry_count` persists and increments again if another error is encountered.
 
-Non-erring indices do not report the fields `failed_step`, `is_auto_retryable_error`, nor `failed_step_retry_count`. Indices that have recovered from previous errors also remove these temporary fields. This is why the [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) allows for flagging `only_errors` to report both indices currently reporting or retrying erring steps:
+Non-erring indices do not report the fields `failed_step`, `is_auto_retryable_error`, nor `failed_step_retry_count`. Indices that have recovered from previous errors also remove these temporary fields. This is why the [{{ilm-init}} explain API]({{es-apis}}operation/operation-ilm-explain-lifecycle) supports the `only_errors` flag, which returns only indices that are currently failing or are retrying a step:
 
 ```console
 GET _all/_ilm/explain?human=true&expand_wildcards=all&only_errors=true
