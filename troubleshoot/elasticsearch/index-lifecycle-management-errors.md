@@ -313,7 +313,7 @@ For an example, refer to this [resolving does not match pattern video](https://w
 The following errors usually surface during shard recovery, which can occur when you use [{{ilm-init}} migrate](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-migrate.md) operations or [{{ilm-init}} searchable snapshots](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-searchable-snapshot.md). Because these operations run asynchronously, the error reported by {{ilm-init}} often shows only a symptom of the real problem. To troubleshoot the underlying cause, refer to [cluster allocation API examples](/troubleshoot/elasticsearch/cluster-allocation-api-examples.md).
 
 
-:::{dropdown} `index has a preference for tiers [xxx] and node does not meet the required [xxx] tier`
+:::{dropdown} index has a preference for tiers [xxx] and node does not meet the required [xxx] tier
 :name: _index_has_a_preference_for_tiers
 
 If the [allocation explain API]({{es-apis}}operation/operation-cluster-allocation-explain) returns this error, it indicates that shards cannot be assigned according to the current attribute-based or data tier allocation rules. For detailed guidance on resolving this issue, refer to [Unable to assign shards based on the allocation rule](https://www.elastic.co/docs/troubleshoot/monitoring/unavailable-shards#ec-cannot-assign-shards-on-allocation-rule).
