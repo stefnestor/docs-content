@@ -10,7 +10,7 @@ products:
 
 # Fix {{ilm}} errors [index-lifecycle-error-handling]
 
-[{{ilm-cap}}](/manage-data/lifecycle/index-lifecycle-management.md) ({{ilm-init}}) runs actions asynchronously on your cluster's indices, according to the conditions you define in your policy. {{ilm-init}} [phases and actions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md) run sequentially on each index, applying the user's permissions from the last time they edited the [{{ilm-init}} policy](/manage-data/lifecycle/index-lifecycle-management/configure-lifecycle-policy.md).
+[{{ilm-cap}}](/manage-data/lifecycle/index-lifecycle-management.md) ({{ilm-init}}) runs actions asynchronously on your cluster's indices, according to the conditions you define in your policy. {{ilm-init}} [phases and actions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md) run sequentially on each index, using the permissions of the user who last edited the [{{ilm-init}} policy](/manage-data/lifecycle/index-lifecycle-management/configure-lifecycle-policy.md).
 
 {{ilm-init}} can surface two types of issues:
 
