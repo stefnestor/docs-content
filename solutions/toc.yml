@@ -485,6 +485,7 @@ toc:
         - file: observability/streams/management/data-quality.md
         - hidden: observability/streams/management/significant-events.md
         - file: observability/streams/management/advanced.md
+        - file: observability/streams/management/knowledge-indicators.md
         - file: observability/streams/wired-streams.md
         - file: observability/streams/management/streamlang.md
       - file: observability/incident-management.md
