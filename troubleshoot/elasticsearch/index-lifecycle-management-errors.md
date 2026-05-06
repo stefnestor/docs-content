@@ -34,7 +34,7 @@ This page refers to steps other than these as _transient_ steps, where {{ilm-ini
 
 {{ilm-init}} [polls for work on an interval basis](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md) (default `10m`). For more information, refer to [{{ilm-init}} phase transitions](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-execution). 
 
-Therefore, an index proceeds through its {{ilm-init}} steps as fast as the direct operation's duration in combination with {{ilm-init}}'s poll interval. For example, transient steps whose duration is proportional to their underlying asynchronous operation's duration and can thereby be affected by their [task backlog](/troubleshoot/elasticsearch/task-queue-backlog.md) commonly include:
+An index moves through its {{ilm-init}} steps as fast as the underlying operation finishes, plus the wait for the next poll. Transient steps that depend on an asynchronous operation can therefore be affected by [task backlogs](/troubleshoot/elasticsearch/task-queue-backlog.md). Common examples:
 
 * `*/migrate/check-migration` monitors the index's [shards' allocation and recoveries](/deploy-manage/distributed-architecture/shard-allocation-relocation-recovery.md).
 * `*/*/forcemerge` waits for the index's [force merge](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-forcemerge.md), noting the guide's performance considerations.
