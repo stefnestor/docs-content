@@ -346,7 +346,7 @@ This indicates that the cluster is running out of disk space. This can happen wh
 To fix it, make sure the account that creates or modifies the policy has the necessary permission for every operation it includes. If this error surfaces on system indices, refer to [File-based access recovery](/troubleshoot/elasticsearch/file-based-recovery.md).
 :::
 
-:::{dropdown} `policy [<policy-name>] does not exist`
+:::{dropdown} policy [<policy-name>] does not exist
 :name: _policy_policy_name_does_not_exist
 
 The error occurs because the index is assigned to an {{ilm-init}} policy that does not exist in the cluster. To fix this, you can either [create the missing policy]({{es-apis}}operation/operation-ilm-put-lifecycle) with the required settings or [link the index to an existing {{ilm-init}} policy](elasticsearch://reference/elasticsearch/configuration-reference/index-lifecycle-management-settings.md#index-lifecycle-name).
