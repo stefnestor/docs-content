@@ -17,7 +17,7 @@ products:
 - **Direct errors:** The {{es}} API call itself fails.
 - **Indirect configuration issues:** The API call succeeds, but the intended result doesn't take effect.
 
-This guide covers how to check {{ilm-init}} overall health, investigate individual indices' status, and lists the most common setup questions and issues.
+This guide explains how to check overall {{ilm-init}} health, investigate individual indices, and resolve common errors.
 
 ## Check for {{ilm-init}} issues [ilm-check-issues]
 
