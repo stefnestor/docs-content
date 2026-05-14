@@ -12,6 +12,11 @@ products:
 
 The **Entity analytics** page provides a centralized workspace for investigating entity risk across your environment. Use it to explore entity risk scores, surface behavioral anomalies, and prioritize threat investigations.
 
+:::{image} /solutions/images/security-entity-analytics-overview.png
+:alt: Entity analytics overview page
+:screenshot:
+:::
+
 :::{admonition} Requirements
 * This feature requires the appropriate [subscription](https://www.elastic.co/pricing) in {{stack}} or [project feature tier](/deploy-manage/deploy/elastic-cloud/project-settings.md) in {{serverless-short}}.
 
@@ -119,10 +124,6 @@ Interact with the table to filter and explore entity data:
 The **Entities** table only shows a subset of the data available for each entity. You can query the `.entities.v1.latest.security_user_<space-id>`, `.entities.v1.latest.security_host_<space-id>`, and `.entities.v1.latest.security_service_<space-id>` indices to see all the fields for each entity in the entity store.
 :::
 
-:::{image} /solutions/images/security-entities-section.png
-:alt: Entities section
-:screenshot:
-:::
 
 Entity data from different sources appears in the **Entities** section based on the following timelines:
 
@@ -155,10 +156,6 @@ To display user risk scores, you must [turn on risk scoring](/solutions/security
 
 This section displays user risk score data for your environment, including the total number of users, and the five most recently recorded user risk scores, with their associated user names, risk data, and number of detection alerts. User risk scores are [calculated](/solutions/security/advanced-entity-analytics/entity-risk-scoring.md#how-is-risk-score-calculated) using a weighted sum on a scale of 0 (lowest) to 100 (highest).
 
-:::{image} /solutions/images/security-user-score-data.png
-:alt: User risk table
-:screenshot:
-:::
 
 Interact with the table to filter data, view more details, and take action:
 
@@ -182,10 +179,6 @@ To display host risk scores, you must [turn on risk scoring](/solutions/security
 
 This section displays host risk score data for your environment, including the total number of hosts, and the five most recently recorded host risk scores, with their associated host names, risk data, and number of detection alerts. Host risk scores are [calculated](/solutions/security/advanced-entity-analytics/entity-risk-scoring.md#how-is-risk-score-calculated) using a weighted sum on a scale of 0 (lowest) to 100 (highest).
 
-:::{image} /solutions/images/security-host-score-data.png
-:alt: Host risk scores table
-:screenshot:
-:::
 
 Interact with the table to filter data, view more details, and take action:
 
@@ -209,10 +202,6 @@ To display service risk scores, you must [turn on risk scoring](/solutions/secur
 
 This section displays service risk score data for your environment, including the total number of services, and the five most recently recorded service risk scores, with their associated service names, risk data, and number of detection alerts. Service risk scores are [calculated](/solutions/security/advanced-entity-analytics/entity-risk-scoring.md#how-is-risk-score-calculated) using a weighted sum on a scale of 0 (lowest) to 100 (highest).
 
-:::{image} /solutions/images/security-service-risk-scores.png
-:alt: Service risk scores table
-:screenshot:
-:::
 
 Interact with the table to filter data, view more details, and take action:
 
@@ -234,11 +223,6 @@ Anomaly detection jobs identify suspicious or irregular behavior patterns. The *
 
 :::{admonition} Requirements
 To display anomaly results, you must [install and run](/explore-analyze/machine-learning/anomaly-detection/ml-ad-run-jobs.md) one or more [prebuilt anomaly detection jobs](/reference/machine-learning/ootb-ml-jobs-siem.md). You cannot add custom anomaly detection jobs to the **Entity analytics** page.
-:::
-
-:::{image} /solutions/images/security-anomalies-table.png
-:alt: Anomalies table
-:screenshot:
 :::
 
 Interact with the table to view more details:
