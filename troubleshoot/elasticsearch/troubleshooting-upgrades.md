@@ -10,7 +10,7 @@ products:
 
 # Troubleshoot upgrades [troubleshooting-upgrades]
 
-Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md) proceed smoothly due to due dilligence in upgrade [planning](/deploy-manage/upgrade/plan-upgrade.md) and [preparation](/deploy-manage/upgrade/prepare-to-upgrade.md).
+Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md) proceed smoothly due to due diligence in upgrade [planning](/deploy-manage/upgrade/plan-upgrade.md) and [preparation](/deploy-manage/upgrade/prepare-to-upgrade.md).
 
 This guide outlines {{es}} logs which indicate either upgrade blocking issues or fatal node start-up errors.
 
