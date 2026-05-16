@@ -15,15 +15,6 @@ Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elastics
 This guide outlines {{es}} logs which indicate either upgrade blocking issues or fatal node start-up errors.
 
 
-## Upgrade asssitant 
-
-https://support.elastic.dev/knowledge/view/f3c6ea67
-
-```
-IllegalStateException[unable to create new index [X] because it would match composable template [Y]];
-```
-
-
 
 ## 
 
@@ -38,6 +29,14 @@ A restarted node must sequentially
 * pass [bootstrap checks](/deploy-manage/deploy/self-managed/bootstrap-checks.md#checks)
 * [join cluster](/troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md) as confirmed by `master node changed` log
 * [allocate shards](/troubleshoot/elasticsearch/diagnose-unassigned-shards.md) if [`data` node](/deploy-manage/distributed-architecture/clusters-nodes-shards/node-roles.md#data-node-role)
+
+### bootstrap
+
+- https://github.com/elastic/kibana/issues/266733
+```
+fatal exception while booting Elasticsearch java.lang.IllegalStateException: The index [XXXXX] created in version [7.x.x] with current compatibility version [7.x.x] must be marked as read-only using the setting [index.blocks.write] set to [true] before upgrading to 9.x.x.
+```
+
 
 ## Rolling upgrades considerations [upgrade-issues]
 

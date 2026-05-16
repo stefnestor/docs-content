@@ -37,6 +37,7 @@ This section helps you fix issues with {{es}} deployments.
 * [](/troubleshoot/elasticsearch/index-lifecycle-management-errors.md)
 * [](/troubleshoot/elasticsearch/file-based-recovery.md)
 * [](/troubleshoot/elasticsearch/troubleshooting-upgrades.md)
+* [](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md)
 
 ## Capacity [troubleshooting-capacity]
 
