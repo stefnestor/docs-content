@@ -12,9 +12,9 @@ products:
   - id: elasticsearch
 ---
 
-# Troubleshoot Upgrade assistant [troubleshooting-upgrade-assistant]
+# Troubleshoot Upgrade Assistant [troubleshooting-upgrade-assistant]
 
-You should run the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) from the current major's latest minor and patch before upgrading to the next major stack version. You should end up with a list of steps each with a green filled-in checkmark.
+You should run the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) from the current major's latest minor and patch before upgrading to the next major stack version. You should end up with a list of steps each with a green filled-in checkmark. Failure to do so causes the [common upgrade issues](/troubleshoot/elasticsearch/troubleshooting-upgrades.md).
 
 ## Upgrade assistant errors
 
@@ -61,7 +61,3 @@ Enterprise Search host(s) and configuration must be removed.
 ```text
  Cannot update mappings in [.ml-config-reindexed-for-8-reindexed-for-9]: system indices can only use mappings from their descriptors, but the mappings in the request [{\"_doc\":{\"_meta\":{\"managed_index_mappings_version\":1,\"version\":\"8.11.0\"},\"properties\":{\"established_model_memory\":{\"type\":\"keyword\"}}}}] did not match those in the descriptor(s)"}
 ```
-
-https://github.com/elastic/kibana/issues/116209
-
-
