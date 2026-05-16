@@ -49,6 +49,8 @@ If you are running a single node in production, it is possible to evade the boot
 
 ## Checks
 
+The following checks can induce `fatal exception while booting Elasticsearch` startup errors. Refer also to [troubleshooting node bootlooping](/troubleshoot/monitoring/node-bootlooping.md).
+
 :::{dropdown} Heap size check
 
 $$$heap-size$$$
