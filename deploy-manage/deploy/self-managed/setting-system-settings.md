@@ -114,7 +114,6 @@ Environment="MY_VAR=my-value"
 LimitNOFILE=65535
 LimitNPROC=4096
 LimitMEMLOCK=infinity
-NotifyAccess=all
 ```
 
 Replace the directives with those required for your deployment.
