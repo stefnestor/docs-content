@@ -28,7 +28,7 @@ Exact errors can differ between JVM versions, but the most common errors surface
   * `failed to map segment from shared object`
   * `failed to allocate closure`
 
-* when a component that relies on JNA attempts to run it may error `because JNA is not available`
+* when a component that relies on JNA attempts to run it can error `because JNA is not available`
 
 To resolve these problems, either remove the `noexec` option from your `/tmp` filesystem, or configure {{es}} to use a different location for its temporary directory by setting the [`$ES_TMPDIR`](/deploy-manage/deploy/self-managed/important-settings-configuration.md#es-tmpdir) environment variable. For example:
 
