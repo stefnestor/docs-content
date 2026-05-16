@@ -250,7 +250,7 @@ GET _cat/nodes?v=true&h=name,ip,role,master,version,uptime&s=uptime
 ```
 
 :::{tip}
-If you encounter issues during rolling upgrade, refer to [Troubleshoot upgrades](troubleshoot/elasticsearch/troubleshooting-upgrades.md) for common issues.
+If you encounter issues during rolling upgrade, refer to [Troubleshoot upgrades](/troubleshoot/elasticsearch/troubleshooting-upgrades.md) for common issues.
 :::
 
 ## Archived settings [archived-settings]

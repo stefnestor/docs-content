@@ -12,7 +12,7 @@ products:
 
 Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md) proceed smoothly due to due diligence in upgrade [planning](/deploy-manage/upgrade/plan-upgrade.md) and [preparation](/deploy-manage/upgrade/prepare-to-upgrade.md). 
 
-To avoid majority of errors discussed below, ensure to resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. For more information, refer to [Troubleshoot Upgrade Assistant](troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
+To avoid majority of errors discussed below, ensure to resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. For more information, refer to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
 
 If you suspect an issue monitoring your upgrade, inspect progress through the following outline. We have compiled the most common error resolutions encountered for your reference to review based on your findings.
 
@@ -103,7 +103,7 @@ The following outline edge cases and their impacts where:
 
 * One or more nodes unexpectedly leave cluster.
 * Nodes leave cluster out of expected [upgrade order](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md#upgrade-order).
-* Cluster was not architected to be [highly availabile](/deploy-manage/deploy/elastic-cloud/elastic-cloud-hosted-planning.md).
+* Cluster was not architected to be [highly available](/deploy-manage/deploy/elastic-cloud/elastic-cloud-hosted-planning.md).
 
 ### Unexpected node disconnect [troubleshooting-upgrades-theory-disconnect]
 
@@ -180,7 +180,7 @@ The following are [bootstrap checks](/deploy-manage/deploy/self-managed/bootstra
 
 This error indicates the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) was not fully completed during [upgrade preparation work](/deploy-manage/upgrade/prepare-to-upgrade.md).
 
-You should reset this node's version upgrade, rejoin it to cluster at the earlier version, and complete the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. Refer also to [Troubleshoot Upgrade Assistant](troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
+You should reset this node's version upgrade, rejoin it to cluster at the earlier version, and complete the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. Refer also to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
 
 #### Unknown settings [troubleshooting-upgrades-errors-bootstrap-unknown]
 
@@ -221,7 +221,7 @@ If {{kib}} does not start after [its upgrade](/deploy-manage/upgrade/deployment-
 
 ### Transform upgrade mode [troubleshooting-upgrades-errors-post-transforms]
 
-If you [Set upgrade_mode for transform indices](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-set-upgrade-mode), then you might encounter errors unexpected after upgrade like
+If you [Set upgrade_mode for transform indices]({{es-apis}}operation-transform-set-upgrade-mode), then you might encounter errors unexpected after upgrade like
 
 * `Cannot stop any Transform while the Transform feature is upgrading (408)`
 * `Transform task will not be assigned while upgrade mode is enabled.`
@@ -230,7 +230,7 @@ Update this to `enabled=false` to exit upgrade mode for transforms.
 
 ### Machine Learning upgrade mode [troubleshooting-upgrades-errors-post-ml]
 
-If you [Set upgrade_mode for machine learning indices](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-set-upgrade-mode), then you might encounter errors unexpected after upgrade like:
+If you [Set upgrade_mode for machine learning indices]({{es-apis}}operation/operation-ml-set-upgrade-mode), then you might encounter errors unexpected after upgrade like:
 
 * `You don't have permission to manage Machine Learning jobs. Access to the plugin requires the Machine Learning feature to be visible in this space.`
 * `Index migration in progress. Indices related to Machine Learning are currently being upgraded. Some actions will not be available during this time.`
