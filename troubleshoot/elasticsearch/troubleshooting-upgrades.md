@@ -3,7 +3,7 @@ navigation_title: "Troubleshoot upgrades"
 description: "Common upgrade issues and resolutions."
 type: troubleshooting
 applies_to:
-  stack:
+  stack: ga
 products:
   - id: elasticsearch
 ---
@@ -93,7 +93,7 @@ Once that has happened, there is no way to return the cluster to a state that is
 {{es}} maintains the data in the data paths of the older nodes and will recover the cluster to health using this data after the nodes are fully upgraded. Therefore, to bring these nodes back into the cluster, upgrade them.
 
 :::{note} :applies_to: { ece:, ess: }
-Usually you can "Reapply" your latest [Deployment activity](/deploy-manage/deploy/elastic-cloud/keep-track-of-deployment-activity.md) {{es}} upgrade to finish upgrading. If the node out of cluster causes a [Cluster health](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health) status of `red`, then plans will be blocked for data safety. If this is the case, kindly [contact us](/troubleshoot/index.md#contact-us) with {{ech}} deployment ID or [{{ece}} diagnostic](/troubleshoot/deployments/cloud-enterprise/run-ece-diagnostics-tool.md) flagged `--deployments` for the problematic deployment ID.
+Usually you can "Reapply" your latest [Deployment activity](/deploy-manage/deploy/elastic-cloud/keep-track-of-deployment-activity.md) {{es}} upgrade to finish upgrading. If the node out of cluster causes a [Cluster health](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health) status of `red`, then plans will be blocked for data safety. If this is the case, [contact us](/troubleshoot/index.md#contact-us) with {{ech}} deployment ID or [{{ece}} diagnostic](/troubleshoot/deployments/cloud-enterprise/run-ece-diagnostics-tool.md) flagged `--deployments` for the problematic deployment ID.
 :::
 
 

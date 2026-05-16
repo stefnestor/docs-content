@@ -3,7 +3,7 @@ navigation_title: "Troubleshoot Upgrade Assitant"
 description: "Common upgrade issues and resolutions."
 type: troubleshooting
 applies_to:
-  stack:
+  stack: ga
 products:
   - id: kibana
   - id: cloud-enterprise
