@@ -14,9 +14,9 @@ products:
 
 # Troubleshoot Upgrade assistant [troubleshooting-upgrade-assistant]
 
-You should run the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) from the current major's latest minor and patch before upgrading to the next major stack version. You should end up with a filled-in green checkmark on each step.
+You should run the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) from the current major's latest minor and patch before upgrading to the next major stack version. You should end up with a list of steps each with a green filled-in checkmark.
 
-## Upgrade asssitant errors
+## Upgrade assistant errors
 
 The {{kib}} [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) second step "Migrate system indices" might error `System indices migration failed`. Click "View Migration Details" to show the output of {{es}}'s [Get feature migration information API]({{es-apis}}operation/operation-migration-get-feature-upgrade-status)
 

@@ -246,7 +246,7 @@ If you plan to upgrade nodes in quick succession, you might choose to leave inde
 To monitor which nodes have been upgraded, use the [CAT nodes](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes) API:
 
 ```console
-GET _cat/nodes?v=true&h=name,ip,version,uptime&s=uptime
+GET _cat/nodes?v=true&h=name,ip,role,master,version,uptime&s=uptime
 ```
 
 :::{tip}
