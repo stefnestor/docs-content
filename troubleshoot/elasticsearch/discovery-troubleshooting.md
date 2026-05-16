@@ -39,7 +39,7 @@ When a node wins the master election, it logs a message containing `elected-as-m
 
 If there is no elected master node and no node can win an election, all nodes repeatedly log messages about the problem using a [logger](/deploy-manage/monitor/logging-configuration.md) called `org.elasticsearch.cluster.coordination.ClusterFormationFailureHelper`. By default, this happens every 10 seconds. 
 
-During this time the {{es}} will induce `MasterNotDiscoveredException` errors and which its API will report like:
+During this time, {{es}} returns `MasterNotDiscoveredException`. Its API reports:
 
 ```json
 {

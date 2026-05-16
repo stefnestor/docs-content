@@ -57,7 +57,7 @@ By default, {{es}} automatically sizes JVM heap based on a node’s [roles](elas
 
 This can cause errors like
 
-```
+```text
 initial heap size [X] not equal to maximum heap size [Y]; this can cause resize pauses and prevents memory locking from locking the entire heap
 initial heap size [X] not equal to maximum heap size [Y]; this can cause resize pauses
 ```
@@ -73,7 +73,7 @@ File descriptors are a Unix construct for tracking open "files". In Unix though,
 
 This can cause errors like
 
-```
+```text
 max file descriptors [X] for elasticsearch process is too low, increase to at least [Y]
 ```
 
@@ -88,7 +88,7 @@ When the JVM does a major garbage collection it touches every page of the heap. 
 
 This can cause errors like
 
-```
+```text
 memory locking requested for elasticsearch process but memory is not locked
 ```
 
@@ -102,7 +102,7 @@ $$$max-number-threads-check$$$
 
 This can cause errors like
 
-```
+```text
 max number of threads [X] for user [Y] is too low, increase to at least [Z]
 ```
 
@@ -117,7 +117,7 @@ The segment files that are the components of individual shards and the translog 
 
 This can cause errors like
 
-```
+```text
 max file size [X] for user [Y] is too low, increase to [unlimited]
 ```
 
@@ -132,7 +132,7 @@ $$$max-size-virtual-memory-check$$$
 
 This can cause errors like
 
-```
+```text
 max file size [X] for user [Y] is too low, increase to [unlimited]
 ```
 
@@ -147,7 +147,7 @@ In addition to [unlimited address space](#max-size-virtual-memory-check), to use
 
 This can cause errors like
 
-```
+```text
 max virtual memory areas vm.max_map_count [X] is too low, increase to at least [Y]
 ```
 
@@ -164,7 +164,7 @@ There are two different JVMs provided by OpenJDK-derived JVMs: the client JVM an
 
 This can cause errors like
 
-```
+```text
 JVM is using the client VM [X] but should be using a server VM for the best performance
 ```
 
@@ -179,7 +179,7 @@ There are various garbage collectors for the OpenJDK-derived JVMs targeting diff
 
 This can cause errors like
 
-```
+```text
 JVM is using the serial collector but should not be for the best performance; either it's the default for the VM [%s] or -XX:+UseSerialGC was explicitly specified
 ```
 
@@ -194,7 +194,7 @@ $$$bootstrap-checks-syscall-filter$$$
 
 This can cause errors like
 
-```
+```text
 system call filters failed to install; check the logs and fix your configuration
 ```
 
@@ -218,7 +218,7 @@ The OpenJDK project provides early-access snapshots of upcoming releases. These 
 
 This can cause errors like
 
-```
+```text
 Java version [X] is an early-access build, only use release builds
 ```
 
@@ -240,7 +240,7 @@ By default, when {{es}} first starts up it will try and discover other nodes run
 
 This can cause errors like
 
-```
+```text
 the default discovery settings are unsuitable for production use; at least one of [X, Y, Z] must be configured
 ```
 
@@ -261,7 +261,7 @@ If you use {{watcher}} and have chosen to encrypt sensitive data (by setting `xp
 
 This can cause errors like
 
-```
+```text
 Encryption of sensitive data requires the key to be placed in the secure setting store.
 ```
 
@@ -276,7 +276,7 @@ If you use {{es}} {{security-features}} and a Public Key Infrastructure (PKI) re
 
 This can cause errors like
 
-```
+```text
 a PKI realm is enabled but cannot be used as neither HTTP or Transport have SSL and client authentication enabled
 ```
 
@@ -306,7 +306,7 @@ Single-node clusters that use a loopback interface do not have this requirement.
 
 This can cause errors like
 
-```
+```text
 Transport SSL must be enabled if security is enabled.
 ```
 
@@ -323,7 +323,7 @@ In particular, if `xpack.security.authc.token.enabled` is set to `true` in the [
 
 This can cause errors like
 
-```
+```text
 HTTPS is required in order to use the token service; please enable HTTPS using the [%s] setting or disable the token service using the [%s] setting
 ```
 

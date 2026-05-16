@@ -29,7 +29,7 @@ Cluster upgrades can be performed as:
 
 * _(Recommended)_ **A rolling restart**
 
-    This option allows you to upgrade your cluster one node at a time without interrupting service. Running multiple versions of {{es}} in the same cluster beyond the duration of an upgrade is not supported, as shards cannot be replicated from upgraded nodes to nodes running the earlier ersion. Running more than two versions of {{es}} in the same cluster is not supported.
+    This option allows you to upgrade your cluster one node at a time without interrupting service. Running multiple versions of {{es}} in the same cluster beyond the duration of an upgrade is not supported, as shards cannot be replicated from upgraded nodes to nodes running the earlier version. Running more than two versions of {{es}} in the same cluster is not supported.
 
 * **A full restart**
 
