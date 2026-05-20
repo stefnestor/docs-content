@@ -24,7 +24,7 @@ Exact errors can differ between JVM versions, but the most common error messages
 * at startup due to a `java.nio.file.AccessDeniedException` exception against a file inside the `/etc/elasticsearch/tmp/` directory
 * at startup if JNA fails to load:
 
-  * an `java.lang.UnsatisfiedLinkerError` exception 
+  * a `java.lang.UnsatisfiedLinkerError` exception 
   * `failed to map segment from shared object`
   * `failed to allocate closure`
 
