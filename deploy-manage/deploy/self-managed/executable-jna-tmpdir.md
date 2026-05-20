@@ -21,7 +21,7 @@ By default, {{es}} will create its temporary directory within `/tmp`. However, s
 
 Exact errors can differ between JVM versions, but the most common error messages are:
 
-* at startup due to an `java.nio.file.AccessDeniedException` exception against a file inside the `/etc/elasticsearch/tmp/` directory
+* at startup due to a `java.nio.file.AccessDeniedException` exception against a file inside the `/etc/elasticsearch/tmp/` directory
 * at startup if JNA fails to load:
 
   * an `java.lang.UnsatisfiedLinkerError` exception 
