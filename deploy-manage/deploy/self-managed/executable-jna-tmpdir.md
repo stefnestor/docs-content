@@ -19,7 +19,7 @@ This is only relevant for Linux.
 
 By default, {{es}} will create its temporary directory within `/tmp`. However, some hardened Linux installations mount `/tmp` with the `noexec` option by default. This prevents JNA and `libffi` from working correctly.
 
-Exact errors can differ between JVM versions, but the most common errors surface:
+Exact errors can differ between JVM versions, but the most common error messages are:
 
 * at startup due to an `java.nio.file.AccessDeniedException` exception against a file inside the `/etc/elasticsearch/tmp/` directory
 * at startup if JNA fails to load:
