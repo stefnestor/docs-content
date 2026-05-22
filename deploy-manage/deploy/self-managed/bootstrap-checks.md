@@ -49,7 +49,7 @@ If you are running a single node in production, it is possible to evade the boot
 
 ## Checks
 
-The following checks can induce `fatal exception while booting Elasticsearch` startup errors. Refer also to [troubleshooting node bootlooping](/troubleshoot/monitoring/node-bootlooping.md).
+The following checks can cause `fatal exception while booting Elasticsearch` startup errors. For more information, see [Troubleshooting node bootlooping](/troubleshoot/monitoring/node-bootlooping.md).
 
 :::{dropdown} Heap size check
 
@@ -57,7 +57,7 @@ $$$heap-size$$$
 
 By default, {{es}} automatically sizes JVM heap based on a node’s [roles](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#node-roles) and total memory. If you manually override the default sizing and start the JVM with different initial and max heap sizes, the JVM may pause as it resizes the heap during system usage. If you enable [`bootstrap.memory_lock`](setup-configuration-memory.md#bootstrap-memory_lock), the JVM locks the initial heap size on startup. If the initial heap size is not equal to the maximum heap size, some JVM heap may not be locked after a resize.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 initial heap size [X] not equal to maximum heap size [Y]; this can cause resize pauses and prevents memory locking from locking the entire heap
@@ -73,7 +73,7 @@ $$$bootstrap-checks-file-descriptor$$$
 
 File descriptors are a Unix construct for tracking open "files". In Unix though, [everything is a file](https://en.wikipedia.org/wiki/Everything_is_a_file). For example, "files" could be a physical file, a virtual file (e.g., `/proc/loadavg`), or network sockets. {{es}} requires lots of file descriptors (e.g., every shard is composed of multiple segments and other files, plus connections to other nodes, etc.). This bootstrap check is enforced on OS X and Linux.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 max file descriptors [X] for elasticsearch process is too low, increase to at least [Y]
@@ -88,7 +88,7 @@ $$$bootstrap-checks-memory-lock$$$
 
 When the JVM does a major garbage collection it touches every page of the heap. If any of those pages are swapped out to disk they will have to be swapped back in to memory. That causes lots of disk thrashing that {{es}} would much rather use to service requests. There are several ways to configure a system to disallow swapping. One way is by requesting the JVM to lock the heap in memory through `mlockall` (Unix) or virtual lock (Windows). This is done via the {{es}} setting [`bootstrap.memory_lock`](/deploy-manage/deploy/self-managed/setup-configuration-memory.md#bootstrap-memory_lock). However, there are cases where this setting can be passed to {{es}} but {{es}} is not able to lock the heap (e.g., if the `elasticsearch` user does not have `memlock unlimited`). The memory lock check verifies that **if** the `bootstrap.memory_lock` setting is enabled, that the JVM was successfully able to lock the heap.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 memory locking requested for elasticsearch process but memory is not locked
@@ -102,7 +102,7 @@ $$$max-number-threads-check$$$
 
 {{es}} executes requests by breaking the request down into stages and handing those stages off to different thread pool executors. There are different [thread pool executors](elasticsearch://reference/elasticsearch/configuration-reference/thread-pool-settings.md) for a variety of tasks within {{es}}. Thus, {{es}} needs the ability to create a lot of threads. The maximum number of threads check ensures that the {{es}} process has the rights to create enough threads under normal use. This check is enforced only on Linux.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 max number of threads [X] for user [Y] is too low, increase to at least [Z]
@@ -117,7 +117,7 @@ $$$bootstrap-checks-max-file-size$$$
 
 The segment files that are the components of individual shards and the translog generations that are components of the translog can get large (exceeding multiple gigabytes). On systems where the max size of files that can be created by the {{es}} process is limited, this can lead to failed writes. Therefore, the safest option here is that the max file size is unlimited and that is what the max file size bootstrap check enforces.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 max file size [X] for user [Y] is too low, increase to [unlimited]
@@ -132,7 +132,7 @@ $$$max-size-virtual-memory-check$$$
 
 {{es}} and Lucene use `mmap` to great effect to map portions of an index into the {{es}} address space. This keeps certain index data off the JVM heap but in memory for blazing fast access. For this to be effective, the {{es}} should have unlimited address space. The maximum size virtual memory check enforces that the {{es}} process has unlimited address space and is enforced only on Linux.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 max file size [X] for user [Y] is too low, increase to [unlimited]
@@ -147,7 +147,7 @@ $$$bootstrap-checks-max-map-count$$$
 
 In addition to [unlimited address space](#max-size-virtual-memory-check), to use `mmap` effectively, {{es}} also requires the ability to create many memory-mapped areas. The maximum map count check checks that the kernel allows a process to have at least 262,144 memory-mapped areas and is enforced on Linux only.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 max virtual memory areas vm.max_map_count [X] is too low, increase to at least [Y]
@@ -164,7 +164,7 @@ $$$bootstrap-checks-client-jvm$$$
 
 There are two different JVMs provided by OpenJDK-derived JVMs: the client JVM and the server JVM. These JVMs use different compilers for producing executable machine code from Java bytecode. The client JVM is tuned for startup time and memory footprint while the server JVM is tuned for maximizing performance. The difference in performance between the two VMs can be substantial. The client JVM check ensures that {{es}} is not running inside the client JVM.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 JVM is using the client VM [X] but should be using a server VM for the best performance
@@ -179,7 +179,7 @@ $$$bootstrap-checks-serial-collector$$$
 
 There are various garbage collectors for the OpenJDK-derived JVMs targeting different workloads. The serial collector in particular is best suited for single logical CPU machines or extremely small heaps, neither of which are suitable for running {{es}}. Using the serial collector with {{es}} can be devastating for performance. The serial collector check ensures that {{es}} is not configured to run with the serial collector.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 JVM is using the serial collector but should not be for the best performance; either it's the default for the VM [%s] or -XX:+UseSerialGC was explicitly specified
@@ -194,7 +194,7 @@ $$$bootstrap-checks-syscall-filter$$$
 
 {{es}} installs system call filters of various flavors depending on the operating system (e.g., seccomp on Linux). These system call filters are installed to prevent the ability to execute system calls related to forking as a defense mechanism against arbitrary code execution attacks on {{es}}. The system call filter check ensures that if system call filters are enabled, then they were successfully installed.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 system call filters failed to install; check the logs and fix your configuration
@@ -218,7 +218,7 @@ $$$bootstrap-checks-early-access$$$
 
 The OpenJDK project provides early-access snapshots of upcoming releases. These releases are not suitable for production. The early-access check detects these early-access snapshots.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 Java version [X] is an early-access build, only use release builds
@@ -240,7 +240,7 @@ $$$bootstrap-checks-discovery-configuration$$$
 
 By default, when {{es}} first starts up it will try and discover other nodes running on the same host. If no elected master can be discovered within a few seconds then {{es}} will form a cluster that includes any other nodes that were discovered. It is useful to be able to form this cluster without any extra configuration in development mode, but this is unsuitable for production because it’s possible to form multiple clusters and lose data as a result.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 the default discovery settings are unsuitable for production use; at least one of [X, Y, Z] must be configured
@@ -261,7 +261,7 @@ $$$bootstrap-checks-xpack-encrypt-sensitive-data$$$
 
 If you use {{watcher}} and have chosen to encrypt sensitive data (by setting `xpack.watcher.encrypt_sensitive_data` to `true`), you must also place a key in the secure settings store.
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 Encryption of sensitive data requires the key to be placed in the secure setting store.
@@ -276,7 +276,7 @@ $$$bootstrap-checks-xpack-pki-realm$$$
 
 If you use {{es}} {{security-features}} and a Public Key Infrastructure (PKI) realm, you must configure Transport Layer Security (TLS) on your cluster and enable client authentication on the network layers (either transport or http). For more information, see [PKI user authentication](/deploy-manage/users-roles/cluster-or-deployment-auth/pki.md) and [Set up basic security plus HTTPS](/deploy-manage/security/set-up-basic-security-plus-https.md).
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 a PKI realm is enabled but cannot be used as neither HTTP or Transport have SSL and client authentication enabled
@@ -306,7 +306,7 @@ If you enable {{es}} {{security-features}}, unless you have a trial license, you
 Single-node clusters that use a loopback interface do not have this requirement. For more information, see [*Start the {{stack}} with security enabled automatically*](/deploy-manage/security/self-auto-setup.md).
 :::
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 Transport SSL must be enabled if security is enabled.
@@ -323,7 +323,7 @@ If you use {{es}} {{security-features}} and the built-in token service is enable
 
 In particular, if `xpack.security.authc.token.enabled` is set to `true` in the [`elasticsearch.yml`](/deploy-manage/deploy/self-managed/configure-elasticsearch.md) file, you must also set `xpack.security.http.ssl.enabled` to `true`. For more information about these settings, see [Security settings](elasticsearch://reference/elasticsearch/configuration-reference/security-settings.md) and [Advanced HTTP settings](elasticsearch://reference/elasticsearch/configuration-reference/networking-settings.md#http-settings).
 
-This can cause errors like
+You may encounter the following errors:
 
 ```text
 HTTPS is required in order to use the token service; please enable HTTPS using the [%s] setting or disable the token service using the [%s] setting
