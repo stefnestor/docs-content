@@ -39,7 +39,7 @@ When a node wins the master election, it logs a message containing `elected-as-m
 
 If there is no elected master node and no node can win an election, all nodes repeatedly log messages about the problem using a [logger](/deploy-manage/monitor/logging-configuration.md) called `org.elasticsearch.cluster.coordination.ClusterFormationFailureHelper`. By default, this happens every 10 seconds. 
 
-During this time, {{es}} returns `MasterNotDiscoveredException`. Its API reports:
+During this time, {{es}} returns `MasterNotDiscoveredException`. The following error displays:
 
 ```json
 {
@@ -82,7 +82,7 @@ If the logs suggest that the node cannot discover or join the cluster due to tim
 
 ## Node joins cluster and leaves again [discovery-node-leaves]
 
-If a node joins the cluster but {{es}} determines it to be faulty, it is removed from the cluster again. This will log as `node-join` then afterwards as `node-left` by the elected-master node. Refer to [Troubleshooting an unstable cluster](/troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md) for more information.
+If a node joins the cluster but {{es}} determines it to be faulty, it is removed from the cluster again. This logs as `node-join` then afterwards as `node-left` by the elected master node. Refer to [Troubleshooting an unstable cluster](/troubleshoot/elasticsearch/troubleshooting-unstable-cluster.md) for more information.
 
 
 ## Investigate timeout and network issues [investigate-timeout-and-network-issues]
