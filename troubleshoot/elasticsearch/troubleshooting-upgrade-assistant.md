@@ -31,7 +31,7 @@ Reindexing errors commonly occur due to configuration issues with templates or i
 
 ### Index block errors [troubleshooting-upgrade-assistant-migrations-blocks]
 
-{{es}} can surface `cluster_block_exception` [index blocks](/reference/elasticsearch/index-settings/index-block.md) errors. These blocks are protections for an index and usually purposely configured, so you should review your index's architecture before removing block.
+{{es}} can surface `cluster_block_exception` [index blocks](elasticsearch:/reference/elasticsearch/index-settings/index-block.md) errors. These blocks are protections for an index and usually purposely configured, so you should review your index's architecture before removing block.
 
 The most common is `FORBIDDEN/8/index write (api)` from an index have `index.blocks.write` setting enabled. The error would appear like:
 

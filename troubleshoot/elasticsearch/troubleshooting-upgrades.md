@@ -12,7 +12,7 @@ products:
 
 Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md) proceed smoothly due to due diligence in upgrade [planning](/deploy-manage/upgrade/plan-upgrade.md) and [preparation](/deploy-manage/upgrade/prepare-to-upgrade.md). 
 
-To avoid majority of errors discussed below, ensure to resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. For more information, refer to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
+To avoid majority of errors discussed in the following sections, ensure to resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. For more information, refer to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
 
 We have compiled the most common error resolutions clusters encounter during rolling upgrade for your reference. If you suspect an issue monitoring your upgrade, inspect progress through the following outline.
 
