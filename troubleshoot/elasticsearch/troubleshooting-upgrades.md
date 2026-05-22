@@ -14,7 +14,7 @@ Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elastics
 
 To avoid majority of errors discussed below, ensure to resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. For more information, refer to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
 
-If you suspect an issue monitoring your upgrade, inspect progress through the following outline. We have compiled the most common error resolutions encountered for your reference to review based on your findings.
+We have compiled the most common error resolutions clusters encounter during rolling upgrade for your reference. If you suspect an issue monitoring your upgrade, inspect progress through the following outline.
 
 ## Monitor upgrade [troubleshooting-upgrades-monitor]
 
@@ -228,7 +228,7 @@ If you [Set upgrade_mode for transform indices]({{es-apis}}operation-transform-s
 
 Update this to `enabled=false` to exit upgrade mode for transforms.
 
-### Machine Learning upgrade mode [troubleshooting-upgrades-errors-post-ml]
+### Machine learning upgrade mode [troubleshooting-upgrades-errors-post-ml]
 
 If you [Set upgrade_mode for machine learning indices]({{es-apis}}operation/operation-ml-set-upgrade-mode), then you might encounter errors unexpected after upgrade like:
 
