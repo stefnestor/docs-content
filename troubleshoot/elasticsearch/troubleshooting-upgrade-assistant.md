@@ -1,6 +1,6 @@
 ---
-navigation_title: "Troubleshoot Upgrade Assitant"
-description: "Common upgrade issues and resolutions."
+navigation_title: "Troubleshoot Upgrade Assistant"
+description: "Common Upgrade Assistant errors and how to resolve them."
 type: troubleshooting
 applies_to:
   stack: ga
@@ -16,7 +16,7 @@ products:
 
 You should run the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) from the current major's latest minor and patch before upgrading to the next major stack version. You should end up with a list of steps each filled-in with a green checkmark. Failure to do so can cause your cluster to encounter one of the [common upgrade issues](/troubleshoot/elasticsearch/troubleshooting-upgrades.md).
 
-We have compiled the most common errors and resolutions that clusters encounter while running the **Upgrade Assistant** for your reference.
+The following sections describe the most common errors and resolutions that clusters encounter while running the **Upgrade Assistant**.
 
 ## Migration errors [troubleshooting-upgrade-assistant-migrations]
 

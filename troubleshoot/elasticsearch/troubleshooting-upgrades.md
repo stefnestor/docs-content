@@ -1,6 +1,6 @@
 ---
 navigation_title: "Troubleshoot upgrades"
-description: "Common upgrade issues and resolutions."
+description: "Common Elasticsearch rolling upgrade errors and how to resolve them."
 type: troubleshooting
 applies_to:
   stack: ga
@@ -10,11 +10,11 @@ products:
 
 # Troubleshoot upgrades [troubleshooting-upgrades]
 
-Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md) proceed smoothly due to due diligence in upgrade [planning](/deploy-manage/upgrade/plan-upgrade.md) and [preparation](/deploy-manage/upgrade/prepare-to-upgrade.md). 
+Usually, [{{es}} upgrades](/deploy-manage/upgrade/deployment-or-cluster/elasticsearch.md) proceed smoothly because of due diligence in upgrade [planning](/deploy-manage/upgrade/plan-upgrade.md) and [preparation](/deploy-manage/upgrade/prepare-to-upgrade.md).
 
-To avoid majority of errors discussed in the following sections, ensure to resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning upgrading. For more information, refer to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
+To avoid the majority of errors discussed in the following sections, resolve all [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) critical items before beginning the upgrade. For more information, refer to [Troubleshoot Upgrade Assistant](/troubleshoot/elasticsearch/troubleshooting-upgrade-assistant.md).
 
-We have compiled the most common error resolutions clusters encounter during rolling upgrade for your reference. If you suspect an issue monitoring your upgrade, inspect progress through the following outline.
+The following sections describe the most common error resolutions clusters encounter during rolling upgrades. If you suspect an issue while monitoring your upgrade, use this outline to inspect progress and diagnose problems.
 
 ## Monitor upgrade [troubleshooting-upgrades-monitor]
 
@@ -69,7 +69,7 @@ For an example three node cluster, this first node's upgrade could appear like
 	tiebreaker-0000000003 10.42.0.222 mv     -      8.19.x   20d
 	```
 
-If a node does not rejoin cluster, you will inspect its restart logs.
+If a node does not rejoin the cluster, inspect its restart logs.
 
 ### Check node logs [troubleshooting-upgrades-monitor-logs]
 
