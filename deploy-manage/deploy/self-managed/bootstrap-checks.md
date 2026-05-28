@@ -57,7 +57,7 @@ $$$heap-size$$$
 
 By default, {{es}} automatically sizes JVM heap based on a node’s [roles](elasticsearch://reference/elasticsearch/configuration-reference/node-settings.md#node-roles) and total memory. If you manually override the default sizing and start the JVM with different initial and max heap sizes, the JVM may pause as it resizes the heap during system usage. If you enable [`bootstrap.memory_lock`](setup-configuration-memory.md#bootstrap-memory_lock), the JVM locks the initial heap size on startup. If the initial heap size is not equal to the maximum heap size, some JVM heap may not be locked after a resize.
 
-You may encounter the following errors:
+You might encounter the following errors:
 
 ```text
 initial heap size [X] not equal to maximum heap size [Y]; this can cause resize pauses and prevents memory locking from locking the entire heap
