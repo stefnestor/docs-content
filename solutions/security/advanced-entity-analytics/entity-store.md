@@ -73,7 +73,8 @@ The entity store is automatically enabled when you turn on risk scoring. In the 
 2. Turn the toggle on.
 
 :::{note}
-If you've upgraded from a previous version, and the entity store was installed in any space, it's automatically migrated after the upgrade. Your existing index data is retained.
+* If you've upgraded from a previous version, and the entity store was installed in any space, it's automatically migrated after the upgrade. Your existing index data is retained.
+* If you use [cross-cluster search](/explore-analyze/cross-cluster-search.md), the entity store ingests logs from every remote cluster. To avoid unnecessary load, turn off risk scoring on any remote cluster where it isn't actively used.
 :::
 :::
 
@@ -218,9 +219,25 @@ Use `frequency` to control how often extraction runs.
 Use `maxLogsPerPage` to cap the raw-log slice size before aggregation.
 
 * Lower it if queries are too heavy or time-consuming.
-* Default: `40000` documents.
+* Default: `50000` documents.
 
 Start with `maxLogsPerPage` rather than `docsLimit` when extraction is slow or unstable, because it reduces the amount of raw source data processed in each extraction operation. Adjust `docsLimit` if tuning `maxLogsPerPage` is insufficient and you still see performance issues.
+
+#### `maxLogsPerWindow`
+
+Use `maxLogsPerWindow` to cap the total number of raw log documents processed in a single extraction run, across all slices in the window.
+
+* Lower it if a single task run can still saturate {{es}} CPU even after lowering `maxLogsPerPage`. This is the most effective lever for protecting a cluster from CPU overload, because it bounds the work a single extraction task can do.
+* Increase it if cluster CPU is not overloaded and can handle more processed logs.
+* Default: `100000` documents.
+
+#### `maxLogsPerWindowCapBehavior`
+
+Use `maxLogsPerWindowCapBehavior` to control what happens when `maxLogsPerWindow` is reached during a run.
+
+* `drop` — the next run advances past the uncapped logs (cursor jumps to the end of the window). Logs above the cap are skipped permanently. Use this to keep the cluster healthy in exchange for coverage gaps when ingest exceeds the cap.
+* `defer` — the next run resumes from where the cap fired and processes the remaining logs. Use this to preserve full coverage at the cost of falling behind real time when logs exceed the cap.
+* Default: `drop`.
 
 #### `maxTimeWindowSize`
 
