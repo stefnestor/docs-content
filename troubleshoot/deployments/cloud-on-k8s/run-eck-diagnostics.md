@@ -11,7 +11,7 @@ products:
 
 # Capture ECK diagnostics [k8s-take-eck-dump]
 
-{{eck}} (ECK) diagnostics is a stand-alone command line tool that you can run on hosts where the ECK operator is installed. It emits ECK and Kubernetes data, and stores everything into an archive file that can be provided to [Elastic support](/troubleshoot/index.md#troubleshoot-work-with-support) for troubleshooting and investigation purposes.
+{{eck}} (ECK) diagnostics is a stand-alone command line tool that you can run on hosts where the ECK operator is installed. It collects logs, metrics, and configuration details, and stores everything into an archive file that can be provided to [Elastic support](/troubleshoot/index.md#troubleshoot-work-with-support) for troubleshooting and investigation purposes.
 
 ::::{note}
 :::{include} /troubleshoot/_snippets/diagnostics-privacy.md
@@ -23,7 +23,7 @@ products:
 To install the [eck-diagnostics](https://github.com/elastic/eck-diagnostics/) tool:
 
 1. Locate the [latest release](https://github.com/elastic/eck-diagnostics/releases/latest).
-2. Download the `*.tar.gz` asset associated to your hardware profile.
+2. Download the `*.tar.gz` asset associated with your hardware profile.
 3. Unpack the gzip'ed tar archive to access the diagnostic binary `eck-diagnostics`.
 
 ## Run [k8s_run] 
@@ -34,7 +34,7 @@ You must know the Kubernetes namespaces of your operator and stack resources to 
 eck-diagnostics -o <operator-namespaces> -r <resources-namespaces>
 ```
 
-This tool supports various command line flags. The most common command line flags considered are:
+This tool supports various command line flags. The most common command line flags are:
 
 * (Optional) Run it with `-h` or `--help` to print all available options. 
 
@@ -42,13 +42,13 @@ This tool supports various command line flags. The most common command line flag
     eck-diagnostics --help
     ```
 
-* (Required) Run it with `-r` or `--resources-namespace` to indicate the namespaces where your Elastic stack resources are deployed. 
+* (Required) Run it with `-r` or `--resources-namespaces` to indicate the namespaces where your Elastic stack resources are deployed. 
 
 * (Optional) Run it with `-o` or `--operator-namespaces` to override the default `elastic-system` namespace for the deployed ECK operator.
 
 * (Optional) Run it with `--stack-diagnostics-timeout` to designate the maximum waiting time to pull the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
-
-* (Optional) Run it with `--run-stack-diagnostics=false` to deactivate pulling [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) hosted within the resources namespace. This is enabled by default and is recommended. However, this requires the temporary deployment of additional Pods into the Kubernetes cluster. 
+* (Optional) Run it with `--stack-diagnostics-timeout` to designate the maximum waiting time to collect the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
+* (Optional) Run it with `--run-stack-diagnostics=false` to deactivate collecting [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) from the resources namespace. This is enabled by default and is recommended, but requires the temporary deployment of additional Pods into the Kubernetes cluster. 
 
 * (Optional) Check [ECK Diagnostics in air-gapped environments](/deploy-manage/deploy/cloud-on-k8s/air-gapped-install.md#k8s-eck-diag-air-gapped) for command line flags to run support diagnostics in environments without access to the open internet.
 
