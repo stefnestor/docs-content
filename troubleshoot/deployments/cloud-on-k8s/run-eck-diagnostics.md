@@ -28,7 +28,7 @@ To install the [eck-diagnostics](https://github.com/elastic/eck-diagnostics/) to
 
 ## Run [k8s_run] 
 
-You must know the Kubenetes namespaces of your operator and stack resources to run this diagnostic. The most common usage of this `eck-diagnostics` binary is:
+You must know the Kubernetes namespaces of your operator and stack resources to run this diagnostic. The most common usage of this `eck-diagnostics` binary is:
 
 ```bash
 eck-diagnostics -o <operator-namespaces> -r <resources-namespaces>
@@ -48,7 +48,7 @@ This tool supports various command line flags. The most common command line flag
 
 * (Optional) Run it with `--stack-diagnostics-timeout` to designate the maximum waiting time to pull the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
 
-* (Optional) Run it with `--run-stack-diagnostics=false` to disable automatically pulling [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) hosted within the resources namespace. This is enabled by default and is recommended. However, this requires the temporary deployment of additional Pods into the Kubernetes cluster. 
+* (Optional) Run it with `--run-stack-diagnostics=false` to deactivate pulling [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) hosted within the resources namespace. This is enabled by default and is recommended. However, this requires the temporary deployment of additional Pods into the Kubernetes cluster. 
 
 * (Optional) Check [ECK Diagnostics in air-gapped environments](/deploy-manage/deploy/cloud-on-k8s/air-gapped-install.md#k8s-eck-diag-air-gapped) for command line flags to run support diagnostics in environments without access to the open internet.
 
