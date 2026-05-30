@@ -26,12 +26,23 @@ Don’t use the diagnostics tool that comes bundled in ECE images. Always downlo
 
 1. Download the bundled diagnostic binary.
 
-    * For x86_64 CPU architectures: [https://download.elasticsearch.org/cloud/amd64/ece-diagnostics](https://download.elasticsearch.org/cloud/amd64/ece-diagnostics)
+    * For x86_64 AMD CPU architectures: [https://download.elasticsearch.org/cloud/amd64/ece-diagnostics](https://download.elasticsearch.org/cloud/amd64/ece-diagnostics)
+
+        ```sh
+        curl --compressed --silent -o ./ece-diagnostics https://download.elasticsearch.org/cloud/amd64/ece-diagnostics
+        ```
+
     * For ARM CPU architectures: [https://download.elasticsearch.org/cloud/arm64/ece-diagnostics](https://download.elasticsearch.org/cloud/arm64/ece-diagnostics)
+
+        ```sh
+        curl --compressed --silent -o ./ece-diagnostics https://download.elasticsearch.org/cloud/arm64/ece-diagnostics
+        ```
 
 2. Make it executable.
 
-    
+    ```sh
+    chmod +x ./ece-diagnostics
+    ```
 
 
 ## How to use [ece_how_to_use] 
@@ -76,6 +87,3 @@ Finished creating file: /tmp/ecediag-192.168.44.10-20220506-084902.tar.gz (total
 ```
 
 At that point, you’re ready to upload the `.tar.gz` file to Elastic Support.
-
-:::{include} /deploy-manage/_snippets/autoops-callout-with-ech.md
-:::
