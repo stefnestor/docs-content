@@ -48,9 +48,7 @@ This tool supports various command line flags. The most common command line flag
 
 * (Optional) `--stack-diagnostics-timeout` to designate the maximum waiting time to pull the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
 
-* (Optional) `--stack-diagnostics-timeout` to designate the maximum waiting time to collect the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
-
-* (Optional) `--run-stack-diagnostics=false` to deactivate collecting [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) from the resources namespace. This is enabled by default and is recommended, but requires the temporary deployment of additional Pods into the Kubernetes cluster. 
+* (Optional) `--run-stack-diagnostics=false` to deactivate collecting [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) from the resources namespace. This is enabled by default and is recommended, but requires the temporary deployment of additional Pods into the Kubernetes cluster.
 
 * (Optional) `-f` or `--filters` to filter the Elastic resources that it runs diagnostics against. By specifying the type and name of resource, you can filter for any combination of Elastic stack components.
 
@@ -60,6 +58,9 @@ This tool supports various command line flags. The most common command line flag
     ```
 
 Check [ECK Diagnostics in air-gapped environments](/deploy-manage/deploy/cloud-on-k8s/air-gapped-install.md#k8s-eck-diag-air-gapped) for command line flags to run support diagnostics in environments without access to the open internet.
+
+:::{include} /deploy-manage/_snippets/autoops-callout-with-ech.md
+:::
 
 ## Example [k8s_example] 
 
