@@ -36,28 +36,30 @@ eck-diagnostics -o <operator-namespaces> -r <resources-namespaces>
 
 This tool supports various command line flags. The most common command line flags are:
 
-* (Optional) Run it with `-h` or `--help` to print all available options. 
+* (Optional) `-h` or `--help` to print all available options. 
 
     ```bash
     eck-diagnostics --help
     ```
 
-* (Required) Run it with `-r` or `--resources-namespaces` to indicate the namespaces where your Elastic stack resources are deployed. 
+* (Required) `-r` or `--resources-namespaces` to indicate the namespaces where your Elastic stack resources are deployed. 
 
-* (Optional) Run it with `-o` or `--operator-namespaces` to override the default `elastic-system` namespace for the deployed ECK operator.
+* (Optional) `-o` or `--operator-namespaces` to override the default `elastic-system` namespace for the deployed ECK operator.
 
-* (Optional) Run it with `--stack-diagnostics-timeout` to designate the maximum waiting time to pull the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
-* (Optional) Run it with `--stack-diagnostics-timeout` to designate the maximum waiting time to collect the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
-* (Optional) Run it with `--run-stack-diagnostics=false` to deactivate collecting [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) from the resources namespace. This is enabled by default and is recommended, but requires the temporary deployment of additional Pods into the Kubernetes cluster. 
+* (Optional) `--stack-diagnostics-timeout` to designate the maximum waiting time to pull the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
 
-* (Optional) Check [ECK Diagnostics in air-gapped environments](/deploy-manage/deploy/cloud-on-k8s/air-gapped-install.md#k8s-eck-diag-air-gapped) for command line flags to run support diagnostics in environments without access to the open internet.
+* (Optional) `--stack-diagnostics-timeout` to designate the maximum waiting time to collect the {{es}} and {{kib}} diagnostics. Defaults to `5m0s`.
 
-* (Optional) The tool can also filter the Elastic resources that it runs diagnostics against by specifying the `-f` or `--filters` flag. By specifying the type and name of resource, you can filter for any combination of Elastic stack components.
+* (Optional) `--run-stack-diagnostics=false` to deactivate collecting [{{es}} diagnostics](/troubleshoot/elasticsearch/diagnostic.md) and [{{kib}} diagnostics](/troubleshoot/kibana/capturing-diagnostics.md) from the resources namespace. This is enabled by default and is recommended, but requires the temporary deployment of additional Pods into the Kubernetes cluster. 
+
+* (Optional) `-f` or `--filters` to filter the Elastic resources that it runs diagnostics against. By specifying the type and name of resource, you can filter for any combination of Elastic stack components.
 
     ```bash
     # Filter only for an elasticsearch cluster named 'mycluster', and a kibana instance named 'mykibana'.
     eck-diagnostics -o <operator-namespaces> -r <resources-namespaces> -f "elasticsearch=mycluster" -f "kibana=mykibana"
     ```
+
+Check [ECK Diagnostics in air-gapped environments](/deploy-manage/deploy/cloud-on-k8s/air-gapped-install.md#k8s-eck-diag-air-gapped) for command line flags to run support diagnostics in environments without access to the open internet.
 
 ## Example [k8s_example] 
 
