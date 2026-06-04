@@ -59,9 +59,6 @@ This tool supports various command line flags. The most common command line flag
 
 Check [ECK Diagnostics in air-gapped environments](/deploy-manage/deploy/cloud-on-k8s/air-gapped-install.md#k8s-eck-diag-air-gapped) for command line flags to run support diagnostics in environments without access to the open internet.
 
-:::{include} /deploy-manage/_snippets/autoops-callout-with-ech.md
-:::
-
 ## Example [k8s_example] 
 
 Assuming the ECK operator is deployed in a namespace called `operators` and Elastic stack resources are deployed in the `security` and `monitoring` namespaces, you should run `eck-diagnostics` as follows:
