@@ -23,18 +23,18 @@ Allocation sequentially computes from [cluster-level settings and filters](elast
 
 There is no guarantee that individual components will be evenly spread across the nodes. This could happen if some nodes have fewer shards, or are using less disk space, but are assigned shards with higher write loads.
 
-When rebalancing shards, {{es}} does not consider the amount or complexity of search queries. This is indirectly achieved by balancing shard count and disk usage. It also does not consider:
+When rebalancing shards, {{es}} does not consider the amount or complexity of search queries. This is indirectly achieved by balancing shard count and disk usage. It also does not consider the following factors:
 
 * current [CPU usage](/troubleshoot/elasticsearch/high-cpu-usage.md)
 * current [JVM memory pressure](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md)
 * [task queue backlog](/troubleshoot/elasticsearch/task-queue-backlog.md)
 * which nodes [coordinate the related tasks](/deploy-manage/distributed-architecture/reading-and-writing-documents.md)
-* which node is elected-master
+* which node is elected as the master node
 * write load of aliases or standalone indices
 
-## Check balance [troubleshooting-unbalanced-cluster-check]
+## Check the cluster balance [troubleshooting-unbalanced-cluster-check]
 
-To check the cluster's balance, use the [cat allocation command]({{es-apis}}operation/operation-cat-allocation) to list workloads per node:
+To check the cluster's balance, use the [cat allocation command]({{es-apis}}operation/operation-cat-allocation) to list workloads on each node:
 
 ```console
 GET /_cat/allocation?v
@@ -59,13 +59,13 @@ This response contains the following information that influences balancing:
 
 A cluster is considered balanced when all shards are in their desired locations, which means that no further shard movements are planned (all `shards.undesired` values are equal to 0).
 
-## Balancing expectations [troubleshooting-unbalanced-cluster-check]
+## Rebalancing behavior [rebalancing-behavior]
 
-Some operations such as node restarting, decommissioning, or changing cluster allocation settings are disruptive and might require multiple shards to move in order to rebalance the cluster.
+Some operations, such as node restarting, decommissioning, or changing cluster allocation settings, are disruptive and might require multiple shards to move in order to rebalance the cluster.
 
 Shard movement order is not deterministic and mostly determined by the source and target node readiness to move a shard. While rebalancing is in progress some nodes might appear busier than others.
 
-When a shard is allocated to an undesired node it uses the resources of the current node instead of the target. This might cause a [hotspot](/troubleshoot/elasticsearch/hotspotting.md) (disk or CPU) when multiple shards reside on the current node that have not been moved to their corresponding targets yet.
+When a shard is allocated to an undesired node it uses the resources of the current node instead of the target. This might cause a disk or CPU [hotspot](/troubleshoot/elasticsearch/hotspotting.md) when multiple shards reside on the current node that have not been moved to their corresponding targets yet.
 
 You can monitor shard migrations using the [cat recovery command]({{es-apis}}operation/operation-cat-recovery), along with their migrated `bp` bytes percent of `tb` total bytes:
 
@@ -75,7 +75,7 @@ GET _cat/recovery?v=true&expand_wildcards=all&active_only=true&h=time,tb,bp,top,
 
 ## Divergent balances [troubleshooting-unbalanced-cluster-check]
 
-If a cluster takes a long time to finish rebalancing you might find the following log entries:
+If a cluster takes a long time to finish rebalancing, you might find the following log entries:
 
 ```text
 [WARN][o.e.c.r.a.a.DesiredBalanceReconciler] [10%] of assigned shards (10/100) are not on their desired nodes, which exceeds the warn threshold of [10%]
