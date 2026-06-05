@@ -23,7 +23,7 @@ Allocation sequentially computes from [cluster-level settings and filters](elast
 
 There is no guarantee that individual components will be evenly spread across the nodes. This could happen if some nodes have fewer shards, or are using less disk space, but are assigned shards with higher write loads.
 
-When rebalancing shards, {{es}} does not take into account the amount or complexity of search queries. This is indirectly achieved by balancing shard count and disk usage. It also does not take into account:
+When rebalancing shards, {{es}} does not consider the amount or complexity of search queries. This is indirectly achieved by balancing shard count and disk usage. It also does not consider:
 
 * current [CPU usage](/troubleshoot/elasticsearch/high-cpu-usage.md)
 * current [JVM memory pressure](/troubleshoot/elasticsearch/high-jvm-memory-pressure.md)
