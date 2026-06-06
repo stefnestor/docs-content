@@ -1,6 +1,6 @@
 ---
-navigation_title: "Troubleshoot Upgrade Assistant"
-description: "Common Upgrade Assistant errors and how to resolve them."
+navigation_title: "Upgrade Assistant"
+description: "Common Upgrade Assistant issues and how to resolve them."
 type: troubleshooting
 applies_to:
   stack: ga
@@ -12,28 +12,28 @@ products:
   - id: elasticsearch
 ---
 
-# Troubleshoot Upgrade Assistant [troubleshooting-upgrade-assistant]
+# Resolve Upgrade Assistant issues [troubleshooting-upgrade-assistant]
 
-You should run the [Upgrade Assistant](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) from the current major's latest minor and patch before upgrading to the next major stack version. You should end up with a list of steps each filled-in with a green checkmark. Failure to do so can cause your cluster to encounter one of the [common upgrade issues](/troubleshoot/elasticsearch/troubleshooting-upgrades.md).
+The [](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md) checks your cluster for problems that can block or affect an upgrade to the next major version, and guides you through resolving them. This page covers the most common issues it reports, and how to fix them.
 
-The following sections describe the most common errors and resolutions that clusters encounter while running the **Upgrade Assistant**.
+For issues that can occur during the upgrade itself, refer to [](/troubleshoot/elasticsearch/troubleshooting-upgrades.md).
 
 ## Migration errors [troubleshooting-upgrade-assistant-migrations]
 
-{{es}} indices are [compatible for sequential major versions](/deploy-manage/upgrade/deployment-or-cluster/reading-indices-from-older-elasticsearch-versions.md). You must [migrate older index versions](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-migration) to avoid [index compatibility errors](/troubleshoot/elasticsearch/troubleshooting-upgrades.md#troubleshooting-upgrades-errors-bootstrap-index) which would block a node's start-up during its upgrade to a later version.
+{{es}} indices are [compatible across sequential major versions](/deploy-manage/upgrade/deployment-or-cluster/reading-indices-from-older-elasticsearch-versions.md) only. [Migrate older indices]({{es-apis}}group/endpoint-migration) before you upgrade; otherwise, a node fails to start with an [index compatibility error](/troubleshoot/elasticsearch/troubleshooting-upgrades.md#troubleshooting-upgrades-errors-bootstrap-index) when you upgrade it to a later version.
 
-The **Upgrade Assistant** automatically performs these migrations [on behalf of the user](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md#_required_permissions_11). We recommend using the {{kib}} UI automation and only falling back to the {{es}} API as required for error resolution. Critical errors requiring intervention can surface under steps:
+The Upgrade Assistant performs these migrations on your behalf, using your account's [permissions](/deploy-manage/upgrade/prepare-to-upgrade/upgrade-assistant.md#_required_permissions_11). Rely on the {{kib}} UI, and fall back to the {{es}} API only when you need to resolve an error. Errors that need your intervention can appear under these steps:
 
-* **Migrate system indices**: If the error `System indices migration failed` reports after you clicked "Migrate indices", then click "View Migration Details" to show the output of {{es}}'s [Get feature migration information API]({{es-apis}}operation/operation-migration-get-feature-upgrade-status) for errors.
-* **Review deprecated settings and resolve issues** for {{es}}: If the error `Old index with a compatibility version` reports, determine which of the available "Action" items you prefer between reindexing, setting read-only mode, or deleting. If you choose reindexing, any issues encountered will surface under a "Reindexing error" banner.
+* **Migrate system indices**: If the error `System indices migration failed` appears after you click **Migrate indices**, then click **View migration details** to show the output of the {{es}} [get feature migration information API]({{es-apis}}operation/operation-migration-get-feature-upgrade-status) for errors.
+* **Review deprecated settings and resolve issues** for {{es}}: If the error `Old index with a compatibility version` appears, choose one of the available **Action** items: reindex the index or set it to read-only. If you choose reindexing, any issues that occur appear under a **Reindexing error** banner.
 
-Reindexing errors commonly occur due to configuration issues with templates or index blocks.
+Reindexing errors usually stem from configuration problems with templates or index blocks.
 
 ### Index block errors [troubleshooting-upgrade-assistant-migrations-blocks]
 
-{{es}} can surface `cluster_block_exception` [index blocks](elasticsearch:/reference/elasticsearch/index-settings/index-block.md) errors. These blocks are protections for an index and usually purposely configured, so you should review your index's architecture before removing block.
+{{es}} can return `cluster_block_exception` [index block](elasticsearch:/reference/elasticsearch/index-settings/index-block.md) errors. These blocks protect an index and are usually intentional, so review your index's configuration before you remove one.
 
-The most common is `FORBIDDEN/8/index write (api)` from an index have `index.blocks.write` setting enabled. The error would appear like:
+The most common is `FORBIDDEN/8/index write (api)`, from an index that has the `index.blocks.write` setting enabled. The error looks like this:
 
 ```json
 {
@@ -49,34 +49,34 @@ The most common is `FORBIDDEN/8/index write (api)` from an index have `index.blo
 }
 ```
 
-For example, this can occur when your {{es}} [Reindex API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex)'s target index previously existed and had a write block enabled after ingestion was completed.
+For example, this can happen when the target index of a [reindex API]({{es-apis}}operation/operation-reindex) request already existed and had a write block enabled after ingestion.
 
-It is also possible that a cluster experiencing disk watermark issues might surface `FORBIDDEN/12/index read-only / allow delete (api)`. [Watermark errors](/troubleshoot/elasticsearch/fix-watermark-errors.md) should be resolved before proceeding.
+A cluster experiencing disk watermark issues might also return `FORBIDDEN/12/index read-only / allow delete (api)`. Resolve [watermark errors](/troubleshoot/elasticsearch/fix-watermark-errors.md) before you proceed.
 
-The **Upgrade Assistant** can proactively warn you of possible watermark issues which might exacerbate during upgrade with message:
+The Upgrade Assistant can warn you about watermark issues that might worsen during the upgrade, with a message such as:
 
 ```text
 Get disk usage on all nodes below the value specified in cluster.routing.allocation.disk.watermark.low (nodes impacted: [NODE_NAME, NODE_NAME])
 ```
 
-This message should be treated as a warning and reviewed to ensure sufficient disk for rolling upgrade before proceeding.
+Treat this as a warning: confirm you have enough disk space for the rolling upgrade before you proceed.
 
-### Template errors [troubleshooting-upgrade-assistant-migrations-blocks]
+### Template errors [troubleshooting-upgrade-assistant-migrations-templates]
 
-Reindexing can surface issues which would normally surface during index creation. The most common relate to conflicting [Index Templates](/manage-data/data-store/templates.md) where:
+Reindexing can run into the same problems that occur during normal index creation. The most common involve conflicting [index templates](/manage-data/data-store/templates.md), where:
 
-* The index is blocked from creating.
+* **The index can't be created.**
 
-  Conflicting templates can prevent index creation with `IllegalStateException` errors such as:
+  Conflicting templates can block index creation with `IllegalStateException` errors such as:
 
   * `unable to create new index [X] because it would match composable template [Y]`
   * `unable to create new index [X] because it would match legacy template [Y]`
 
-  You will need to resolve template conflicts before proceeding. You can investigate `overlapping` templates with the [Simulate an index API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-index-template).
+  Resolve template conflicts before you proceed. To find `overlapping` templates, use the [simulate an index API]({{es-apis}}operation/operation-indices-simulate-index-template).
 
-* The index creates but inherits incorrect settings or mappings.
+* **The index is created, but it inherits the wrong settings or mappings.**
 
-  On historical {{es}} versions, user-created templates could impair [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices) from creating correctly. The symptom of this would most commonly surface as `.security` reindexing or node start-up errors such as:
+  In earlier {{es}} versions, user-created templates could prevent [system indices](elasticsearch://reference/elasticsearch/rest-apis/api-conventions.md#system-indices) from being created correctly. This most commonly appears as `.security` reindexing or node startup errors such as:
 
   * `mapping set to strict, dynamic introduction of [allow_restricted_indices] within [indices] is not allowed`
   * `missing _meta field in mapping [_doc] of index [.security]`
@@ -84,12 +84,12 @@ Reindexing can surface issues which would normally surface during index creation
   * `cannot read security-version string in index .security`
   * `security index is not on the current version - the native realm will not be operational until the upgrade API is run on the security index`
 
-  On user-managed indices, indices inheriting from an unexpected template would most commonly surface during reindexing as errors such as:
+  For user-managed indices, an index that inherits from an unexpected template most commonly produces reindexing errors such as:
 
-  * `mapper_parsing_exception` due to `reason` of `failed to parse field [V] of type [X] in document with id 'Y'. Preview of field's value: Z"`
-  * `limit of total fields [X] in index [Y] has been exceeded` due to surpassing [mapping limit setting](elasticsearch://reference/elasticsearch/index-settings/mapping-limit.md)
+  * `mapper_parsing_exception` due to `reason` of `failed to parse field [V] of type [X] in document with id 'Y'. Preview of field's value: 'Z'`
+  * `limit of total fields [X] in index [Y] has been exceeded` because it exceeds the [mapping limit setting](elasticsearch://reference/elasticsearch/index-settings/mapping-limit.md)
 
 
 :::{tip}
-Be careful to review any index templates setup to target all indices, for example with `index_patterns` against `*` or `.*`. You should avoid these as they can both cause errors during index creation or unexpected behavior after index creation.
+Make sure to review any index template configured to match all indices (for example, with `index_patterns` of `*` or `.*`). Avoid these patterns, which can cause errors during index creation or unexpected behavior afterward.
 :::
