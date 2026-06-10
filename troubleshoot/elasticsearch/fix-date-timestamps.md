@@ -179,7 +179,7 @@ For Security's [Detection rules](/solutions/security/detect-and-alert.md), you m
 
 You might consider enabling {{kib}} [Advanced Settings](kibana://reference/advanced-settings.md) to avoid `data_cold,data_frozen` [data tiers](/manage-data/lifecycle/data-tiers.md) with the following settings:
 
-* `data_views:fields_excluded_data_tiers` for all [Data views](/explore-analyze/find-and-organize/data-views.md):
+* `data_views:fields_excluded_data_tiers` for all [Data views](/explore-analyze/find-and-organize/data-views.md)
 * `observability:searchExcludedDataTiers` for the [Observability solution](/solutions/observability.md)
 * For the [Security solution](/solutions/security.md):
     * `securitySolution:excludedDataTiersForRuleExecution`
