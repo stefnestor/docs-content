@@ -1,6 +1,6 @@
 ---
 navigation_title: Fix date timestamps
-description: ""
+description: "Detect and mitigate timestamp data quality issues."
 type: troubleshooting
 applies_to:
   stack: ga
@@ -23,7 +23,7 @@ Users should ensure stored date fields are valid. {{es}} accepting a value does 
     * time-bucketed dates
     * truncated strings
 
-We recommend resolving timestamp data quality issues as close to problem source as possible. The following guide outlines symptoms which can occur due to and how to account for timestamp data quality issues. Since timestamp data quality issues can commonly affect the performance of scheduled tasks which search `now-X`, our outline will focus examples on checking for unexpected future dates within the `@timestamp` date field. 
+We recommend resolving timestamp data quality issues as close to problem source as possible. This guide outlines symptoms that can occur due to timestamp data quality issues and how to mitigate their impact. Since timestamp data quality issues can commonly affect the performance of scheduled tasks that search `now-X`, the examples focus on detecting unexpected future dates in the `@timestamp` date field.
 
 ## Symptoms [fix-date-timestamps-symptoms]
 
@@ -75,7 +75,7 @@ However, if this misconfigured host was ingesting data those 30 days, then you c
 
 From this you can see that the search is more computationally expensive and can potentially return different results based off the host having misconfigured timestamps. Next, we will discuss how to investigate the scope of the data quality issue.
 
-## Investigate
+## Investigate [fix-date-timestamps-investigate]
 
 Timestamp data quality issues can be hard to notice if they're not actively causing performance strain. It can require familiarity with the seasonal patterns of the data. 
 
@@ -87,13 +87,13 @@ A common sign to look for is date values far into the past or future. You can ch
     GET _cluster/state?filter_path=metadata.indices.*.timestamp_range
     ```
 
-    You can use third-party tools such as [JQ](https://jqlang.github.io/jq/manual/) to filter and format these results. For example to see a list of indices who's maximum timestamp is in the future from the time the command is ran:
+    You can use third-party tools such as [JQ](https://jqlang.github.io/jq/manual/) to filter and format these results. For example to see a list of indices whose maximum timestamp is in the future from the time the command is run:
 
     ```sh
     cat cluster_state.json | jq -cMr '.metadata.indices| to_entries| sort_by(.key)| .[]| .value.timestamp_range as $ts| select($ts.min)| {min:($ts.min/1000.0 | todate),max:($ts.max/1000.0 | todate), index:.key}' | jq -r --arg now "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'select(.max > $now)'
     ```
 
-* To list the top 200 [aggregated](/explore-analyze/query-filter/aggregations.md) indices by document count of having timestamps in the future from the time the command is ran:
+* To list the top 200 [aggregated](/explore-analyze/query-filter/aggregations.md) indices by document count of having timestamps in the future from the time the command is run:
 
     ```console
     GET */_search
