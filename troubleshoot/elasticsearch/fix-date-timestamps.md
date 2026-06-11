@@ -1,6 +1,6 @@
 ---
-navigation_title: Fix date timestamps
-description: "Detect and mitigate timestamp data quality issues."
+navigation_title: Timestamp data quality
+description: "Detect, investigate, and resolve timestamp data quality issues that can cause unexpected behavior."
 type: troubleshooting
 applies_to:
   stack: ga
@@ -8,92 +8,98 @@ products:
   - id: elasticsearch
 ---
 
-# Fix date timestamps [fix-date-timestamps]
+# Troubleshoot timestamp data quality issues [fix-date-timestamps]
 
-{{es}} will accept any valid past, present, or future date for its [date fields](elasticsearch://reference/elasticsearch/mapping-reference/date.md) as long as the value satisfies that field's [date `format` setting](elasticsearch://reference/elasticsearch/mapping-reference/mapping-date-format.md).
+In {{es}} date fields, you can use any valid past, present, or future date as the value, as long as it matches the field's [date `format`](elasticsearch://reference/elasticsearch/mapping-reference/mapping-date-format.md).
 
-Users should ensure stored date fields are valid. {{es}} accepting a value does not reflect its accuracy. The following are not guaranteed to be problematic for your setup but are common client-side data quality issues that users need to consider to ensure their timestamp's accuracy:
+Make sure your stored date fields are valid. When ensuring timestamp accuracy, you might encounter these common client-side data quality issues:
 
-* Operating system timezones
-* Variances in date formatting
-* Unexpected values such as:
-    * future dates
-    * default dates, such as the `1970` [unix epoch](https://en.wikipedia.org/wiki/Unix_time)
+* Operating system timezone setting conflicts
+* Incorrectly formatted date values
+* Unexpected values for the specific date field, for example:
+    * future dates that don't make sense for the data
+    * default dates, such as the `1970` [Unix epoch](https://en.wikipedia.org/wiki/Unix_time)
     * negative dates
     * time-bucketed dates
     * truncated strings
 
-We recommend resolving timestamp data quality issues as close to problem source as possible. This guide outlines symptoms that can occur due to timestamp data quality issues and how to mitigate their impact. Since timestamp data quality issues can commonly affect the performance of scheduled tasks that search `now-X`, the examples focus on detecting unexpected future dates in the `@timestamp` date field.
+This page summarizes the symptoms of these issues and helps you address them, focusing on unexpected future dates in the `@timestamp` field. 
+
+:::{tip}
+When possible, make sure to resolve timestamp data quality issues in the data itself, rather than working around them in {{es}}.
+:::
 
 ## Symptoms [fix-date-timestamps-symptoms]
 
-Timestamp data quality issues can strain resources and cause unexpected search results.
-
-The following are common locations where users first notice issues:
+Timestamp data quality issues can strain resources and cause unexpected search results. They can especially affect the following features:
 
 * [Discover](/explore-analyze/discover.md)
 * [Dashboards](/explore-analyze/dashboards.md)
-* Security's [Detections and alerts](/solutions/security/detect-and-alert.md)
-* Observability's [Incident management alerts](/solutions/observability/incident-management/alerting.md)
+* {{elastic-sec}} [detections and alerts](/solutions/security/detect-and-alert.md)
+* {{observability}} [incident management alerts](/solutions/observability/incident-management/alerting.md)
 * [{{kib}} alerting](/explore-analyze/alerting/alerts.md)
 * [Watchers](/explore-analyze/alerting/watcher.md)
 
-The following are symptoms that users commonly first notice:
+Common symptoms of these issues include:
 
-* There is a full [search queue backlog](/troubleshoot/elasticsearch/task-queue-backlog.md#diagnose-task-queue-thread-pool) on later [data tiers](/manage-data/lifecycle/data-tiers.md) but not blocking on `data_hot`.
-* The `data_frozen` data tier experiences ongoing [high CPU usage](/troubleshoot/elasticsearch/high-cpu-usage.md).
+* Later [data tiers](/manage-data/lifecycle/data-tiers.md) have a [search queue backlog](/troubleshoot/elasticsearch/task-queue-backlog.md#diagnose-task-queue-thread-pool), but not on `data_hot`.
+* The `data_frozen` data tier shows ongoing [high CPU usage](/troubleshoot/elasticsearch/high-cpu-usage.md).
 * [Slow logs](elasticsearch://reference/elasticsearch/index-settings/slow-log.md) report events for `data_cold` or `data_frozen` on short, periodic intervals.
-* [{{kib}}'s Inspect](https://www.elastic.co/blog/troubleshooting-guide-common-issues-kibana-discover-load#3.-load-search) reports search results from unexpected indices.
-* Indices created based on [{{ls}}'s date math syntax](https://www.elastic.co/docs/reference/logstash/plugins/plugins-outputs-elasticsearch#plugins-outputs-elasticsearch-index) or {{es}}'s [Date index name processor](elasticsearch://reference/enrich-processor/date-index-name-processor.md) reference dates far into the past or future.
+* In {{kib}}, [Inspect](https://www.elastic.co/blog/troubleshooting-guide-common-issues-kibana-discover-load#3.-load-search) reports search results from unexpected indices.
+* Indices based on {{ls}} [date math syntax](logstash-docs-md://lsr/plugins-outputs-elasticsearch.md#plugins-outputs-elasticsearch-index) or the {{es}} [Date index name processor](elasticsearch://reference/enrich-processor/date-index-name-processor.md) refer to dates far into the past or future.
 
-Performance incidents can frequently be avoided by following [best practices](#fix-date-timestamps-recommendations) even if underlying timestamp data quality issues remain.
+:::{tip}
+The [best practices](#fix-date-timestamps-recommendations) on this page can help prevent performance incidents, even when underlying timestamp data quality issues still exist.
+:::
 
-### Example [fix-date-timestamps-example]
+### Example: Timestamp data quality and search performance [fix-date-timestamps-example]
 
-Here's an example to demonstrate how timestamp data quality issues can affect the search performance of your cluster.
+Here's an example that illustrates how timestamp data quality issues can affect the search performance of your cluster. Suppose a single on-prem host has a misconfigured system clock, causing its `@timestamp` field to log timestamps one year in the future. In this example:
 
-As setup, let's say a single on-prem host has a bad time configuration logging a future date that is one year into the future. This host's `@timestamp` date field will report data a year ahead of other hosts logging similar data.
+- Host data ingests into an {{es}} [data stream](/manage-data/data-store/data-streams.md) with five [primary shards](elasticsearch://reference/elasticsearch/index-settings/index-modules.md#index-number-of-shards). 
+- The data stream powers a [dashboard](/explore-analyze/dashboards.md), which uses a [data view](/explore-analyze/find-and-organize/data-views.md) that relies on the `@timestamp` field.
+- The data stream has an [index lifecycle management (ILM) policy](/manage-data/lifecycle/index-lifecycle-management.md) that guarantees it [rolls over indices](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md) at least once a day and [migrates data to the frozen tier](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-actions) after 15 days. 
 
-For our example, all these hosts' data ingests into a 5 [primaries](elasticsearch://reference/elasticsearch/index-settings/index-modules.md#index-number-of-shards) {{es}} [data stream](/manage-data/data-store/data-streams.md). This data stream has an [Index lifecycle management policy](/manage-data/lifecycle/index-lifecycle-management.md) that guarantees it [rolls over indices](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md) at least once a day and that [migrates data to frozen tier](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-actions) after 15 days. After 30 days, there are 150 shards with half hosted in frozen tier.
+After 30 days, there are 150 shards, half of them hosted in the frozen tier.
 
-This data stream is powering a [dashboard](/explore-analyze/dashboards.md). The dashboard uses a [data view](/explore-analyze/find-and-organize/data-views.md) with the `@timestamp` field as its designated date field.
+#### Scenario 1: No data ingested by misconfigured host
 
-If this misconfigured host was not ingesting data those 30 days, when a user selects a `now-15m` [time window](/explore-analyze/dashboards/using.md#_set_a_time_range), you could normally expect:
+If the misconfigured host didn't ingest data during the 30-day period, the following issues can occur when a user selects a `now-15m` [time window](/explore-analyze/dashboards/using.md#_set_a_time_range) in the dashboard:
 
-1. The [search pre-filter]({{es-apis}}operation/operation-msearch) could narrow into only the latest backing index's 5 shards.
-1. The data [would be read](/deploy-manage/distributed-architecture/reading-and-writing-documents.md#_basic_read_model) off of only these shards and remaining search [queries](/explore-analyze/query-filter.md) and [aggregations](/explore-analyze/query-filter/aggregations.md) would run off that subset of data.
-1. The Dashboard's [Inspect](/troubleshoot/observability/inspect.md) would report 5 shards searched and 145 shards `skipped`.
+1. The [search pre-filter]({{es-apis}}operation/operation-msearch) shows only the five shards from the latest backing index.
+1. Data is [read](/deploy-manage/distributed-architecture/reading-and-writing-documents.md#_basic_read_model) from the latest five shards only, and the remaining search [queries](/explore-analyze/query-filter.md) and [aggregations](/explore-analyze/query-filter/aggregations.md) run on that subset of data.
+1. [Inspect](/troubleshoot/observability/inspect.md) reports 5 shards searched and 145 shards `skipped`.
 
-However, if this misconfigured host was ingesting data those 30 days, then you could expect:
+#### Scenario 2: Data ingested by misconfigured host
 
-1. The pre-filter cannot filter-out any backing indices, so will allow search against all 150 shards backing this data stream.
-1. Half of the shards are in the `data_frozen` data tier, which is intended for [rarely queried data](/manage-data/lifecycle/data-tiers.md). This is because:
-    * Frozen tier hardware profile is usually provisioned to be proportioned for low CPU to high data, so searches run slower. 
-    * These indices are [partially-mounted searchable snapshots](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md) so searches can run slower as data needs fetched out of snapshot repository.
-1. The cluster will search all 150 shards for timestamps within the desired window. This resource usage can happen even if no documents end up qualifying for the requested time range.
-1. The Dashboard's [Inspect](/troubleshoot/observability/inspect.md) would report 150 shards searched and 0 `skipped`.
+If the misconfigured host was ingesting data during the 30-day period, the following issues can occur:
 
-From this you can see that the search is more computationally expensive and can potentially return different results based off the host having misconfigured timestamps. Next, we will discuss how to investigate the scope of the data quality issue.
+1. The pre-filter can't filter out backing indices, so it allows searches against all 150 shards backing this data stream.
+1. Half of the shards are in the `data_frozen` data tier, which is intended for [rarely queried data](/manage-data/lifecycle/data-tiers.md). The frozen tier is usually provisioned with low CPU relative to high data volume, so searches run slower. Additionally, in the frozen tier, indices are [partially mounted searchable snapshots](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), which slows down searches because data must be fetched from the snapshot repository.
+1. The cluster searches all 150 shards for timestamps within the desired window. This resource usage can happen even if no documents end up matching the selected time range.
+1. [Inspect](/troubleshoot/observability/inspect.md) reports 150 shards searched and 0 `skipped`.
 
-## Investigate [fix-date-timestamps-investigate]
+In both scenarios, search is more computationally expensive and can return incorrect results because of the host's misconfigured timestamps. The next section explains how to investigate the scope of a timestamp data quality issue.
 
-Timestamp data quality issues can be hard to notice if they're not actively causing performance strain. It can require familiarity with the seasonal patterns of the data. 
+## Investigate timestamp data quality [fix-date-timestamps-investigate]
 
-A common sign to look for is date values far into the past or future. You can check for future dates with the following options:
+Timestamp data quality issues can be difficult to notice if they're not actively causing performance strain. For best results, make sure you're familiar with the typical patterns and expected trends in your data (also referred to as "seasonal patterns"), so you can spot anomalies.
 
-* To review [partially-mounted searchable snapshots](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md#searchable-snapshot-mount-storage-options) and their `@timestamp` date field only, you can [read the cluster state]({{es-apis}}operation/operation-cluster-state):
+To check for date values far into the past or future, you can use the following options:
+
+* To review [partially mounted searchable snapshots](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md#searchable-snapshot-mount-storage-options) and their `@timestamp` date field only, use a [cluster state request]({{es-apis}}operation/operation-cluster-state):
 
     ```console
     GET _cluster/state?filter_path=metadata.indices.*.timestamp_range
     ```
 
-    You can use third-party tools such as [JQ](https://jqlang.github.io/jq/manual/) to filter and format these results. For example to see a list of indices whose maximum timestamp is in the future from the time the command is run:
+    To filter and format the results, you can use third-party tools such as [jq](https://jqlang.github.io/jq/manual/). For example, to see a list of indices with a maximum timestamp in the future:
 
     ```sh
     cat cluster_state.json | jq -cMr '.metadata.indices| to_entries| sort_by(.key)| .[]| .value.timestamp_range as $ts| select($ts.min)| {min:($ts.min/1000.0 | todate),max:($ts.max/1000.0 | todate), index:.key}' | jq -r --arg now "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" 'select(.max > $now)'
     ```
 
-* To list the top 200 [aggregated](/explore-analyze/query-filter/aggregations.md) indices by document count of having timestamps in the future from the time the command is run:
+* To list the top 200 [aggregated](/explore-analyze/query-filter/aggregations.md) indices by the number of documents whose timestamps are in the future, use a search request:
 
     ```console
     GET */_search
@@ -111,9 +117,13 @@ A common sign to look for is date values far into the past or future. You can ch
         }
       }
     }
-    ``` 
+    ```
 
-* You can list individual indices' minimum and maximum timestamps. This can be expensive, depending on your search target scope and the hardware profiles of nodes hosting related shards.
+* To list individual indices' minimum and maximum timestamps, use a search request.
+
+    ::::{warning}
+    This search can be resource-intensive, depending on your search target scope and the hardware profiles of nodes hosting related shards.
+    ::::
 
     ```console
     GET my_datastream/_search
@@ -132,7 +142,7 @@ A common sign to look for is date values far into the past or future. You can ch
     }
     ```
 
-If future dates are found, you will likely want to resolve this data quality concern. If so, it can help to check for potential seasonal patterns in their distributions in order for your team to decide how to proceed:
+If you find future dates, check for patterns in the data distribution:
 
 ```console
 GET my_datastream/_search?filter_path=aggregations
@@ -154,45 +164,49 @@ GET my_datastream/_search?filter_path=aggregations
 }
 ```
 
-Once you have investigated the scope and source of your timestamp data quality issue, you can determine how your team would like to resolve it. On the rest of the page, we will outline [best practices](#fix-date-timestamps-recommendations) and common [cleanup](#fix-date-timestamps-cleanup) options.
+The rest of this page provides [best practices](#fix-date-timestamps-recommendations) and [cleanup](#fix-date-timestamps-cleanup) tips.
 
 ## Best practices [fix-date-timestamps-recommendations]
 
-You can consider the following options to minimize the impact of timestamp data quality issues. You should consider these for all scheduled tasks.
+To minimize the impact of timestamp data quality issues, consider these options for all scheduled tasks.
 
-### Default date columns [fix-date-timestamps-defaults]
+### Default date fields [fix-date-timestamps-defaults]
 
-[Time series data](/manage-data/lifecycle.md) is frequently searched by its date fields. The most common date field used is [`@timestamp`](https://www.elastic.co/docs/reference/ecs/ecs-base). By default, this field's value reflects when the event originated as reported by the source. This is the most common date view users expect to use to search their data, so is the default date field when creating a [data view](/explore-analyze/find-and-organize/data-views.md). Data views are how Discover and Dashboard objects [resolve]({{es-apis}}operation/operation-indices-resolve-index) to and search data.
+[Time series data](/manage-data/lifecycle.md) is frequently searched by date field, and the most common date field is [`@timestamp`](ecs://reference/ecs-base.md). By default, this field's value reflects when the event **originated,** as reported by the source. This is the default date field when creating a [data view](/explore-analyze/find-and-organize/data-views.md). Discover and Dashboard objects use data views to [resolve]({{es-apis}}operation/operation-indices-resolve-index) and search data.
 
-When users are not present, you should instead consider searching off of the [`event.ingested`](https://www.elastic.co/docs/reference/ecs/ecs-event) date field. By default, this field's value reflects when the event ingested into the cluster. Refer to [this troubleshooting guide](/troubleshoot/elasticsearch/troubleshoot-ingest-pipelines.md) to add it to your data with a custom [ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md) if it is not already populating. To avoid complications from ingestion lag, you should first consider `event.ingested` for all scheduled tasks, such as:
+For scheduled tasks that run without user interaction, consider searching on the [`event.ingested`](ecs://reference/ecs-event.md) date field instead of `@timestamp`. By default, this field's value reflects when the event was **ingested** into the cluster. If `event.ingested` isn't already populated, refer to [Troubleshoot ingest pipelines](/troubleshoot/elasticsearch/troubleshoot-ingest-pipelines.md) to add the field to your data with a custom [ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md).
+
+These common scheduled tasks benefit from using `event.ingested`:
 
 * [Transforms](/explore-analyze/transforms.md)
 * [Machine Learning](/explore-analyze/machine-learning.md)
 * [{{kib}} alerting](/explore-analyze/alerting/alerts.md)
 * [Watchers](/explore-analyze/alerting/watcher.md)
 
-{{kib}} [solutions](/solutions/index.md) can encourage this, like in [Security's data sources](/solutions/security/detect-and-alert/set-rule-data-sources.md#best-practices), or automatically choose this on your behalf, like in [Observability's rules](/solutions/observability/incident-management/create-manage-rules.md#observability-create-manage-rules-observability-rules).
+The `event.ingested` approach is recommended for [{{elastic-sec}} data sources](/solutions/security/detect-and-alert/set-rule-data-sources.md#best-practices) and is automatically used in [{{observability}} rules](/solutions/observability/incident-management/create-manage-rules.md#observability-create-manage-rules-observability-rules).
 
-For Security's [Detection rules](/solutions/security/detect-and-alert.md), you might also consider enabling the **Do not use @timestamp as a fallback timestamp field** [advanced setting](/solutions/security/detect-and-alert/common-rule-settings.md#rule-ui-advanced-params).
+For {{elastic-sec}} [detection rules](/solutions/security/detect-and-alert.md), also consider enabling the [**Do not use @timestamp as a fallback timestamp field** advanced setting](/solutions/security/detect-and-alert/common-rule-settings.md#rule-ui-advanced-params).
 
 ### {{kib}} data source settings [fix-date-timestamps-flags]
 
-You might consider enabling {{kib}} [Advanced Settings](kibana://reference/advanced-settings.md) to avoid `data_cold,data_frozen` [data tiers](/manage-data/lifecycle/data-tiers.md) with the following settings:
+You can use these {{kib}} [advanced settings](kibana://reference/advanced-settings.md) to avoid `data_cold,data_frozen` [data tiers](/manage-data/lifecycle/data-tiers.md):
 
-* `data_views:fields_excluded_data_tiers` for all [Data views](/explore-analyze/find-and-organize/data-views.md)
-* `observability:searchExcludedDataTiers` for the [Observability solution](/solutions/observability.md)
-* For the [Security solution](/solutions/security.md):
+* `data_views:fields_excluded_data_tiers` for all [data views](/explore-analyze/find-and-organize/data-views.md)
+* `observability:searchExcludedDataTiers` for [{{observability}}](/solutions/observability.md)
+* For [Security](/solutions/security.md):
     * `securitySolution:excludedDataTiersForRuleExecution`
     * `securitySolution:excludeColdAndFrozenTiersInPrevalence`
     * `securitySolution:excludeColdAndFrozenTiersInAnalyzer`
 
     :::{tip}
-    Refer also to [](/solutions/security/detect-and-alert/set-rule-data-sources.md#exclude-cold-frozen-tier) for best practices.
+    For guidance specific to {{elastic-sec}}, refer to [Exclude cold and frozen tiers from rule execution](/solutions/security/detect-and-alert/set-rule-data-sources.md#exclude-cold-frozen-tier).
     :::
 
 ### Data tier filters [fix-date-timestamps-tier]
 
-The {{es}} search pre-filter can filter in or out of [data tiers](/manage-data/lifecycle/data-tiers.md) with a [boolean query](elasticsearch://reference/query-languages/query-dsl/query-dsl-bool-query.md) DSL. Filtering with [query string query](elasticsearch://reference/query-languages/query-dsl/query-dsl-query-string-query.md) is insufficient. For example, you could filter out `data_cold,data_frozen` like:
+To include or exclude [data tiers](/manage-data/lifecycle/data-tiers.md) when searching, you can use a DSL [boolean query](elasticsearch://reference/query-languages/query-dsl/query-dsl-bool-query.md). Filtering with [query string query](elasticsearch://reference/query-languages/query-dsl/query-dsl-query-string-query.md) is insufficient.
+
+For example, you can filter out `data_cold,data_frozen` with the following boolean query:
 
 ```json
 {
@@ -206,17 +220,17 @@ The {{es}} search pre-filter can filter in or out of [data tiers](/manage-data/l
 }
 ```
 
-## Cleanup [fix-date-timestamps-cleanup]
+## Clean up timestamp data [fix-date-timestamps-cleanup]
 
-You can consider the following cleanup options for your timestamp data quality issues. 
+After investigating timestamp data quality and reviewing best practices, clean up any issues by deleting or modifying the problematic data.
 
 ### Delete problematic data [fix-date-timestamps-cleanup-delete]
 
-If your team determines it is best to remove invalid data, then you can delete it either by:
+To remove invalid data, use one of these methods:
 
-* [Deleting the index]({{es-apis}}operation/operation-indices-delete) or [deleting the data stream]({{es-apis}}operation/operation-indices-delete-data-stream). For [searchable snapshot indices](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), decide if you will [delete their associated snapshots](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-delete).
+* [Delete the index]({{es-apis}}operation/operation-indices-delete) or [delete the data stream]({{es-apis}}operation/operation-indices-delete-data-stream). For [searchable snapshot indices](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), consider whether to also [delete their associated snapshots]({{es-apis}}operation/operation-snapshot-delete).
 
-* Running [Delete by query]({{es-apis}}operation/operation-delete-by-query) against the index to remove problematic data. For example, to remove documents with future dates:
+* Use an index [delete by query]({{es-apis}}operation/operation-delete-by-query) request. For example, to remove documents with future dates:
 
     ```console
     POST my_index/_delete_by_query
@@ -234,12 +248,12 @@ If your team determines it is best to remove invalid data, then you can delete i
 ### Modify problematic data [fix-date-timestamps-cleanup-modify]
 
 :::{tip}
-To modify documents within a [searchable snapshot index](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), you must first [restore it to a normal index](/manage-data/lifecycle/data-tiers/manage-data-tiers-ech-ece.md#searchable-snapshot-data-tier).
+To modify documents in a [searchable snapshot index](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), you must first [restore it to a regular index](/manage-data/lifecycle/data-tiers/manage-data-tiers-ech-ece.md#searchable-snapshot-data-tier).
 :::
 
-The following is an example flow which users commonly consider to modify invalid data by updating it to current time:
+The following example steps modify invalid data by updating it to the current time:
 
-1. Create an [Ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md) which modifies the `@timestamp` date field to the current timestamp
+1. Create an [ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md) that sets the `@timestamp` date field to the current timestamp:
 
     ```console
     PUT _ingest/pipeline/update_date
@@ -262,9 +276,9 @@ The following is an example flow which users commonly consider to modify invalid
     }
     ```
 
-1. Run the data over that pipeline to modify the value, either 
+1. Run the data through the new pipeline to modify the value, using one of these approaches:
 
-    * Across the entire index by [reindexing]({{es-apis}}operation/operation-reindex) into a new index.
+    * To modify the value across the entire index, [reindex]({{es-apis}}operation/operation-reindex) to a new index.
 
         ```console
         POST _reindex
@@ -279,7 +293,7 @@ The following is an example flow which users commonly consider to modify invalid
         }
         ```
 
-    * Targeting specific documents by [updating by query]({{es-apis}}operation/operation-update-by-query) within the existing index.
+    * To target specific documents, use an [update by query]({{es-apis}}operation/operation-update-by-query) request within the existing index.
 
         ```console
         POST my_index/_update_by_query?pipeline=update_date
