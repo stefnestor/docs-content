@@ -52,7 +52,7 @@ Common symptoms of these issues include:
 The [best practices](#fix-date-timestamps-recommendations) on this page can help prevent performance incidents, even when underlying timestamp data quality issues still exist.
 :::
 
-### Example: Timestamp data quality and search performance [fix-date-timestamps-example]
+### Example [fix-date-timestamps-example]
 
 Here's an example that illustrates how timestamp data quality issues can affect the search performance of your cluster. Suppose a single on-prem host has a misconfigured system clock, causing its `@timestamp` field to log timestamps one year in the future. In this example:
 
