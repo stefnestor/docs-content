@@ -10,7 +10,7 @@ products:
 
 # Troubleshoot timestamp data quality issues [fix-date-timestamps]
 
-In {{es}} date fields, you can use any valid past, present, or future date as the value, as long as it matches the field's [date `format`](elasticsearch://reference/elasticsearch/mapping-reference/mapping-date-format.md).
+In {{es}} date fields, you can use any valid past, present, or future date as the value, as long as it matches the field's [date format](elasticsearch://reference/elasticsearch/mapping-reference/mapping-date-format.md).
 
 Make sure your stored date fields are valid. When ensuring timestamp accuracy, you might encounter these common client-side data quality issues:
 
@@ -49,7 +49,7 @@ Common symptoms of these issues include:
 * Indices based on {{ls}} [date math syntax](logstash-docs-md://lsr/plugins-outputs-elasticsearch.md#plugins-outputs-elasticsearch-index) or the {{es}} [Date index name processor](elasticsearch://reference/enrich-processor/date-index-name-processor.md) refer to dates far into the past or future.
 
 :::{tip}
-The [best practices](#fix-date-timestamps-recommendations) on this page can help prevent performance incidents, even when underlying timestamp data quality issues still exist.
+You can [reduce the performance impact](#fix-date-timestamps-recommendations) of these issues even when the underlying timestamp data quality problems still exist.
 :::
 
 ### Example [fix-date-timestamps-example]
@@ -57,7 +57,7 @@ The [best practices](#fix-date-timestamps-recommendations) on this page can help
 Here's an example that illustrates how timestamp data quality issues can affect the search performance of your cluster. Suppose a single on-prem host has a misconfigured system clock, causing its `@timestamp` field to log timestamps one year in the future. In this example:
 
 - Host data ingests into an {{es}} [data stream](/manage-data/data-store/data-streams.md) with five [primary shards](elasticsearch://reference/elasticsearch/index-settings/index-modules.md#index-number-of-shards). 
-- The data stream powers a [dashboard](/explore-analyze/dashboards.md), which uses a [data view](/explore-analyze/find-and-organize/data-views.md) that relies on the `@timestamp` field.
+- The data stream powers a [dashboard](/explore-analyze/dashboards.md), which uses a [data view](/explore-analyze/find-and-organize/data-views.md) with `@timestamp` as the time field.
 - The data stream has an [index lifecycle management (ILM) policy](/manage-data/lifecycle/index-lifecycle-management.md) that guarantees it [rolls over indices](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-rollover.md) at least once a day and [migrates data to the frozen tier](/manage-data/lifecycle/index-lifecycle-management/index-lifecycle.md#ilm-phase-actions) after 15 days. 
 
 After 30 days, there are 150 shards, half of them hosted in the frozen tier.
@@ -164,13 +164,13 @@ GET my_datastream/_search?filter_path=aggregations
 }
 ```
 
-The rest of this page provides [best practices](#fix-date-timestamps-recommendations) and [cleanup](#fix-date-timestamps-cleanup) tips.
+The rest of this page explains how to [reduce the performance impact](#fix-date-timestamps-recommendations) of these issues and [clean up](#fix-date-timestamps-cleanup) problematic data.
 
-## Best practices [fix-date-timestamps-recommendations]
+## Reduce performance impact [fix-date-timestamps-recommendations]
 
-To minimize the impact of timestamp data quality issues, consider these options for all scheduled tasks.
+Even when timestamp data quality issues remain in your data, you can reduce their performance impact by adjusting how scheduled tasks and searches run.
 
-### Default date fields [fix-date-timestamps-defaults]
+### Default date field [fix-date-timestamps-defaults]
 
 [Time series data](/manage-data/lifecycle.md) is frequently searched by date field, and the most common date field is [`@timestamp`](ecs://reference/ecs-base.md). By default, this field's value reflects when the event **originated,** as reported by the source. This is the default date field when creating a [data view](/explore-analyze/find-and-organize/data-views.md). Discover and Dashboard objects use data views to [resolve]({{es-apis}}operation/operation-indices-resolve-index) and search data.
 
@@ -185,11 +185,11 @@ These common scheduled tasks benefit from using `event.ingested`:
 
 The `event.ingested` approach is recommended for [{{elastic-sec}} data sources](/solutions/security/detect-and-alert/set-rule-data-sources.md#best-practices) and is automatically used in [{{observability}} rules](/solutions/observability/incident-management/create-manage-rules.md#observability-create-manage-rules-observability-rules).
 
-For {{elastic-sec}} [detection rules](/solutions/security/detect-and-alert.md), also consider enabling the [**Do not use @timestamp as a fallback timestamp field** advanced setting](/solutions/security/detect-and-alert/common-rule-settings.md#rule-ui-advanced-params).
+For {{elastic-sec}} [detection rules](/solutions/security/detect-and-alert.md), also consider enabling the advanced setting that ensures `@timestamp` is not used as a [fallback for timestamp overrides](/solutions/security/detect-and-alert/common-rule-settings.md#rule-ui-advanced-params).
 
 ### {{kib}} data source settings [fix-date-timestamps-flags]
 
-You can use these {{kib}} [advanced settings](kibana://reference/advanced-settings.md) to avoid `data_cold,data_frozen` [data tiers](/manage-data/lifecycle/data-tiers.md):
+You can use these {{kib}} [advanced settings](kibana://reference/advanced-settings.md) to exclude the `data_cold` and `data_frozen` [data tiers](/manage-data/lifecycle/data-tiers.md) from searches:
 
 * `data_views:fields_excluded_data_tiers` for all [data views](/explore-analyze/find-and-organize/data-views.md)
 * `observability:searchExcludedDataTiers` for [{{observability}}](/solutions/observability.md)
@@ -204,9 +204,9 @@ You can use these {{kib}} [advanced settings](kibana://reference/advanced-settin
 
 ### Data tier filters [fix-date-timestamps-tier]
 
-To include or exclude [data tiers](/manage-data/lifecycle/data-tiers.md) when searching, you can use a DSL [boolean query](elasticsearch://reference/query-languages/query-dsl/query-dsl-bool-query.md). Filtering with [query string query](elasticsearch://reference/query-languages/query-dsl/query-dsl-query-string-query.md) is insufficient.
+You can also use a Query DSL [boolean query](elasticsearch://reference/query-languages/query-dsl/query-dsl-bool-query.md) filter out specific [data tiers](/manage-data/lifecycle/data-tiers.md). Filtering with a [query string query](elasticsearch://reference/query-languages/query-dsl/query-dsl-query-string-query.md) is insufficient.
 
-For example, you can filter out `data_cold,data_frozen` with the following boolean query:
+For example, you can filter out `data_cold` and `data_frozen` with the following boolean query:
 
 ```json
 {
@@ -247,11 +247,7 @@ To remove invalid data, use one of these methods:
 
 ### Modify problematic data [fix-date-timestamps-cleanup-modify]
 
-:::{tip}
-To modify documents in a [searchable snapshot index](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), you must first [restore it to a regular index](/manage-data/lifecycle/data-tiers/manage-data-tiers-ech-ece.md#searchable-snapshot-data-tier).
-:::
-
-The following example steps modify invalid data by updating it to the current time:
+The following example steps modify invalid data by updating the `@timestamp` field to the current time:
 
 1. Create an [ingest pipeline](/manage-data/ingest/transform-enrich/ingest-pipelines.md) that sets the `@timestamp` date field to the current timestamp:
 
@@ -307,3 +303,7 @@ The following example steps modify invalid data by updating it to the current ti
           }
         }
         ```
+        
+:::{tip}
+To modify documents in a [searchable snapshot index](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md), you must first [restore it to a regular index](/manage-data/lifecycle/data-tiers/manage-data-tiers-ech-ece.md#searchable-snapshot-data-tier).
+:::
