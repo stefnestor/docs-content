@@ -78,6 +78,15 @@ stack: ga 9.5
 
 The activity feed tracks a case's comments and history. To find specific entries, use the search box, filter by type (comments or history) or author, and sort by newest or oldest first. Select **Show more** to load additional entries, or clear the filters to return to the full feed.
 
+## Apply a template to a case [apply-case-template]
+
+```{applies_to}
+stack: ga 9.5+
+serverless: ga
+```
+
+You can apply a different [case template](manage-case-templates.md) to an existing case. Open the case, select **Apply template** from the case actions menu, then choose an enabled template. Applying a template updates the case's fields. It doesn't change the case's existing connector.
+
 ## Bulk-manage cases [bulk-manage-cases]
 
 From the **Cases** page, select one or more cases to perform bulk actions such as deleting cases or changing their status, severity, assignees, or tags.
