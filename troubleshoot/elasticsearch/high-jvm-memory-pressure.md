@@ -162,7 +162,7 @@ cat nodes.json | jq -rc '.nodes[]|.name as $n|.jvm.mem|{name:$n, heap_min:.heap_
 
 Every shard uses memory. Usually, a small set of large shards uses fewer resources than many small shards. For tips on reducing your shard count, refer to [](/deploy-manage/production-guidance/optimize-performance/size-shards.md).
 
-### Ensure indices merge  [reduce-jvm-memory-pressure-merge]
+### Ensure indices force merge  [reduce-jvm-memory-pressure-merge]
 
 Once document writes are complete, ensure an index is [merged](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-forcemerge) to optimize its read performance. For indices managed by {{ilm}}, you can automate this by adding the [{{ilm-init}} force merge action](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-forcemerge.md).
 
