@@ -162,6 +162,12 @@ cat nodes.json | jq -rc '.nodes[]|.name as $n|.jvm.mem|{name:$n, heap_min:.heap_
 
 Every shard uses memory. Usually, a small set of large shards uses fewer resources than many small shards. For tips on reducing your shard count, refer to [](/deploy-manage/production-guidance/optimize-performance/size-shards.md).
 
+### Ensure indices merge  [reduce-jvm-memory-pressure-merge]
+
+Once document writes are complete, ensure an index is [merged](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-forcemerge). For indices using {{ilm}}, this is automated with [{{ilm-init}} Force Merge](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-forcemerge.md). 
+
+This is critical to the read performance of [partial Searchable Snapshots](/deploy-manage/tools/snapshot-and-restore/searchable-snapshots.md#searchable-snapshot-mount-storage-options) such that it's default ensured as fail-safe by the [{{ilm-init}} Searchable Snapshot](elasticsearch://reference/elasticsearch/index-lifecycle-actions/ilm-searchable-snapshot.md) flag `force_merge_index`.
+
 ### Common traffic issues [reduce-jvm-memory-pressure-traffic]
 
 This section contains some common suggestions for reducing JVM memory pressure related to traffic patterns.
